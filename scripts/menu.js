@@ -55,10 +55,6 @@ showMoreBtns.forEach(button => {
 
             if (targetSection) {
                 // Kéo đến vị trí của phần tử mục tiêu
-                                    // Kéo đến vị trí của phần tử mục tiêu
-                                    const headerOffset = document.querySelector('.header') ? document.querySelector('.header').offsetHeight : 0; // Thay '.header' bằng selector của header của bạn
-                                    const elementPosition = targetSection.getBoundingClientRect().top;
-                                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset; // Thêm bù
                 targetSection.scrollIntoView({
                     behavior: 'smooth', // hiệu ứng cuộn mượt
                     block: 'start' // cuộn đến đầu phần tử
