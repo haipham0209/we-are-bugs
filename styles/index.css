@@ -56,12 +56,14 @@
         padding: 4px 12px;
         border-radius: 10px;
         border: 1px solid #333;
-        background-color: rgba(255, 255, 255, 0.5);
+        /* background-color: rgba(255, 255, 255, 0.5); */
+        background-color: transparent;
         /* Màu nền trong suốt */
         font-family: 'Georgia', serif;
         font-size: 22px;
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s;
+        margin-bottom: 2px;
     }
 
     .filter-button.active {

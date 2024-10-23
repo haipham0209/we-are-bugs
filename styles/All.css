@@ -21,7 +21,7 @@
     }
     main{
         /* background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
-        margin-top: 120px;
+        margin-top: 105px;
         flex: 1; /* Chiếm phần còn lại của chiều cao body */
         /* padding-top: 60px; Để không gian cho header */
         overflow-y: auto; /* Chỉ cuộn nội dung trong main */
@@ -65,7 +65,7 @@
         /* animation: wave 10s ease infinite; Thêm hiệu ứng gợn sóng */
         border-bottom: solid 1.5px rgb(255, 255, 255);
         font-size: 25px;
-        height: 120px;
+        height: 105px;
         z-index: 100;
         top: 0;
         left: 0;
@@ -145,7 +145,7 @@
     
     /* Ẩn menu theo mặc định */
     .nav-menu {
-        margin-top: 120px;
+        margin-top: 105px;
         position: fixed;
         /* top: 70px; */
         left: -100%;
