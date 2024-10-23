@@ -44,6 +44,16 @@ textarea {
     border-radius: 4px;
     box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng thể */
 }
+#categoryText{
+    margin: 0;
+    border-right: solid 0px;
+    height: 25px;
+}
+#category{
+    margin: 0;
+    width: 90px;
+    height: 25px;
+}
 
 /* Nút submit */
 button {
@@ -89,6 +99,7 @@ video {
     display: none;
     
 }
+
 
 /* #start-scan {
     
