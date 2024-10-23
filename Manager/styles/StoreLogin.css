@@ -4,6 +4,7 @@
         padding: 0.5px;
         box-sizing: border-box;
     }
+
     body {
         font-family: Arial, sans-serif;
         display: flex;
@@ -13,52 +14,160 @@
         background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
         background-size: 400% 400%;
         animation: wave 10s ease infinite;
+        margin: 0;
+        padding: 0;
     }
 
     @keyframes wave {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .logo h1 {
+        font-size: 48px;
+        margin: 0;
+    }
+
+    .logo p {
+        font-size: 18px;
+        font-style: italic;
+        margin: 0;
+        color: #333;
     }
 
     .login-form {
-        padding: 20px;
-        border-radius: 8px;
-        width: 300px;
+        padding: 30px;
+        border-radius: 20px;
+        width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
-        /* background-color: rgba(255, 255, 255, 0.9); */
+        background-color: white;
     }
+
     .login-form h2 {
         text-align: center;
         margin-bottom: 20px;
     }
+
     .login-form label {
         display: block;
         margin-bottom: 5px;
     }
+
     .login-form input {
         font-weight: bold;
         width: 100%;
         padding: 8px;
-        margin-bottom: 15px;
+        margin-top: 10px;
+        margin-bottom: 10px;
         border: 1px solid #ccc;
         border-radius: 10px;
-    }
-    .login-form button {
         background-color: #d2e7d3;
-        border: 2px solid #ccc; 
-        border-radius: 15%;
-        padding: auto; 
-        cursor: pointer; 
-        display: inline-flex; 
-        justify-content: center; 
-        align-items: center; 
-        transition: 0.3s; 
-        margin-bottom: 10px;
+    }
+
+    .login-form button {
+        background-color: black;
+        color: white;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        width: 100%;
+        padding: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 10px;
     }
 
     .login-form button:hover {
         background-color: #0ee3bf;
+    }
+
+    /* form-row全体の調整 */
+    .form-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    /* カスタムチェックボックス */
+    .custom-checkbox {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 14px;
+        user-select: none;
+        color: #333;
+    }
+
+    /* チェックボックス自体は隠す */
+    .custom-checkbox input {
+        display: none;
+    }
+
+    /* チェックマーク部分のスタイル */
+    .custom-checkbox .checkmark {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        margin-right: 8px;
+        display: inline-block;
+        transition: background-color 0.3s, border-color 0.3s;
+        vertical-align: middle; /* チェックマークの垂直位置を調整 */
+    }
+
+    /* チェックされたときのスタイル */
+    .custom-checkbox input:checked+.checkmark {
+        background-color: #0ee3bf;
+        border-color: #0ee3bf;
+        position: relative;
+    }
+
+    /* チェックマークの表示 */
+    .custom-checkbox input:checked+.checkmark::after {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+    .register-link {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .register-link a {
+        color: #333;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+
+    .register-link a:hover {
+        color: #0ee3bf;
     }
 }
