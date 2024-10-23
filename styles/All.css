@@ -12,14 +12,24 @@
         background-size: 100% 100%;
         /* animation: wave 10s ease infinite; */
         margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden; /* Ẩn cuộn của body */
+            display: flex;
+            flex-direction: column;
+        
     }
     main{
-        margin-top: 80px;
+        margin-top: 60px;
+        flex: 1; /* Chiếm phần còn lại của chiều cao body */
+        padding-top: 60px; /* Để không gian cho header */
+        overflow-y: auto; /* Chỉ cuộn nội dung trong main */
     }
     
     footer{
         margin: 5px;
         padding: 0px;
+        padding: 20px;
         /* background-color: #ccc; */
     }
    

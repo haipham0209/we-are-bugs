@@ -5,6 +5,7 @@ so sánh 2 password khi đăng ký
 mỗi lần tạo page mới phải include
 xóa cookie ở màn hình cửa hàng
 mỗi cửa hàng 1 folder image riêng   
+hiện tại chỉ đăng nhập dc 1 thiết bị
 
 ghi nhớ đăng nhập -> sửa thời gian coookie
 
