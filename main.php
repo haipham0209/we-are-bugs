@@ -78,12 +78,21 @@ $conn->close();
     <header>
         <!-- Navbar -->
         <div class="navbar">
-            <button class="menu-toggle" aria-label="Toggle navigation">
-                <span class="menu-icon"></span>
-            </button>
-            <input type="text" class="search-bar" placeholder="Search...">
+        <button class="menu-toggle" aria-label="Toggle navigation">
+            <span class="menu-icon"></span>
+        </button>
+
+        <div class="logo-container">
             <h1 class="logo">WRB</h1>
+            <input type="text" class="search-bar" placeholder="Search...">
         </div>
+        
+        <button class="account" aria-label="Account button">
+            <img src="./images/avataricon.jpg" alt="Account icon" class="account-icon">
+        </button>
+        
+
+    </div>
 
         <nav class="nav-menu">
             <ul>

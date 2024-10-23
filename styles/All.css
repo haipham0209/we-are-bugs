@@ -54,7 +54,8 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
+        margin: 5px;
         padding: 10px 20px;
         padding: 10px;
         /* background-color: aqua; */
@@ -69,7 +70,7 @@
         top: 0;
         left: 0;
         margin: 0;
-        padding: 0;
+        /* padding: 0; */
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
 
@@ -81,19 +82,29 @@
         cursor: pointer;
         margin: 8px;
     }
+    .account {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        width: 45px; /* Chiều rộng nút */
+        height: 45px; /* Chiều cao nút */
+        padding: 0; /* Xóa khoảng cách mặc định */
+        /* padding-top: 10px; */
+        align-items: flex-end;
+    }
     
-   
-    /* .search-bar {
-        width: 60%;
-        height: 35px;
-        padding: 5px;
-        border-radius: 5px;
-        border: 1px solid #ccc; 
-    } */
+    .account-icon {
+        display: block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%; /* Nút hình tròn */
+        
+    }
+    
     .search-bar {
-        width: 70%;
+        width: 90%;
         height: 35px;
-        padding: 5px;
+        /* padding: 5px; */
         border-radius: 5px;
         padding-right: 40px; /* Chừa khoảng trống cho biểu tượng kính lúp */
         font-size: 16px;
@@ -104,6 +115,17 @@
         background-position: right 10px center; /* Vị trí bên phải, căn giữa theo chiều dọc */
         background-repeat: no-repeat;
         cursor: pointer; /* Chỉ tay khi rê chuột vào */
+        
+    }
+
+    .logo-container {
+        flex: 1; /* Chiếm hết phần còn lại của navbar */
+        display: flex;
+        flex-direction: column; /* Logo trên, search dưới */
+        align-items: center;
+        gap: 5px;
+        margin-left: 1px;
+        padding: 0;
     }
     
     .search-bar:focus {
