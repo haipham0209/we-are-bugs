@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="./styles/addProduct.css">
     <link rel="stylesheet" href="../styles/All.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
+    <!-- <script src="html5-qrcode.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/instascan/1.0.0/instascan.min.js"></script> -->
 </head>
 <body>
     <header>
@@ -84,7 +86,7 @@
     // Khởi động camera và quét mã barcode
     function startCamera() {
         html5QrcodeScanner = new Html5QrcodeScanner(
-            "barcode-scanner", { fps: 10, qrbox: 250 });
+            "barcode-scanner", { fps: 5, qrbox: 250 });
 
         html5QrcodeScanner.render(onScanSuccess, onScanError);
     }
@@ -97,9 +99,15 @@
     }
 
     // Xử lý lỗi trong quá trình quét (tùy chọn)
-    function onScanError(error) {
+    let errorCount = 0;  // Đếm số lần lỗi
+
+function onScanError(error) {
+    errorCount++;
+    if (errorCount % 5 === 0) {  // Chỉ log lỗi sau mỗi 5 lần thất bại
         console.warn(`Scan error: ${error}`);
     }
+}
+
 
     // Dừng camera
     function stopCamera() {
@@ -113,6 +121,9 @@
             <button type="submit">商品を追加する</button>
         </form>
     </div>
+    <!-- <div id="barcode-scanner__dashboard_section" style="width: 100%; padding: 10px 0px; text-align: left;"><div><div id="barcode-scanner__dashboard_section_csr" style="display: block; text-align: center;"><div style="display: none; padding: 5px 10px; text-align: center;"><input id="html5-qrcode-input-range-zoom" class="html5-qrcode-element" type="range" min="1" max="5" step="0.1" style="display: inline-block; width: 50%; height: 5px; background: rgb(211, 211, 211); outline: none; opacity: 0.7;"><span style="margin-right: 10px;">1x zoom</span></div><span style="margin-right: 10px;">Select Camera (2)  <select id="html5-qrcode-select-camera" class="html5-qrcode-element" disabled=""><option value="3774e0c68f96806f939485e466e60d70fce564495b87a7d7c5c31da67117ee81">HD Webcam (5986:211b)</option><option value="28995ee4fdbaa1af0587a25003cb6f5de3f93303e36b8fecbdd9c89e5558f059">Intel Virtual Camera</option></select></span><span><button id="html5-qrcode-button-camera-start" class="html5-qrcode-element" type="button" style="opacity: 1; display: none;">Start Scanning</button><button id="html5-qrcode-button-camera-stop" class="html5-qrcode-element" type="button" style="display: inline-block;">Stop Scanning</button></span></div><div style="text-align: center; margin: auto auto 10px; width: 80%; max-width: 600px; border: 6px dashed rgb(235, 235, 235); padding: 10px; display: none;"><label for="html5-qrcode-private-filescan-input" style="display: inline-block;"><button id="html5-qrcode-button-file-selection" class="html5-qrcode-element" type="button">Choose Image - No image choosen</button><input id="html5-qrcode-private-filescan-input" class="html5-qrcode-element" type="file" accept="image/*" style="display: none;"></label><div style="font-weight: 400;">Or drop an image to scan</div></div></div><div style="text-align: center;"><span id="html5-qrcode-anchor-scan-type-change" class="html5-qrcode-element" style="text-decoration: underline; cursor: pointer; display: none;">Scan an Image File</span></div></div>
+    <div id="barcode-scanner__dashboard_section" style="width: 100%; padding: 10px 0px; text-align: left;"><div><div id="barcode-scanner__dashboard_section_csr" style="display: block; text-align: center;"><div style="display: none; padding: 5px 10px; text-align: center;"><input id="html5-qrcode-input-range-zoom" class="html5-qrcode-element" type="range" min="1" max="5" step="0.1" style="display: inline-block; width: 50%; height: 5px; background: rgb(211, 211, 211); outline: none; opacity: 0.7;"><span style="margin-right: 10px;">1x zoom</span></div><span style="margin-right: 10px;">Select Camera (2)  <select id="html5-qrcode-select-camera" class="html5-qrcode-element" disabled=""><option value="3774e0c68f96806f939485e466e60d70fce564495b87a7d7c5c31da67117ee81">HD Webcam (5986:211b)</option><option value="28995ee4fdbaa1af0587a25003cb6f5de3f93303e36b8fecbdd9c89e5558f059">Intel Virtual Camera</option></select></span><span><button id="html5-qrcode-button-camera-start" class="html5-qrcode-element" type="button" style="opacity: 1; display: none;">Start Scanning</button><button id="html5-qrcode-button-camera-stop" class="html5-qrcode-element" type="button" style="display: inline-block;">Stop Scanning</button></span></div><div style="text-align: center; margin: auto auto 10px; width: 80%; max-width: 600px; border: 6px dashed rgb(235, 235, 235); padding: 10px; display: none;"><label for="html5-qrcode-private-filescan-input" style="display: inline-block;"><button id="html5-qrcode-button-file-selection" class="html5-qrcode-element" type="button">Choose Image - No image choosen</button><input id="html5-qrcode-private-filescan-input" class="html5-qrcode-element" type="file" accept="image/*" style="display: none;"></label><div style="font-weight: 400;">Or drop an image to scan</div></div></div><div style="text-align: center;"><span id="html5-qrcode-anchor-scan-type-change" class="html5-qrcode-element" style="text-decoration: underline; cursor: pointer; display: none;">Scan an Image File</span></div></div> -->
+
 </main>
     <footer>
 

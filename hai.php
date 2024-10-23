@@ -1,10 +1,12 @@
 
 l
 ko cho sửa tên sname ở Edit
+so sánh 2 password khi đăng ký
 mỗi lần tạo page mới phải include
 xóa cookie ở màn hình cửa hàng
 
-so sánh 2 password khi đăng ký
+
+ghi nhớ đăng nhập -> sửa thời gian coookie
 
 sau khi đăng nhập->so sánh và tạo token lưu vao cookie, khi vào màn hình authcheck-> lấy dữ liệu vào session
 
