@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="inventory.css">
+    <link rel="stylesheet" href="./styles/inventory.css">
     <title>在庫</title>
 </head>
 <body>
@@ -21,24 +21,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr> -->
                     <!-- Thêm nhiều sản phẩm hơn nếu cần -->
                     <script>
                         for (let i = 1; i <= 100; i++) {
@@ -49,7 +31,7 @@
             </table>
         </div>
     </div>
-    <script src="inventory.js"></script>
+    <script src="./scripts/inventory.js"></script>
 
 </body>
 </html>
