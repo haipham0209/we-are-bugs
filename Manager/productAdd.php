@@ -11,8 +11,9 @@ include('./php/auth_check.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./styles/addProduct.css">
     <link rel="stylesheet" href="../styles/All.css">
+    <link rel="stylesheet" href="./styles/addProduct.css">
+    
     <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
@@ -34,7 +35,10 @@ include('./php/auth_check.php');
             <div style="display: flex; align-items: center;">
             <input type="text" id="categoryText" name="categoryText" placeholder="選択したカテゴリー" />
                 <select id="category" name="category" required onchange="updateCategoryText()">
-                    <option value="men"></option>
+                    <option value="1">WOMEN</option>
+                    <option value="2">WOMEN</option>
+                    <option value="3">CHILD</option>
+                    <option value="4">OTHE</option>
                 </select>
                 
             </div>
