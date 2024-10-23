@@ -55,6 +55,10 @@ showMoreBtns.forEach(button => {
 
             if (targetSection) {
                 // Kéo đến vị trí của phần tử mục tiêu
+                                    // Kéo đến vị trí của phần tử mục tiêu
+                                    const headerOffset = document.querySelector('.header') ? document.querySelector('.header').offsetHeight : 0; // Thay '.header' bằng selector của header của bạn
+                                    const elementPosition = targetSection.getBoundingClientRect().top;
+                                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset; // Thêm bù
                 targetSection.scrollIntoView({
                     behavior: 'smooth', // hiệu ứng cuộn mượt
                     block: 'start' // cuộn đến đầu phần tử
@@ -62,6 +66,37 @@ showMoreBtns.forEach(button => {
             }
         });
     });
+
+    //filter button===========================================================================
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     // filter button===========================================================================
+    
+    //     const filterButtons = document.querySelectorAll('.filter-button');
+    
+    //     filterButtons.forEach(button => {
+    //         button.addEventListener('click', () => {
+    //             const targetId = button.getAttribute('data-target');
+    //             const targetSection = document.querySelector(targetId);
+    
+    //             if (targetSection) {
+    //                 // Kéo đến vị trí của phần tử mục tiêu
+    //                 const headerOffset = document.querySelector('.header') ? document.querySelector('.header').offsetHeight : 0; // Thay '.header' bằng selector của header của bạn
+    //                 const elementPosition = targetSection.getBoundingClientRect().top;
+    //                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset; // Thêm bù
+    
+    //                 window.scrollTo({
+    //                     top: offsetPosition,
+    //                     behavior: 'smooth' // hiệu ứng cuộn mượt
+    //                 });
+    //             } else {
+    //                 console.error(`No target section found for ID: ${targetId}`);
+    //             }
+    //         });
+    //     });
+    // });
+    
+
 //////////////////////////////////////////////////////////show more button/////////////////////////////////////
 document.addEventListener("DOMContentLoaded", function () {
     const groups = document.querySelectorAll(".group");
