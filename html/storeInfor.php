@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -12,22 +13,27 @@
 <body>
     <header>
         <!-- Navbar -->
-    <div class="navbar">
-        <div class="menu-icon">☰</div>
-        <input type="text" class="search-bar" placeholder="Search...">
-        <h1 class="logo">WRB</h1>
-    </div>
+        <div class="navbar">
+            <button class="menu-toggle" aria-label="Toggle navigation">
+            <span class="menu-icon"></span>
+            </button>
+            <input type="text" class="search-bar" placeholder="Search...">
+            <h1 class="logo">WRB</h1>
+        </div>
+
     <nav class="nav-menu">
         <ul>
-          <li><a href="../main.php">ホームページ</a></li>
+        <li><h3><?php echo $sname; ?></h3></li>
+          <li><a href="./main.php?sname=<?php echo $_GET['sname']  ?>">ホームページ</a></li>
           <li><a href="./html/product.php">商品</a></li>
-          <li><a href="">お店について</a></li>
+          <li><a href="./html/storeInfor.php">お店について</a></li>
           <li><a href="#">会員登録</a></li>
           <li><a href="#">ログイン</a></li>
           <li class="support-title">サポート</li>
-          <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel">+81000000000000</a></li>
-          <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mail:">srb@ecc.ac.jp</a></li>
-          <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""></a></li>
+          <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo $tel; ?>"><?php echo $tel; ?></a></li>
+
+          <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a></li>
+          <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a></li>
          </ul>
     </nav>
        <div class="overlay"></div>
