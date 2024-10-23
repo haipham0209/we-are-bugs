@@ -61,6 +61,11 @@
         background-color: white;
     }
 
+    .register-form label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
     .register-form h2 {
         text-align: center;
         margin-bottom: 20px;
@@ -95,7 +100,24 @@
     }
 
     .register-form button:hover {
-        background-color: #c2e7c2;
-        border-color: #3498db;
+        background-color: #0ee3bf;
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .login-link a {
+        color: #333;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+
+    .login-link a:hover {
+        color: #0ee3bf;
     }
 }

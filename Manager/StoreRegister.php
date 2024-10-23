@@ -27,44 +27,58 @@
             <p>～Fashion & Boutique～</p>
         </div>
 
-        <form class="register-form" action="./php/register.php" method="post">
-            <h2>Register</h2>
+        <div class="register-form">
+            <form class="register-form2" action="./php/register.php" method="post">
+                <div class="register-info">
+                    <h2>新規登録</h2>
 
-            <label for="username"></label>
-            <?php if (isset($_GET['error']) && $_GET['error'] == 'username_exists'): ?>
-                <span style="color: red;">ユーザー名がすでに存在します！</span>
-            <?php endif; ?>
-            <p>ユーザー名</p>
-            <input type="text" id="username" name="username" placeholder="ユーザー名入力" required value="<?= isset($_GET['username']) ? htmlspecialchars($_GET['username']) : '' ?>">
+                    <label for="username"></label>
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'username_exists'): ?>
+                        <span style="color: red;">ユーザー名がすでに存在します！</span>
+                    <?php endif; ?>
+                    <p>ユーザー名</p>
+                    <input type="text" id="username" name="username" placeholder="ユーザー名入力" required value="<?= isset($_GET['username']) ? htmlspecialchars($_GET['username']) : '' ?>">
 
-            <?php if (isset($_GET['error']) && $_GET['error'] == 'sname_exists'): ?>
-                <span style="color: red;">店名が既に存在します！</span>
-            <?php endif; ?>
-            <label for="sname"></label>
-            <input type="text" id="sname" name="sname" placeholder="店名を入力" required value="<?= isset($_GET['sname']) ? htmlspecialchars($_GET['sname']) : '' ?>">
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'sname_exists'): ?>
+                        <span style="color: red;">店名が既に存在します！</span>
+                    <?php endif; ?>
+                    <label for="sname"></label>
+                    <p>店名</p>
+                    <input type="text" id="sname" name="sname" placeholder="店名を入力" required value="<?= isset($_GET['sname']) ? htmlspecialchars($_GET['sname']) : '' ?>">
 
-            <?php if (isset($_GET['error']) && $_GET['error'] == 'email_exists'): ?>
-                <span style="color: red;">既に登録しているメールです！</span>
-            <?php endif; ?>
-            <label for="email"></label>
-            <input type="email" id="email" name="email" placeholder="メールを入力" required value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>">
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'email_exists'): ?>
+                        <span style="color: red;">既に登録しているメールです！</span>
+                    <?php endif; ?>
+                    <label for="email"></label>
+                    <p>メール</p>
+                    <input type="email" id="email" name="email" placeholder="メールを入力" required value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>">
 
-            <?php if (isset($_GET['error']) && $_GET['error'] == 'password_too_short'): ?>
-                <span style="color: red;">パスワードは6文字以上でなければなりません！</span>
-            <?php endif; ?>
-            <label for="password"></label>
-            <input type="password" id="password" name="password" placeholder="パスワード" required>
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'password_too_short'): ?>
+                        <span style="color: red;">パスワードは6文字以上でなければなりません！</span>
+                    <?php endif; ?>
+                    <label for="password"></label>
+                    <p>パスワード</p>
+                    <input type="password" id="password" name="password" placeholder="パスワードを入力" required>
 
-            <?php if (isset($_GET['error']) && $_GET['error'] == 'password_mismatch'): ?>
-                <span style="color: red;">パスワードが一致しません！</span>
-            <?php endif; ?>
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'password_mismatch'): ?>
+                        <span style="color: red;">パスワードが一致しません！</span>
+                    <?php endif; ?>
 
-            <label for="confirm_password"></label>
-            <input type="password" id="confirm_password" name="confirm_password" placeholder="もう一回パスワード" required>
+                    <label for="confirm_password"></label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="もう一回パスワード" required>
 
 
-            <button type="submit">登録</button>
-        </form>
+                    <button type="submit">登録</button>
+                </div>
+            </form>
+
+            <div class="login-link">
+                <p>Already have account? <a href="./StoreLogin.php">Login</a></p>
+            </div>
+        </div>
+
+
+
 
         <div id="loading" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center;">
             <div id="lottie"></div>
