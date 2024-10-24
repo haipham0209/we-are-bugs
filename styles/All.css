@@ -13,7 +13,7 @@
     body {
         background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
         /* background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff); */
-        background-size: 100% 80%;
+        background-size: 100% 100%;
         /* animation: wave 10s ease infinite; */
         margin: 0;
             font-family: Arial, sans-serif;
