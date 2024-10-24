@@ -115,7 +115,7 @@ $conn->close();
 
     <main>
         <div class="filter-buttons">
-        <button class="filter-button active" data-target="#men">All</button>
+        <button class="filter-button " data-target="#men">All</button>
             <button class="filter-button" data-target="#men">Men</button>
             <button class="filter-button" data-target="#women">Women</button>
             <button class="filter-button" data-target="#child">Children</button>
