@@ -75,6 +75,7 @@ $conn->close();
     
 </head>
 <body>
+<div class="notch-space"></div> <!-- Vùng notch màu trắng -->
     <header>
         <!-- Navbar -->
         <div class="navbar">

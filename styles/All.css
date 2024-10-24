@@ -5,9 +5,20 @@
         padding: 0.5px;
         box-sizing: border-box;
     }
+        /* Vùng notch màu trắng cố định */
+        .notch-space {
+            background-color: white;
+            height: env(safe-area-inset-top); /* Chiều cao tương ứng notch */
+            width: 100%; /* Chiếm toàn bộ chiều ngang */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10; /* Đảm bảo nằm trên cùng */
+          }
     header{
         /* margin-top: 105px; */
         padding-top: 105px;
+        margin-top: env(safe-area-inset-top);
     }
     
     body {
