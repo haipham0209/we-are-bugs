@@ -44,15 +44,6 @@ showMoreBtns.forEach(button => {
     });
 });
 
-
-document.querySelector('.menu-toggle').addEventListener('click', function() {
-    const headerHeight = document.querySelector('header').offsetHeight;
-    window.scrollTo({
-        top: 0 + headerHeight,
-        behavior: 'smooth'
-    });
-});
-
 //filter button===========================================================================
     
     const filterButtons = document.querySelectorAll('.filter-button');
