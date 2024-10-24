@@ -57,7 +57,7 @@ showMoreBtns.forEach(button => {
                 // Kéo đến vị trí của phần tử mục tiêu
                 targetSection.scrollIntoView({
                     behavior: 'smooth', // hiệu ứng cuộn mượt
-                    block: 'start' // cuộn đến đầu phần tử
+                    // block: 'start' // cuộn đến đầu phần tử
                 });
             }
         });
