@@ -115,13 +115,14 @@ $conn->close();
     </header>
 
     <main>
-        <div class="filter-buttons">
-        <button class="filter-button " data-target="#men">All</button>
-            <button class="filter-button" data-target="#men">Men</button>
-            <button class="filter-button" data-target="#women">Women</button>
-            <button class="filter-button" data-target="#child">Children</button>
-            <button class="filter-button">Special Events</button>
-        </div>
+    <div class="filter-buttons">
+    <a href="#all" class="filter-button">All</a>
+    <a href="#men" class="filter-button">Men</a>
+    <a href="#women" class="filter-button">Women</a>
+    <a href="#child" class="filter-button">Children</a>
+    <a href="#special-events" class="filter-button">Special Events</a>
+  </div>
+        
 
         <section class="best-sellers">
             <h2>Best Sellers</h2>

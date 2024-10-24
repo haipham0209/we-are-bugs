@@ -46,22 +46,22 @@ showMoreBtns.forEach(button => {
 
 //filter button===========================================================================
     
-    const filterButtons = document.querySelectorAll('.filter-button');
+    // const filterButtons = document.querySelectorAll('.filter-button');
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.getAttribute('data-target');
-            const targetSection = document.querySelector(targetId);
+    // filterButtons.forEach(button => {
+    //     button.addEventListener('click', () => {
+    //         const targetId = button.getAttribute('data-target');
+    //         const targetSection = document.querySelector(targetId);
 
-            if (targetSection) {
-                // Kéo đến vị trí của phần tử mục tiêu
-                targetSection.scrollIntoView({
-                    behavior: 'smooth', // hiệu ứng cuộn mượt
-                    block: 'start' // cuộn đến đầu phần tử
-                });
-            }
-        });
-    });
+    //         if (targetSection) {
+    //             // Kéo đến vị trí của phần tử mục tiêu
+    //             targetSection.scrollIntoView({
+    //                 behavior: 'smooth', // hiệu ứng cuộn mượt
+    //                 block: 'start' // cuộn đến đầu phần tử
+    //             });
+    //         }
+    //     });
+    // });
 
     //filter button===========================================================================
 
