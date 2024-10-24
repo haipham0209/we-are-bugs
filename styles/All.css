@@ -5,6 +5,9 @@
         padding: 0.5px;
         box-sizing: border-box;
     }
+    header{
+        margin-top: 105px;
+    }
     
     body {
         background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
