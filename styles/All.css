@@ -28,7 +28,7 @@
         /* s */
         /* margin-top: 105px; */
         background-color: red;
-        flex: 1; /* Chiếm phần còn lại của chiều cao body */
+        /* flex: 1; Chiếm phần còn lại của chiều cao body */
         /* padding-top: 60px; Để không gian cho header */
         overflow-y: auto; /* Chỉ cuộn nội dung trong main */
     }
