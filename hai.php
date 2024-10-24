@@ -23,6 +23,8 @@ ssh -i "haikey2.pem" ubuntu@54.145.40.61
 
 git pull origin main
 
+cd /var/www/html/we-are-bugs
+
 git clone https://github.com/haipham0209/we-are-bugs.git
 
 
