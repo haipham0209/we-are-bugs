@@ -1,5 +1,23 @@
 //nav===========================================================================
 
+// document.addEventListener('DOMContentLoaded', function () {
+//     const menuToggle = document.querySelector('.menu-toggle');
+//     const navMenu = document.querySelector('.nav-menu');
+//     const overlay = document.querySelector('.overlay');
+//     const menuIcon = document.querySelector('.menu-icon');
+
+//     // Mở/đóng menu khi nhấp vào nút
+//     menuToggle.addEventListener('click', function () {
+//         navMenu.classList.toggle('open');
+//         menuIcon.classList.toggle('open'); // Thay đổi biểu tượng
+//     });
+
+//     // Đóng menu khi nhấp vào overlay
+//     overlay.addEventListener('click', function () {
+//         navMenu.classList.remove('open');
+//         menuIcon.classList.remove('open'); // Đặt lại biểu tượng về ban đầu
+//     });
+// });
 document.addEventListener('DOMContentLoaded', function () {
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('.nav-menu');
@@ -9,15 +27,18 @@ document.addEventListener('DOMContentLoaded', function () {
     // Mở/đóng menu khi nhấp vào nút
     menuToggle.addEventListener('click', function () {
         navMenu.classList.toggle('open');
+        overlay.classList.toggle('active'); // Thay đổi trạng thái overlay
         menuIcon.classList.toggle('open'); // Thay đổi biểu tượng
     });
 
     // Đóng menu khi nhấp vào overlay
     overlay.addEventListener('click', function () {
         navMenu.classList.remove('open');
-        menuIcon.classList.remove('open'); // Đặt lại biểu tượng về ban đầu
+        overlay.classList.remove('active'); // Ẩn overlay khi đóng menu
+        menuIcon.classList.remove('open'); // Đổi lại biểu tượng
     });
 });
+
 
 
 

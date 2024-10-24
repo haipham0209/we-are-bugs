@@ -78,7 +78,7 @@ $conn->close();
     <header>
 
 
-        <nav class="nav-menu">
+        <nav class="nav-menu" >
             <ul>
             <li><h3><?php echo $sname; ?></h3></li>
             <li><a href="./main.php?sname=<?php echo $_GET['sname']  ?>">ホームページ</a></li>
