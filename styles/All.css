@@ -16,11 +16,11 @@
         background-size: 100% 100%;
         /* animation: wave 10s ease infinite; */
         margin: 0;
-        font-family: Arial, sans-serif;
-        /* height: 100vh; */
-        overflow: hidden; /* Ẩn cuộn của body */
-        display: flex;
-        flex-direction: column;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden; /* Ẩn cuộn của body */
+            display: flex;
+            flex-direction: column;
         
     }
     main{
@@ -150,7 +150,7 @@
     
     /* Ẩn menu theo mặc định */
     .nav-menu {
-        /* margin-top: 105px; */
+        margin-top: 105px;
         position: fixed;
         /* top: 70px; */
         left: -100%;
