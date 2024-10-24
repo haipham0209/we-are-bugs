@@ -6,7 +6,8 @@
         box-sizing: border-box;
     }
     header{
-        margin-top: 105px;
+        /* margin-top: 105px; */
+        padding-top: 105px;
     }
     
     body {
