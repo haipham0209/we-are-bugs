@@ -8,6 +8,8 @@
     header{
         /* margin-top: 105px; */
         padding-top: 105px;
+        margin-top: -80px;
+        height: 185px;
     }
     
     body {
