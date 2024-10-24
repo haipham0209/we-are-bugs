@@ -7,7 +7,7 @@
     }
     header{
         /* margin-top: 105px; */
-        padding-top: 185px;
+        padding-top: 105px;
     }
     
     body {
@@ -27,7 +27,8 @@
         /* background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
         /* s */
         margin-top: 1px;
-        height: 75vh;
+        padding-top: 105px;
+        /* height: 75vh; */
         flex: 1; /* Chiếm phần còn lại của chiều cao body */
         /* padding-top: 60px; Để không gian cho header */
         overflow-y: auto; /* Chỉ cuộn nội dung trong main */
