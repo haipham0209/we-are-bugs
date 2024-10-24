@@ -5,20 +5,9 @@
         padding: 0.5px;
         box-sizing: border-box;
     }
-        /* Vùng notch màu trắng cố định */
-        .notch-space {
-            background-color: white;
-            height: env(safe-area-inset-top); /* Chiều cao tương ứng notch */
-            width: 100%; /* Chiếm toàn bộ chiều ngang */
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 10; /* Đảm bảo nằm trên cùng */
-          }
     header{
         /* margin-top: 105px; */
         padding-top: 105px;
-        margin-top: env(safe-area-inset-top);
     }
     
     body {
@@ -38,8 +27,7 @@
         /* background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
         /* s */
         /* margin-top: 105px; */
-        background-color: rgb(193, 141, 141);
-        /* flex: 1; Chiếm phần còn lại của chiều cao body */
+        flex: 1; /* Chiếm phần còn lại của chiều cao body */
         /* padding-top: 60px; Để không gian cho header */
         overflow-y: auto; /* Chỉ cuộn nội dung trong main */
     }
@@ -162,7 +150,7 @@
     
     /* Ẩn menu theo mặc định */
     .nav-menu {
-        /* margin-top: 105px; */
+        margin-top: 105px;
         position: fixed;
         /* top: 70px; */
         left: -100%;

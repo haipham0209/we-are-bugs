@@ -75,7 +75,6 @@ $conn->close();
     
 </head>
 <body>
-<div class="notch-space"></div> <!-- Vùng notch màu trắng -->
     <header>
         <!-- Navbar -->
         <div class="navbar">
@@ -116,13 +115,12 @@ $conn->close();
 
     <main>
         <div class="filter-buttons">
-        <button class="filter-button " data-target="#men">All</button>
+        <button class="filter-button active" data-target="#men">All</button>
             <button class="filter-button" data-target="#men">Men</button>
             <button class="filter-button" data-target="#women">Women</button>
             <button class="filter-button" data-target="#child">Children</button>
             <button class="filter-button">Special Events</button>
         </div>
-        
 
         <section class="best-sellers">
             <h2>Best Sellers</h2>
