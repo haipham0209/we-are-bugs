@@ -31,14 +31,7 @@
         /* padding-top: 60px; Để không gian cho header */
         overflow-y: auto; /* Chỉ cuộn nội dung trong main */
     }
-    
-    footer{
-        margin: 5px;
-        padding: 0px;
-        padding: 20px;
-        /* background-color: #ccc; */
-    }
-   
+
     /* @keyframes wave {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
