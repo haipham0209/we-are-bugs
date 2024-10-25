@@ -110,6 +110,7 @@ $conn->close();
             <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a></li>
             </ul>
         </nav>
+        <div class="overlay"></div>
         <nav class="nav-myPage">
             <ul>
                 <li><a href="#">登録</a></li>

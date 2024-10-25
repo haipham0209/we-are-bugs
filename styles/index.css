@@ -117,7 +117,7 @@
         margin-bottom: 5px;
         padding-bottom: 1px;
         padding-top: 10px;
-        justify-content: flex-start;
+        justify-content: center;
         /* Đặt căn trái cho các nút */
         overflow-x: auto;
         /* Cho phép cuộn ngang */
