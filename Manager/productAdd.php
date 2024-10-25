@@ -3,7 +3,7 @@
 </script>
 <?php
 // Gọi file xác thực người dùng trước khi load nội dung trang
-include('./php/auth_check.php');
+// include('./php/auth_check.php');
 ?>
 <!DOCTYPE html>
 <html lang="ja">
