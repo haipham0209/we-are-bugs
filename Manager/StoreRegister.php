@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./styles/StoreRegister.css">
     <title>登録</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.7/lottie.min.js"></script>
@@ -96,7 +96,7 @@
                 });
 
                 // animation
-                document.querySelector('.register-form').addEventListener('submit', function(event) {
+                document.querySelector('.register-form2').addEventListener('submit', function(event) {
                     // 
                     event.preventDefault();
                     document.getElementById('loading').style.display = 'flex';
@@ -109,15 +109,15 @@
             });
         </script>
         <?php
-        if (isset($_GET['success']) && $_GET['success'] === 'true') {
-            // cache 
-            header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-            header("Pragma: no-cache"); // HTTP 1.0.
-            header("Expires: 0"); // 
-            header('Location: ./StoreLogin.html');
+        // if (isset($_GET['success']) && $_GET['success'] === 'true') {
+        //     // cache 
+        //     header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        //     header("Pragma: no-cache"); // HTTP 1.0.
+        //     header("Expires: 0"); // 
+        //     header('Location: ./StoreLogin.html');
 
-            exit;
-        }
+        //     exit;
+        // }
         ?>
     </div>
 </body>

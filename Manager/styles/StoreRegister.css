@@ -1,11 +1,12 @@
 @media only screen and (max-width: 767px) {
     * {
         margin: 0.5px;
-        padding: 0.5px;
+        /* padding: 0.5px; */
         box-sizing: border-box;
     }
 
     body {
+        overflow: hidden;
         font-family: Arial, sans-serif;
         display: flex;
         justify-content: center;
@@ -40,8 +41,12 @@
     }
 
     .logo h1 {
-        font-size: 48px;
-        margin: 0;
+        font-size: 40px;
+        /* margin: 0; */
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        /* margin-top: 30px; */
     }
 
     .logo p {
@@ -52,7 +57,7 @@
     }
 
     .register-form {
-        padding: 30px;
+        padding: 0 30px 30px;
         border-radius: 20px;
         width: 100%;
         height: 100%;
@@ -68,15 +73,14 @@
 
     .register-form h2 {
         text-align: center;
-        margin-bottom: 20px;
     }
 
     .register-form input {
         font-weight: bold;
         width: 100%;
         padding: 8px;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        /* margin-top: 5px; */
+        margin-bottom: 5px;
         border: 1px solid #ccc;
         border-radius: 10px;
         background-color: #d2e7d3;

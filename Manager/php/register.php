@@ -78,10 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "insert store ERROR";
             exit();
             }
-            echo "<script>
-                    localStorage.setItem('registerSuccess', 'true');
-                    window.location.href = '../StoreRegister.php';
-                    </script>";
+            header("Location: ../StoreLogin.php?username=" . urlencode($username));
+            // echo "<script>
+            //         localStorage.setItem('registerSuccess', 'true');
+            //         window.location.href = '../StoreRegister.php';
+            //         </script>";
             exit();
         } else {
             echo "insert ERROR";

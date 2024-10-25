@@ -5,6 +5,7 @@ so sánh 2 password khi đăng ký
 mỗi lần tạo page mới phải include
 xóa cookie ở màn hình cửa hàng
 mỗi cửa hàng 1 folder image riêng   
+hiện tại chỉ đăng nhập dc 1 thiết bị
 
 ghi nhớ đăng nhập -> sửa thời gian coookie
 
@@ -20,7 +21,11 @@ cd "C:\Sites\ec2\"
 
 ssh -i "haikey2.pem" ubuntu@54.145.40.61
 
+
+cd /var/www/html/we-are-bugs
 git pull origin main
+
+
 
 git clone https://github.com/haipham0209/we-are-bugs.git
 

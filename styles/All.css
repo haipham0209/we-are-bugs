@@ -5,6 +5,10 @@
         padding: 0.5px;
         box-sizing: border-box;
     }
+    header{
+        /* margin-top: 105px; */
+        padding-top: 105px;
+    }
     
     body {
         background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
@@ -12,14 +16,26 @@
         background-size: 100% 100%;
         /* animation: wave 10s ease infinite; */
         margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden; /* Ẩn cuộn của body */
+            display: flex;
+            flex-direction: column;
+        
     }
     main{
-        margin-top: 80px;
+        /* background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
+        /* s */
+        /* margin-top: 105px; */
+        flex: 1; /* Chiếm phần còn lại của chiều cao body */
+        /* padding-top: 60px; Để không gian cho header */
+        overflow-y: auto; /* Chỉ cuộn nội dung trong main */
     }
     
     footer{
         margin: 5px;
         padding: 0px;
+        padding: 20px;
         /* background-color: #ccc; */
     }
    
@@ -43,22 +59,23 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
+        margin: 5px;
         padding: 10px 20px;
         padding: 10px;
         /* background-color: aqua; */
-        background: #79ac78;
+        /* background: #79ac78; */
         /* background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
         background-size: 400% 400%;
         /* animation: wave 10s ease infinite; Thêm hiệu ứng gợn sóng */
         border-bottom: solid 1.5px rgb(255, 255, 255);
         font-size: 25px;
-        height: 70px;
+        height: 105px;
         z-index: 100;
         top: 0;
         left: 0;
         margin: 0;
-        padding: 0;
+        /* padding: 0; */
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
 
@@ -66,23 +83,33 @@
     }
     
     .menu-icon {
-        font-size: 30px;
+        font-size: 40px;
         cursor: pointer;
-        margin: 5px;
+        margin: 8px;
+    }
+    .account {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        width: 45px; /* Chiều rộng nút */
+        height: 45px; /* Chiều cao nút */
+        padding: 0; /* Xóa khoảng cách mặc định */
+        /* padding-top: 10px; */
+        align-items: flex-end;
     }
     
-   
-    /* .search-bar {
-        width: 60%;
-        height: 35px;
-        padding: 5px;
-        border-radius: 5px;
-        border: 1px solid #ccc; 
-    } */
+    .account-icon {
+        display: block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%; /* Nút hình tròn */
+        
+    }
+    
     .search-bar {
-        width: 70%;
+        width: 90%;
         height: 35px;
-        padding: 5px;
+        /* padding: 5px; */
         border-radius: 5px;
         padding-right: 40px; /* Chừa khoảng trống cho biểu tượng kính lúp */
         font-size: 16px;
@@ -93,6 +120,17 @@
         background-position: right 10px center; /* Vị trí bên phải, căn giữa theo chiều dọc */
         background-repeat: no-repeat;
         cursor: pointer; /* Chỉ tay khi rê chuột vào */
+        
+    }
+
+    .logo-container {
+        flex: 1; /* Chiếm hết phần còn lại của navbar */
+        display: flex;
+        flex-direction: column; /* Logo trên, search dưới */
+        align-items: center;
+        gap: 5px;
+        margin-left: 1px;
+        padding: 0;
     }
     
     .search-bar:focus {
@@ -112,12 +150,12 @@
     
     /* Ẩn menu theo mặc định */
     .nav-menu {
-        margin-top: 68px;
+        /* margin-top: 105px; */
         position: fixed;
         /* top: 70px; */
         left: -100%;
         width: 80%;
-        height: 100%;
+        height: 85%;
         background-color: rgba(0, 0, 0, 0.9);
         color: white;
         display: flex;

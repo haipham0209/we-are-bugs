@@ -1,14 +1,20 @@
+<script>
+    console.log(document.cookie);
+</script>
+<?php
+// Gọi file xác thực người dùng trước khi load nội dung trang
+include('./php/auth_check.php');
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./styles/addProduct.css">
     <link rel="stylesheet" href="../styles/All.css">
+    <link rel="stylesheet" href="./styles/addProduct.css">
+    
     <script src="https://unpkg.com/html5-qrcode"></script>
-    <!-- <script src="html5-qrcode.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/instascan/1.0.0/instascan.min.js"></script> -->
 </head>
 <body>
     <header>
@@ -17,7 +23,7 @@
     <main>
     <h3>商品追加</h3>
     <div class="addContainer">
-        <form class="proAddForm" action="" method="POST" enctype="multipart/form-data">
+        <form class="proAddForm" action="./php/addProductP.php" method="POST" enctype="multipart/form-data">
             <!-- Trường chọn ảnh -->
             <label for="productImage">商品画像:</label>
             <input type="file" id="productImage" name="productImage" accept="image/*" onchange="previewImage(event)">
@@ -27,12 +33,14 @@
             <!-- Category -->
             <label for="category">カテゴリー:</label>
             <div style="display: flex; align-items: center;">
+            <input type="text" id="categoryText" name="categoryText" placeholder="選択したカテゴリー" />
                 <select id="category" name="category" required onchange="updateCategoryText()">
-                    <option value="men">Men</option>
-                    <option value="women">Women</option>
-                    <option value="child">Child</option>
+                    <option value="1">WOMEN</option>
+                    <option value="2">WOMEN</option>
+                    <option value="3">CHILD</option>
+                    <option value="4">OTHE</option>
                 </select>
-                <input type="text" id="categoryText" name="categoryText" style="margin-left: 10px;" placeholder="選択したカテゴリー" />
+                
             </div>
             <br>
 
