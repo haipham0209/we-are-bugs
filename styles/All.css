@@ -161,7 +161,7 @@
         display: flex;
         flex-direction: column; 
         justify-content: flex-start;
-        transition: left 0.3s ease;
+        transition: left 0.7s ease;
         z-index: 1000;
         border-radius: 5px 15px 15px 0; /* Bo góc bên phải trên và dưới */
     }
@@ -246,5 +246,6 @@
     html {
         margin: 0;
         padding: 0;
+        touch-action: manipulation; /* Ngăn nhấp đúp để zoom */
       }
       
