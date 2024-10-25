@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WRB - My Page</title>
     <link rel="stylesheet" href="../styles/All.css">
-    <link rel="stylesheet" href="../styles/index.css">
     <link rel="stylesheet" href="../styles/myPage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
@@ -20,8 +19,7 @@
             <span class="menu-icon"></span>
             </button>
             <div class="logobar">
-                <!-- <img src="../images/wrb-logo.png" alt="Store Logo"> -->
-                <h2>WRB</h2> 
+                <img src="../images/wrb-logo.png" alt="Store Logo">
             </div>
             <button class="avatar-toggle">
                 <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User">
@@ -51,46 +49,7 @@
     </header>
 
     <main>
-        <div class="mypage-container">
-            <!-- Order History Section -->
-            <div class="order-history">
-                <h2>
-                    <img src="../images/time.png" alt="History Icon" class="icon"> 注文履歴
-                </h2>
-                <div class="order-items">
-                    <img src="../images/product/1.jpg" alt="Order Item">
-                </div>
-            </div>
-            <!-- Shopping Cart Section -->
-            <div class="cart">
-                <h2>
-                    <img src="../images/shopping.png" alt="Cart Icon" class="icon"> 買い物カゴ
-                </h2>
-                <div class="cart-items">
-                    <div class="cart-img">
-                        <img src="../images/no-image.png" alt="Cart Item">
-                    </div>
-                    <div class="cart-info">
-                        <div class="cart-details">
-                            <p>1アイテム</p>
-                            <p>1,500¥</p>
-                        </div>
-                        <button class="buy-button">ご購入</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Favorites Section -->
-            <div class="favorites">
-                <h2>
-                    <img src="../images/black-heart.png" alt="Favor Icon" class="icon"> お気に入りリスト
-                </h2>
-                <div class="favor-items">
-                    <img src="../images/no-image.png" alt="Favor Item">
-                    <img src="../images/no-image.png" alt="Favor Item">
-                    <img src="../images/no-image.png" alt="Favor Item">
-                </div>
-            </div>
-        </div>
+       
     </main>
     <footer>
        

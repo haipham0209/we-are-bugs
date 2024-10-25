@@ -78,21 +78,17 @@ $conn->close();
     <header>
         <!-- Navbar -->
         <div class="navbar">
-        <button class="menu-toggle" aria-label="Toggle navigation">
-            <span class="menu-icon"></span>
-        </button>
-
-        <div class="logo-container">
-            <h1 class="logo">WRB</h1>
-            <input type="text" class="search-bar" placeholder="Search...">
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                <span class="menu-icon"></span>
+            </button>
+            <div class="logo-container">
+                <h1 class="logo">WRB</h1>
+                <input type="text" class="search-bar" placeholder="Search...">
+            </div>
+            <button class="account-toggle">
+                <img class="avatar" src="./images/avataricon.jpg" alt="Account icon" class="account-icon">
+            </button>
         </div>
-        
-        <button class="account-toggle">
-            <img class="avatar" src="./images/avataricon.jpg" alt="Account icon" class="account-icon">
-        </button>
-        
-
-    </div>
 
         <nav class="nav-menu">
             <ul>
@@ -105,7 +101,6 @@ $conn->close();
             <li><a href="./html/myPage.php">マイページ</a></li>
             <li class="support-title">サポート</li>
             <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo $tel; ?>"><?php echo $tel; ?></a></li>
-
             <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a></li>
             <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a></li>
             </ul>
@@ -202,8 +197,6 @@ $conn->close();
                 <button class="show-more-btn" data-group="men">Show More</button>
             </div>
 
-            
-
             <!-- Nhóm Women -->
             <div class="group" id="women">
                 <h1 class="title">Women</h1>
@@ -220,7 +213,6 @@ $conn->close();
                         <img src="./images/facebook.png" alt="Yellow Skirt" />
                         <p class="rotated-text">Yellow Skirt<br>7500 ¥</p>
                     </div>
-
                 </div>
                 <button class="show-more-btn" data-group="women">Show More</button>
             </div>

@@ -5,38 +5,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WRB - Store Information</title>
-    <link rel="stylesheet" href="../styles/All.css">
+    <link rel="stylesheet" href="../styles/myPage.css">
     <link rel="stylesheet" href="../styles/storeInfor.css">
+    <link rel="stylesheet" href="../styles/All.css">
+    <link rel="stylesheet" href="../styles/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
 </head>
 <body>
-    <header>
+<header>
         <!-- Navbar -->
         <div class="navbar">
             <button class="menu-toggle" aria-label="Toggle navigation">
             <span class="menu-icon"></span>
             </button>
-            <input type="text" class="search-bar" placeholder="Search...">
-            <h1 class="logo">WRB</h1>
+            <div class="logobar">
+                <h2>WRB</h2>   
+            </div>
+            <button class="avatar-toggle">
+                <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User">
+            </button>
         </div>
-
-    <nav class="nav-menu">
-        <ul>
-        <li><h3><?php echo $sname; ?></h3></li>
-          <li><a href="./main.php?sname=<?php echo $_GET['sname']  ?>">ホームページ</a></li>
-          <li><a href="./html/product.php">商品</a></li>
-          <li><a href="./html/storeInfor.php">お店について</a></li>
-          <li><a href="#">会員登録</a></li>
-          <li><a href="#">ログイン</a></li>
-          <li class="support-title">サポート</li>
-          <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo $tel; ?>"><?php echo $tel; ?></a></li>
-
-          <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a></li>
-          <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a></li>
-         </ul>
-    </nav>
-       <div class="overlay"></div>
+        <nav class="nav-menu">
+            <ul>
+            <li><h3><?php echo $sname; ?></h3></li>
+            <li><a href="./main.php?sname=<?php echo $_GET['sname']  ?>">ホームページ</a></li>
+            <li><a href="./html/product.php">商品</a></li>
+            <li><a href="./html/storeInfor.php">お店について</a></li>
+            <li class="support-title">サポート</li>
+            <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo $tel; ?>"><?php echo $tel; ?></a></li>
+            <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a></li>
+            <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a></li>
+            </ul>
+        </nav>
+        <div class="overlay"></div>
+        <nav class="nav-myPage">
+            <ul>
+                <li><a href="#">登録</a></li>
+                <li><a href="#">ログイン</a></li>
+            </ul>
+        </nav>
+        <div class="overlay-avatar"></div>
     </header>
 
     <main>
@@ -44,7 +53,7 @@
         <div class="store-info">
             <!-- Logo Section -->
             <div class="logo">
-                <img src="../images/wrb-logo.png" alt="WRB Logo">
+                <img src="../images/wrb.png" alt="WRB Logo">
             </div>
              <!-- About Store Section -->
             <div class="about-store">
@@ -60,11 +69,8 @@
                 <h2>お客様の声</h2>
                 <p>「トレンドを押さえたセンスの良い商品がたくさんあって、お気に入りです！」</p>
                 <p>「スタッフが親切で、親身になってアドバイスしてくれるのが嬉しいです。」</p>
-            </div>
-           
+            </div>  
         </div>
-
-        
     </main>
     <footer>
         <!-- Social Media Section -->
@@ -77,5 +83,5 @@
 
 </body>
 <script src="../scripts/menu.js"></script>
-
+<script src="../scripts/mypage.js"></script>
 </html>

@@ -11,7 +11,7 @@
     }
     
     body {
-        background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
+        background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
         /* background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff); */
         background-size: 100% 100%;
         /* animation: wave 10s ease infinite; */
@@ -93,7 +93,7 @@
         width: 45px; /* Chiều rộng nút */
         height: 45px; /* Chiều cao nút */
         padding: 0; /* Xóa khoảng cách mặc định */
-        /* padding-top: 10px; */
+        padding-top: 10px;
         align-items: flex-end;
     }
     

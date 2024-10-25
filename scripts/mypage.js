@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const avaToggle = document.querySelector('.avatar-toggle');
     const navMypage = document.querySelector('.nav-myPage');
-    const overlay = document.querySelector('.overlay');
+    const overlayAva = document.querySelector('.overlay-avatar');
     const avatar = document.querySelector('.avatar');
 
    
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    overlay.addEventListener('click', function () {
+    overlayAva.addEventListener('click', function () {
         navMypage.classList.remove('open');
         avatar.classList.remove('open'); 
     });
