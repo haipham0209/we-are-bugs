@@ -18,8 +18,25 @@ document.addEventListener('DOMContentLoaded', function () {
         menuIcon.classList.remove('open'); // Đặt lại biểu tượng về ban đầu
     });
 });
+//nav-avatar
+document.addEventListener('DOMContentLoaded', function () {
+    const accToggle = document.querySelector('.account-toggle');
+    const navMypage = document.querySelector('.nav-myPage');
+    const overlay = document.querySelector('.overlay');
+    const avatar = document.querySelector('.avatar');
+
+   
+    accToggle.addEventListener('click', function () {
+        navMypage.classList.toggle('open');
+        avatar.classList.toggle('open'); 
+    });
 
 
+    overlay.addEventListener('click', function () {
+        navMypage.classList.remove('open');
+        avatar.classList.remove('open'); 
+    });
+});
 
 //showmore btn=======================================================================
 // Lấy tất cả các nút "Show More"

@@ -28,6 +28,85 @@
         /* Gạch chân */
     }
 
+      /* Ẩn  theo mặc định */
+.nav-myPage {
+    position: fixed;
+    right: -100%;
+    width: 50%;
+    height: 30%;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start;
+    transition: right 0.7s ease;
+    z-index: 1000;
+    border-radius: 15px 0 0 15px ; 
+}
+
+.nav-myPage.open {
+    right: 0;
+    margin-right: 5px;
+}
+
+.nav-myPage ul {
+    margin-top: 50px;
+    margin-left: 10px;
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.nav-myPage ul li {
+    margin: 30px 0;
+}
+
+.nav-myPage ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    margin-left: 15px;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0; /* Chạy từ 80% màn hình */
+    width: 20%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0); /* Trong suốt */
+    display: none; /* Mặc định ẩn */
+    z-index: 999; /* Trên nội dung khác, nhưng dưới menu */
+}
+
+/* Khi avatar mở thì overlay hiển thị */
+.nav-myPage.open + .overlay {
+    display: block;
+}
+
+/* =============================END nav avatar------------------------------ */
+    /* ---------------------------------nav button ------------------------------------- */
+    .account-toggle {
+        margin: auto;
+        justify-content: center; 
+        background: none;
+        border: none;
+        font-size: 24px; /* Adjust size as needed */
+        cursor: pointer;
+    }
+    
+    .avatar {
+        display: inline-block;
+    }
+    
+/* --------------------------------end nav button----------------------------------------- */
+
+
 
     /*================================= FILTERBUTTONS==============================================================*/
 

@@ -16,12 +16,11 @@
         background-size: 100% 100%;
         /* animation: wave 10s ease infinite; */
         margin: 0;
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            overflow: hidden; /* Ẩn cuộn của body */
-            display: flex;
-            flex-direction: column;
-        
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        overflow: hidden; /* Ẩn cuộn của body */
+        display: flex;
+        flex-direction: column;  
     }
     main{
         /* background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
@@ -87,7 +86,7 @@
         cursor: pointer;
         margin: 8px;
     }
-    .account {
+    .account-toggle {
         background-color: transparent;
         border: none;
         cursor: pointer;
@@ -98,7 +97,7 @@
         align-items: flex-end;
     }
     
-    .account-icon {
+    .account-toggle img {
         display: block;
         width: 40px;
         height: 40px;

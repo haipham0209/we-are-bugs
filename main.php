@@ -87,8 +87,8 @@ $conn->close();
             <input type="text" class="search-bar" placeholder="Search...">
         </div>
         
-        <button class="account" aria-label="Account button">
-            <img src="./images/avataricon.jpg" alt="Account icon" class="account-icon">
+        <button class="account-toggle">
+            <img class="avatar" src="./images/avataricon.jpg" alt="Account icon" class="account-icon">
         </button>
         
 
@@ -108,6 +108,12 @@ $conn->close();
 
             <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a></li>
             <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a></li>
+            </ul>
+        </nav>
+        <nav class="nav-myPage">
+            <ul>
+                <li><a href="#">登録</a></li>
+                <li><a href="#">ログイン</a></li>
             </ul>
         </nav>
         <div class="overlay"></div>
