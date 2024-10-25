@@ -10,7 +10,7 @@ include('./php/storeinfo.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>プロフィール</title>
-    <link rel="stylesheet" href="./styles/profile.css">
+     <link rel="stylesheet" href="./styles/profileEdit.css">
     <script src="./scripts/profile.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.7/lottie.min.js"></script>
 </head>
@@ -18,13 +18,22 @@ include('./php/storeinfo.php');
 <body>
     <div class="container">
         <!-- アイコン -->
-        <div class="avatar-container">
-            <img id="avatar-preview" class="avatar" src="./images/" alt="アイコン">
-            <label class="upload-button" for="avatar-input">
-                <img src="upload-icon.png" alt="上傳">
+        <div class="avatar">
+        <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="loadImage(event)">
+            <svg width="198" height="107" viewBox="0 0 198 107" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="99" cy="53.5" rx="99" ry="53.5" fill="#B0D9B1"/>
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="#333">ロゴ を選び</text>
+            </svg>
+            <label class="upload-button" for="fileInput">
+            <img src="upload-icon.png" alt="ロゴマーク">
+        </label>
+            <!-- <img id="avatar-preview" class="avatar" src="./images/" alt="アイコン"> -->
+            <!-- <label class="upload-button" for="avatar-input">
+                <img src="upload-icon.png" alt="ロゴマーク">
             </label>
-            <input type="file" id="avatar-input" accept="image/*">
+            <input type="file" id="avatar-input" accept="image/*"> -->
         </div>
+
         <!-- form^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
         <form class="edit-form" action="./php/storeProEditP.php" method="POST">
     <div class="form">
