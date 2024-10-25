@@ -199,8 +199,8 @@
     .overlay {
         position: fixed;
         top: 0;
-        left: 80%; /* Chạy từ 80% màn hình */
-        width: 20%;
+        left: 0; /* Chạy từ 80% màn hình */
+        width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0); /* Trong suốt */
         display: none; /* Mặc định ẩn */
