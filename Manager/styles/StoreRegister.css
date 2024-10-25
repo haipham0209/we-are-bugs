@@ -38,6 +38,8 @@
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        position: relative;
+        padding-bottom: 40px;
     }
 
     .logo h1 {
@@ -123,5 +125,29 @@
 
     .login-link a:hover {
         color: #0ee3bf;
+    }
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: left;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    footer a {
+        text-decoration: none;
+        color: black;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+    }
+
+    footer img {
+        margin-right: 10px;
+        width: 25px;
+        height: 25px;
     }
 }

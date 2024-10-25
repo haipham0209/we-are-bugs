@@ -32,6 +32,10 @@
         </div>
     </div>
     <script src="./scripts/inventory.js"></script>
-
 </body>
+<footer style="text-align: center">
+        <a href="#">
+            <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;">
+        </a>
+    </footer>
 </html>
