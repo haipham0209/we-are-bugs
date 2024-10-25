@@ -3,93 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotating Rectangles Carousel</title>
+  <title>Barcode Scanner with Quagga.js</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f0f0f0;
-    }
-
-    /* Div bao trùm giới hạn kích thước carousel */
-    .wrapper {
-      width: 300px;
-      height: 300px;
-      overflow: hidden; /* Ẩn phần tử ngoài khung */
-      position: relative;
-      border: 2px solid black;
-      border-radius: 50%; /* Tạo khung tròn */
-    }
-
-    /* Tất cả các phần tử xoay sẽ nằm trong vùng này */
-    .carousel {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      animation: rotate 10s linear infinite; /* Xoay toàn bộ carousel */
-    }
-
-    .rectangle {
-      position: absolute;
-      width: 60px;
-      height: 120px;
-      background-color: #4CAF50;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-weight: bold;
-      border-radius: 5px;
-      transform-origin: 50% 100%; /* Gốc xoay tại cạnh dưới */
-    }
-
-    @keyframes rotate {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
+    #camera {
+      border: 1px solid black; /* Optional: add a border for the video */
+      /* Removed display: none to show the video initially for debugging */
     }
   </style>
 </head>
-<body>
 
-  <div class="wrapper">
-    <div class="carousel" id="carousel">
-      <div class="rectangle">1</div>
-      <div class="rectangle">2</div>
-      <div class="rectangle">3</div>
-      <div class="rectangle">4</div>
-      <div class="rectangle">5</div>
-      <div class="rectangle">6</div>
-    </div>
-  </div>
+<body>
+  <h1>Quét mã Barcode</h1>
+
+  <button id="startButton">Bắt đầu quét</button> <!-- Button to start camera -->
+  <video id="camera" width="300" height="200" autoplay></video>
+  
+  <p>Mã đã quét: <span id="result"></span></p>
 
   <script>
-    const carousel = document.getElementById('carousel');
-    const rectangles = document.querySelectorAll('.rectangle');
-    const radius = 100; // Bán kính xoay của hình chữ nhật
+    const resultSpan = document.getElementById('result');
+    const cameraElement = document.getElementById('camera');
+    const startButton = document.getElementById('startButton');
 
-    rectangles.forEach((rect, index) => {
-      const angle = (index / rectangles.length) * 2 * Math.PI; // Tính góc cho từng hình chữ nhật
-      const x = radius * Math.cos(angle); // Tọa độ X
-      const y = radius * Math.sin(angle); // Tọa độ Y
+    // Function to start Quagga.js
+    function startScanner() {
+      // Check if cameraElement is visible
+      console.log("Starting scanner...");
+      cameraElement.style.display = "block"; // Show video
+      
+      Quagga.init({
+        inputStream: {
+          name: "Live",
+          type: "LiveStream",
+          target: cameraElement, // Attach video to this element
+          constraints: {
+            facingMode: "environment" // Use rear camera if available
+          },
+          area: { // Optional: define scanning area
+            top: "0%",    
+            right: "0%",  
+            left: "0%",   
+            bottom: "0%"  
+          },
+          willReadFrequently: true, // Improve performance for canvas reading
+        },
+        decoder: {
+          readers: ["code_128_reader", "ean_reader"], // Specify barcode types to scan
+        },
+      }, function (err) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log("Quagga initialized");
+        Quagga.start(); // Start scanning
+      });
 
-      // Đặt vị trí và xoay từng hình chữ nhật
-      rect.style.left = `${150 + x - rect.offsetWidth / 2}px`;
-      rect.style.top = `${150 + y - rect.offsetHeight}px`;
-      rect.style.transform = `rotate(${(angle * 180) / Math.PI + 90}deg)`;
+      // Listen for detected codes
+      Quagga.onDetected(function (data) {
+        const code = data.codeResult.code;
+        resultSpan.textContent = code; // Display scanned code
+        console.log("Barcode detected:", code);
+      });
+    }
+
+    // Assign click event to the button
+    startButton.addEventListener('click', function() {
+      startScanner();
     });
   </script>
-
 </body>
 </html>
