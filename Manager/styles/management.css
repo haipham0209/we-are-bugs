@@ -4,6 +4,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: relative;
 }
 
 /* 容器樣式 */
@@ -12,6 +13,7 @@ body {
     max-width: 400px;
     flex-direction: row-reverse;
     text-align: center;
+    padding-bottom: 40px;
 }
 
 /* 左侧菜單欄 */
@@ -170,6 +172,30 @@ body {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: left;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+footer a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+footer img {
+    margin-right: 10px;
+    width: 25px;
+    height: 25px;
 }
 
 /* Hiệu ứng hover */
