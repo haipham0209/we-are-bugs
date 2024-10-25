@@ -8,10 +8,104 @@
 
 
 .avatar {
+    margin:auto;
     margin-right: 10px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
-    justify-content: right;
+    justify-content: center; 
 }
+
+.mypage-container {
+    margin:auto;
+    justify-content: center; 
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.282);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Phần của từng mục (lịch sử, giỏ hàng, danh sách yêu thích) */
+.order-history, .cart, .favorites {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.order-history:last-child, .cart:last-child, .favorites:last-child {
+    border-bottom: none;
+}
+
+/* Tiêu đề của mỗi phần (có icon) */
+h2 {
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Hình ảnh sản phẩm */
+.order-items img, .cart-items img, .favor-items img {
+    width: 100px;   /* Chiều rộng cố định */
+    height: 150px;  /* Chiều cao cố định */
+    object-fit: cover; /* Giúp hình ảnh không bị méo, giữ nguyên tỉ lệ và cắt theo khung */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Cart Section */
+.cart-items {
+    display: flex;
+    flex-direction: column; /* Chuyển thành cột để ảnh ở trên */
+    margin-bottom: 10px;
+}
+
+/* Phần chi tiết và nút mua hàng */
+.cart-info {
+    display: flex;
+    justify-content: space-between;  /* Chi tiết bên trái, nút bên phải */
+    width: 100%;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.cart-details {
+    text-align: left;
+    font-size: 0.9em;
+    color: #555;
+    flex-grow: 1; /* Giúp phần chi tiết chiếm hết không gian còn lại */
+}
+
+.buy-button {
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.buy-button:hover {
+    background-color: #1a8531;
+}
+
+/* Favorites section (danh sách yêu thích) */
+.favor-items {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+

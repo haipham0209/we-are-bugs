@@ -21,7 +21,7 @@
             <div class="logobar">
                 <img src="../images/wrb-logo.png" alt="Store Logo">
             </div>
-            <img class="avatar" src="../images/avatar icon.jpg" alt="Avatar User">
+            <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User">
             
         </div>
 
@@ -31,8 +31,6 @@
           <li><a href="./main.php?sname=<?php echo $_GET['sname']  ?>">ホームページ</a></li>
           <li><a href="./html/product.php">商品</a></li>
           <li><a href="./html/storeInfor.php">お店について</a></li>
-          <li><a href="#">会員登録</a></li>
-          <li><a href="#">ログイン</a></li>
           <li class="support-title">サポート</li>
           <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo $tel; ?>"><?php echo $tel; ?></a></li>
           <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a></li>
@@ -43,8 +41,46 @@
     </header>
 
     <main>
-       
-        
+        <div class="mypage-container">
+            <!-- Order History Section -->
+            <div class="order-history">
+                <h2>
+                    <img src="../images/time.png" alt="History Icon" class="icon"> 注文履歴
+                </h2>
+                <div class="order-items">
+                    <img src="../images/product/1.jpg" alt="Order Item">
+                </div>
+            </div>
+            <!-- Shopping Cart Section -->
+            <div class="cart">
+                <h2>
+                    <img src="../images/shopping.png" alt="Cart Icon" class="icon"> 買い物カゴ
+                </h2>
+                <div class="cart-items">
+                    <div class="cart-img">
+                        <img src="../images/no-image.png" alt="Cart Item">
+                    </div>
+                    <div class="cart-info">
+                        <div class="cart-details">
+                            <p>1アイテム</p>
+                            <p>1,500¥</p>
+                        </div>
+                        <button class="buy-button">ご購入</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Favorites Section -->
+            <div class="favorites">
+                <h2>
+                    <img src="../images/black-heart.png" alt="Favor Icon" class="icon"> お気に入りリスト
+                </h2>
+                <div class="favor-items">
+                    <img src="../images/no-image.png" alt="Favor Item">
+                    <img src="../images/no-image.png" alt="Favor Item">
+                    <img src="../images/no-image.png" alt="Favor Item">
+                </div>
+            </div>
+        </div>
     </main>
     <footer>
        
