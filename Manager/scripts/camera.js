@@ -1,51 +1,51 @@
+let scannerRunning = false; // Trạng thái của camera
 
-    const startScanButton = document.getElementById('start-scan');
-    const barcodeInput = document.getElementById('barcode');
-    const scannerDiv = document.getElementById('barcode-scanner');
-    let html5QrcodeScanner;
+// Khởi động quét mã
+function startScanner() {
+    if (scannerRunning) return; // Nếu đã chạy thì không khởi động lại
 
-    // Bắt đầu hoặc dừng quét camera
-    startScanButton.addEventListener('click', () => {
-        if (scannerDiv.style.display === 'none') {
-            scannerDiv.style.display = 'block';
-            startCamera();
-            startScanButton.textContent = '停止';  // Nút đổi thành "Dừng"
-        } else {
-            stopCamera();
-            startScanButton.textContent = 'カメラでスキャン';  // Nút đổi thành "Bật Camera"
+    scannerRunning = true;
+    const cameraDiv = document.getElementById('camera');
+    cameraDiv.style.display = 'block'; // Hiện camera
+
+    Quagga.init(
+        {
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: cameraDiv,
+            },
+            decoder: {
+                readers: ["ean_reader", "code_128_reader", "upc_reader"], // Các loại barcode
+            },
+        },
+        (err) => {
+            if (err) {
+                console.error(err);
+                alert("カメラを起動できませんでした。");
+                stopScanner();
+                return;
+            }
+            Quagga.start();
         }
+    );
+
+    // Khi phát hiện mã, tắt camera và điền vào ô barcode
+    Quagga.onDetected((data) => {
+        const code = data.codeResult.code;
+        document.getElementById('barcode').value = code; // Điền mã vào ô input
+        stopScanner();
     });
-
-    // Khởi động camera và quét mã barcode
-    function startCamera() {
-        html5QrcodeScanner = new Html5QrcodeScanner(
-            "barcode-scanner", { fps: 5, qrbox: 250 });
-
-        html5QrcodeScanner.render(onScanSuccess, onScanError);
-    }
-
-    // Xử lý khi quét thành công
-    function onScanSuccess(decodedText) {
-        barcodeInput.value = decodedText;  // Gán mã barcode vào input
-        stopCamera();  // Tự động dừng sau khi quét thành công
-        startScanButton.textContent = 'カメラでスキャン';
-    }
-
-    // Xử lý lỗi trong quá trình quét (tùy chọn)
-    let errorCount = 0;  // Đếm số lần lỗi
-
-function onScanError(error) {
-    errorCount++;
-    if (errorCount % 5 === 0) {  // Chỉ log lỗi sau mỗi 5 lần thất bại
-        console.warn(`Scan error: ${error}`);
-    }
 }
 
+// Dừng quét mã và tắt camera
+function stopScanner() {
+    if (!scannerRunning) return; // Nếu camera chưa bật thì bỏ qua
 
-    // Dừng camera
-    function stopCamera() {
-        if (html5QrcodeScanner) {
-            html5QrcodeScanner.clear().catch(error => console.error('Stop failed.', error));
-        }
-        scannerDiv.style.display = 'none';
-    }
+    Quagga.stop();
+    document.getElementById('camera').style.display = 'none'; // Ẩn camera
+    scannerRunning = false;
+}
+
+// Gắn sự kiện cho nút bắt đầu quét
+document.getElementById('start-scan').addEventListener('click', startScanner);

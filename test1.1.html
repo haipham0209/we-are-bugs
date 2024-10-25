@@ -1,95 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rectangles Standing on Circle</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 200vh;
-      background-color: #f0f0f0;
-      overflow: hidden;
-    }
-
-    .circle-container {
-      position: relative;
-      width: 100%;
-      height:0px;
-      border-radius: 50%; /* Tạo đường tròn */
-      border: 2px dashed black;
-    }
-
-    .rectangle {
-      position: absolute;
-      width: 130px;
-      height: 200px;
-      background-color: #4CAF50;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-weight: bold;
-      border-radius: 5px;
-      transform-origin: 50% 100%; /* Gốc xoay tại cạnh dưới */
-    }
-
-  </style>
+    <meta charset="utf-8"/>
+    <title>QuaggaJS Barcode Scanner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #camera {
+            width: 100%;
+            max-width: 640px;
+            border: 1px solid #ccc; /* Thêm đường viền cho camera */
+            border-radius: 5px; /* Bo góc cho camera */
+            overflow: hidden; /* Ẩn phần ngoài camera */
+        }
+        video {
+            width: 100%;
+            height: auto; /* Đảm bảo video có chiều cao tự động */
+        }
+        h1 {
+            margin: 20px 0;
+            color: #333;
+        }
+        #result {
+            margin-top: 10px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
 </head>
+
 <body>
+    <h1>Quét mã Barcode</h1>
+    <div id="camera"></div>
+    <p id="result"></p> <!-- Khu vực hiển thị mã đã quét -->
 
-    <div class="circle-container" id="circle-container">
-        <div class="rectangle">1</div>
-        <div class="rectangle">2</div>
-        <div class="rectangle">3</div>
-        <div class="rectangle">4</div>
-        <div class="rectangle">5</div>
+    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
+    <script>
+        const quaggaConf = {
+            inputStream: {
+                target: document.querySelector("#camera"),
+                type: "LiveStream",
+                constraints: {
+                    width: { min: 640 },
+                    height: { min: 480 },
+                    facingMode: "environment",
+                    aspectRatio: { min: 1, max: 2 }
+                }
+            },
+            decoder: {
+                readers: ['code_128_reader', 'ean_reader'] // Thêm nhiều loại mã nếu cần
+            },
+        };
 
-        <div class="rectangle">6</div>
-        <div class="rectangle">6</div>
-        <div class="rectangle">6</div>
-        <div class="rectangle">1</div>
-        <div class="rectangle">2</div>
+        Quagga.init(quaggaConf, function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("Quagga initialized successfully!");
+            Quagga.start();
+        });
 
-        <div class="rectangle">3</div>
-        <div class="rectangle">4</div>
-        <div class="rectangle">2</div>
-        <div class="rectangle">3</div>
-        <div class="rectangle">4</div>
-        
-        <div class="rectangle">2</div>
-        <div class="rectangle">2</div>
-        <div class="rectangle">3</div>
-        <div class="rectangle">4</div>
-        <div class="rectangle">2</div>
-      </div>
-
-
-  <script>
-    // const container = document.getElementById('circle-container');
-    const rectangles = document.querySelectorAll('.rectangle');
-    const radius = 550; // Bán kính đường tròn
-
-    rectangles.forEach((rect, index) => {
-      const angle = (index / rectangles.length) * 2 * Math.PI; // Góc cho từng hình chữ nhật
-      const x = radius * Math.cos(angle); // Tọa độ X trên chu vi
-      const y = radius * Math.sin(angle); // Tọa độ Y trên chu vi
-
-      // Đặt vị trí sao cho cạnh dưới (cd) của hình tiếp xúc với chu vi
-      rect.style.left = `${200 + x - rect.offsetWidth / 2}px`;
-      rect.style.top = `${200 + y - rect.offsetHeight}px`;
-
-      // Xoay hình chữ nhật sao cho cạnh dưới tiếp xúc chính xác
-      rect.style.transform = `rotate(${(angle * 180) / Math.PI + 90}deg)`;
-    });
-  </script>
+        Quagga.onDetected(function (result) {
+            const code = result.codeResult.code;
+            document.getElementById("result").textContent = "Mã đã quét: " + code; // Hiển thị mã quét
+            alert("Detected barcode: " + code); // Thông báo khi phát hiện mã
+        });
+    </script>
 </body>
 </html>
