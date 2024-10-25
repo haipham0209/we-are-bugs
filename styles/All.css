@@ -7,7 +7,8 @@
     }
     header{
         /* margin-top: 105px; */
-        padding-top: 105px;
+        /* padding-top: 105px; */
+        
     }
     
     body {
@@ -30,15 +31,22 @@
         flex: 1; /* Chiếm phần còn lại của chiều cao body */
         /* padding-top: 60px; Để không gian cho header */
         overflow-y: auto; /* Chỉ cuộn nội dung trong main */
+        margin-top: 105px; 
+        min-height: calc(100vh - 105px);  
+        overflow-y: auto;  
+    }
+    footer{
+        /* margin: 5px;
+        padding: 0px;
+        padding: 20px; */
+        /* background-color: #ccc; */
+        position: relative; 
+        margin-top: auto;
+        /* height: 200px;
+        margin-top: 200px;
+        padding: 200px; */
     }
     
-    footer{
-        margin: 5px;
-        padding: 0px;
-        padding: 20px;
-        /* background-color: #ccc; */
-    }
-   
     /* @keyframes wave {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }

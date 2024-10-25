@@ -213,14 +213,7 @@ $conn->close();
                         <img src="./images/facebook.png" alt="Yellow Skirt" />
                         <p class="rotated-text">Yellow Skirt<br>7500 ¥</p>
                     </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Coat" />
-                        <p class="rotated-text">Coat<br>10000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Scarf" />
-                        <p class="rotated-text">Scarf<br>3000 ¥</p>
-                    </div>
+
                 </div>
                 <button class="show-more-btn" data-group="women">Show More</button>
             </div>
@@ -236,6 +229,10 @@ $conn->close();
                     <div class="product-content">
                         <img src="./images/facebook.png" alt="Shorts" />
                         <p class="rotated-text">Shorts<br>3000 ¥</p>
+                    </div>
+                    <div class="product-content">
+                        <img src="./images/facebook.png" alt="Cap" />
+                        <p class="rotated-text">Cap<br>2000 ¥</p>
                     </div>
                     <div class="product-content">
                         <img src="./images/facebook.png" alt="Cap" />
