@@ -7,7 +7,7 @@
     }
     header{
         /* margin-top: 105px; */
-        /* padding-top: 105px; */
+        padding-top: 105px;
     }
     
     body {
@@ -26,14 +26,19 @@
     main{
         /* background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
         /* s */
-        margin-top: 1px;
-        /* padding-top: 105px; */
-        /* height: 75vh; */
+        /* margin-top: 105px; */
         flex: 1; /* Chiếm phần còn lại của chiều cao body */
         /* padding-top: 60px; Để không gian cho header */
         overflow-y: auto; /* Chỉ cuộn nội dung trong main */
     }
-
+    
+    footer{
+        margin: 5px;
+        padding: 0px;
+        padding: 20px;
+        /* background-color: #ccc; */
+    }
+   
     /* @keyframes wave {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
@@ -50,7 +55,7 @@
     
     /* Navbar */
     .navbar {
-        /* position: fixed; */
+        position: fixed;
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -145,12 +150,12 @@
     
     /* Ẩn menu theo mặc định */
     .nav-menu {
-        margin-top: 105px;
+        /* margin-top: 105px; */
         position: fixed;
         /* top: 70px; */
-        /* left: -100%; */
-        width: 100%;
-        height: 100%;
+        left: -100%;
+        width: 80%;
+        height: 85%;
         background-color: rgba(0, 0, 0, 0.9);
         color: white;
         display: flex;
@@ -159,20 +164,12 @@
         transition: left 0.3s ease;
         z-index: 1000;
         border-radius: 5px 15px 15px 0; /* Bo góc bên phải trên và dưới */
-        display: none;
-        opacity: 0; /* Ẩn menu */
-        transition: opacity 1s ease, transform 1s ease; /* Hiệu ứng chuyển động */
-        transform: translateY(-20px); /* Đẩy menu lên một chút */
-        z-index: 1000;
-        border-radius: 5px 15px 15px 0; /* Bo góc bên phải trên và dưới */
     }
     
     /* Khi menu được mở */
     .nav-menu.open {
-        /* transition: opacity 1s ease, transform 1s ease; Hiệu ứng chuyển động */
-        opacity: 1; /* Hiện menu */
-        transform: translateY(0); /* Trở về vị trí ban đầu */
-        display: block;
+        left: 0;
+        margin-left: 0;
     }
     
     /* Danh sách menu */
@@ -200,32 +197,21 @@
         display: none;
     }
     
-/* Overlay */
-.overlay {
-    display: none; /* Ẩn overlay mặc định */
-    position: fixed; /* Để overlay phủ lên toàn bộ màn hình */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: transparent; /* Màu nền mờ cho overlay */
-    z-index: 999; /* Đảm bảo overlay ở trên cùng */
-    opacity: 0; /* Ẩn overlay */
-    visibility: hidden; /* Ẩn overlay */
-    transition: opacity 0.5s ease, visibility 0.5s ease; /* Hiệu ứng chuyển động cho overlay */
-}
-
-/* Khi menu mở thì overlay hiển thị */
-.overlay.active {
-    display: block; /* Hiện overlay */
-    opacity: 1; /* Hiện overlay */
-    visibility: visible; /* Hiện overlay */
-}
-
-
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 80%; /* Chạy từ 80% màn hình */
+        width: 20%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0); /* Trong suốt */
+        display: none; /* Mặc định ẩn */
+        z-index: 999; /* Trên nội dung khác, nhưng dưới menu */
+    }
     
     /* Khi menu mở thì overlay hiển thị */
-
+    .nav-menu.open + .overlay {
+        display: block;
+    }
     .support-title {
         border-bottom: 1px solid white; /* Gạch chân */
     }
@@ -254,30 +240,7 @@
             content: '☰';
         }
         /* --------------------------------end nav button----------------------------------------- */
-    /* Ẩn menu theo mặc định */
-.nav-menu {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    /* background-color: rgba(0, 0, 0, 0.9); */
-    background-color: black;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    transition: opacity 0.7s ease, visibility 0.7s ease; /* Hiệu ứng chuyển động cho opacity và visibility */
-    z-index: 1000;
-    border-radius: 5px 15px 15px 0; /* Bo góc bên phải trên và dưới */
-    opacity: 0; /* Ẩn menu */
-    visibility: hidden; /* Ẩn menu */
-}
-
-/* Khi menu được mở */
-.nav-menu.open {
-    opacity: 1; /* Hiện menu */
-    visibility: visible; /* Hiện menu */
-}
-
+    
     }
     /* Reset margin/padding */
     html {
