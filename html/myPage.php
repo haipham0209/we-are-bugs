@@ -21,8 +21,9 @@
             <div class="logobar">
                 <img src="../images/wrb-logo.png" alt="Store Logo">
             </div>
-            <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User">
-            
+            <button class="avatar-toggle">
+                <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User">
+            </button>
         </div>
 
     <nav class="nav-menu">
@@ -36,6 +37,12 @@
           <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a></li>
           <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a></li>
          </ul>
+    </nav>
+    <nav class="nav-myPage">
+        <ul>
+            <li><a href="#">登録</a></li>
+            <li><a href="#">ログイン</a></li>
+        </ul>
     </nav>
        <div class="overlay"></div>
     </header>
@@ -88,5 +95,5 @@
 
 </body>
 <script src="../scripts/menu.js"></script>
-
+<script src="../scripts/mypage.js"></script>
 </html>
