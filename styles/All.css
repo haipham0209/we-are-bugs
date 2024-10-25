@@ -23,13 +23,6 @@
             flex-direction: column;
         
     }
-    body {
-        margin-top: env(safe-area-inset-top, 10px);
-        margin-left: env(safe-area-inset-left, 0px);
-        margin-right: env(safe-area-inset-right, 0px);
-        margin-bottom: env(safe-area-inset-bottom, 0px);
-    }
-    
     main{
         /* background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
         /* s */
@@ -253,5 +246,6 @@
     html {
         margin: 0;
         padding: 0;
+        touch-action: manipulation; /* Ngăn nhấp đúp để zoom */
       }
       
