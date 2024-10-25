@@ -46,22 +46,57 @@ showMoreBtns.forEach(button => {
 
 //filter button===========================================================================
     
-    const filterButtons = document.querySelectorAll('.filter-button');
+const filterButtons = document.querySelectorAll('.filter-button');
+const groups = document.querySelectorAll('.group');
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.getAttribute('data-target');
-            const targetSection = document.querySelector(targetId);
+// Hàm kiểm tra và tự động kích hoạt 'All' nếu không có nút nào active
+function checkAndActivateAll() {
+    const hasActive = Array.from(filterButtons).some(
+        btn => btn.classList.contains('active') && btn.getAttribute('data-target') !== 'all'
+    );
 
-            if (targetSection) {
-                // Kéo đến vị trí của phần tử mục tiêu
-                targetSection.scrollIntoView({
-                    behavior: 'smooth', // hiệu ứng cuộn mượt
-                    block: 'start' // cuộn đến đầu phần tử
+    if (!hasActive) {
+        const allButton = document.querySelector('[data-target="all"]');
+        allButton.classList.add('active');
+        groups.forEach(group => group.style.display = 'block');
+    }
+}
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const targetGroup = button.getAttribute('data-target');
+
+        if (targetGroup === 'all') {
+            // Bỏ 'active' khỏi tất cả và kích hoạt lại 'All'
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            groups.forEach(group => group.style.display = 'block');
+        } else {
+            // Bỏ 'active' khỏi 'All' và toggle cho nút bấm hiện tại
+            document.querySelector('[data-target="all"]').classList.remove('active');
+            button.classList.toggle('active');
+
+            // Ẩn tất cả nhóm trước khi hiển thị những nhóm active
+            groups.forEach(group => group.style.display = 'none');
+
+            const activeButtons = Array.from(filterButtons).filter(btn =>
+                btn.classList.contains('active')
+            );
+
+            if (activeButtons.length > 0) {
+                activeButtons.forEach(btn => {
+                    const targetId = btn.getAttribute('data-target');
+                    document.getElementById(targetId).style.display = 'block';
                 });
             }
-        });
+
+            // Kiểm tra nếu không còn nút nào active, kích hoạt 'All'
+            checkAndActivateAll();
+        }
     });
+});
+
+
 
     //filter button===========================================================================
 
