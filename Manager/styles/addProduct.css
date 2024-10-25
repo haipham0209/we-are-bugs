@@ -31,7 +31,9 @@ label {
     margin-top: 3x;
     display: block;
 }
-
+main{
+    overflow-y: auto; /* Chỉ cuộn nội dung trong main */
+}
 
 input[type="text"],
 input[type="number"],
