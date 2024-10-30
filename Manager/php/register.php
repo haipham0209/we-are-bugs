@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $verify_link = "https://click.ecc.ac.jp/ecc/se2a_24_bugs/we%20are/Manager/php/account_verify.php?token=" . urlencode($token);
             $mail->isHTML(true);
-            $mail->Subject = 'Xác thực tài khoản của bạn';
+            $mail->Subject = 'アカウント作成';
             $mail->Body = "Chào $username,<br><br>Vui lòng bấm vào <a href='$verify_link'>liên kết này</a> để kích hoạt tài khoản.";
 
             $mail->send();
