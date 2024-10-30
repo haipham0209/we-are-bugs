@@ -36,18 +36,49 @@ include('./php/storeinfo.php');
 
         <!-- form^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
         <form class="edit-form" action="./php/storeProEditP.php" method="POST">
-    <div class="form">
-    <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
-    <label for="shop-name">店名</label>
-<input type="text" id="shop-name" name="sname" value="<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>" required>
-
-
-        <label for="address">住所</label>
-        <input type="text" id="address" name="address"value="<?php echo isset($_SESSION['address']) ? htmlspecialchars($_SESSION['address']) : ''; ?>" required>
-
-        <label for="phone">電話</label>
-        <input type="text" id="phone" name="phone" value="<?php echo isset($_SESSION['tel']) ? htmlspecialchars($_SESSION['tel']) : ''; ?>" required >
+<div class="form">
+        <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
+    <div class="form-row">
+        <label for="shop-name">店名</label>
+        <input type="text" id="shop-name" name="sname" value="<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>"<?php echo isset($_SESSION['sname']) && !empty($_SESSION['sname']) ? 'readonly' : ''; ?>  required>
+        <img src=""class="icon">
     </div>
+    <div class="form-row">
+        <label for="address">住所</label>
+                <input type="text" id="address" name="address"value="<?php echo isset($_SESSION['address']) ? htmlspecialchars($_SESSION['address']) : ''; ?>" readonly required>
+                <img src="./images/pen.png" alt="編集" class="icon" onclick="toggleEdit('address')">
+            
+        </div>
+    <div class="form-row">
+        <label for="phone">電話</label>
+        <input type="text" id="phone" name="phone" value="<?php echo isset($_SESSION['tel']) ? htmlspecialchars($_SESSION['tel']) : ''; ?>" readonly required >
+        <img src="./images/pen.png" alt="編集" class="icon" onclick="toggleEdit('phone')">
+    </div>
+    <!-- Link to open the dialog -->
+<div>
+    <span class="edit-password-link" onclick="openDialog()">パスワードを編集</span>
+</div>
+    <!-- Password Change Modal -->
+<div id="passwordDialog" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeDialog()">&times;</span>
+        <h2>パスワードを変更</h2>
+        <form action="./php/changePassword.php" method="POST">
+            <div>現在のパスワード</div>
+            <input type="password" id="old-password" name="old_password" required>
+
+            <div>新しいパスワード</div>
+            <input type="password" id="new-password" name="new_password" required>
+
+            <div>新しいパスワード（確認）</div>
+            <input type="password" id="confirm-password" name="confirm_password" required>
+
+            <button type="submit" class="confirm-btn">確認</button>
+        </form>
+    </div>
+</div>
+</div>
+
     
     <div class="save">
         <button type="submit" class="save-button">
@@ -58,6 +89,8 @@ include('./php/storeinfo.php');
     <a href="../main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>" target="_blank" rel="noopener noreferrer">
         ストアのリンクアドレス
     </a>
+    <!-- Copy Icon -->
+    <img src="./images/copy.png" alt="Copy Link" class="copy-icon" onclick="copyLink()" style="cursor: pointer; width: 20px; height: 20px; margin-left: 8px;">
 </div>
 
 </form>
@@ -99,7 +132,7 @@ setTimeout(() => {
 </body>
 <footer style="text-align: center">
         <a href="#">
-            <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;">
+            <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;" onclick="location.href='main.php'">
         </a>
     </footer>
 

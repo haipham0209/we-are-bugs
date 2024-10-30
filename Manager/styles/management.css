@@ -1,10 +1,14 @@
 /* 全局样式 */
+*{
+    outline: none;
+}
 body {
     font-family: 'Arial', sans-serif;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     position: relative;
+    outline: none;
 }
 
 /* 容器樣式 */
@@ -14,6 +18,8 @@ body {
     flex-direction: row-reverse;
     text-align: center;
     padding-bottom: 40px;
+    border: none;
+    outline: none;
 }
 
 /* 左侧菜單欄 */
