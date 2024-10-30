@@ -35,8 +35,8 @@ include('./php/auth_check.php');
                 <img src="./images/sale-icon.png" alt="割引" class="icon">
                 <span>割引</span>
             </button>
-            <button class="menu-button">
-                <img src="./images/stock-icon.png" alt="在庫" class="icon">
+            <button class="menu-button" onclick="location.href='inventory.php'">
+                <img src="./images/stock-icon.png" alt="在庫" class="icon"  >
                 <span>在庫</span>
             </button>
             <button class="menu-button">
@@ -71,7 +71,7 @@ include('./php/auth_check.php');
                 <span id="profit">_____________</span> ¥
             </div>
         </div>
-        <div class="logout-container">
+        <div class="logout-container" onclick="location.href='StoreLogin.php'">
         <a href="./php/log_out.php" class="logout-button">Log Out</a>
     </div>
     </div>
@@ -79,7 +79,7 @@ include('./php/auth_check.php');
 </body>
 <footer style="text-align: center">
         <a href="#">
-            <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;">
+            <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;" onclick="location.href='StoreLogin.php'">
         </a>
 </footer>
 

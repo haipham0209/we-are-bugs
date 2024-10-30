@@ -45,7 +45,6 @@
                     <label for="sname"></label>
                     <p>店名</p>
                     <input type="text" id="sname" name="sname" placeholder="店名を入力" required value="<?= isset($_GET['sname']) ? htmlspecialchars($_GET['sname']) : '' ?>">
-
                     <?php if (isset($_GET['error']) && $_GET['error'] == 'email_exists'): ?>
                         <span style="color: red;">既に登録しているメールです！</span>
                     <?php endif; ?>
@@ -55,6 +54,10 @@
 
                     <?php if (isset($_GET['error']) && $_GET['error'] == 'password_too_short'): ?>
                         <span style="color: red;">パスワードは6文字以上でなければなりません！</span>
+                    <?php endif; ?>
+
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'password_short'): ?>
+                        <span style="color: red;">パスワード6文字以上入力ください</span>
                     <?php endif; ?>
                     <label for="password"></label>
                     <p>パスワード</p>

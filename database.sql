@@ -45,12 +45,18 @@ CREATE TABLE product (
     costPrice DECIMAL(10, 2) NOT NULL,
     description TEXT,
     stock_quantity INT NOT NULL,
-    barcode VARCHAR(13) NOT NULL,
-    productImage VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (userid, productid),
-    FOREIGN KEY (userid) REFERENCES user(userid) ON DELETE CASCADE,
-    FOREIGN KEY (category_id, userid) REFERENCES category(category_id, userid)
+    barcode VARCHAR(13) UNIQUE NOT NULL,
+    FOREIGN KEY (storeid) REFERENCES store(storeid),
+    FOREIGN KEY (category_id) REFERENCES category(category_id)
 );
 
 
+CREATE TABLE category (
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    cname VARCHAR(100) NOT NULL COLLATE utf8mb4_0900_ai_ci
+);
+
+
+
+
+GRANT ALL PRIVILEGES ON wearebugs.* TO 'dbuser'@'localhost';
