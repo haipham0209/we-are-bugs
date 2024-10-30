@@ -92,7 +92,7 @@ if (isset($_COOKIE['loggedin'])) {
                 <p>Don’t have an account yet? <a href="./StoreRegister.php">Signup</a></p>
             </div>
 
-            <a href="#">パスワードを忘れた場合</a>
+            <a href="./ForgotPassword.php">パスワードを忘れた場合</a>
         </div>
     </div>
 </body>
