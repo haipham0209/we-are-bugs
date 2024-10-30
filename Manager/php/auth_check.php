@@ -2,7 +2,7 @@
 session_start();
 
 // Thông tin kết nối cơ sở dữ liệu
-include('./db_connect.php');
+include('db_connect.php');
 
 // Tạo kết nối
 $conn = new mysqli($servername, $username, $password, $dbname);

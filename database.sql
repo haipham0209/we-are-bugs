@@ -9,6 +9,7 @@ CREATE TABLE user (
     mail VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL COLLATE utf8mb4_0900_ai_ci,
     token VARCHAR(255),
+    status ENUM('pending', 'active') NOT NULL DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -51,10 +52,12 @@ CREATE TABLE product (
 );
 
 
-CREATE TABLE category (
-    category_id INT PRIMARY KEY AUTO_INCREMENT,
-    cname VARCHAR(100) NOT NULL COLLATE utf8mb4_0900_ai_ci
-);
+INSERT INTO user (username, mail, password, token, status) 
+VALUES 
+('hai', 'ngochai@example.com', '$2y$10$8Xj..zBCFY87Dl1yrBqxdepSMjaIBUVleEfnD8sfyDKjqRYmyOyb6', 'token123', 'active'),
+('lan', 'lan@example2.com', '$2y$10$8Xj..zBCFY87Dl1yrBqxdepSMjaIBUVleEfnD8sfyDKjqRYmyOyb6', 'token123', 'active'),
+
+
 
 
 
