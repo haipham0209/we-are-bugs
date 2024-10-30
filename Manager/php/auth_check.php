@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 // Thông tin kết nối cơ sở dữ liệu
 include('db_connect.php');

@@ -1,6 +1,6 @@
-drop database wearebugs;
-create database wearebugs;
-use wearebugs
+DROP DATABASE IF EXISTS wearebugs; -- Xóa cơ sở dữ liệu nếu đã tồn tại
+CREATE DATABASE wearebugs; -- Tạo cơ sở dữ liệu mới
+USE wearebugs; -- Sử dụng cơ sở dữ liệu vừa tạo
 
 -- Bảng user
 CREATE TABLE user (
@@ -13,19 +13,6 @@ CREATE TABLE user (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Bảng store
-CREATE TABLE store (
-    storeid INT AUTO_INCREMENT PRIMARY KEY,
-    userid INT NOT NULL,
-    sname VARCHAR(100) NOT NULL COLLATE utf8mb4_0900_ai_ci,
-    address VARCHAR(255), 
-    tel VARCHAR(20), 
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_user FOREIGN KEY (userid) REFERENCES user(userid) 
-    ON DELETE CASCADE 
-);
-
 -- Bảng category
 CREATE TABLE category (
     category_id INT NOT NULL, -- Bỏ AUTO_INCREMENT
@@ -36,30 +23,41 @@ CREATE TABLE category (
     CONSTRAINT unique_cname UNIQUE (cname, userid) -- Đảm bảo cname duy nhất theo userid
 );
 
+-- Bảng store
+CREATE TABLE store (
+    storeid INT AUTO_INCREMENT PRIMARY KEY,
+    userid INT NOT NULL,
+    sname VARCHAR(100) NOT NULL COLLATE utf8mb4_0900_ai_ci,
+    address VARCHAR(255),
+    tel VARCHAR(20),
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_user FOREIGN KEY (userid) REFERENCES user(userid) 
+    ON DELETE CASCADE 
+);
+
 -- Bảng product
 CREATE TABLE product (
-    productid INT NOT NULL,
+    productid INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- Thêm AUTO_INCREMENT
     userid INT NOT NULL,
     category_id INT NOT NULL,
+    storeid INT NOT NULL, -- Thêm trường storeid
     pname VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     costPrice DECIMAL(10, 2) NOT NULL,
     description TEXT,
     stock_quantity INT NOT NULL,
     barcode VARCHAR(13) UNIQUE NOT NULL,
-    FOREIGN KEY (storeid) REFERENCES store(storeid),
-    FOREIGN KEY (category_id) REFERENCES category(category_id)
+    FOREIGN KEY (userid) REFERENCES user(userid),
+    FOREIGN KEY (category_id) REFERENCES category(category_id),
+    FOREIGN KEY (storeid) REFERENCES store(storeid) -- Khóa ngoại cho storeid
 );
 
-
+-- Chèn dữ liệu vào bảng user
 INSERT INTO user (username, mail, password, token, status) 
 VALUES 
-('hai', 'ngochai@example.com', '$2y$10$8Xj..zBCFY87Dl1yrBqxdepSMjaIBUVleEfnD8sfyDKjqRYmyOyb6', 'token123', 'active'),
-('lan', 'lan@example2.com', '$2y$10$8Xj..zBCFY87Dl1yrBqxdepSMjaIBUVleEfnD8sfyDKjqRYmyOyb6', 'token123', 'active'),
+('wrb', 'wrb@example.com', '$2y$10$8Xj..zBCFY87Dl1yrBqxdepSMjaIBUVleEfnD8sfyDKjqRYmyOyb6', 'token123', 'active');
 
-
-
-
-
-
-GRANT ALL PRIVILEGES ON wearebugs.* TO 'dbuser'@'localhost';
+-- Chèn dữ liệu vào bảng store
+INSERT INTO store (userid, sname, address, tel, description)
+VALUES (1, 'WRB STORE', '123 Street ABC', '0123456789', 'AAAAAAA');
