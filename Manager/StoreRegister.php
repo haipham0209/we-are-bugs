@@ -56,6 +56,10 @@
                     <?php if (isset($_GET['error']) && $_GET['error'] == 'password_too_short'): ?>
                         <span style="color: red;">パスワードは6文字以上でなければなりません！</span>
                     <?php endif; ?>
+
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'password_short'): ?>
+                        <span style="color: red;">パスワード6文字以上入力ください</span>
+                    <?php endif; ?>
                     <label for="password"></label>
                     <p>パスワード</p>
                     <input type="password" id="password" name="password" placeholder="パスワードを入力" required>

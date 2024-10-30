@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $conn->real_escape_string($_POST['password']);
     $email = $conn->real_escape_string($_POST['email']);
     $sname = $conn->real_escape_string($_POST['sname']);
-
+    $confirm_password = $conn->real_escape_string($_POST['confirm_password']);
     // username 存在かどうか
     $check_sql = "SELECT * FROM user WHERE username = ?";
     $stmt = $conn->prepare($check_sql);
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result->num_rows > 0) {
         // 存在場合
-        header("Location: ../StoreRegister.php?error=username_exists&username=" . urlencode($username) . "&email=" . urlencode($email));
+        header("Location: ../StoreRegister.php?error=username_exists&username=" . urlencode($username). "&sname=" . urlencode($sname) . "&email=" . urlencode($email));
 
         exit();
     }
@@ -60,7 +60,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result->num_rows > 0) {
         // 存在場合
         // header("Location: ../StoreRegister.php?error=email_exists");
-        header("Location: ../StoreRegister.php?error=email_exists&username=" . urlencode($username) . "&email=" . urlencode($email));
+        header("Location: ../StoreRegister.php?error=email_exists&username=" . urlencode($username). "&sname=" . urlencode($sname) . "&email=" . urlencode($email));
+        exit();
+    }
+
+    //password 2 time checl
+    if (strlen($password) < 6) {
+        // header('Location: ?error=password_short');
+        header("Location: ../StoreRegister.php?error=password_short&username=" . urlencode($username) . "&sname=" . urlencode($sname). "&email=" . urlencode($email));
+        exit();
+    }
+
+    // Kiểm tra xem hai mật khẩu có khớp không
+    if ($password !== $confirm_password) {
+        // header('Location: ?error=password_mismatch');
+        header("Location: ../StoreRegister.php?error=password_mismatch&username=" . urlencode($username) . "&sname=" . urlencode($sname). "&email=" . urlencode($email));
         exit();
     }
 // ---------------------------------------- INSERT -----------------------------------------------------------
