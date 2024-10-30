@@ -26,7 +26,7 @@ if (isset($_GET['token'])) {
 
         if ($stmt->execute()) {
             echo "Tài khoản của bạn đã được kích hoạt thành công!";
-            header("Location: ../StoreLogin.php?success=activated");
+            // header("Location: ../StoreLogin.php?success=activated");
             exit();
         } else {
             echo "Lỗi khi kích hoạt tài khoản.";

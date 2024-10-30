@@ -35,6 +35,9 @@ if (isset($_COOKIE['loggedin'])) {
             <h2>ログイン</h2>
             <form class="login-form2" action="./php/StoreLoginP.php" method="POST">
                 <div class="login-info">
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'account_pending'): ?>
+                        <span style="color: red;">アカウント見つからない</span>
+                    <?php endif; ?>
                     <?php if (isset($_GET['error']) && $_GET['error'] == 'username_not_found'): ?>
                         <span style="color: red;">ユーザー名が存在しない！</span>
                     <?php endif; ?>
