@@ -25,14 +25,18 @@ if (isset($_GET['token'])) {
         $stmt->bind_param("s", $token);
 
         if ($stmt->execute()) {
-            echo "Tài khoản của bạn đã được kích hoạt thành công!";
+            // echo "Tài khoản của bạn đã được kích hoạt thành công!";
+            header("Location: ../success.html");
             // header("Location: ../StoreLogin.php?success=activated");
             exit();
         } else {
-            echo "Lỗi khi kích hoạt tài khoản.";
+            // echo "Lỗi khi kích hoạt tài khoản.";
+            header("Location: ../error.php?error=account_activate_false");
         }
     } else {
-        echo "Token không hợp lệ hoặc tài khoản đã được kích hoạt.";
+        
+        // echo "Token không hợp lệ hoặc tài khoản đã được kích hoạt.";
+        header("Location: ../error.php?error=invalid_token");
     }
 
     $stmt->close();
