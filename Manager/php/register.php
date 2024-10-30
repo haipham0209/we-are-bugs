@@ -77,12 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = '2230110@ecc.ac.jp';
-            $mail->Password = 'C@K7buiz5e'; // Mật khẩu ứng dụng
+            $mail->Username = 'wearewrb@gmail.com';
+            $mail->Password = 'prdgyjrdieqldvnt'; // Mật khẩu ứng dụng
             $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-            $mail->setFrom('your-email@gmail.com', 'Your Name');
+            $mail->setFrom('wearewrb@gmail.com', 'WRB');
             $mail->addAddress($email, $username);
 
             $verify_link = "https://click.ecc.ac.jp/ecc/se2a_24_bugs/we%20are/Manager/php/account_verify.php?token=" . urlencode($token);
