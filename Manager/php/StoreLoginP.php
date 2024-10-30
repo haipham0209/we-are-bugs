@@ -67,18 +67,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['storeid'] = $storeid; // Lưu storeid
         }    
             // session 開始
-            session_destroy();
+            // session_destroy();
             session_start();
-            setcookie('username', $username, time() + (864000 * 30), "/"); //30day
-            // setcookie('userid', $userid, time() + (864000 * 30), "/"); //30day
-            setcookie('token', $token, time() + (8640000 * 30), "/");
-            setcookie('loggedin', true, time() + (8640000 * 30), "/");
-//đã làm ở authcheck nên ko cần ở đaay
-            // $_SESSION['username'] = $username; // Lưu ID người dùng
-            // $_SESSION['userid'] = $userid; // Lưu ID người dùng
-            // $_SESSION['mail'] = $mail; // Lưu địa chỉ email
-            // $_SESSION['storeid'] = $storeid; // Lưu storeid
-            // $_SESSION['last_activity'] = time(); // Lưu thời gian hoạt động cuối cùng
+            // 「ログイン状態を保存する」チェックボックスがチェックされているか確認
+            if (isset($_POST['checkbox_remember_account'])) {
+                // 30日間の有効期限
+                $expire = time() + (86400 * 30);
+            } else {
+                // ブラウザを閉じたら無効
+                $expire = 0;
+            }
+
+            // Cookie を設定
+            setcookie('username', $username, $expire, "/");
+            setcookie('token', $token, $expire, "/");
+            setcookie('loggedin', true, $expire, "/");
+
             //page 移動
             header("Location: ../main.php");
             exit();
