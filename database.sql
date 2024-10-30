@@ -62,3 +62,8 @@ VALUES
 -- Chèn dữ liệu vào bảng store
 INSERT INTO store (userid, sname, address, tel, description)
 VALUES (1, 'WRB STORE', '123 Street ABC', '0123456789', 'AAAAAAA');
+
+UPDATE user 
+SET status = 'active' 
+WHERE username = 'hai';
+
