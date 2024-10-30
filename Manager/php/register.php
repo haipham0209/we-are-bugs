@@ -80,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // ---------------------------------------- INSERT -----------------------------------------------------------
         $sql = "INSERT INTO user (username, password, mail) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
+        $password = password_hash($password, PASSWORD_BCRYPT);
         $stmt->bind_param("sss", $username, $password, $email);
         if ($stmt->execute()) {
             // FLAG　保存する
