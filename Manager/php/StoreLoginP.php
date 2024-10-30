@@ -1,9 +1,6 @@
 <?php
 // Kết nối cơ sở dữ liệu
-$servername = "localhost";
-$username = "dbuser";
-$password = "ecc";
-$dbname = "wearebugs";
+include('./db_connect.php');
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
@@ -33,6 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stored_password = $user['password'];  // Mật khẩu đã băm
         $userid = $user["userid"];
         $mail = $user["mail"];
+        $status = $user["status"]; // Giả sử trạng thái lưu trong cột 'status'
+
+        // Kiểm tra trạng thái tài khoản
+        if ($status === 'pending') {
+            header("Location: ../StoreLogin.php?error=account_pending&username=" . urlencode($username));
+            exit();
+        }
 
         // Kiểm tra mật khẩu bằng password_verify
         if (password_verify($password, $stored_password)) {
