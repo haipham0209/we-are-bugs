@@ -1,7 +1,6 @@
-CREATE DATABASE wearebugs;
-GRANT ALL PRIVILEGES ON wearebugs.* TO 'dbuser'@'localhost';
-
-USE wearebugs;
+drop database wearebugs;
+create database wearebugs;
+use wearebugs
 
 -- Bảng user
 CREATE TABLE user (
@@ -28,25 +27,30 @@ CREATE TABLE store (
 
 -- Bảng category
 CREATE TABLE category (
-    category_id INT PRIMARY KEY AUTO_INCREMENT,
-    cname VARCHAR(100) NOT NULL COLLATE utf8mb4_0900_ai_ci
+    category_id INT NOT NULL, -- Bỏ AUTO_INCREMENT
+    userid INT NOT NULL,
+    cname VARCHAR(100) NOT NULL,
+    PRIMARY KEY (category_id, userid), -- Thay đổi ràng buộc PRIMARY KEY
+    FOREIGN KEY (userid) REFERENCES user(userid) ON DELETE CASCADE,
+    CONSTRAINT unique_cname UNIQUE (cname, userid) -- Đảm bảo cname duy nhất theo userid
 );
 
 -- Bảng product
 CREATE TABLE product (
-    productid INT PRIMARY KEY AUTO_INCREMENT,
-    storeid INT,
-    category_id INT,
-    pname VARCHAR(255) NOT NULL COLLATE utf8mb4_0900_ai_ci,
+    productid INT NOT NULL,
+    userid INT NOT NULL,
+    category_id INT NOT NULL,
+    pname VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     costPrice DECIMAL(10, 2) NOT NULL,
     description TEXT,
     stock_quantity INT NOT NULL,
-    barcode VARCHAR(13) UNIQUE NOT NULL,
-    productImage VARCHAR(255) NOT NULL,  -- Lưu đường dẫn ảnh
+    barcode VARCHAR(13) NOT NULL,
+    productImage VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_store FOREIGN KEY (storeid) REFERENCES store(storeid),
-    CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES category(category_id),
-    CONSTRAINT unique_pname UNIQUE (pname), -- Đảm bảo tên sản phẩm duy nhất
-    CONSTRAINT unique_barcode UNIQUE (barcode) -- Đảm bảo barcode duy nhất
+    PRIMARY KEY (userid, productid),
+    FOREIGN KEY (userid) REFERENCES user(userid) ON DELETE CASCADE,
+    FOREIGN KEY (category_id, userid) REFERENCES category(category_id, userid)
 );
+
+

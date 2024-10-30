@@ -1,21 +1,38 @@
-<script>
-    console.log(document.cookie);
-</script>
 <?php
 // Gọi file xác thực người dùng trước khi load nội dung trang
-// include('./php/auth_check.php');
+include('./php/auth_check.php');
+
+// Kết nối cơ sở dữ liệu
+$servername = "localhost";
+$username = "dbuser";
+$password = "ecc";
+$dbname = "wearebugs";
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Kiểm tra kết nối
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Lấy userid từ session
+$userid = $_SESSION['userid'];
+
+// Lấy danh sách các danh mục từ cơ sở dữ liệu của người dùng hiện tại
+$category_sql = "SELECT category_id, cname FROM category WHERE userid = ?";
+$stmt = $conn->prepare($category_sql);
+$stmt->bind_param("i", $userid); // Ràng buộc biến userid
+$stmt->execute();
+$category_result = $stmt->get_result();
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
     <title>Document</title>
     <link rel="stylesheet" href="../styles/All.css">
     <link rel="stylesheet" href="./styles/addProduct.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
 </head>
 <body>
     <header></header>
@@ -34,10 +51,16 @@
                 <div style="display: flex; align-items: center;">
                     <input type="text" id="categoryText" name="categoryText" placeholder="選択したカテゴリー" />
                     <select id="category" name="category" required onchange="updateCategoryText()">
-                        <option value="1">WOMEN</option>
-                        <option value="2">WOMEN</option>
-                        <option value="3">CHILD</option>
-                        <option value="4">OTHE</option>
+                        <option value="">選択してください</option>
+                        <?php
+                        if ($category_result->num_rows > 0) {
+                            while ($row = $category_result->fetch_assoc()) {
+                                echo "<option value='" . $row['category_id'] . "'>" . htmlspecialchars($row['cname']) . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>Không có danh mục nào</option>";
+                        }
+                        ?>
                     </select>
                 </div>
                 <br>
@@ -51,46 +74,41 @@
                     }
                 </script>
 
-                <!-- Tên sản phẩm -->
+                <!-- Các trường khác -->
                 <label for="pname">商品名:</label>
                 <input type="text" id="pname" name="pname" required>
                 <br>
 
-                <!-- Giá bán -->
                 <label for="price">価格:</label>
                 <input type="number" id="price" name="price" required min="0" step="0.01">
                 <br>
 
-                <!-- Giá nhập hàng -->
                 <label for="costPrice">仕入れ価格:</label>
                 <input type="number" id="costPrice" name="costPrice" required min="0" step="0.01">
                 <br>
 
-                <!-- Mô tả sản phẩm -->
                 <label for="description">商品説明:</label>
                 <textarea id="description" name="description" rows="4" cols="50" required></textarea>
                 <br>
 
-                <!-- Số lượng trong kho -->
                 <label for="stockQuantity">在庫数量:</label>
                 <input type="number" id="stockQuantity" name="stockQuantity" required min="0">
                 <br>
 
-                <!-- Barcode -->
                 <label for="barcode">バーコード:</label>
                 <input type="text" id="barcode" name="barcode" required>
                 <button type="button" id="start-scan">カメラでスキャン</button>
-
-                <!-- Div để hiển thị camera -->
-                <div id="camera" style="display: none;"></div>
 
                 <button type="submit">商品を追加する</button>
             </form>
         </div>
     </main>
     <footer></footer>
-
-    <script src="./scripts/camera.js"></script>
 </body>
-
 </html>
+
+<?php
+// Đóng kết nối cơ sở dữ liệu
+$stmt->close();
+$conn->close();
+?>
