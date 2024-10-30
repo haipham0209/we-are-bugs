@@ -1,9 +1,6 @@
 <?php
 // データベース接続
-$servername = "localhost";
-$username = "dbuser";
-$password = "ecc";
-$dbname = "wearebugs";
+include('db_connect.php');
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {

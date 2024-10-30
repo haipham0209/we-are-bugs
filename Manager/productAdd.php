@@ -3,10 +3,7 @@
 include('./php/auth_check.php');
 
 // Kết nối cơ sở dữ liệu
-$servername = "localhost";
-$username = "dbuser";
-$password = "ecc";
-$dbname = "wearebugs";
+include('./php/auth_check.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Kiểm tra kết nối

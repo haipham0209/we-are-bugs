@@ -2,10 +2,8 @@
 session_start();
 
 // Kết nối cơ sở dữ liệu
-$servername = "localhost";
-$username = "dbuser";
-$password = "ecc";
-$dbname = "wearebugs";
+// include('auth_check.php');
+include('db_connect.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Kiểm tra kết nối

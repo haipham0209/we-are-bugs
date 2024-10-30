@@ -41,16 +41,17 @@ CREATE TABLE product (
     productid INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- Thêm AUTO_INCREMENT
     userid INT NOT NULL,
     category_id INT NOT NULL,
-    storeid INT NOT NULL, -- Thêm trường storeid
+    -- storeid INT NOT NULL, -- Thêm trường storeid
     pname VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     costPrice DECIMAL(10, 2) NOT NULL,
     description TEXT,
     stock_quantity INT NOT NULL,
     barcode VARCHAR(13) UNIQUE NOT NULL,
+    productImage VARCHAR(255), -- Thêm cột productImage để chứa đường dẫn hình ảnh
     FOREIGN KEY (userid) REFERENCES user(userid),
-    FOREIGN KEY (category_id) REFERENCES category(category_id),
-    FOREIGN KEY (storeid) REFERENCES store(storeid) -- Khóa ngoại cho storeid
+    FOREIGN KEY (category_id) REFERENCES category(category_id)
+    -- FOREIGN KEY (userid) REFERENCES store(userid),
 );
 
 -- Chèn dữ liệu vào bảng user

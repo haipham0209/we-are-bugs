@@ -3,6 +3,7 @@
 
 // include('db_connect.php');
 include('auth_check.php');
+include('db_connect.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     echo "SERVER NOT FOUND";

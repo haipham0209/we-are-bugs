@@ -1,6 +1,6 @@
 <?php
 // Kết nối cơ sở dữ liệu
-include('./db_connect.php');
+include('db_connect.php');
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
