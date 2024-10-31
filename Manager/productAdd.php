@@ -2,24 +2,27 @@
 // Gọi file xác thực người dùng trước khi load nội dung trang
 include('./php/auth_check.php');
 
-// Kết nối cơ sở dữ liệu
-include('./php/db_connect.php');
-$conn = new mysqli($servername, $username, $password, $dbname);
 
-// Kiểm tra kết nối
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
-// Lấy userid từ session
-$userid = $_SESSION['userid'];
 
-// Lấy danh sách các danh mục từ cơ sở dữ liệu của người dùng hiện tại
-$category_sql = "SELECT category_id, cname FROM category WHERE userid = ?";
-$stmt = $conn->prepare($category_sql);
-$stmt->bind_param("i", $userid); // Ràng buộc biến userid
-$stmt->execute();
-$category_result = $stmt->get_result();
+// // Kết nối cơ sở dữ liệu
+// include('./php/db_connect.php');
+// $conn = new mysqli($servername, $username, $password, $dbname);
+
+// // Kiểm tra kết nối
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// }
+
+// // Lấy userid từ session
+// $userid = $_SESSION['userid'];
+// echo "2222222222222";
+// // Lấy danh sách các danh mục từ cơ sở dữ liệu của người dùng hiện tại
+// $category_sql = "SELECT category_id, cname FROM category WHERE userid = ?";
+// $stmt = $conn->prepare($category_sql);
+// $stmt->bind_param("i", $userid); // Ràng buộc biến userid
+// $stmt->execute();
+// $category_result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -106,6 +109,6 @@ $category_result = $stmt->get_result();
 
 <?php
 // Đóng kết nối cơ sở dữ liệu
-$stmt->close();
-$conn->close();
+// $stmt->close();
+// $conn->close();
 ?>

@@ -3,12 +3,27 @@
 
 sửa category và product truy vấn dựa vào storeid
 1 user chỉ tạo dc 1 store,
+--LAN:
+========  truy vấn thông tin chỉ dựa vào storeid -==============
+1.category lấy chữ chứ ko lấy dropdown (dropdown ko gửi dữ liệu lên php)
+        (so sánh chữ ko phân biệt chữ lớn chữ nhỏ)
+2.kiểm tra ko có category tương ứng trên DB thì insert vô bảng category trc rồi mới insert bảng product
+3.nếu có sẵn category trên DB thì chỉ thêm sản phẩm 
+---------------------------------------------------------------------------------------------
+SAU KHI TẠO LẠI BẢNG => ĐĂNG KÝ TÀI KHOẢN MỚI NHƯ BTH => HIỆN BẢNG CHECK EMAIL THÌ KO CẦN MỞ MAIL ==>
+DÁN LỆNH SAU LÀ LOGIN DC : (THAY TÊN USERNAME)
+
+UPDATE user 
+SET status = 'active' 
+WHERE username = 'hai';
+
+
+
 
 DROP DATABASE IF EXISTS wearebugs;
 CREATE DATABASE wearebugs;
 USE wearebugs;
- 
-CREATE TABLE user (
+ CREATE TABLE user (
     userid INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
     mail VARCHAR(255) NOT NULL UNIQUE,
@@ -50,7 +65,7 @@ CREATE TABLE product (
     productImage VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (storeid) REFERENCES store(storeid),
-    FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, userid)
+    FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, storeid)
 );
 
 
