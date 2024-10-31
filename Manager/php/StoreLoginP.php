@@ -60,8 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($store_result->num_rows > 0) {
                 $store = $store_result->fetch_assoc();
                 $storeid = $store["storeid"];
-                session_start();
-                $_SESSION['storeid'] = $storeid;
+                // session_start();
+                // $_SESSION['storeid'] = $storeid;
             }
 
             // Kiểm tra xem checkbox "ghi nhớ đăng nhập" có được chọn không

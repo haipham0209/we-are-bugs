@@ -11,7 +11,7 @@ if (isset($_COOKIE['userid'])) {
 if (isset($_COOKIE['loggedin'])) {
     setcookie('loggedin', false, time() + (8640000 * 30), "/");
 }
-session_start();
+// session_start();
 session_unset();  // Xóa tất cả biến session
 session_destroy();  // Hủy session hiện tại
 

@@ -3,7 +3,7 @@
 include('./php/auth_check.php');
 
 // Kết nối cơ sở dữ liệu
-include('./php/auth_check.php');
+include('./php/db_connect.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Kiểm tra kết nối

@@ -1,5 +1,8 @@
 <?php
-// session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 // Thông tin kết nối cơ sở dữ liệu
 include('db_connect.php');
@@ -30,7 +33,7 @@ if (isset($_COOKIE['username']) && isset($_COOKIE['token'])) {
         exit();
     }
 
-    // Lưu thông tin người dùng vào session
+    // ------------------------------------Lưu tất cả thông tin người dùng vào session---------------------------------------------------------------------
     $user = $user_result->fetch_assoc();
     foreach ($user as $key => $value) {
         $_SESSION[$key] = $value;
@@ -42,7 +45,7 @@ if (isset($_COOKIE['username']) && isset($_COOKIE['token'])) {
     $stmt->bind_param("i", $user['userid']);
     $stmt->execute();
     $store_result = $stmt->get_result();
-
+//-------------------------------------- Lưu tất cả thông tin cửa hàng vào session--------------------------------------------------------------------------
     if ($store_result->num_rows > 0) {
         // Lưu thông tin cửa hàng vào session
         $store = $store_result->fetch_assoc();
