@@ -1,64 +1,68 @@
 
 
+
+sửa category và product truy vấn dựa vào storeid
+1 user chỉ tạo dc 1 store,
+
 DROP DATABASE IF EXISTS wearebugs;
 CREATE DATABASE wearebugs;
 USE wearebugs;
  
--- Bảng user
 CREATE TABLE user (
     userid INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL UNIQUE COLLATE utf8mb4_0900_ai_ci,
+    username VARCHAR(100) NOT NULL UNIQUE,
     mail VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL COLLATE utf8mb4_0900_ai_ci,
+    password VARCHAR(255) NOT NULL,
     token VARCHAR(255),
     status ENUM('pending', 'active') NOT NULL DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
--- Bảng store
+
 CREATE TABLE store (
     storeid INT AUTO_INCREMENT PRIMARY KEY,
-    userid INT NOT NULL,
-    sname VARCHAR(100) NOT NULL COLLATE utf8mb4_0900_ai_ci,
+    userid INT NOT NULL UNIQUE,
+    sname VARCHAR(100) NOT NULL,
     address VARCHAR(255),
     tel VARCHAR(20),
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_user FOREIGN KEY (userid) REFERENCES user(userid)
-    ON DELETE CASCADE
+    FOREIGN KEY (userid) REFERENCES user(userid)
 );
- 
--- Bảng category (không dùng AUTO_INCREMENT cho category_id)
+
 CREATE TABLE category (
     category_id INT NOT NULL,
-    userid INT NOT NULL,
+    storeid INT NOT NULL,
     cname VARCHAR(100) NOT NULL,
-    PRIMARY KEY (category_id, userid), -- Đảm bảo category_id duy nhất cho mỗi người dùng
-    FOREIGN KEY (userid) REFERENCES user(userid) ON DELETE CASCADE,
-    CONSTRAINT unique_cname UNIQUE (cname, userid) -- Đảm bảo tên danh mục duy nhất theo userid
+    PRIMARY KEY (category_id, storeid),
+    FOREIGN KEY (storeid) REFERENCES store(storeid)
 );
- 
--- Bảng product
+
 CREATE TABLE product (
-    productid INT NOT NULL,
-    userid INT NOT NULL,
+    productid INT AUTO_INCREMENT PRIMARY KEY,
+    storeid INT NOT NULL,
     category_id INT NOT NULL,
     pname VARCHAR(255) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    costPrice DECIMAL(10, 2) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    costPrice DECIMAL(10,2) NOT NULL,
     description TEXT,
     stock_quantity INT NOT NULL,
     barcode VARCHAR(13) NOT NULL,
     productImage VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (userid, productid),
-    FOREIGN KEY (userid) REFERENCES user(userid) ON DELETE CASCADE,
-    FOREIGN KEY (category_id, userid) REFERENCES category(category_id, userid)
+    FOREIGN KEY (storeid) REFERENCES store(storeid),
+    FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, userid)
 );
+
 
 UPDATE user 
 SET status = 'active' 
 WHERE username = 'hai';
 
+
+show columns from user;
+show columns from store;
+show columns from product;
+show columns from category;
 
 
 

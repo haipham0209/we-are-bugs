@@ -1,8 +1,8 @@
 <?php
-session_start();
+// session_start();
 
 // Kết nối cơ sở dữ liệu
-// include('auth_check.php');
+include('auth_check.php');
 include('db_connect.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
 
