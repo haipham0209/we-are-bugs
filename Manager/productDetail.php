@@ -32,19 +32,23 @@ include('./php/auth_check.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../styles/All.css">
-    <link rel="stylesheet" href="./styles/addProduct.css">
+    <link rel="stylesheet" href="./styles/productDetail.css">
 </head>
 <body>
     <header></header>
     <main>
-        <h3>商品追加</h3>
+        <h3>商品詳細</h3>
         <div class="addContainer">
             <form class="proAddForm" action="./php/addProductP.php" method="POST" enctype="multipart/form-data">
                 <!-- Trường chọn ảnh -->
-                <label for="productImage">商品画像:</label>
-                <input type="file" id="productImage" name="productImage" accept="image/*" onchange="previewImage(event)">
-                <br>
-                <img id="imagePreview" src="#" alt="プレビュー画像" style="display:none; max-width:200px; margin-top:10px;">
+                <div class="imgDiv">
+                    <label for="productImage">商品画像:</label>
+                    <div class="imageContainer">
+                        <img id="imagePreview" src="./images/twitter.png" alt="プレビュー画像">
+                        <button id="editButton" onclick="changeImage()">Chỉnh sửa</button>
+                    </div>
+                    <input type="file" id="productImage" name="productImage" accept="image/*" style="display:none;" onchange="previewImage(event)">
+                </div>
 
                 <!-- Category -->
                 <label for="category">カテゴリー:</label>
