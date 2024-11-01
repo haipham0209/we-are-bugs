@@ -1,28 +1,6 @@
 <?php
 // Gọi file xác thực người dùng trước khi load nội dung trang
 include('./php/auth_check.php');
-
-
-
-
-// // Kết nối cơ sở dữ liệu
-// include('./php/db_connect.php');
-// $conn = new mysqli($servername, $username, $password, $dbname);
-
-// // Kiểm tra kết nối
-// if ($conn->connect_error) {
-//     die("Connection failed: " . $conn->connect_error);
-// }
-
-// // Lấy userid từ session
-// $userid = $_SESSION['userid'];
-// echo "2222222222222";
-// // Lấy danh sách các danh mục từ cơ sở dữ liệu của người dùng hiện tại
-// $category_sql = "SELECT category_id, cname FROM category WHERE userid = ?";
-// $stmt = $conn->prepare($category_sql);
-// $stmt->bind_param("i", $userid); // Ràng buộc biến userid
-// $stmt->execute();
-// $category_result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +23,7 @@ include('./php/auth_check.php');
                     <label for="productImage">商品画像:</label>
                     <div class="imageContainer">
                         <img id="imagePreview" src="./images/twitter.png" alt="プレビュー画像">
-                        <button id="editButton" onclick="changeImage()">Chỉnh sửa</button>
+                        <!-- <button id="editButton" onclick="changeImage()">Chỉnh sửa</button> -->
                     </div>
                     <input type="file" id="productImage" name="productImage" accept="image/*" style="display:none;" onchange="previewImage(event)">
                 </div>
@@ -101,9 +79,8 @@ include('./php/auth_check.php');
 
                 <label for="barcode">バーコード:</label>
                 <input type="text" id="barcode" name="barcode" required>
-                <button type="button" id="start-scan">カメラでスキャン</button>
 
-                <button type="submit">商品を追加する</button>
+                <button type="submit">商品情報を更新する</button>
             </form>
         </div>
     </main>

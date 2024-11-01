@@ -3,7 +3,10 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 20px;
+    /* padding: 20px; */
+    padding: 0;
+    margin: 0;
+
 }
 
 /* Container của form */
@@ -76,24 +79,34 @@ button:hover {
     background-color: #45a049;
 }
 
-.imgDiv{
+.imgDiv {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center; /* Căn giữa theo chiều ngang */
-    margin: auto;
-    padding: auto;
+    align-items: flex-start;
 }
 
-/* Hiển thị ảnh preview */
+.imageContainer {
+    /* display: flex; */
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    
+    /* margin-top: 10px; */
+}
+
 #imagePreview {
-    /* display: none; */
-    margin-top: 2px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    max-width: 50%;
+    max-width: 200px;
+    margin-right: 10px;
     align-items: center;
 }
+
+#editButton {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
 
 /* //////////////barcode/////////////////////// */
 #barcode-scanner {
