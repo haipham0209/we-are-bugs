@@ -14,11 +14,20 @@
 
     /* 容器 */
     .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .profile-form {
+        padding: 30px;
+        border-radius: 20px;
+        width: 80%;
         height: 100%;
-        width: 90%;
-        max-width: 400px;
-        text-align: center;
-        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
     }
 
     /* Avatar */
@@ -167,11 +176,10 @@
         cursor: pointer;
     }
 
-
-
-
     .save {
         margin-top: 20px;
+        display: flex;
+        justify-content: center;
     }
 
     .save-button {
@@ -186,6 +194,18 @@
         width: 60px;
         height: 67px;
         object-fit: contain;
+    }
+
+    .edit-password-link {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .store-link {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
     }
 
     footer {
