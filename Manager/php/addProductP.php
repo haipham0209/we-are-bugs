@@ -57,6 +57,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $stmt->store_result();
 
+            // if ($stmt->num_rows === 0) {
+            //      // Nếu không tồn tại, thêm mới danh mục
+            //      $insert_category_sql = "INSERT INTO category (category_id, storeid, cname) VALUES (?, ?, ?)";
+            //      // Xác định category_id mới
+            //      $new_category_id = $conn->insert_id;
+            //      $stmt = $conn->prepare($insert_category_sql);
+            //      $stmt->bind_param("iis", $new_category_id, $storeid, $category_name);
+            //      $stmt->execute();
+            //      $category_id = $new_category_id;
+            // } else {
+            //     // Lấy ID danh mục nếu đã tồn tại
+            //     $stmt->bind_result($category_id);
+            //     $stmt->fetch();
+            // }
             if ($stmt->num_rows === 0) {
                 // Xác định `category_id` mới dựa trên giá trị cao nhất hiện tại
                 $max_category_id_sql = "SELECT IFNULL(MAX(category_id), 0) + 1 AS next_id FROM category WHERE storeid = ?";
@@ -94,20 +108,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     }
 
-    // // Tạo thư mục cho người dùng
-    // $user_folder = "../storeproductImg/" . $username;
-    // if (!file_exists($user_folder)) {
-    //     mkdir($user_folder, 0777, true);
-    // }
+    // Tạo thư mục cho người dùng
+    $user_folder = "../storeproductImg/" . $username;
+    if (!file_exists($user_folder)) {
+        mkdir($user_folder, 0777, true);
+    }
 
-    // // Tạo thư mục cho danh mục
-    // $category_folder = $user_folder . "/" . $category_name;
-    // if (!file_exists($category_folder)) {
-    //     mkdir($category_folder, 0777, true);
-    // }
+    // Tạo thư mục cho danh mục
+    $category_folder = $user_folder . "/" . $category_name;
+    if (!file_exists($category_folder)) {
+        mkdir($category_folder, 0777, true);
+    }
+    // Kiểm tra nếu có lỗi tải lên ảnh
+    if ($_FILES['productImage']['error'] !== UPLOAD_ERR_OK) {
+        echo "Lỗi khi tải lên ảnh!";
+        exit();
+    }
 
-    // Đường dẫn lưu ảnh chung
-    $category_folder = "../storeproductImg"; // Tất cả ảnh sẽ được lưu tại thư mục này
+    // Tạo tên file duy nhất để lưu ảnh
+    $imageExtension = pathinfo($_FILES['productImage']['name'], PATHINFO_EXTENSION);
+    $uniqueImageName = $storeid . "_" . time() . "." . $imageExtension;
+    $imagePath = $category_folder . "/" . $uniqueImageName;
 
     // Khởi tạo giá trị mặc định cho $max_productid
     $max_productid = 0;
@@ -128,38 +149,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Thêm sản phẩm vào bảng product
     $stmt = $conn->prepare("INSERT INTO product (productid, storeid, category_id, pname, price, costPrice, description, stock_quantity, barcode, productImage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $imagePath = ''; // Đường dẫn sẽ chỉ được cập nhật nếu lưu ảnh thành công
     $stmt->bind_param("iiissssiss", $next_productid, $storeid, $category_id, $pname, $price, $costPrice, $description, $stockQuantity, $barcode, $imagePath);
 
     if ($stmt->execute()) {
-        // Kiểm tra nếu có lỗi tải lên ảnh
-        if ($_FILES['productImage']['error'] !== UPLOAD_ERR_OK) {
-            echo "Lỗi khi tải lên ảnh!";
-            // Xóa sản phẩm khỏi cơ sở dữ liệu nếu không lưu ảnh thành công
-            $delete_stmt = $conn->prepare("DELETE FROM product WHERE productid = ? AND storeid = ?");
-            $delete_stmt->bind_param("ii", $next_productid, $storeid);
-            $delete_stmt->execute();
-            $delete_stmt->close();
-            exit();
-        }
-
-        // Tạo tên file duy nhất để lưu ảnh
-        $imageExtension = pathinfo($_FILES['productImage']['name'], PATHINFO_EXTENSION);
-        $uniqueImageName = $storeid . "_" . time() . "." . $imageExtension;
-        $imagePath = $category_folder . "/" . $uniqueImageName;
-
-        // Di chuyển ảnh vào thư mục chung
-        if (move_uploaded_file($_FILES['productImage']['tmp_name'], $imagePath)) {
-            // Cập nhật đường dẫn ảnh cho sản phẩm
-            $update_stmt = $conn->prepare("UPDATE product SET productImage = ? WHERE productid = ? AND storeid = ?");
-            $update_stmt->bind_param("sii", $imagePath, $next_productid, $storeid);
-            $update_stmt->execute();
-            $update_stmt->close();
-
+          // Nếu thêm sản phẩm thành công, lưu ảnh vào thư mục
+          if (move_uploaded_file($_FILES['productImage']['tmp_name'], $imagePath)) {
             echo "Sản phẩm đã được thêm thành công!";
         } else {
             echo "Lỗi khi lưu ảnh!";
-            // Nếu lưu ảnh thất bại, xóa sản phẩm khỏi cơ sở dữ liệu
+            // Nếu lưu ảnh thất bại, xoá sản phẩm vừa thêm khỏi cơ sở dữ liệu
             $delete_stmt = $conn->prepare("DELETE FROM product WHERE productid = ? AND storeid = ?");
             $delete_stmt->bind_param("ii", $next_productid, $storeid);
             $delete_stmt->execute();
@@ -168,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         echo "Lỗi khi thêm sản phẩm vào cơ sở dữ liệu.";
     }
+
     $stmt->close();
 }
 
