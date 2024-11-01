@@ -60,6 +60,11 @@ if (isset($_COOKIE['username']) && isset($_COOKIE['token'])) {
     $stmt->close();
     $conn->close();
 } else {
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    session_unset();  // Xóa tất cả biến session
+    session_destroy();  // Hủy session hiện tại
     // Nếu không có cookie, chuyển về trang đăng nhập
     header("Location: StoreLogin.php?error=auth_check");
     exit();
