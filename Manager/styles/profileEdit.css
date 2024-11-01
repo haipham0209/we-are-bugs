@@ -250,4 +250,12 @@
     .delete-button:hover {
         background-color: #FF4C4C;
     }
+
+    .user-logo {
+        width: 198px;
+        height: auto;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
 }

@@ -2,6 +2,21 @@
 // Gọi file xác thực người dùng trước khi load nội dung trang
 include('./php/auth_check.php');
 include('./php/storeinfo.php');
+include('./php/db_connect.php'); // データベース接続ファイル
+
+// ユーザーがログインしているか確認
+if (!isset($_SESSION['userid'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// データベースからロゴパスを取得
+$stmt = $conn->prepare("SELECT logo_path FROM user WHERE userid = ?");
+$stmt->bind_param("i", $_SESSION['userid']);
+$stmt->execute();
+$stmt->bind_result($logoPath);
+$stmt->fetch();
+$stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -20,19 +35,16 @@ include('./php/storeinfo.php');
         <div class="profile-form">
             <!-- アイコン -->
             <div class="avatar">
-                <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="loadImage(event)">
-                <svg width="198" height="107" viewBox="0 0 198 107" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="99" cy="53.5" rx="99" ry="53.5" fill="#B0D9B1" />
-                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="#333">ロゴ を選び</text>
-                </svg>
-                <label class="upload-button" for="fileInput">
-                    <img src="upload-icon.png" alt="ロゴマーク">
-                </label>
-                <!-- <img id="avatar-preview" class="avatar" src="./images/" alt="アイコン"> -->
-                <!-- <label class="upload-button" for="avatar-input">
-                <img src="upload-icon.png" alt="ロゴマーク">
-            </label>
-            <input type="file" id="avatar-input" accept="image/*"> -->
+                <form id="logoForm" action="./php/uploadLogo.php" method="POST" enctype="multipart/form-data">
+                    <input type="file" id="fileInput" name="logo" accept="image/*" style="display: none;" onchange="document.getElementById('logoForm').submit();">
+                    <svg width="198" height="107" viewBox="0 0 198 107" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="99" cy="53.5" rx="99" ry="53.5" fill="#B0D9B1" />
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="#333">ロゴ を選び</text>
+                    </svg>
+                    <label class="upload-button" for="fileInput">
+                        <img src="upload-icon.png" alt="ロゴマーク">
+                    </label>
+                </form>
             </div>
 
             <!-- form^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
