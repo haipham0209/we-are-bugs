@@ -202,3 +202,148 @@
         height: 25px;
     }
 }
+
+/* Giao diện PC */
+@media only screen and (min-width: 768px) {
+    /* Toàn màn hình */
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* height: 100vh; */
+        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        background-size: 400% 400%;
+        animation: wave 10s ease infinite;
+        margin: 0;
+        overflow: hidden;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    /* Container */
+    .container {
+        width: 400px;
+        /* height: 70vh; */
+        max-height: 600px; /* Đặt giới hạn chiều cao nhỏ hơn */
+        padding: 15px 20px; /* Giảm khoảng padding bên trong */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Logo */
+    .logo {
+        margin-bottom: 5px; /* Giảm khoảng cách dưới logo */
+        text-align: center;
+    }
+
+    .logo h1 {
+        font-size: 36px; /* Giảm kích thước font của logo */
+        margin: 0;
+        color: #333;
+    }
+
+    .logo p {
+        font-size: 16px; /* Giảm kích thước font của slogan */
+        font-style: italic;
+        color: #333;
+        margin-top: 4px;
+    }
+
+    /* Login form */
+    .login-form {
+        width: 100%;
+        /* margin-top: 10px; */
+    }
+
+    .login-form h2 {
+        font-size: 20px; /* Giảm kích thước tiêu đề */
+        text-align: center;
+        margin-bottom: 10px; /* Giảm khoảng cách dưới tiêu đề */
+    }
+
+    .login-form label {
+        font-size: 14px; /* Giảm kích thước font nhãn */
+        margin-bottom: 4px; /* Giảm khoảng cách dưới nhãn */
+    }
+
+    .login-form input {
+        width: 95%;
+        padding: 8px; /* Giảm padding trong input */
+        /* margin-top: 5px; Giảm khoảng cách trên */
+        margin-bottom: 5px; /* Giảm khoảng cách dưới */
+        font-size: 14px;
+        border-radius: 6px;
+        background-color: #d2e7d3;
+        border: 1px solid #ccc;
+    }
+
+    .login-form button {
+        font-size: 14px; /* Giảm kích thước font nút */
+        padding: 8px; /* Giảm padding của nút */
+        background-color: black;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        transition: 0.3s;
+        margin: 10px 0;
+    }
+
+    .login-form button:hover {
+        background-color: #0ee3bf;
+    }
+
+    /* Form row */
+    .form-row {
+        margin-top: 5px; /* Giảm khoảng cách trên của form-row */
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        
+    }
+
+    /* Custom checkbox */
+    .custom-checkbox {
+        display: flex;
+        align-items: center; /* Căn các yếu tố trong cùng một hàng ngang */
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+    .custom-checkbox .checkmark {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        margin-right: 8px; /* Khoảng cách giữa checkbox và văn bản */
+        display: inline-block;
+        transition: background-color 0.3s, border-color 0.3s;
+        vertical-align: middle;
+    }
+
+    .register-link {
+        font-size: 12px; /* Giảm kích thước font của link đăng ký */
+        margin-top: 10px; /* Giảm khoảng cách trên */
+        text-align: center;
+    }
+.register-link .pass{
+    font-size: 18px;
+}
+    footer {
+        padding: 5px;
+        text-align: left;
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+    }
+
+    footer img {
+        width: 20px;
+        height: 20px;
+    }
+}
