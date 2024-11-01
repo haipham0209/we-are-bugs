@@ -69,10 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $stmt->close();
 
-        // Gửi email xác thực bằng PHPMailer
         require '../../vendor/autoload.php'; // Đảm bảo PHPMailer đã được cài đặt
         $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-
+        
         try {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
@@ -81,21 +80,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->Password = 'prdgyjrdieqldvnt'; // Mật khẩu ứng dụng
             $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
-
-            $mail->setFrom('wearewrb@gmail.com', 'WRB');
+        
+            $mail->setFrom('wearewrb@gmail.com', 'スマラクシステム サポートチーム');
             $mail->addAddress($email, $username);
-
+            $mail->CharSet = 'UTF-8'; // Thiết lập mã hóa UTF-8
+        
             $verify_link = "https://click.ecc.ac.jp/ecc/se2a_24_bugs/we%20are/Manager/php/account_verify.php?token=" . urlencode($token);
+        
             $mail->isHTML(true);
-            $mail->Subject = 'アカウント作成';
-            $mail->Body = "Chào $username,<br><br>Vui lòng bấm vào <a href='$verify_link'>liên kết này</a> để kích hoạt tài khoản.";
-
+            $mail->Subject = 'アカウント登録ありがとうございます - スマラクシステム';
+            $mail->Body = "
+                $username こんにちは。<br><br>
+                この度は、スマラクシステムにご登録いただき誠にありがとうございます。<br>
+                以下のリンクをクリックして、アカウントを有効化してください。<br><br>
+                <a href='$verify_link'>アカウント有効化リンク</a><br><br>
+                リンクをクリックすると、アカウントの有効化が完了し、サービスのご利用を開始いただけます。<br>
+                ご不明な点がございましたら、お気軽にお問い合わせください。<br><br>
+                今後ともスマラクシステムをよろしくお願いいたします。<br><br>
+                スマラクシステム サポートチーム<br>
+                support mail: wearewrb@gmail.com
+            ";
+        
             $mail->send();
             header("Location: ../mail_check.html");
             exit();
         } catch (Exception $e) {
             echo "Lỗi khi gửi email: {$mail->ErrorInfo}";
         }
+        
+        
     } else {
         echo "Lỗi khi tạo tài khoản.";
     }

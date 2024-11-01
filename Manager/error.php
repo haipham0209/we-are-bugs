@@ -51,12 +51,15 @@
 
                 // Hiển thị thông báo tương ứng với lỗi
                 if ($error == "account_activate_false") {
-                    echo "アカウントの有効化に失敗しました。再試行してください。";
+                    echo "アカウントの有効化に  失敗しました。再試行してください。";
+                    echo "EROR CODE WRB-01";
                 } elseif ($error == "invalid_token") {
                     echo "無効なリンクです。再度ご確認ください。";
-                } else {
-                    echo "不明なエラーが発生しました。";
-                }
+                    echo "EROR CODE WRB-02";
+                } 
+            }else {
+                echo "不明なエラーが発生しました。";
+                echo "EROR CODE WRB-000";
             }
         ?>
     </div>

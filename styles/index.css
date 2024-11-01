@@ -5,10 +5,10 @@
         padding: 0.5px;
         box-sizing: border-box;
     }
-    h1 {
+    /* h1 {
         margin: 5px;
         padding: 5px;
-    }
+    } */
 
     /* Category Section */
     .category {
@@ -177,11 +177,16 @@
         text-align: center;
         margin-bottom: 15px;
         margin-top: 7.5px;
-        box-shadow: 5px 5px 15px rgba(168, 166, 166, 0.5);
+        /* box-shadow: 5px 5px 15px rgba(168, 166, 166, 0.5); */
         /* Đổ bóng */
-        border: solid 1px rgb(255, 255, 255);
+        /* border: solid 1px rgb(255, 255, 255); */
         border-radius: 15px;
-        background-color: rgba(255, 255, 255, 0.5);
+        /* background-color: rgba(255, 255, 255, 0.5); */
+    }
+    p.rotated-text{
+        font-family: "Itim", cursive;
+        font-size: 20px;
+        color: rgb(27, 28, 26);
     }
 
     .product-content img {
