@@ -57,15 +57,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $stmt->store_result();
 
+            // if ($stmt->num_rows === 0) {
+            //      // Nếu không tồn tại, thêm mới danh mục
+            //      $insert_category_sql = "INSERT INTO category (category_id, storeid, cname) VALUES (?, ?, ?)";
+            //      // Xác định category_id mới
+            //      $new_category_id = $conn->insert_id;
+            //      $stmt = $conn->prepare($insert_category_sql);
+            //      $stmt->bind_param("iis", $new_category_id, $storeid, $category_name);
+            //      $stmt->execute();
+            //      $category_id = $new_category_id;
+            // } else {
+            //     // Lấy ID danh mục nếu đã tồn tại
+            //     $stmt->bind_result($category_id);
+            //     $stmt->fetch();
+            // }
             if ($stmt->num_rows === 0) {
-                 // Nếu không tồn tại, thêm mới danh mục
-                 $insert_category_sql = "INSERT INTO category (category_id, storeid, cname) VALUES (?, ?, ?)";
-                 // Xác định category_id mới
-                 $new_category_id = $conn->insert_id;
-                 $stmt = $conn->prepare($insert_category_sql);
-                 $stmt->bind_param("iis", $new_category_id, $storeid, $category_name);
-                 $stmt->execute();
-                 $category_id = $new_category_id;
+                // Xác định `category_id` mới dựa trên giá trị cao nhất hiện tại
+                $max_category_id_sql = "SELECT IFNULL(MAX(category_id), 0) + 1 AS next_id FROM category WHERE storeid = ?";
+                $stmt_max = $conn->prepare($max_category_id_sql);
+                $stmt_max->bind_param("i", $storeid);
+                $stmt_max->execute();
+                $stmt_max->bind_result($new_category_id);
+                $stmt_max->fetch();
+                $stmt_max->close();
+                
+                // Chèn danh mục mới với `category_id` mới xác định
+                $insert_category_sql = "INSERT INTO category (category_id, storeid, cname) VALUES (?, ?, ?)";
+                $stmt = $conn->prepare($insert_category_sql);
+                $stmt->bind_param("iis", $new_category_id, $storeid, $category_name);
+                $stmt->execute();
+                $category_id = $new_category_id;
             } else {
                 // Lấy ID danh mục nếu đã tồn tại
                 $stmt->bind_result($category_id);
@@ -109,13 +130,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uniqueImageName = $storeid . "_" . time() . "." . $imageExtension;
     $imagePath = $category_folder . "/" . $uniqueImageName;
 
+    // Khởi tạo giá trị mặc định cho $max_productid
+    $max_productid = 0;
+
     // Tìm `productid` tiếp theo cho cửa hàng hiện tại
     $max_productid_sql = "SELECT IFNULL(MAX(productid), 0) AS max_id FROM product WHERE storeid = ?";
     $stmt = $conn->prepare($max_productid_sql);
     $stmt->bind_param("i", $storeid);
-    $stmt->execute();
-    $stmt->bind_result($max_productid);
-    $stmt->fetch();
+
+    if ($stmt->execute()) {
+        $stmt->bind_result($max_productid);
+        $stmt->fetch();
+    }
     $stmt->close();
 
     // Tăng productid lên 1
