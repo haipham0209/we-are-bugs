@@ -1,5 +1,6 @@
 /* Reset styles */
 @media only screen and (max-width: 767px) {
+    
     * {
         margin: 0.5px;
         padding: 0.5px;
@@ -43,14 +44,25 @@
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     } */
-    h1 {
-        margin: 5px;
-        padding: 5px;
+    h1.title {
+        font-family: 'Gloria Hallelujah', sans-serif; /* Tương tự với Grape Nuts */
+        font-size: 2em;
+        color: #2c3e50;
+        text-align: center;
+        letter-spacing: 1px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        margin: 20px 0;
     }
-    h2{
-        margin: 5px;
-        padding: 5px;
+    h2 {
+        font-family: 'Gloria Hallelujah', sans-serif; /* Tương tự với Grape Nuts */
+        font-size: 2em;
+        color: #2c3e50;
+        text-align: center;
+        letter-spacing: 1px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        margin: 20px 0;
     }
+    
     
     /* Navbar */
     .navbar {
