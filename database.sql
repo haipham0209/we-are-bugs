@@ -15,7 +15,7 @@ DÁN LỆNH SAU LÀ LOGIN DC : (THAY TÊN USERNAME)
 
 UPDATE user 
 SET status = 'active' 
-WHERE username = 'hai';
+WHERE username = 'lan1';
 
 
 
@@ -53,7 +53,8 @@ CREATE TABLE category (
 );
 
 CREATE TABLE product (
-    productid INT AUTO_INCREMENT PRIMARY KEY,
+    -- productid INT AUTO_INCREMENT PRIMARY KEY,
+    productid INT NOT NULL,
     storeid INT NOT NULL,
     category_id INT NOT NULL,
     pname VARCHAR(255) NOT NULL,
