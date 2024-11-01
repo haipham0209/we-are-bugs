@@ -1,10 +1,11 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-$servername = "localhost";
-$username = "dbuser"; // Thay đổi theo thông tin của bạn
-$password = "ecc"; // Thay đổi theo thông tin của bạn
-$dbname = "wearebugs"; // Thay đổi theo thông tin của bạn
+
+// Thông tin kết nối cơ sở dữ liệu
+include('./Manager/php/db_connect.php');
 
 // Kết nối đến cơ sở dữ liệu
 $conn = new mysqli($servername, $username, $password, $dbname);
