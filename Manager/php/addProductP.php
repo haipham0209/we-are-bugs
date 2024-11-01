@@ -1,7 +1,4 @@
 <?php
-// session_start();
-
-// Kết nối cơ sở dữ liệu
 include('auth_check.php');
 include('db_connect.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -11,28 +8,96 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Giả sử thông tin username đã có trong session
+// Lấy thông tin người dùng
 $username = $_SESSION['username'];
-$userid = $_SESSION['userid']; // Lấy userid của người dùng hiện tại từ session
+$userid = $_SESSION['userid'];
 
-// Lấy danh sách category của người dùng
-$categories_sql = "SELECT * FROM category WHERE userid = ?";
-$stmt = $conn->prepare($categories_sql);
+// Lấy storeid dựa trên userid
+$store_query = "SELECT storeid FROM store WHERE userid = ?";
+$stmt = $conn->prepare($store_query);
 $stmt->bind_param("i", $userid);
 $stmt->execute();
-$categories_result = $stmt->get_result();
+$stmt->bind_result($storeid);
+$stmt->fetch();
+$stmt->close();
 
 // Kiểm tra nếu có sản phẩm được thêm vào
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Xác thực dữ liệu đầu vào từ form
-    $category_id = filter_input(INPUT_POST, 'category', FILTER_VALIDATE_INT);
     $pname = trim($_POST['pname']);
     $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
     $costPrice = filter_input(INPUT_POST, 'costPrice', FILTER_VALIDATE_FLOAT);
     $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
     $stockQuantity = filter_input(INPUT_POST, 'stockQuantity', FILTER_VALIDATE_INT);
     $barcode = trim($_POST['barcode']);
+    $category = $_POST['category']; // Lấy giá trị lựa chọn danh mục
+    $category_id = null;
 
+    // Kiểm tra tính duy nhất của tên sản phẩm và mã barcode
+    $check_product_sql = "SELECT productid FROM product WHERE (pname = ? OR barcode = ?) AND storeid = ?";
+    $stmt = $conn->prepare($check_product_sql);
+    $stmt->bind_param("ssi", $pname, $barcode, $storeid);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        echo "Tên sản phẩm hoặc mã barcode đã tồn tại.";
+        exit();
+    }
+    $stmt->close();
+
+    // Lấy tên danh mục nếu người dùng chọn "新しいカテゴリーを追加"
+    if ($category === "new") {
+        if (!empty($_POST['categoryText'])) {
+            $category_name = strtolower(trim($_POST['categoryText']));
+
+            // Kiểm tra nếu danh mục mới đã tồn tại
+            $check_category_sql = "SELECT category_id FROM category WHERE LOWER(cname) = ? AND storeid = ?";
+            $stmt = $conn->prepare($check_category_sql);
+            $stmt->bind_param("si", $category_name, $storeid);
+            $stmt->execute();
+            $stmt->store_result();
+
+            if ($stmt->num_rows === 0) {
+                 // Nếu không tồn tại, thêm mới danh mục
+                 $insert_category_sql = "INSERT INTO category (category_id, storeid, cname) VALUES (?, ?, ?)";
+                 // Xác định category_id mới
+                 $new_category_id = $conn->insert_id;
+                 $stmt = $conn->prepare($insert_category_sql);
+                 $stmt->bind_param("iis", $new_category_id, $storeid, $category_name);
+                 $stmt->execute();
+                 $category_id = $new_category_id;
+            } else {
+                // Lấy ID danh mục nếu đã tồn tại
+                $stmt->bind_result($category_id);
+                $stmt->fetch();
+            }
+            $stmt->close();
+        } else {
+            die("Vui lòng nhập tên danh mục mới.");
+        }
+    } else {
+        // Lấy `category_id` và `cname` nếu chọn một danh mục đã có
+        $category_id = $category;
+        $category_name_sql = "SELECT cname FROM category WHERE category_id = ? AND storeid = ?";
+        $stmt = $conn->prepare($category_name_sql);
+        $stmt->bind_param("ii", $category_id, $storeid);
+        $stmt->execute();
+        $stmt->bind_result($category_name);
+        $stmt->fetch();
+        $stmt->close();
+    }
+
+    // Tạo thư mục cho người dùng
+    $user_folder = "../storeproductImg/" . $username;
+    if (!file_exists($user_folder)) {
+        mkdir($user_folder, 0777, true);
+    }
+
+    // Tạo thư mục cho danh mục
+    $category_folder = $user_folder . "/" . $category_name;
+    if (!file_exists($category_folder)) {
+        mkdir($category_folder, 0777, true);
+    }
     // Kiểm tra nếu có lỗi tải lên ảnh
     if ($_FILES['productImage']['error'] !== UPLOAD_ERR_OK) {
         echo "Lỗi khi tải lên ảnh!";
@@ -41,36 +106,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Tạo tên file duy nhất để lưu ảnh
     $imageExtension = pathinfo($_FILES['productImage']['name'], PATHINFO_EXTENSION);
-    $uniqueImageName = $userid . "_" . time() . "." . $imageExtension;
-    $user_folder = "../storeproductImg/" . $username;
-    $category_folder = $user_folder . "/" . $category_id;
+    $uniqueImageName = $storeid . "_" . time() . "." . $imageExtension;
     $imagePath = $category_folder . "/" . $uniqueImageName;
 
-    // Tìm `productid` tiếp theo cho người dùng hiện tại
-    $stmt = $conn->prepare("SELECT IFNULL(MAX(productid), 0) + 1 AS next_productid FROM product WHERE userid = ?");
-    $stmt->bind_param("i", $userid);
+    // Tìm `productid` tiếp theo cho cửa hàng hiện tại
+    $max_productid_sql = "SELECT IFNULL(MAX(productid), 0) AS max_id FROM product WHERE storeid = ?";
+    $stmt = $conn->prepare($max_productid_sql);
+    $stmt->bind_param("i", $storeid);
     $stmt->execute();
-    $stmt->bind_result($next_productid);
+    $stmt->bind_result($max_productid);
     $stmt->fetch();
     $stmt->close();
 
-    // Thêm sản phẩm vào bảng product trước, nhưng chưa tải lên ảnh
-    $stmt = $conn->prepare("INSERT INTO product (productid, userid, category_id, pname, price, costPrice, description, stock_quantity, barcode, productImage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiissssiss", $next_productid, $userid, $category_id, $pname, $price, $costPrice, $description, $stockQuantity, $barcode, $imagePath);
+    // Tăng productid lên 1
+    $next_productid = $max_productid + 1;
+
+    // Thêm sản phẩm vào bảng product
+    $stmt = $conn->prepare("INSERT INTO product (productid, storeid, category_id, pname, price, costPrice, description, stock_quantity, barcode, productImage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiissssiss", $next_productid, $storeid, $category_id, $pname, $price, $costPrice, $description, $stockQuantity, $barcode, $imagePath);
 
     if ($stmt->execute()) {
-        // Nếu thêm sản phẩm thành công, tạo thư mục và lưu ảnh vào thư mục
-        if (!file_exists($category_folder)) {
-            mkdir($category_folder, 0777, true);
-        }
-
-        if (move_uploaded_file($_FILES['productImage']['tmp_name'], $imagePath)) {
+          // Nếu thêm sản phẩm thành công, lưu ảnh vào thư mục
+          if (move_uploaded_file($_FILES['productImage']['tmp_name'], $imagePath)) {
             echo "Sản phẩm đã được thêm thành công!";
         } else {
             echo "Lỗi khi lưu ảnh!";
             // Nếu lưu ảnh thất bại, xoá sản phẩm vừa thêm khỏi cơ sở dữ liệu
-            $delete_stmt = $conn->prepare("DELETE FROM product WHERE productid = ? AND userid = ?");
-            $delete_stmt->bind_param("ii", $next_productid, $userid);
+            $delete_stmt = $conn->prepare("DELETE FROM product WHERE productid = ? AND storeid = ?");
+            $delete_stmt->bind_param("ii", $next_productid, $storeid);
             $delete_stmt->execute();
             $delete_stmt->close();
         }

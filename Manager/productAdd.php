@@ -2,27 +2,25 @@
 // Gọi file xác thực người dùng trước khi load nội dung trang
 include('./php/auth_check.php');
 
+// Kết nối cơ sở dữ liệu
+include('./php/db_connect.php');
+$conn = new mysqli($servername, $username, $password, $dbname);
 
+// Kiểm tra kết nối
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
+// Lấy storeid từ session hoặc từ một nguồn khác
+$storeid = $_SESSION['storeid']; // Assuming storeid is stored in session
 
-// // Kết nối cơ sở dữ liệu
-// include('./php/db_connect.php');
-// $conn = new mysqli($servername, $username, $password, $dbname);
+// Lấy danh sách các danh mục từ cơ sở dữ liệu của người dùng hiện tại
+$category_sql = "SELECT category_id, cname FROM category WHERE storeid = ?";
+$stmt = $conn->prepare($category_sql);
+$stmt->bind_param("i", $storeid); // Ràng buộc biến storeid
+$stmt->execute();
+$category_result = $stmt->get_result();
 
-// // Kiểm tra kết nối
-// if ($conn->connect_error) {
-//     die("Connection failed: " . $conn->connect_error);
-// }
-
-// // Lấy userid từ session
-// $userid = $_SESSION['userid'];
-// echo "2222222222222";
-// // Lấy danh sách các danh mục từ cơ sở dữ liệu của người dùng hiện tại
-// $category_sql = "SELECT category_id, cname FROM category WHERE userid = ?";
-// $stmt = $conn->prepare($category_sql);
-// $stmt->bind_param("i", $userid); // Ràng buộc biến userid
-// $stmt->execute();
-// $category_result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +28,7 @@ include('./php/auth_check.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ProductAdd</title>
     <link rel="stylesheet" href="../styles/All.css">
     <link rel="stylesheet" href="./styles/addProduct.css">
 </head>
@@ -49,16 +47,15 @@ include('./php/auth_check.php');
                 <!-- Category -->
                 <label for="category">カテゴリー:</label>
                 <div style="display: flex; align-items: center;">
-                    <input type="text" id="categoryText" name="categoryText" placeholder="選択したカテゴリー" />
-                    <select id="category" name="category" required onchange="updateCategoryText()">
+                    <input type="text" id="categoryText" name="categoryText" placeholder="選択してください" readonly />
+                    <select id="category" name="category" required onchange="handleCategorySelection()">
                         <option value="">選択してください</option>
+                        <option value="new">新しいカテゴリーを追加</option>
                         <?php
                         if ($category_result->num_rows > 0) {
                             while ($row = $category_result->fetch_assoc()) {
                                 echo "<option value='" . $row['category_id'] . "'>" . htmlspecialchars($row['cname']) . "</option>";
                             }
-                        } else {
-                            echo "<option value=''>Không có danh mục nào</option>";
                         }
                         ?>
                     </select>
@@ -67,10 +64,24 @@ include('./php/auth_check.php');
 
                 <!-- JavaScript để cập nhật ô văn bản -->
                 <script>
-                    function updateCategoryText() {
+                    function previewImage(event) {
+                        const imagePreview = document.getElementById('imagePreview');
+                        imagePreview.src = URL.createObjectURL(event.target.files[0]);
+                        imagePreview.style.display = 'block';
+                    }
+
+                    function handleCategorySelection() {
                         const categoryDropdown = document.getElementById('category');
                         const categoryTextInput = document.getElementById('categoryText');
-                        categoryTextInput.value = categoryDropdown.options[categoryDropdown.selectedIndex].text;
+
+                        if (categoryDropdown.value === "new") {
+                            categoryTextInput.placeholder = "新しいカテゴリー名を入力してください";
+                            categoryTextInput.value = ""; // Clear the input field
+                            categoryTextInput.removeAttribute('readonly');
+                        } else {
+                            categoryTextInput.value = categoryDropdown.options[categoryDropdown.selectedIndex].text;
+                            categoryTextInput.setAttribute('readonly', true);
+                        }
                     }
                 </script>
 
@@ -104,11 +115,11 @@ include('./php/auth_check.php');
         </div>
     </main>
     <footer></footer>
+    <script src="./scripts/camera.js"></script>
 </body>
 </html>
 
 <?php
 // Đóng kết nối cơ sở dữ liệu
-// $stmt->close();
-// $conn->close();
+$conn->close();
 ?>
