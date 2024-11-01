@@ -73,6 +73,11 @@ $conn->close();
     <link rel="stylesheet" href="./styles/All.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Lavishly+Yours&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Itim&family=Lavishly+Yours&display=swap" rel="stylesheet">
 
 
     
@@ -154,7 +159,7 @@ $conn->close();
         <section id="product-section" class="category">
             <!-- Nhóm Men -->
             <div class="group" id="men">
-                <h1 class="title">Men</h1>
+                <h3 class="title">Men</h3>
                 <div class="product-showcase">
                     <div class="product-content">
                         <img src="./images/product/1.jpg" alt="White Dress" />
@@ -202,7 +207,7 @@ $conn->close();
 
             <!-- Nhóm Women -->
             <div class="group" id="women">
-                <h1 class="title">Women</h1>
+                <h3 class="title">Women</h3>
                 <div class="product-showcase">
                     <div class="product-content">
                         <img src="./images/facebook.png" alt="Red Dress" />
@@ -222,7 +227,7 @@ $conn->close();
 
             <!-- Nhóm Child -->
             <div class="group" id="child">
-                <h1 class="title">Child</h1>
+                <h3 class="title">Child</h3>
                 <div class="product-showcase">
                     <div class="product-content">
                         <img src="./images/facebook.png" alt="T-Shirt" />

@@ -5,10 +5,10 @@
         padding: 0.5px;
         box-sizing: border-box;
     }
-    h1 {
+    /* h1 {
         margin: 5px;
         padding: 5px;
-    }
+    } */
 
     /* Category Section */
     .category {
@@ -184,6 +184,8 @@
         /* background-color: rgba(255, 255, 255, 0.5); */
     }
     p.rotated-text{
+        font-family: "Itim", cursive;
+        font-size: 20px;
         color: rgb(27, 28, 26);
     }
 
