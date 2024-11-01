@@ -47,45 +47,53 @@ include('./php/storeinfo.php');
         <label for="address">住所</label>
                 <input type="text" id="address" name="address"value="<?php echo isset($_SESSION['address']) ? htmlspecialchars($_SESSION['address']) : ''; ?>" readonly required>
                 <img src="./images/pen.png" alt="編集" class="icon" onclick="toggleEdit('address')">
-            
-        </div>
+    </div>
     <div class="form-row">
         <label for="phone">電話</label>
         <input type="text" id="phone" name="phone" value="<?php echo isset($_SESSION['tel']) ? htmlspecialchars($_SESSION['tel']) : ''; ?>" readonly required >
         <img src="./images/pen.png" alt="編集" class="icon" onclick="toggleEdit('phone')">
     </div>
-    <!-- Link to open the dialog -->
-<div>
-    <span class="edit-password-link" onclick="openDialog()">パスワードを編集</span>
-</div>
-    <!-- Password Change Modal -->
-<div id="passwordDialog" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeDialog()">&times;</span>
-        <h2>パスワードを変更</h2>
-        <form action="./php/changePassword.php" method="POST">
-            <div>現在のパスワード</div>
-            <input type="password" id="old-password" name="old_password" required>
-
-            <div>新しいパスワード</div>
-            <input type="password" id="new-password" name="new_password" required>
-
-            <div>新しいパスワード（確認）</div>
-            <input type="password" id="confirm-password" name="confirm_password" required>
-
-            <button type="submit" class="confirm-btn">確認</button>
-        </form>
-    </div>
-</div>
-</div>
-
-    
     <div class="save">
         <button type="submit" class="save-button">
             <img src="./images/signupBtn.png" alt="save">
         </button>
     </div>
+</div>
+    <script>
+        function toggleEdit(fieldId) {
+            var field = document.getElementById(fieldId);
+            field.readOnly = !field.readOnly;
+            field.focus();
+        }
+    </script>
+
+    <!-- Link to open the dialog -->
     <div>
+        <span class="edit-password-link" onclick="openDialog()">パスワードを編集</span>
+    </div>
+    <!-- Password Change Modal -->
+<!-- Dialog password không yêu cầu trong form chính -->
+<div id="passwordDialog" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeDialog()">&times;</span>
+        <h2>パスワードを変更</h2>
+        <form action="./php/changePassword.php" method="POST">
+            <div>現在のパスワード</div>
+            <input type="password" id="old-password" name="old_password">
+
+            <div>新しいパスワード</div>
+            <input type="password" id="new-password" name="new_password">
+
+            <div>新しいパスワード（確認）</div>
+            <input type="password" id="confirm-password" name="confirm_password">
+
+            <button type="submit" class="confirm-btn">確認</button>
+        </form>
+    </div>
+</div>
+
+
+<div>
     <a href="../main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>" target="_blank" rel="noopener noreferrer">
         ストアのリンクアドレス
     </a>
