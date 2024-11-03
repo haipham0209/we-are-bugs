@@ -31,6 +31,7 @@ $category_result = $stmt->get_result();
     <title>ProductAdd</title>
     <link rel="stylesheet" href="../styles/All.css">
     <link rel="stylesheet" href="./styles/addProduct.css">
+    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
 </head>
 <body>
     <header></header>
