@@ -50,7 +50,7 @@ $category_result = $stmt->get_result();
                 <div style="display: flex; align-items: center;">
                     <input type="text" id="categoryText" name="categoryText" placeholder="選択してください" readonly />
                     <select id="category" name="category" required onchange="handleCategorySelection()">
-                        <!-- <option value="">選択してください</option> -->
+                        <option value="">選択してください</option>
                         <option value="new">新しいカテゴリーを追加</option>
                         <?php
                         if ($category_result->num_rows > 0) {
