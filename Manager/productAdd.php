@@ -109,6 +109,8 @@ $category_result = $stmt->get_result();
                 <label for="barcode">バーコード:</label>
                 <input type="text" id="barcode" name="barcode" required>
                 <button type="button" id="start-scan">カメラでスキャン</button>
+                <!-- Div để hiển thị camera -->
+                <div id="camera" style="display: none;"></div>
 
                 <button type="submit">商品を追加する</button>
             </form>
