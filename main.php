@@ -3,7 +3,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-
 // Thông tin kết nối cơ sở dữ liệu
 include('./Manager/php/db_connect.php');
 
@@ -59,7 +58,6 @@ if ($result->num_rows > 0) {
 
 // Đóng kết nối
 $stmt->close();
-$conn->close();
 ?>
 
 
