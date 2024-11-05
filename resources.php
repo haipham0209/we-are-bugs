@@ -8,13 +8,13 @@ if ($conn->connect_error) {
     exit();
 }
 
-// Tạo mảng resources để lưu trữ sản phẩm theo category_id
-$resources = [];
+// Tạo mảng categories để lưu trữ sản phẩm theo category
+$categories = [];
 
 // Truy vấn sản phẩm và thông tin danh mục
 $query = "
-    SELECT p.productid, p.pname, p.price, p.productImage, p.description, 
-           c.category_id, c.cname
+    SELECT p.productid, p.pname, p.price, p.productImage, 
+           c.cname
     FROM product p
     JOIN category c ON p.category_id = c.category_id
     WHERE p.storeid = 1
@@ -23,24 +23,22 @@ $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $categoryId = $row['category_id'];
         $categoryName = $row['cname'];
 
-        // Kiểm tra nếu danh mục chưa có trong resources, tạo mới
-        if (!isset($resources[$categoryId])) {
-            $resources[$categoryId] = [
+        // Kiểm tra nếu danh mục chưa có trong categories, tạo mới
+        if (!isset($categories[$categoryName])) {
+            $categories[$categoryName] = [
                 'cname' => $categoryName,
                 'products' => []
             ];
         }
 
         // Thêm sản phẩm vào danh mục tương ứng
-        $resources[$categoryId]['products'][] = [
+        $categories[$categoryName]['products'][] = [
             'productid' => $row['productid'],
             'pname' => $row['pname'],
             'price' => $row['price'],
-            'productImage' => $row['productImage'],
-            'description' => $row['description']
+            'productImage' => $row['productImage']
         ];
     }
 }
@@ -48,8 +46,11 @@ if ($result->num_rows > 0) {
 // Đóng kết nối
 $conn->close();
 
-// In ra mảng resources để kiểm tra
-// echo "<pre>";
-// print_r($resources);
+// Định dạng mảng cuối cùng
+$categories = array_values($categories); // Chuyển về dạng mảng chỉ số
+
+// In ra mảng categories để kiểm tra
+// // echo "<pre>";
+// print_r($categories);
 // echo "</pre>";
 ?>

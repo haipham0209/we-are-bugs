@@ -58,6 +58,7 @@ if ($result->num_rows > 0) {
 
 // Đóng kết nối
 $stmt->close();
+require "resources.php";
 ?>
 
 
@@ -156,98 +157,23 @@ $stmt->close();
         </section>
 
         <section id="product-section" class="category">
-            <!-- Nhóm Men -->
-            <div class="group" id="men">
-                <h3 class="title">Men</h3>
-                <div class="product-showcase">
+    <?php foreach ($categories as $category): ?>
+        <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
+            <h3 class="title"><?= htmlspecialchars($category['cname']) ?></h3>
+            <div class="product-showcase">
+                <?php foreach ($category['products'] as $product): ?>
                     <div class="product-content">
-                        <img src="./images/product/1.jpg" alt="White Dress" />
-                        <p class="rotated-text">White Dress<br>8000 ¥</p>
+                        <img src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" />
+                        <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
                     </div>
-                    <div class="product-content">
-                        <img src="./images/product/2.jpg" alt="Black Suit" />
-                        <p class="rotated-text">Black Suit<br>12000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Blue Shirt" />
-                        <p class="rotated-text">Blue Shirt<br>5000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Jacket" />
-                        <p class="rotated-text">Jacket<br>15000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Jeans" />
-                        <p class="rotated-text">Jeans<br>6000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="White Dress" />
-                        <p class="rotated-text">White Dress<br>8000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Black Suit" />
-                        <p class="rotated-text">Black Suit<br>12000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Blue Shirt" />
-                        <p class="rotated-text">Blue Shirt<br>5000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Jacket" />
-                        <p class="rotated-text">Jacket<br>15000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Jeans" />
-                        <p class="rotated-text">Jeans<br>6000 ¥</p>
-                    </div>
-                </div>
-                <button class="show-more-btn" data-group="men">Show More</button>
+                <?php endforeach; ?>
             </div>
+            <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>">Show More</button>
+        </div>
+    <?php endforeach; ?>
+</section>
 
-            <!-- Nhóm Women -->
-            <div class="group" id="women">
-                <h3 class="title">Women</h3>
-                <div class="product-showcase">
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Red Dress" />
-                        <p class="rotated-text">Red Dress<br>9000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Green Top" />
-                        <p class="rotated-text">Green Top<br>7000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Yellow Skirt" />
-                        <p class="rotated-text">Yellow Skirt<br>7500 ¥</p>
-                    </div>
-                </div>
-                <button class="show-more-btn" data-group="women">Show More</button>
-            </div>
 
-            <!-- Nhóm Child -->
-            <div class="group" id="child">
-                <h3 class="title">Child</h3>
-                <div class="product-showcase">
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="T-Shirt" />
-                        <p class="rotated-text">T-Shirt<br>4000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Shorts" />
-                        <p class="rotated-text">Shorts<br>3000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Cap" />
-                        <p class="rotated-text">Cap<br>2000 ¥</p>
-                    </div>
-                    <div class="product-content">
-                        <img src="./images/facebook.png" alt="Cap" />
-                        <p class="rotated-text">Cap<br>2000 ¥</p>
-                    </div>
-                </div>
-                <button class="show-more-btn" data-group="child">Show More</button>
-            </div>
-        </section>
        </main>
     <footer>
         <script src="./scripts/menu.js"></script>
