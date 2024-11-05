@@ -98,19 +98,14 @@
                     path: './images/loading.json'
                 });
 
-                // animation
+                // Hiện loading animation khi form được gửi
                 document.querySelector('.register-form2').addEventListener('submit', function(event) {
-                    // 
-                    event.preventDefault();
                     document.getElementById('loading').style.display = 'flex';
-
-                    // set time animation
-                    setTimeout(() => {
-                        this.submit();
-                    }, 2500);
+                    // Không cần dùng setTimeout, form sẽ tự động gửi
                 });
             });
         </script>
+        
         <?php
         // if (isset($_GET['success']) && $_GET['success'] === 'true') {
         //     // cache 

@@ -32,6 +32,7 @@ $category_result = $stmt->get_result();
     <link rel="stylesheet" href="../styles/All.css">
     <link rel="stylesheet" href="./styles/addProduct.css">
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.7/lottie.min.js"></script>
 </head>
 <body>
     <header></header>
@@ -115,6 +116,28 @@ $category_result = $stmt->get_result();
 
                 <button type="submit">商品を追加する</button>
             </form>
+            <div id="loading" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center;">
+                <div id="lottie"></div>
+            </div>
+            <script>
+            // Lottie 起動
+            document.addEventListener('DOMContentLoaded', function() {
+                // Lottie
+                const animation = lottie.loadAnimation({
+                    container: document.getElementById('lottie'),
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: './images/loading.json'
+                });
+
+                // Hiện loading animation khi form được gửi
+                document.querySelector('.register-form2').addEventListener('submit', function(event) {
+                    document.getElementById('loading').style.display = 'flex';
+                    // Không cần dùng setTimeout, form sẽ tự động gửi
+                });
+            });
+        </script>
         </div>
     </main>
     <footer></footer>
