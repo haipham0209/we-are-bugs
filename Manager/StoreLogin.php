@@ -76,7 +76,7 @@ if (isset($_COOKIE['loggedin'])) {
                 });
 
                 // Hiện loading animation khi form được gửi
-                document.querySelector('.register-form2').addEventListener('submit', function(event) {
+                document.querySelector('.login-form2').addEventListener('submit', function(event) {
                     document.getElementById('loading').style.display = 'flex';
                     // Không cần dùng setTimeout, form sẽ tự động gửi
                 });
