@@ -121,7 +121,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     // Kiểm tra nếu có lỗi tải lên ảnh
     if ($_FILES['productImage']['error'] !== UPLOAD_ERR_OK) {
-        echo "Lỗi khi tải lên ảnh!";
+        // echo "Lỗi khi tải lên ảnh!";
+        //////////////////hai///////////////////////
+        switch ($_FILES['productImage']['error']) {
+            case UPLOAD_ERR_INI_SIZE:
+                echo "Lỗi: Kích thước file vượt quá giới hạn upload_max_filesize trong php.ini.";
+                break;
+            case UPLOAD_ERR_FORM_SIZE:
+                echo "Lỗi: Kích thước file vượt quá giới hạn MAX_FILE_SIZE trong form HTML.";
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                echo "Lỗi: File chỉ được tải lên một phần.";
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                echo "Lỗi: Không có file nào được tải lên.";
+                break;
+            case UPLOAD_ERR_NO_TMP_DIR:
+                echo "Lỗi: Thiếu thư mục tạm.";
+                break;
+            case UPLOAD_ERR_CANT_WRITE:
+                echo "Lỗi: Không thể ghi file vào đĩa.";
+                break;
+            case UPLOAD_ERR_EXTENSION:
+                echo "Lỗi: Upload bị dừng bởi một phần mở rộng PHP.";
+                break;
+            default:
+                echo "Lỗi không xác định khi tải lên ảnh.";
+                break;
+        }
+
+        ////////////////////////hai//////////////////////////////////
         exit();
     }
 
