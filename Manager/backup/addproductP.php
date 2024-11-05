@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Tăng productid lên 1
     $next_productid = $max_productid + 1;
-    $dbImagePath =  "./Manager/storeproductImg/" . $username . "/" . $category_name . "/" . $uniqueImageName;
+    $dbImagePath = "./storeproductImg/" . $username . "/" . $category_name . "/" . $uniqueImageName;
     // Thêm sản phẩm vào bảng product
     $stmt = $conn->prepare("INSERT INTO product (productid, storeid, category_id, pname, price, costPrice, description, stock_quantity, barcode, productImage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("iiissssiss", $next_productid, $storeid, $category_id, $pname, $price, $costPrice, $description, $stockQuantity, $barcode, $dbImagePath);
