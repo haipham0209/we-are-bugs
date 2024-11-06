@@ -1,0 +1,235 @@
+@media only screen and (max-width: 767px) { 
+    body {
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        background-size: 400% 400%;
+        animation: wave 10s ease infinite;
+    }
+
+    @keyframes wave {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    .main-navbar {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0px;
+        background-color: #e3f3e1;
+    }
+
+    .search-scan {
+        position: relative;
+        width: 70%;
+    }
+
+    .search-bar {
+        width: 100%;
+        padding: 10px 5px 10px 5px; /* Chỉnh lại padding để chừa không gian cho ảnh */
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+    }
+    .search-bar:focus {
+        border-color: #038610; /* Đổi màu viền khi focus */
+        outline: none;
+    }
+
+    /* Định dạng ảnh camera */
+    .camera-icon {
+        position: absolute;
+        text-align: right;
+        right: 0px;
+        top: 50%;
+        justify-content: right;
+        transform: translateY(-50%);
+        width: 24px; /* Kích thước của ảnh camera */
+        height: 24px;
+        cursor: pointer;
+        opacity: 0.8; /* Tạo hiệu ứng mờ nhẹ */
+        transition: opacity 0.3s ease;
+    }
+    .camera-icon:hover {
+        opacity: 1; /* Hiệu ứng hover */
+    }
+
+    .main-home {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .logo {
+        font-size: 24px;
+        margin: auto;
+        padding-left: 15px;
+        font-weight: bold;
+        color: #333;
+    }
+    #camera {
+        display: none;
+    }
+    
+    .title{
+        font-size: 30px;
+        font-weight: bold; 
+        margin: 15px 10px 5px 10px;
+    }
+    /* Main-category Buttons */
+    .main-category {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+        padding: 10px;
+        justify-content: center;
+        overflow-x: auto; /* Cho phép cuộn ngang khi danh sách dài */
+        white-space: nowrap; /* Ngăn không cho các nút xuống dòng */
+    }
+
+    /* Ẩn thanh cuộn */
+    /* .main-category::-webkit-scrollbar {
+        display: none;
+    } */
+
+    .main-category button {
+        padding: 10px 20px;
+        border-radius: 10px; /* Bo tròn góc nút */
+        border: 0.5px solid #000000; /* Màu viền nổi bật */
+        background-color: #f4f4f400; /* Màu nền nhẹ nhàng */
+        font-family: 'Arial', sans-serif;
+        font-size: 20px; /* Kích thước chữ */
+        color: #333; /* Màu chữ */
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+        margin-bottom: 5px; /* Khoảng cách giữa các nút */
+    }
+
+    /* Hiệu ứng hover */
+    .main-category button:hover {
+        background-color: #000000; /* Màu nền khi hover */
+        color: #fff; /* Đổi màu chữ khi hover */
+        transform: translateY(-3px); /* Hiệu ứng nổi lên khi hover */
+        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng mạnh hơn khi hover */
+    }
+
+    /* Hiệu ứng nút active */
+    .main-category button.active {
+        background-color: #4CAF50; /* Màu nền cho nút đang active */
+        color: #fff; /* Màu chữ */
+        border-color: #4CAF50; /* Màu viền khi active */
+    }
+
+    /* Responsive adjustments */
+    @media only screen and (max-width: 767px) {
+        .main-category {
+            gap: 8px;
+            padding: 8px;
+        }
+        
+        .main-category button {
+            font-size: 16px;
+            padding: 8px 16px;
+        }
+    }
+
+    /* Định dạng product card */
+    .product-card {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        background-color: #f0f0f0;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 20px 0;
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Định dạng hình ảnh sản phẩm */
+    .product-card img {
+        width: 120px;
+        height: auto;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+
+    /* Thông tin sản phẩm */
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .product-info p {
+        margin: 5px 0;
+        font-size: 16px;
+        color: #333;
+    }
+
+    /* Stock (số lượng tồn kho) */
+    .stock {
+        font-size: 14px;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #000;
+        padding: 5px 10px;
+        border-radius: 5px;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    /* Button chỉnh sửa (biểu tượng cây bút) */
+    .edit-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 20px;
+        height: 20px;
+        background-image: url('./images/edit-icon.png'); /* Đường dẫn đến icon cây bút */
+        background-size: cover;
+        cursor: pointer;
+    }
+
+    /* Nút Add Product */
+    .add-product {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .add-product button {
+        background-color: #035c0c;
+        color: #ffffff;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .add-product button:hover {
+        background-color: #000000;
+        transform: scale(1.1);
+    }
+
+
+
+} 
