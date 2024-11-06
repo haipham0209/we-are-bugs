@@ -138,18 +138,26 @@
     }
 
     /* Định dạng product card */
+    .all-product{
+        background-color: #b1aeaeff;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
     .product-card {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        background-color: #f0f0f0;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         padding: 20px;
-        margin: 20px 0;
+        margin: 10px 0;
         position: relative;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        
+        /* Thêm đường viền trắng giữa các sản phẩm */
+        border: 1px solid #ffffff;  /* Đường viền trắng */
+        border-radius: 8px;  /* Thêm góc bo tròn cho viền nếu muốn */
+        background-color: #f9f9f9;  /* Màu nền nhẹ cho sản phẩm */
     }
+    
 
     .product-card:hover {
         transform: scale(1.02);

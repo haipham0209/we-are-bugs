@@ -85,30 +85,32 @@ $product_result = $product_stmt->get_result();
             </div>
 
             <!-- Product Cards -->
-            <?php
-                if ($product_result->num_rows > 0) {
-                    // Duyệt qua danh sách sản phẩm và hiển thị mỗi sản phẩm dưới dạng card
-                    while ($product = $product_result->fetch_assoc()) {
-                        // Xây dựng đường dẫn ảnh từ username, cname và productImage
-                        $productImagePath = '../' .$product['productImage'];
-                        
-                        echo '
-                        <div class="product-card">
-                            <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
-                            <div class="product-info">
-                                <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p><strong>原価：</strong>' . htmlspecialchars($product['costPrice'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p><strong>値段：</strong>' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p><strong>説明：</strong>' . htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') . '</p>
-                            </div>
-                            <div class="stock">在庫: ' . htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') . '</div>
-                        </div>';
+             <div class="all-product">
+                <?php
+                    if ($product_result->num_rows > 0) {
+                        // Duyệt qua danh sách sản phẩm và hiển thị mỗi sản phẩm dưới dạng card
+                        while ($product = $product_result->fetch_assoc()) {
+                            // Xây dựng đường dẫn ảnh từ username, cname và productImage
+                            $productImagePath = '../' .$product['productImage'];
+                            
+                            echo '
+                            <div class="product-card">
+                                <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
+                                <div class="product-info">
+                                    <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
+                                    <p><strong>原価：</strong>' . htmlspecialchars($product['costPrice'], ENT_QUOTES, 'UTF-8') . '</p>
+                                    <p><strong>値段：</strong>' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '</p>
+                                    <p><strong>説明：</strong>' . htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') . '</p>
+                                </div>
+                                <div class="stock">在庫: ' . htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') . '</div>
+                            </div>';
+                        }
+                    } else {
+                        echo '<p>No products found.</p>';
                     }
-                } else {
-                    echo '<p>No products found.</p>';
-                }
-                
-            ?>
+                    
+                ?>
+            </div>
 
             <!-- Add Product Button -->
             <div class="add-product">
