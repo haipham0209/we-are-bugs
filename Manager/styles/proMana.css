@@ -79,8 +79,7 @@
         font-weight: bold; 
         margin: 15px 10px 5px 10px;
     }
-    /* Main-category Buttons */
-    .main-category {
+    .category{
         display: flex;
         gap: 10px;
         /* margin-bottom: 10px; */
@@ -89,53 +88,68 @@
         overflow-x: auto; /* Cho phép cuộn ngang khi danh sách dài */
         white-space: nowrap; /* Ngăn không cho các nút xuống dòng */
     }
-
-    /* Ẩn thanh cuộn */
-    /* .main-category::-webkit-scrollbar {
-        display: none;
-    } */
-
-    .main-category button {
-        padding: 10px 20px;
-        border-radius: 10px; /* Bo tròn góc nút */
-        border: 0.5px solid #000000; /* Màu viền nổi bật */
-        background-color: #f4f4f400; /* Màu nền nhẹ nhàng */
-        font-family: 'Arial', sans-serif;
-        font-size: 20px; /* Kích thước chữ */
-        color: #333; /* Màu chữ */
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-        margin-bottom: 5px; /* Khoảng cách giữa các nút */
+    /* Các nút trong category (All và các nút khác) đều có kích thước và khoảng cách giống nhau */
+    .category, .main-category {
+        display: flex;
+        gap: 10px;  /* Khoảng cách giữa các nút */
+        justify-content: center; /* Căn giữa các nút */
+        flex-wrap: wrap; /* Cho phép cuộn khi các nút quá dài */
     }
 
-    /* Hiệu ứng hover */
+    /* Nút All Categories luôn có nền đen và chữ trắng */
+    .all-categories {
+        background-color: #000;  /* Nền đen */
+        color: #fff;             /* Chữ trắng */
+        border-radius: 10px;     /* Bo tròn các góc */
+        padding: 10px 20px;      /* Padding cho nút */
+        font-size: 16px;         /* Kích thước chữ */
+        border: 1px solid #000;  /* Đường viền đen */
+        cursor: pointer;        /* Hiển thị con trỏ chuột */
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    }
+
+    /* Nút All Categories khi hover (Vẫn giữ nền đen và chữ trắng) */
+    .all-categories:hover {
+        background-color: #333;  /* Nền hơi sáng khi hover */
+        color: #fff;             /* Chữ vẫn trắng */
+    }
+
+    /* Các nút trong main-category có nền sáng và chữ đen */
+    .main-category button {
+        background-color: #f4f4f400;  /* Nền sáng */
+        color: #333;                /* Chữ đen */
+        border-radius: 10px;        /* Bo tròn góc */
+        padding: 10px 20px;         /* Padding cho nút */
+        font-size: 16px;            /* Kích thước chữ */
+        border: 1px solid #000;     /* Đường viền đen */
+        cursor: pointer;           /* Hiển thị con trỏ chuột */
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    }
+
+    /* Các nút trong main-category khi hover (Nền chuyển sang đen, chữ chuyển sang trắng) */
     .main-category button:hover {
-        background-color: #000000; /* Màu nền khi hover */
-        color: #fff; /* Đổi màu chữ khi hover */
+        background-color: #000;  /* Nền đen khi hover */
+        color: #fff;             /* Chữ trắng khi hover */
         transform: translateY(-3px); /* Hiệu ứng nổi lên khi hover */
         box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng mạnh hơn khi hover */
     }
 
-    /* Hiệu ứng nút active */
+    /* Nút active trong main-category khi được chọn */
     .main-category button.active {
-        background-color: #4CAF50; /* Màu nền cho nút đang active */
-        color: #fff; /* Màu chữ */
-        border-color: #4CAF50; /* Màu viền khi active */
+        background-color: #000;  /* Nền đen khi được chọn */
+        color: #fff;             /* Chữ trắng khi được chọn */
     }
 
     /* Responsive adjustments */
     @media only screen and (max-width: 767px) {
-        .main-category {
-            gap: 8px;
-            padding: 8px;
-        }
-        
-        .main-category button {
-            font-size: 16px;
-            padding: 8px 16px;
+        .all-categories, .main-category button {
+            font-size: 14px; /* Giảm kích thước chữ cho các màn hình nhỏ */
+            padding: 8px 16px; /* Giảm padding để vừa với các màn hình nhỏ */
         }
     }
+
 
       /* Nút Add Product */
       .add-product {
@@ -237,9 +251,5 @@
         background-size: cover;
         cursor: pointer;
     }
-
-  
-
-
 
 } 

@@ -70,18 +70,49 @@ $product_result = $product_stmt->get_result();
         <div class="container">
             <p class="title">商品管理</p>
             <!-- Category -->
-            <div class="main-category">
-                <?php
-                if ($category_result->num_rows > 0) {
-                    // Duyệt qua các hàng kết quả từ truy vấn
-                    while ($row = $category_result->fetch_assoc()) {
-                        // Hiển thị từng danh mục dưới dạng button
-                        echo '<button>' . htmlspecialchars($row['cname'], ENT_QUOTES, 'UTF-8') . '</button>';
+            <div class="category">
+                <button class="all-categories" onclick="window.location.reload();">All</button>
+                <div class="main-category">
+                    <?php
+                    if ($category_result->num_rows > 0) {
+                        // Duyệt qua các hàng kết quả từ truy vấn
+                        while ($row = $category_result->fetch_assoc()) {
+                            // Hiển thị từng danh mục dưới dạng button
+                            echo '<button>' . htmlspecialchars($row['cname'], ENT_QUOTES, 'UTF-8') . '</button>';
+                        }
+                    } else {
+                        echo '<p>No categories found.</p>';
                     }
-                } else {
-                    echo '<p>No categories found.</p>';
-                }
-                ?>
+                    ?>
+                </div>  
+                <script>
+                    // Khi người dùng nhấn vào nút trong main-category
+                    document.querySelectorAll('.main-category button').forEach(button => {
+                        button.addEventListener('click', function() {
+                            // Xóa class 'active' ở tất cả các nút trong main-category
+                            document.querySelectorAll('.main-category button').forEach(btn => btn.classList.remove('active'));
+
+                            // Thêm class 'active' vào nút vừa được nhấn
+                            this.classList.add('active');
+
+                            // Chuyển nút 'All' thành nền trong suốt với chữ đen
+                            document.querySelector('.all-categories').classList.remove('active');
+                            document.querySelector('.all-categories').style.backgroundColor = 'transparent';
+                            document.querySelector('.all-categories').style.color = '#333'; // Chữ đen
+                        });
+                    });
+
+                    // Khi người dùng nhấn vào nút 'All', giữ trạng thái của nó
+                    document.querySelector('.all-categories').addEventListener('click', function() {
+                        // Xóa class 'active' ở tất cả các nút trong main-category
+                        document.querySelectorAll('.main-category button').forEach(btn => btn.classList.remove('active'));
+
+                        // Giữ nền đen cho 'All' và chữ trắng
+                        this.style.backgroundColor = '#000';
+                        this.style.color = '#fff';
+                    });
+                </script>
+
             </div>
 
             <!-- Add Product Button -->
