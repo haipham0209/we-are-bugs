@@ -188,7 +188,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
           // Nếu thêm sản phẩm thành công, lưu ảnh vào thư mục
           if (move_uploaded_file($_FILES['productImage']['tmp_name'], $imagePath)) {
-            echo "Sản phẩm đã được thêm thành công!";
+            // echo "Sản phẩm đã được thêm thành công!";
+            echo '
+            <div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
+                <!-- Hiển thị hiệu ứng Lottie -->
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest"></script>
+                <lottie-player src="../images/success.json" background="transparent" speed="1" style="width: 150px; height: 150px;" autoplay></lottie-player>
+                <p>商品追加しました、しばらくお待ちください。...</p>
+            </div>
+    
+            <script>
+                // Trì hoãn 3 giây trước khi chuyển hướng
+                setTimeout(function() {
+                    window.location.href = "../productAdd.php";
+                }, 300000); // 3000ms = 3 giây
+            </script>
+        ';
+            // header("Location: ../productAdd.php");
+
         } else {
             // echo "Lỗi khi lưu ảnh!";
             // Nếu lưu ảnh thất bại, xoá sản phẩm vừa thêm khỏi cơ sở dữ liệu
@@ -198,7 +215,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $delete_stmt->close();
         }
     } else {
-        echo "Lỗi khi thêm sản phẩm vào cơ sở dữ liệu.";
+        // echo "Lỗi khi thêm sản phẩm vào cơ sở dữ liệu.";
+
+        header("Location: ../../error.php?errror=DB_ERROR");
     }
 
     $stmt->close();
