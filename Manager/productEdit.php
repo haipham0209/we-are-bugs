@@ -5,17 +5,20 @@ include('./php/auth_check.php');
 
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../styles/All.css">
-    <link rel="stylesheet" href="./styles/productDetail.css">
+    <title>商品編集</title>
+    <!-- <link rel="stylesheet" href="../styles/All.css"> -->
+    <link rel="stylesheet" href="./styles/productEdit.css">
+    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.7/lottie.min.js"></script>
 </head>
+
 <body>
-    <header></header>
     <main>
-        <h3>商品詳細</h3>
+        <h3>商品編集</h3>
         <div class="addContainer">
             <form class="proAddForm" action="./php/addProductP.php" method="POST" enctype="multipart/form-data">
                 <!-- Trường chọn ảnh -->
@@ -79,13 +82,17 @@ include('./php/auth_check.php');
 
                 <label for="barcode">バーコード:</label>
                 <input type="text" id="barcode" name="barcode" required>
+                <button type="button" id="start-scan">カメラでスキャン</button>
+                <!-- Div để hiển thị camera -->
+                <div id="camera" style="display: none;"></div>
 
                 <button type="submit">商品情報を更新する</button>
             </form>
         </div>
     </main>
-    <footer></footer>
+    <script src="./scripts/camera.js"></script>
 </body>
+
 </html>
 
 <?php

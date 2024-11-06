@@ -1,5 +1,14 @@
 let scannerRunning = false; // Trạng thái của camera
 
+// カメラのスキャン機能の開始・停止を切り替える
+function toggleScanner() {
+    if (scannerRunning) {
+        stopScanner(); // カメラを停止
+    } else {
+        startScanner(); // カメラを開始
+    }
+}
+
 // Khởi động quét mã
 function startScanner() {
     if (scannerRunning) return; // Nếu đã chạy thì không khởi động lại
@@ -48,4 +57,4 @@ function stopScanner() {
 }
 
 // Gắn sự kiện cho nút bắt đầu quét
-document.getElementById('start-scan').addEventListener('click', startScanner);
+document.getElementById('start-scan').addEventListener('click', toggleScanner);

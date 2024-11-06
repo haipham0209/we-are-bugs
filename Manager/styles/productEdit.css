@@ -89,14 +89,34 @@
         background-color: #45a049;
     }
 
-    /* Hiển thị ảnh preview */
-    img#imagePreview {
-        display: none;
-        margin-top: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        max-width: 100%;
+    .imgDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
     }
+
+    .imageContainer {
+        /* display: flex; */
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+
+        /* margin-top: 10px; */
+    }
+
+    #imagePreview {
+        max-width: 200px;
+        margin-right: 10px;
+        align-items: center;
+    }
+
+    #editButton {
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+
 
     /* //////////////barcode/////////////////////// */
     #barcode-scanner {

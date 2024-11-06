@@ -25,7 +25,7 @@ include('./php/auth_check.php');
 
         <!-- 左側のボタンメニュー -->
         <div class="menu">
-            <button class="menu-button" onclick="location.href='product.html'">
+            <button class="menu-button" onclick="location.href='productMgr.php'">
                 <img src="./images/product-icon.png" alt="商品" class="icon">
                 <span>商品</span>
             </button>
