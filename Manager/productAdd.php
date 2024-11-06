@@ -25,6 +25,7 @@ $category_result = $stmt->get_result();
 
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,6 +35,7 @@ $category_result = $stmt->get_result();
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.7/lottie.min.js"></script>
 </head>
+
 <body>
     <main>
         <h3>商品追加</h3>
@@ -119,29 +121,29 @@ $category_result = $stmt->get_result();
                 <div id="lottie"></div>
             </div>
             <script>
-            // Lottie 起動
-            document.addEventListener('DOMContentLoaded', function() {
-                // Lottie
-                const animation = lottie.loadAnimation({
-                    container: document.getElementById('lottie'),
-                    renderer: 'svg',
-                    loop: true,
-                    autoplay: true,
-                    path: './images/loading.json'
-                });
+                // Lottie 起動
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Lottie
+                    const animation = lottie.loadAnimation({
+                        container: document.getElementById('lottie'),
+                        renderer: 'svg',
+                        loop: true,
+                        autoplay: true,
+                        path: './images/loading.json'
+                    });
 
-                // Hiện loading animation khi form được gửi
-                document.querySelector('.proAddForm').addEventListener('submit', function(event) {
-                    document.getElementById('loading').style.display = 'flex';
-                    // Không cần dùng setTimeout, form sẽ tự động gửi
+                    // Hiện loading animation khi form được gửi
+                    document.querySelector('.proAddForm').addEventListener('submit', function(event) {
+                        document.getElementById('loading').style.display = 'flex';
+                        // Không cần dùng setTimeout, form sẽ tự động gửi
+                    });
                 });
-            });
-        </script>
+            </script>
         </div>
     </main>
-    <footer></footer>
     <script src="./scripts/camera.js"></script>
 </body>
+
 </html>
 
 <?php
