@@ -9,7 +9,7 @@
         margin: 0;
         background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
         background-size: 100% 100%;
-        overflow: hidden;
+        overflow-y: auto;
     }
 
     /* 容器 */

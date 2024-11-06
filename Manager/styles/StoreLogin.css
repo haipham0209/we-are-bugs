@@ -6,7 +6,6 @@
     }
 
     body {
-        overflow: hidden;
         font-family: Arial, sans-serif;
         display: flex;
         justify-content: center;
@@ -18,6 +17,7 @@
         margin: 0;
         padding-bottom: 40px;
         position: relative;
+        overflow-y: auto;
     }
 
     @keyframes wave {
@@ -216,7 +216,7 @@
         background-size: 400% 400%;
         animation: wave 10s ease infinite;
         margin: 0;
-        overflow: hidden;
+        overflow-y: auto;
         padding-top: 20px;
         padding-bottom: 20px;
     }
