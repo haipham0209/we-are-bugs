@@ -115,17 +115,37 @@ $stmt->close();
                 </div>
 
                 <div>
-                    <form action="./php/accountDeleteP.php" method="POST" onsubmit="return confirmDelete()">
-                        <input type="hidden" name="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
-                        <button type="submit" class="delete-button">アカウントを削除</button>
-                    </form>
-
-                    <script>
-                        function confirmDelete() {
-                            return confirm('本当にアカウントを削除しますか？この操作は元に戻せません。');
-                        }
-                    </script>
+                    <button type="button" class="delete-button" onclick="openDeleteDialog()">アカウントを削除</button>
                 </div>
+
+                <!-- アカウント削除確認モーダル -->
+                <div id="deleteDialog" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <span class="close-btn" onclick="closeDeleteDialog()">&times;</span>
+                        <h2>アカウントを削除</h2>
+                        <p>アカウントを削除するにはパスワードを入力してください。</p>
+                        <form id="deleteForm" action="./php/accountDeleteP.php" method="POST" onsubmit="return confirmDelete()">
+                            <input type="hidden" name="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
+                            <div>パスワード</div>
+                            <input type="password" id="delete-password" name="password" required>
+                            <button type="submit" class="confirm-btn">削除</button>
+                        </form>
+                    </div>
+                </div>
+
+                <?php if (isset($_GET['error']) && $_GET['error'] === 'invalid_password'): ?>
+                    <p style="color: red;">パスワードが間違っています。</p>
+                <?php endif; ?>
+
+                <script>
+                    function openDeleteDialog() {
+                        document.getElementById('deleteDialog').style.display = 'block';
+                    }
+
+                    function closeDeleteDialog() {
+                        document.getElementById('deleteDialog').style.display = 'none';
+                    }
+                </script>
 
             </form>
         </div>
