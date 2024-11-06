@@ -1,3 +1,51 @@
+<?php
+    // Check if the storeid cookie exists
+    if (!isset($_COOKIE['storeid'])) {
+        header("HTTP/1.0 404 Not Found");
+        echo "404 Not Found";
+        exit();
+    }
+
+    // Retrieve storeid from the cookie
+    $storeid = $_COOKIE['storeid'];
+
+    // Database connection
+    include('./Manager/php/db_connect.php');
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        echo "SERVER NOT FOUND";
+        exit();
+    }
+
+    // Prepare the SQL query
+    $query = "SELECT store.sname, store.tel, store.address, user.mail 
+            FROM store 
+            JOIN user ON store.userid = user.userid 
+            WHERE store.storeid = ?";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $storeid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Fetch data if available
+    if ($result->num_rows > 0) {
+        $storeData = $result->fetch_assoc();
+        $sname = $storeData["sname"];
+        $tel = $storeData["tel"];
+        $address = $storeData["address"];
+        $mail = $storeData["mail"];
+    } else {
+        header("HTTP/1.0 404 Not Found");
+        exit();
+    }
+
+    // Close the connection
+    $stmt->close();
+    $conn->close();
+?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -58,13 +106,13 @@
              <!-- About Store Section -->
             <div class="about-store">
                 <h2>店舗紹介</h2>
-                <p>私たちのショップは、大阪にある若者向けのファッションを専門に提供するアパレル店です。最新のトレンドを取り入れたデザインで、10代から若者まで多くのお客様にご愛顧いただいております。</p>
+                <p><?php echo $description; ?></p>
 
                 <h2>所在地</h2>
-                <p>大阪府〇〇町〇〇</p>
+                <p><?php echo $address; ?></p>
 
                 <h2>電話番号</h2>
-                <p>📞+81 90 0000 0000</p>
+                <p>📞<?php echo $tel; ?></p>
 
                 <h2>お客様の声</h2>
                 <p>「トレンドを押さえたセンスの良い商品がたくさんあって、お気に入りです！」</p>
