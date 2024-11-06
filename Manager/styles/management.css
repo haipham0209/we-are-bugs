@@ -171,7 +171,7 @@ body {
 .logout-button {
     text-decoration: none;
     background-color:618264;
-    color: white;
+    color:red;
     padding: 12px 24px;
     font-size: 18px;
     border-radius: 8px;
