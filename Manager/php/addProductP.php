@@ -193,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
                 <!-- Hiển thị hiệu ứng Lottie -->
                 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest"></script>
-                <lottie-player src="../images/success.json" background="transparent" speed="1" style="width: 150px; height: 150px;" autoplay></lottie-player>
+                <lottie-player src="../images/success.json" background="transparent" speed="1.5" style="width: 150px; height: 150px;" autoplay></lottie-player>
                 <p>商品追加しました、しばらくお待ちください。...</p>
             </div>
     
@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Trì hoãn 3 giây trước khi chuyển hướng
                 setTimeout(function() {
                     window.location.href = "../productAdd.php";
-                }, 300000); // 300ms = 3 giây
+                }, 3000); // 300ms = 3 giây
             </script>
         ';
             // header("Location: ../productAdd.php");
