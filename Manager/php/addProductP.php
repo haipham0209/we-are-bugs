@@ -190,19 +190,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           if (move_uploaded_file($_FILES['productImage']['tmp_name'], $imagePath)) {
             // echo "Sản phẩm đã được thêm thành công!";
             echo '
-            <div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
-                <!-- Hiển thị hiệu ứng Lottie -->
-                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest"></script>
-                <lottie-player src="../images/success.json" background="transparent" speed="1.5" style="width: 150px; height: 150px;" autoplay></lottie-player>
-                <p>商品追加しました、しばらくお待ちください。...</p>
-            </div>
-    
-            <script>
-                // Trì hoãn 3 giây trước khi chuyển hướng
-                setTimeout(function() {
-                    window.location.href = "../productAdd.php";
-                }, 3000); // 300ms = 3 giây
-            </script>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
+    <!-- Hiển thị hiệu ứng Lottie -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest"></script>
+    <lottie-player src="../images/success.json" background="transparent" speed="1.5" style="width: 250px; height: 250px;" autoplay></lottie-player>
+    <p style="font-size: 2.5em; font-weight: bold; margin-top: 20px;">商品追加しました、しばらくお待ちください。...</p>
+</div>
+
+<script>
+    // Trì hoãn 3 giây trước khi chuyển hướng
+    setTimeout(function() {
+        window.location.href = "../productAdd.php";
+    }, 3000); // 3000ms = 3 giây
+</script>
+
         ';
             // header("Location: ../productAdd.php");
 
