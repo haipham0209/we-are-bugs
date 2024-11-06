@@ -11,12 +11,12 @@ if (!isset($_SESSION['userid'])) {
 }
 
 // データベースからロゴパスを取得
-$stmt = $conn->prepare("SELECT logo_path FROM user WHERE userid = ?");
-$stmt->bind_param("i", $_SESSION['userid']);
-$stmt->execute();
-$stmt->bind_result($logoPath);
-$stmt->fetch();
-$stmt->close();
+// $stmt = $conn->prepare("SELECT logo_path FROM user WHERE userid = ?");
+// $stmt->bind_param("i", $_SESSION['userid']);
+// $stmt->execute();
+// $stmt->bind_result($logoPath);
+// $stmt->fetch();
+// $stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="ja">
