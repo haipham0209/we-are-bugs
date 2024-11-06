@@ -6,7 +6,7 @@ body {
     font-family: 'Arial', sans-serif;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-y: auto;
     position: relative;
     outline: none;
 }
@@ -203,16 +203,4 @@ footer img {
     height: 25px;
 }
 
-/* Hiệu ứng hover */
-.logout-button:hover {
-    /* background-color: #ff4c4c; */
-    /* transform: scale(1.05); */
-}
-
-/* Hiệu ứng khi nhấp vào */
-.logout-button:active {
-    /* background-color: #e63946; */
-    /* transform: scale(0.95); */
-}
-/* ---------------------------enfd logout--------------------------------- */
 }
