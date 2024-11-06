@@ -73,11 +73,11 @@
 
                     <button type="submit">登録</button>
                 </div>
-            </form>
-
-            <div class="login-link">
+                <div class="login-link">
                 <p>Already have account? <a href="./StoreLogin.php">Login</a></p>
             </div>
+            </form>
+
         </div>
 
 
@@ -98,19 +98,14 @@
                     path: './images/loading.json'
                 });
 
-                // animation
+                // Hiện loading animation khi form được gửi
                 document.querySelector('.register-form2').addEventListener('submit', function(event) {
-                    // 
-                    event.preventDefault();
                     document.getElementById('loading').style.display = 'flex';
-
-                    // set time animation
-                    setTimeout(() => {
-                        this.submit();
-                    }, 2500);
+                    // Không cần dùng setTimeout, form sẽ tự động gửi
                 });
             });
         </script>
+        
         <?php
         // if (isset($_GET['success']) && $_GET['success'] === 'true') {
         //     // cache 
@@ -126,7 +121,7 @@
 </body>
 <footer style="text-align: center">
         <a href="#">
-            <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;">
+            <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;" onclick="location.href='StoreLogin.php'">
         </a>
     </footer>
 

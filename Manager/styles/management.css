@@ -1,4 +1,4 @@
-/* 全局样式 */
+
 *{
     outline: none;
 }
@@ -29,6 +29,7 @@ body {
     gap: 7px;
     align-content: center;
     align-items: center;
+    
 }
 
 /* 按鈕設計 */
@@ -45,6 +46,7 @@ body {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
     cursor: pointer;
+
 }
 
 .menu-button span {
@@ -69,6 +71,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin: 30px 0;
+    
 }
 
 .logo h1 {
@@ -146,10 +149,6 @@ body {
         height: 100%;
     }
 
-    .menu {
-        width: 180px;
-    }
-
     .menu-button {
         font-size: 30px;
         padding: 10px 15px;
@@ -172,7 +171,7 @@ body {
 .logout-button {
     text-decoration: none;
     background-color:618264;
-    color: white;
+    color:red;
     padding: 12px 24px;
     font-size: 18px;
     border-radius: 8px;

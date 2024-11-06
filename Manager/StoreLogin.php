@@ -51,7 +51,7 @@ if (isset($_COOKIE['loggedin'])) {
                     <button type="submit">ログイン</button>
                     <div class="form-row">
                         <label class="custom-checkbox">
-                            <input type="checkbox" id="checkbox_remember_account" name="checkbox_remember_account">
+                            <!-- <input type="checkbox" id="checkbox_remember_account" name="checkbox_remember_account"> -->
                             <span class="checkmark"></span>ログイン状態を保存する
                         </label>
                     </div>
@@ -64,38 +64,35 @@ if (isset($_COOKIE['loggedin'])) {
                 <div id="lottie"></div>
             </div>
             <script>
-                // Lottie 起動
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Lottie
-                    const animation = lottie.loadAnimation({
-                        container: document.getElementById('lottie'),
-                        renderer: 'svg',
-                        loop: true,
-                        autoplay: true,
-                        path: './images/loading.json'
-                    });
-
-                    // animation
-                    document.querySelector('.login-form2').addEventListener('submit', function(event) {
-                        // 
-                        event.preventDefault();
-                        document.getElementById('loading').style.display = 'flex';
-
-                        // set time animation
-                        setTimeout(() => {
-                            this.submit();
-                        }, 2500);
-                    });
+            // Lottie 起動
+            document.addEventListener('DOMContentLoaded', function() {
+                // Lottie
+                const animation = lottie.loadAnimation({
+                    container: document.getElementById('lottie'),
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: './images/loading.json'
                 });
-            </script>
+
+                // Hiện loading animation khi form được gửi
+                document.querySelector('.login-form2').addEventListener('submit', function(event) {
+                    document.getElementById('loading').style.display = 'flex';
+                    // Không cần dùng setTimeout, form sẽ tự động gửi
+                });
+            });
+        </script>
 
             <!-- loading -->
 
             <div class="register-link">
                 <p>Don’t have an account yet? <a href="./StoreRegister.php">Signup</a></p>
+                <div class="pass">
+                <a href="./ForgotPassword.php">パスワードを忘れた場合</a>
+                </div>
             </div>
 
-            <a href="./ForgotPassword.php">パスワードを忘れた場合</a>
+            
         </div>
     </div>
 </body>

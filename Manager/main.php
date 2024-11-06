@@ -15,6 +15,7 @@ include('./php/auth_check.php');
 </head>
 
 <body>
+<div class="wrapper">
     <div class="container">
         <!-- ロゴ部分 -->
         <div class="logo">
@@ -73,6 +74,7 @@ include('./php/auth_check.php');
     </div>
     </div>
     <script src="./scripts/date.js"></script>
+</div>
 </body>
 <footer style="text-align: center">
         <a href="#">
