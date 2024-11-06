@@ -73,11 +73,11 @@
 
                     <button type="submit">登録</button>
                 </div>
-            </form>
-
-            <div class="login-link">
+                <div class="login-link">
                 <p>Already have account? <a href="./StoreLogin.php">Login</a></p>
             </div>
+            </form>
+
         </div>
 
 
