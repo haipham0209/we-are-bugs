@@ -40,7 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        echo "Tên sản phẩm hoặc mã barcode đã tồn tại.";
+        // echo "Tên sản phẩm hoặc mã barcode đã tồn tại.";//////////
+        header("Location: ../productAdd.php?error=exist&productname=" . urlencode($pname). "&price=" . urlencode($price). "&costprice=" . urlencode($costPrice). "&description=" . urlencode($description). "&stock=" . urlencode($stockQuantity). "&barcode=" . urlencode($barcode));
         exit();
     }
     $stmt->close();
@@ -94,7 +95,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $stmt->close();
         } else {
-            die("Vui lòng nhập tên danh mục mới.");
+            // die("Vui lòng nhập tên danh mục mới.");///////////////////////////
+            
+            header("Location: ../productAdd.php?error=notexistcate&productname=" . urlencode($pname). "&price=" . urlencode($price). "&costprice=" . urlencode($costPrice). "&description=" . urlencode($description). "&stock=" . urlencode($stockQuantity). "&barcode=" . urlencode($barcode));
         }
     } else {
         // Lấy `category_id` và `cname` nếu chọn một danh mục đã có
@@ -122,33 +125,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Kiểm tra nếu có lỗi tải lên ảnh
     if ($_FILES['productImage']['error'] !== UPLOAD_ERR_OK) {
         // echo "Lỗi khi tải lên ảnh!";
+        header("Location: ../productAdd.php?error=imgerrort&productname=" . urlencode($pname). "&price=" . urlencode($price). "&costprice=" . urlencode($costPrice). "&description=" . urlencode($description). "&stock=" . urlencode($stockQuantity). "&barcode=" . urlencode($barcode));
+        
         //////////////////hai///////////////////////
-        switch ($_FILES['productImage']['error']) {
-            case UPLOAD_ERR_INI_SIZE:
-                echo "Lỗi: Kích thước file vượt quá giới hạn upload_max_filesize trong php.ini.";
-                break;
-            case UPLOAD_ERR_FORM_SIZE:
-                echo "Lỗi: Kích thước file vượt quá giới hạn MAX_FILE_SIZE trong form HTML.";
-                break;
-            case UPLOAD_ERR_PARTIAL:
-                echo "Lỗi: File chỉ được tải lên một phần.";
-                break;
-            case UPLOAD_ERR_NO_FILE:
-                echo "Lỗi: Không có file nào được tải lên.";
-                break;
-            case UPLOAD_ERR_NO_TMP_DIR:
-                echo "Lỗi: Thiếu thư mục tạm.";
-                break;
-            case UPLOAD_ERR_CANT_WRITE:
-                echo "Lỗi: Không thể ghi file vào đĩa.";
-                break;
-            case UPLOAD_ERR_EXTENSION:
-                echo "Lỗi: Upload bị dừng bởi một phần mở rộng PHP.";
-                break;
-            default:
-                echo "Lỗi không xác định khi tải lên ảnh.";
-                break;
-        }
+        // switch ($_FILES['productImage']['error']) {
+        //     case UPLOAD_ERR_INI_SIZE:
+        //         echo "Lỗi: Kích thước file vượt quá giới hạn upload_max_filesize trong php.ini.";
+        //         break;
+        //     case UPLOAD_ERR_FORM_SIZE:
+        //         echo "Lỗi: Kích thước file vượt quá giới hạn MAX_FILE_SIZE trong form HTML.";
+        //         break;
+        //     case UPLOAD_ERR_PARTIAL:
+        //         echo "Lỗi: File chỉ được tải lên một phần.";
+        //         break;
+        //     case UPLOAD_ERR_NO_FILE:
+        //         echo "Lỗi: Không có file nào được tải lên.";
+        //         break;
+        //     case UPLOAD_ERR_NO_TMP_DIR:
+        //         echo "Lỗi: Thiếu thư mục tạm.";
+        //         break;
+        //     case UPLOAD_ERR_CANT_WRITE:
+        //         echo "Lỗi: Không thể ghi file vào đĩa.";
+        //         break;
+        //     case UPLOAD_ERR_EXTENSION:
+        //         echo "Lỗi: Upload bị dừng bởi một phần mở rộng PHP.";
+        //         break;
+        //     default:
+        //         echo "Lỗi không xác định khi tải lên ảnh.";
+        //         break;
+        // }
 
         ////////////////////////hai//////////////////////////////////
         exit();
@@ -185,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           if (move_uploaded_file($_FILES['productImage']['tmp_name'], $imagePath)) {
             echo "Sản phẩm đã được thêm thành công!";
         } else {
-            echo "Lỗi khi lưu ảnh!";
+            // echo "Lỗi khi lưu ảnh!";
             // Nếu lưu ảnh thất bại, xoá sản phẩm vừa thêm khỏi cơ sở dữ liệu
             $delete_stmt = $conn->prepare("DELETE FROM product WHERE productid = ? AND storeid = ?");
             $delete_stmt->bind_param("ii", $next_productid, $storeid);
