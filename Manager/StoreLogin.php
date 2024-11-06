@@ -51,7 +51,7 @@ if (isset($_COOKIE['loggedin'])) {
                     <button type="submit">ログイン</button>
                     <div class="form-row">
                         <label class="custom-checkbox">
-                            <!-- <input type="checkbox" id="checkbox_remember_account" name="checkbox_remember_account"> -->
+                            <input type="checkbox" id="checkbox_remember_account" name="checkbox_remember_account">
                             <span class="checkmark"></span>ログイン状態を保存する
                         </label>
                     </div>
