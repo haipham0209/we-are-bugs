@@ -84,6 +84,13 @@ $product_result = $product_stmt->get_result();
                 ?>
             </div>
 
+            <!-- Add Product Button -->
+            <div class="add-product">
+                <a href="productAdd.php">
+                    <button>+</button>
+                </a>
+            </div>
+
             <!-- Product Cards -->
              <div class="all-product">
                 <?php
@@ -110,11 +117,6 @@ $product_result = $product_stmt->get_result();
                     }
                     
                 ?>
-            </div>
-
-            <!-- Add Product Button -->
-            <div class="add-product">
-                <button>+</button>
             </div>
         </div>
         <script src="../scripts/camera.js"></script>
