@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Trì hoãn 3 giây trước khi chuyển hướng
                 setTimeout(function() {
                     window.location.href = "../productAdd.php";
-                }, 300000); // 3000ms = 3 giây
+                }, 300000); // 300ms = 3 giây
             </script>
         ';
             // header("Location: ../productAdd.php");
