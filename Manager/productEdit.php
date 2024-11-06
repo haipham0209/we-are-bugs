@@ -17,7 +17,6 @@ include('./php/auth_check.php');
 </head>
 
 <body>
-    <header></header>
     <main>
         <h3>商品編集</h3>
         <div class="addContainer">
