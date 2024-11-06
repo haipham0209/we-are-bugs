@@ -157,7 +157,7 @@ $barcode = isset($_GET['barcode']) ? urldecode($_GET['barcode']) : '';
 
         // Khi nhấn nút submit
         document.querySelector('.proAddForm').addEventListener('submit', function (event) {
-            event.preventDefault();  // Ngừng hành động submit mặc định
+            // event.preventDefault();  // Ngừng hành động submit mặc định
 
             // Hiển thị loading animation
             document.getElementById('loading').style.display = 'flex';
