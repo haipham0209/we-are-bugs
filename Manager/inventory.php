@@ -21,12 +21,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Thêm nhiều sản phẩm hơn nếu cần -->
-                    <script>
+                <?php
+                // Thông tin kết nối cơ sở dữ liệu
+                include('../Manager/php/db_connect.php');
+
+                // Tạo kết nối
+                $conn = new mysqli($servername, $username, $password, $dbname);
+
+                // Kiểm tra kết nối
+                if ($conn->connect_error) {
+                    die("Kết nối thất bại: " . $conn->connect_error);
+                }
+
+                // Truy vấn dữ liệu từ bảng sản phẩm
+                $sql = "SELECT barcode, pname, stock_quantity FROM product";
+                $result = $conn->query($sql);
+
+                // Kiểm tra và hiển thị dữ liệu
+                if ($result->num_rows > 0) {
+                    // Lặp qua từng dòng dữ liệu và hiển thị trong bảng
+                    $count = 1;
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr><td>" . $count++ . "</td><td>" . htmlspecialchars($row["barcode"]) . "</td><td>" . htmlspecialchars($row["pname"]) . "</td><td>" . htmlspecialchars($row["stock_quantity"]) . "</td></tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>Không có sản phẩm nào</td></tr>";
+                }
+                // Đóng kết nối
+                $conn->close();
+                ?>
+                <!-- Thêm nhiều sản phẩm hơn nếu cần -->
+                    <!-- <script>
                         for (let i = 1; i <= 100; i++) {
                             document.write('<tr><td>' + i + '</td><td>SP00' + i + '</td><td>Sản phẩm ' + i + '</td><td>' + (i * 10) + '</td></tr>');
                         }
-                    </script>
+                    </script> -->
                 </tbody>
             </table>
         </div>
