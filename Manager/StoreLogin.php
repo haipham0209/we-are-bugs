@@ -63,7 +63,7 @@ if (isset($_COOKIE['loggedin'])) {
             <div id="loading" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center;">
                 <div id="lottie"></div>
             </div>
-            <script>
+            <!-- <script>
             // Lottie 起動
             document.addEventListener('DOMContentLoaded', function() {
                 // Lottie
@@ -81,7 +81,34 @@ if (isset($_COOKIE['loggedin'])) {
                     // Không cần dùng setTimeout, form sẽ tự động gửi
                 });
             });
-        </script>
+        </script> -->
+        <script>
+    // Lottie 起動
+    document.addEventListener('DOMContentLoaded', function () {
+        // Lottie animation
+        const animation = lottie.loadAnimation({
+            container: document.getElementById('lottie'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: './images/loading.json'
+        });
+
+        // Khi nhấn nút submit
+        document.querySelector('.login-form2').addEventListener('submit', function (event) {
+            event.preventDefault();  // Ngừng hành động submit mặc định
+
+            // Hiển thị loading animation
+            document.getElementById('loading').style.display = 'flex';
+
+            // Đợi 2,5 giây rồi mới gửi form
+            setTimeout(() => {
+                this.submit();  // Gửi form sau 2,5 giây
+            }, 2500);
+        });
+    });
+</script>
+
 
             <!-- loading -->
 

@@ -144,24 +144,32 @@ $barcode = isset($_GET['barcode']) ? urldecode($_GET['barcode']) : '';
                 <div id="lottie"></div>
             </div>
             <script>
-                // Lottie 起動
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Lottie
-                    const animation = lottie.loadAnimation({
-                        container: document.getElementById('lottie'),
-                        renderer: 'svg',
-                        loop: true,
-                        autoplay: true,
-                        path: './images/loading.json'
-                    });
+    // Lottie 起動
+    document.addEventListener('DOMContentLoaded', function () {
+        // Lottie animation
+        const animation = lottie.loadAnimation({
+            container: document.getElementById('lottie'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: './images/loading.json'
+        });
 
-                    // Hiện loading animation khi form được gửi
-                    document.querySelector('.proAddForm').addEventListener('submit', function(event) {
-                        document.getElementById('loading').style.display = 'flex';
-                        // Không cần dùng setTimeout, form sẽ tự động gửi
-                    });
-                });
-            </script>
+        // Khi nhấn nút submit
+        document.querySelector('.proAddForm').addEventListener('submit', function (event) {
+            event.preventDefault();  // Ngừng hành động submit mặc định
+
+            // Hiển thị loading animation
+            document.getElementById('loading').style.display = 'flex';
+
+            // Đợi 2,5 giây rồi mới gửi form
+            setTimeout(() => {
+                this.submit();  // Gửi form sau 2,5 giây
+            }, 2500);
+        });
+    });
+</script>
+
         </div>
     </main>
     <script src="./scripts/camera.js"></script>
