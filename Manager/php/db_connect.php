@@ -10,7 +10,6 @@ $servername = "localhost";
 $username = "dbuser";
 $password = "ecc";
 $dbname = "wearebugs";
-$sb="";
 
 // データベース接続の確立
 $conn = new mysqli($servername, $username, $password, $dbname);
