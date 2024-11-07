@@ -17,7 +17,10 @@ UPDATE user
 SET status = 'active' 
 WHERE username = 'lan1';
 
-
+drop table product;
+drop table category;
+drop table store;
+drop table user;
 
 
 DROP DATABASE IF EXISTS wearebugs;
