@@ -17,13 +17,11 @@ if ($conn->connect_error) {
 
 // Kiểm tra xem có tham số sname trong URL không
 if (!isset($_GET['sname'])) {
-    // Trả về mã trạng thái 404
     header("HTTP/1.0 404 Not Found");
     echo "404 Not Found";
     exit();
 }
 
-// Nếu có tham số sname, tiếp tục xử lý
 $storeName = $_GET['sname'];
 
 // Khởi tạo các biến để tránh lỗi chưa khai báo
@@ -31,33 +29,37 @@ $tel = null;
 $address = null;
 $mail = null;
 $sname = null;
+$storeid = null;
 
 // Thực hiện truy vấn để lấy dữ liệu cửa hàng và thông tin người dùng
-$query = "SELECT store.sname, store.tel, store.address, user.mail FROM store 
+$query = "SELECT store.storeid, store.sname, store.tel, store.address, user.mail 
+          FROM store 
           JOIN user ON store.userid = user.userid 
           WHERE store.sname = ?";
 
 $stmt = $conn->prepare($query);
-$stmt->bind_param("s", $storeName); // Ràng buộc tham số
+$stmt->bind_param("s", $storeName);
 $stmt->execute();
-$result = $stmt->get_result(); // Lấy kết quả truy vấn
+$result = $stmt->get_result();
 
-// Kiểm tra nếu có dữ liệu cửa hàng
 if ($result->num_rows > 0) {
-    $storeData = $result->fetch_assoc(); // Lấy dữ liệu dưới dạng mảng kết hợp
-    // Hiển thị dữ liệu cửa hàng
+    $storeData = $result->fetch_assoc();
+    $storeid = $storeData['storeid']; // Lấy storeid để sử dụng trong resources.php
     $sname = $storeData["sname"];
     $tel = $storeData["tel"];
     $address = $storeData["address"];
-    $mail = $storeData["mail"]; // Lấy email từ bảng user
+    $mail = $storeData["mail"];
 } else {
-    // Xử lý khi không tìm thấy cửa hàng
     header("HTTP/1.0 404 Not Found");
+    echo "404 Not Found";
     exit();
 }
 
 // Đóng kết nối
 $stmt->close();
+$conn->close();
+
+// Gọi file resources.php để hiển thị thông tin sản phẩm của cửa hàng
 require "resources.php";
 ?>
 

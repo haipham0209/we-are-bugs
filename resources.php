@@ -11,18 +11,21 @@ if ($conn->connect_error) {
 // Tạo mảng categories để lưu trữ sản phẩm theo category
 $categories = [];
 
-// Truy vấn sản phẩm và thông tin danh mục
-$query = "
+// Truy vấn sản phẩm và thông tin danh mục theo storeid
+$productQuery = "
     SELECT p.productid, p.pname, p.price, p.productImage, 
            c.cname
     FROM product p
     JOIN category c ON p.category_id = c.category_id
-    WHERE p.storeid = 1
+    WHERE p.storeid = ?
 ";
-$result = $conn->query($query);
+$productStmt = $conn->prepare($productQuery);
+$productStmt->bind_param("i", $storeid);
+$productStmt->execute();
+$productResult = $productStmt->get_result();
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
+if ($productResult->num_rows > 0) {
+    while ($row = $productResult->fetch_assoc()) {
         $categoryName = $row['cname'];
 
         // Kiểm tra nếu danh mục chưa có trong categories, tạo mới
@@ -44,13 +47,6 @@ if ($result->num_rows > 0) {
 }
 
 // Đóng kết nối
+$productStmt->close();
 $conn->close();
-
-// Định dạng mảng cuối cùng
-$categories = array_values($categories); // Chuyển về dạng mảng chỉ số
-
-// In ra mảng categories để kiểm tra
-// // echo "<pre>";
-// print_r($categories);
-// echo "</pre>";
 ?>
