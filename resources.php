@@ -17,10 +17,10 @@ $productQuery = "
            c.cname
     FROM product p
     JOIN category c ON p.category_id = c.category_id
-    WHERE p.storeid = ?
+    WHERE p.storeid = ? AND c.storeid = ?
 ";
 $productStmt = $conn->prepare($productQuery);
-$productStmt->bind_param("i", $storeid);
+$productStmt->bind_param("ii", $storeid, $storeid);  // Truyền storeid 2 lần vào câu truy vấn
 $productStmt->execute();
 $productResult = $productStmt->get_result();
 
