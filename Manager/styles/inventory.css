@@ -24,6 +24,7 @@ body {
     flex-wrap: wrap;
     position: relative;
     padding-bottom: 25px;
+    height: 100%;
 
 }
 
@@ -44,6 +45,7 @@ input[type="text"] {
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin-bottom: 30px;
 }
 
 table {
@@ -72,6 +74,7 @@ footer {
     padding: 10px 20px;
     display: flex;
     align-items: center;
+    margin-top: 50px;
 }
 
 footer a {
