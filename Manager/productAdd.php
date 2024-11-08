@@ -54,12 +54,13 @@ $barcode = isset($_GET['barcode']) ? urldecode($_GET['barcode']) : '';
             <form class="proAddForm" action="./php/addProductP.php" method="POST" enctype="multipart/form-data">
                 <!-- Trường chọn ảnh -->
                 <label for="productImage">商品画像:</label>
+                <img id="imagePreview" src="#" alt="プレビュー画像" style="display:none; max-width:200px; margin-top:10px;">
                 <?php if ($error === 'imgerrort'): ?>
                     <p style="color: red; margin:0;">画像をアップロードしてください。</p>
                 <?php endif; ?>
                 <input type="file" id="productImage" name="productImage" accept="image/*" onchange="previewImage(event)">
                 <br>
-                <img id="imagePreview" src="#" alt="プレビュー画像" style="display:none; max-width:200px; margin-top:10px;">
+                
 
                 <!-- Category -->
                 <label for="category">カテゴリー:</label>

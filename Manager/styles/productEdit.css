@@ -1,17 +1,26 @@
 @media only screen and (max-width: 767px) {
 
-    /* Tổng thể */
     body {
         font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         height: 100vh;
+        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        background-size: 400% 400%;
         animation: wave 10s ease infinite;
-        margin: 0;
-        background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
-        background-size: 100% 100%;
-        overflow-y: auto;
+    }
+
+    @keyframes wave {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    /* CSS thêm cho icon thùng rác */
+    #deleteIcon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
     }
 
     /* Container của form */
@@ -24,6 +33,7 @@
         /* max-height: 30%; */
         margin: 0 auto;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        position: relative;
     }
 
     /* Tiêu đề */
