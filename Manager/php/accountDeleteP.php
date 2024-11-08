@@ -24,11 +24,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 入力されたパスワードが正しいかをチェック
     if (password_verify($password, $hashedPassword)) {
 
-        // storeテーブルの関連レコードを削除
-        $deleteStoreStmt = $conn->prepare("DELETE FROM store WHERE userid = ?");
-        $deleteStoreStmt->bind_param("i", $userid);
-        $deleteStoreStmt->execute();
-        $deleteStoreStmt->close();
+        // storeテーブルからstoreidを取得
+        $storeStmt = $conn->prepare("SELECT storeid FROM store WHERE userid = ?");
+        $storeStmt->bind_param("i", $userid);
+        $storeStmt->execute();
+        $storeStmt->bind_result($storeid);
+        $storeStmt->fetch();
+        $storeStmt->close();
+
+        if ($storeid) {
+            // productテーブルの関連レコードを削除
+            $deleteProductStmt = $conn->prepare("DELETE FROM product WHERE storeid = ?");
+            $deleteProductStmt->bind_param("i", $storeid);
+            $deleteProductStmt->execute();
+            $deleteProductStmt->close();
+
+            // categoryテーブルの関連レコードを削除
+            $deleteCategoryStmt = $conn->prepare("DELETE FROM category WHERE storeid = ?");
+            $deleteCategoryStmt->bind_param("i", $storeid);
+            $deleteCategoryStmt->execute();
+            $deleteCategoryStmt->close();
+
+            // storeテーブルの関連レコードを削除
+            $deleteStoreStmt = $conn->prepare("DELETE FROM store WHERE userid = ?");
+            $deleteStoreStmt->bind_param("i", $userid);
+            $deleteStoreStmt->execute();
+            $deleteStoreStmt->close();
+        }
 
         // パスワードが正しければアカウントを削除
         $stmt = $conn->prepare("DELETE FROM user WHERE userid = ?");
