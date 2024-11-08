@@ -260,6 +260,41 @@
         height: auto;
         display: block; 
     }
+        /* //////////////barcode/////////////////////// */
+    #barcode-scanner {
+        width: 100%;
+        /* Hoặc chiều rộng cụ thể */
+        height: 100px;
+        /* Hoặc chiều cao cụ thể */
+        display: none;
+        /* Ẩn khi không sử dụng */
+        background-color: black;
+    }
+
+    video {
+        width: 100%;
+        /* Hoặc chiều rộng cụ thể */
+        height: 95px;
+        /* Hoặc chiều cao cụ thể */
+        object-fit: contain;
+        overflow-clip-margin: content-box;
+        overflow: clip;
+    }
+
+    #barcode-scanner__dashboard_section {
+        display: none;
+
+    }
+
+    .drawingBuffer {
+        display: none;
+    }
+
+
+    /* #start-scan {
+    
+} */
+    /* ///////////////////////////end barcode//////////////////////////////// */
 
 
 } 
