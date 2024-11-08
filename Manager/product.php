@@ -23,16 +23,16 @@ $category_result = $stmt->get_result();
 
 // Truy vấn để lấy danh sách sản phẩm từ cơ sở dữ liệu
 $product_sql = "
-    SELECT p.pname, p.price, p.costPrice, p.description, p.stock_quantity, p.productImage, 
+     SELECT p.productid, p.pname, p.price, p.costPrice, p.description, p.stock_quantity, p.productImage, 
            u.username, c.cname 
     FROM product p
     JOIN store s ON p.storeid = s.storeid
     JOIN user u ON s.userid = u.userid
-    JOIN category c ON p.category_id = c.category_id
-    WHERE p.storeid = ? AND c.storeid = ?"; // Điều kiện lọc storeid trong cả 2 bảng
+    JOIN category c ON p.category_id = c.category_id AND p.storeid = c.storeid
+    WHERE p.storeid = ?"; 
 
 $product_stmt = $conn->prepare($product_sql);
-$product_stmt->bind_param("ii", $storeid, $storeid); // Truyền storeid 2 lần
+$product_stmt->bind_param("i", $storeid); // Truyền storeid 
 $product_stmt->execute();
 $product_result = $product_stmt->get_result();
 ?>
@@ -131,7 +131,10 @@ $product_result = $product_stmt->get_result();
                             
                             echo '
                             <div class="product-card">
-                                <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
+                                <a href="productEdit.php?id=' . $product['productid'] . '" class="edit-icon">
+                                    <img src="../images/edit.png" alt="Edit">
+                                </a>
+                                <img src="' . $productImagePath . '" alt="Product Image">
                                 <div class="product-info">
                                     <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
                                     <p><strong>原価：</strong>' . htmlspecialchars($product['costPrice'], ENT_QUOTES, 'UTF-8') . '</p>
