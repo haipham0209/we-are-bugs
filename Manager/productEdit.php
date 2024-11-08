@@ -63,7 +63,7 @@ $category_result = $category_stmt->get_result();
     <main>
         <h3>商品編集</h3>
         <div class="addContainer">
-            <form class="proAddForm" action="updateProduct.php" method="POST" enctype="multipart/form-data">
+            <form class="proAddForm" action="./php/updateProduct.php" method="POST" enctype="multipart/form-data">
                 <!-- Thêm icon thùng rác -->
             <img src="../images/delete-icon.png" alt="削除" id="deleteIcon" onclick="deleteProduct()">
                 <!-- Trường chọn ảnh -->
@@ -147,7 +147,7 @@ $category_result = $category_stmt->get_result();
         // Xóa sản phẩm
         function deleteProduct() {
             if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
-                window.location.href = 'deleteProduct.php?id=<?= $productid ?>';
+                window.location.href = './php/deleteProduct.php?id=<?= $productid ?>';
             }
         }
     </script>

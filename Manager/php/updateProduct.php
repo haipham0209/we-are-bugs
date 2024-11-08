@@ -1,6 +1,6 @@
 <?php
-include('./php/auth_check.php');
-include('./php/db_connect.php');
+include('auth_check.php');
+include('db_connect.php');
 
 $productid = $_POST['productid'];
 $storeid = $_SESSION['storeid'];
@@ -18,7 +18,7 @@ $stmt->execute();
 
 if ($stmt->affected_rows > 0) {
     // Nếu cập nhật thành công, chuyển hướng về trang product.php
-    header("Location: product.php");
+    header("Location: ../product.php?path= " .urlencode($productImage));
     exit();
 } else {
     echo "Cập nhật không thành công.";

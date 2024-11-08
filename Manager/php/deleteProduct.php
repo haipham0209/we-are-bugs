@@ -1,6 +1,6 @@
 <?php
-include('./php/auth_check.php');
-include('./php/db_connect.php');
+include('auth_check.php');
+include('db_connect.php');
 
 $productid = $_GET['id'] ?? null;
 
@@ -12,7 +12,7 @@ if ($productid) {
 
     if ($stmt->affected_rows > 0) {
         // Xóa thành công, chuyển hướng về trang product.php
-        header("Location: product.php");
+        header("Location: ../product.php");
     } else {
         echo "Không thể xóa sản phẩm.";
     }
