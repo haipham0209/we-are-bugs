@@ -1,50 +1,4 @@
-<?php
-    // Check if the storeid cookie exists
-    if (!isset($_COOKIE['storeid'])) {
-        header("HTTP/1.0 404 Not Found");
-        echo "404 Not Found";
-        exit();
-    }
 
-    // Retrieve storeid from the cookie
-    $storeid = $_COOKIE['storeid'];
-
-    // Database connection
-    include('./Manager/php/db_connect.php');
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        echo "SERVER NOT FOUND";
-        exit();
-    }
-
-    // Prepare the SQL query
-    $query = "SELECT store.sname, store.tel, store.address, user.mail 
-            FROM store 
-            JOIN user ON store.userid = user.userid 
-            WHERE store.storeid = ?";
-
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $storeid);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Fetch data if available
-    if ($result->num_rows > 0) {
-        $storeData = $result->fetch_assoc();
-        $sname = $storeData["sname"];
-        $tel = $storeData["tel"];
-        $address = $storeData["address"];
-        $mail = $storeData["mail"];
-    } else {
-        header("HTTP/1.0 404 Not Found");
-        exit();
-    }
-
-    // Close the connection
-    $stmt->close();
-    $conn->close();
-?>
 
 
 <!DOCTYPE html>
@@ -68,7 +22,7 @@
             <span class="menu-icon"></span>
             </button>
             <div class="logobar">
-                <h2>WRB</h2>   
+                <p>WRB</p>   
             </div>
             <button class="avatar-toggle">
                 <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User">
