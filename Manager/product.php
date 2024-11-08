@@ -64,8 +64,10 @@ $product_result = $product_stmt->get_result();
                 function toggleCamera() {
                     if (isCameraRunning) {
                         stopScanner();
+                        isCameraRunning = false;
                     } else {
                         startScanner();
+                        isCameraRunning = true;
                     }
                 }
 
@@ -81,7 +83,7 @@ $product_result = $product_stmt->get_result();
     <main>
             <!-- <div id="camera" style="display: none;"></div> -->
     <div id="camera" style="display: none;">
-        <button id="stopBtn" onclick="stopScanner()">カメラ停止</button>
+        <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>
     </div>
         <div class="container">
             <p class="title">商品管理</p>
