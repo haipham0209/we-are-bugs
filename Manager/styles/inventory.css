@@ -45,6 +45,7 @@ input[type="text"] {
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin-bottom: 30px;
 }
 
 table {
