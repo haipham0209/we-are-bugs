@@ -39,7 +39,7 @@ if (!isset($_SESSION['userid'])) {
                     <input type="file" id="fileInput" name="logo" accept="image/*" style="display: none;" onchange="document.getElementById('logoForm').submit();">
                     <svg width="198" height="107" viewBox="0 0 198 107" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <ellipse cx="99" cy="53.5" rx="99" ry="53.5" fill="#B0D9B1" />
-                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="#333">ロゴ を選び</text>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="#333"></text>
                     </svg>
                     <label class="upload-button" for="fileInput">
                         <img src="upload-icon.png" alt="ロゴマーク">
@@ -53,23 +53,27 @@ if (!isset($_SESSION['userid'])) {
                     <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
                     <div class="form-row">
                         <label for="shop-name">店名</label>
-                        <input type="text" id="shop-name" name="sname" value="<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>" <?php echo isset($_SESSION['sname']) && !empty($_SESSION['sname']) ? 'readonly' : ''; ?> required>
-                        <img src="" class="icon">
+                        <div class="group">
+                            <input type="text" id="shop-name" name="sname" value="<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>" <?php echo isset($_SESSION['sname']) && !empty($_SESSION['sname']) ? 'readonly' : ''; ?> required>
+                            <img src="" class="icon_1">
+                        </div>
                     </div>
                     <div class="form-row">
                         <label for="address">住所</label>
-                        <input type="text" id="address" name="address" value="<?php echo isset($_SESSION['address']) ? htmlspecialchars($_SESSION['address']) : ''; ?>" readonly required>
-                        <img src="./images/pen.png" alt="編集" class="icon" onclick="toggleEdit('address')">
+                        <div class="group">
+                            <input type="text" id="address" name="address" value="<?php echo isset($_SESSION['address']) ? htmlspecialchars($_SESSION['address']) : ''; ?>" readonly required>
+                            <img src="./images/pen.png" alt="編集" class="icon" onclick="toggleEdit('address')">
+                        </div>
                     </div>
                     <div class="form-row">
                         <label for="phone">電話</label>
-                        <input type="text" id="phone" name="phone" value="<?php echo isset($_SESSION['tel']) ? htmlspecialchars($_SESSION['tel']) : ''; ?>" readonly required>
-                        <img src="./images/pen.png" alt="編集" class="icon" onclick="toggleEdit('phone')">
+                        <div class="group">
+                            <input type="text" id="phone" name="phone" value="<?php echo isset($_SESSION['tel']) ? htmlspecialchars($_SESSION['tel']) : ''; ?>" readonly required>
+                            <img src="./images/pen.png" alt="編集" class="icon" onclick="toggleEdit('phone')">
+                        </div>
                     </div>
                     <div class="save">
-                        <button type="submit" class="save-button">
-                            <img src="./images/signupBtn.png" alt="save">
-                        </button>
+                        <button type="submit" class="save-button" >保存</button>
                     </div>
                 </div>
                 <script>
