@@ -66,7 +66,10 @@ $product_result = $product_stmt->get_result();
         </script>
     </header>
     <main>
-    <div id="camera" style="display: none;"></div>
+    <!-- <div id="camera" style="display: none;"></div> -->
+    <div id="camera" style="display: none;">
+        <button id="stopBtn" onclick="stopScanner()">カメラ停止</button>
+    </div>
         <div class="container">
             <p class="title">商品管理</p>
             <!-- Category -->
