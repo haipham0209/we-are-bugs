@@ -44,6 +44,8 @@ $product_result = $product_stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./styles/proMana.css">
+    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
+    <script src="./scripts/camera.js"></script>
     <title>商品管理</title>
 </head>
 
@@ -51,11 +53,23 @@ $product_result = $product_stmt->get_result();
     <header>
          <!-- Header navbar -->
          <div class="main-navbar">
-            <div class="search-scan"> 
-                <input type="text" class="search-bar" placeholder="Search...">
-                <img src="./images/camera-icon.png" class="camera-icon" onclick="openCamera()">
-                <div id="camera"></div>
-            </div>
+         <div class="search-scan"> 
+        <input type="text" class="search-bar" placeholder="Search...">
+        <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
+    </div>
+    <script>
+                let isCameraRunning = false; // Biến trạng thái camera
+
+                // Hàm bật/tắt camera khi nhấn vào biểu tượng
+                function toggleCamera() {
+                    if (isCameraRunning) {
+                        stopScanner();
+                    } else {
+                        startScanner();
+                    }
+                }
+
+    </script>
             <button class="main-home">
                 <h1 class="logo">WRB</h1>
             </button>
@@ -65,6 +79,10 @@ $product_result = $product_stmt->get_result();
         </script>
     </header>
     <main>
+            <!-- <div id="camera" style="display: none;"></div> -->
+    <div id="camera" style="display: none;">
+        <button id="stopBtn" onclick="stopScanner()">カメラ停止</button>
+    </div>
         <div class="container">
             <p class="title">商品管理</p>
             <!-- Category -->
