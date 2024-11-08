@@ -1,35 +1,28 @@
 <?php
-// データベース接続
-include('db_connect.php');
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("データベース接続エラー");
-}
+include('./db_connect.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $conn->real_escape_string($_POST['username']);
+    $token = $_POST['token'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
-    if ($new_password !== $confirm_password) {
-        echo "パスワードが一致しません。";
-        echo '<p><a href="../ResetPassword.php?username=' . urlencode($username) . '">戻る</a></p>';
-        exit();
-    }
+    if ($new_password === $confirm_password) {
+        $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
 
-    // 新しいパスワードをハッシュ化
-    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        // トークンでユーザーを特定してパスワードを更新
+        $stmt = $conn->prepare("UPDATE user SET password = ?, token = NULL WHERE token = ?");
+        $stmt->bind_param("ss", $hashed_password, $token);
 
-    // パスワードを更新
-    $update_sql = "UPDATE user SET password = ? WHERE username = ?";
-    $stmt = $conn->prepare($update_sql);
-    $stmt->bind_param("ss", $hashed_password, $username);
-    if ($stmt->execute()) {
-        echo "パスワードが正常にリセットされました。";
-        echo '<p><a href="../StoreLogin.php">ログイン画面に戻る</a></p>';
+        if ($stmt->execute()) {
+            echo "<div style='text-align: center; margin-top: 50px;'>
+                <h2>パスワードが正常にリセットされました</h2>
+                <p><a href='../StoreLogin.php'>ログイン画面へ</a></p>
+                </div>";
+        } else {
+            echo "パスワードリセットに失敗しました。";
+        }
     } else {
-        echo "パスワードの更新に失敗しました。";
+        echo "パスワードが一致しません。";
     }
 
     $stmt->close();
