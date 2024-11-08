@@ -132,6 +132,13 @@ $barcode = isset($_GET['barcode']) ? urldecode($_GET['barcode']) : '';
                 <?php if ($error === 'exist'): ?>
                     <p style="color: red; margin:0;">商品名またはバーコードが既に存在します</p>
                 <?php endif; ?>
+                <script>
+                    // Lắng nghe sự kiện 'barcodeDetected' để cập nhật mã vào ô input
+                    document.addEventListener('barcodeDetected', (event) => {
+                        const barcode = event.detail;
+                        document.getElementById('barcode').value = barcode;
+                    });
+                </script>
                 <label for="barcode">バーコード:</label>
                 <input type="text" id="barcode" name="barcode" required value="<?php echo htmlspecialchars($barcode); ?>">
                 <button type="button" id="start-scan">カメラでスキャン</button>

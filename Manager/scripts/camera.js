@@ -40,11 +40,13 @@ function startScanner() {
     );
 
     // Khi phát hiện mã, tắt camera và điền vào ô barcode
-    Quagga.onDetected((data) => {
-        const code = data.codeResult.code;
-        document.getElementById('barcode').value = code; // Điền mã vào ô input
-        stopScanner();
-    });
+// Khi phát hiện mã, phát sự kiện 'barcodeDetected' với mã vạch
+Quagga.onDetected((data) => {
+    const code = data.codeResult.code;
+    document.dispatchEvent(new CustomEvent('barcodeDetected', { detail: code }));
+    stopScanner();
+});
+
 }
 
 // Dừng quét mã và tắt camera
