@@ -72,6 +72,7 @@
     }
     #camera {
         display: none;
+        margin: 4px;
     }
     
     .title{
@@ -290,15 +291,35 @@
     }
 
     video {
+        margin-top: 3px;
         width: 100%;
         /* Hoặc chiều rộng cụ thể */
-        height: 95px;
+        height: 100%;
         /* Hoặc chiều cao cụ thể */
         object-fit: contain;
         overflow-clip-margin: content-box;
         overflow: clip;
     }
+    #camera {
+        width: 320px;
+        height: 240px;
+        background: #ccc;
+        position: relative;
+        margin: auto; /* Căn giữa nếu cần */
+    }
 
+    #stopBtn {
+        position: absolute;
+        bottom: 10px; /* Đặt nút ở dưới cùng */
+        left: 50%;
+        transform: translateX(-50%); /* Căn giữa theo chiều ngang */
+        padding: 5px 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+        z-index: 1;
+    }
     #barcode-scanner__dashboard_section {
         display: none;
 
