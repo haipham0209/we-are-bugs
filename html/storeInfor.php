@@ -1,4 +1,71 @@
 
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Thông tin kết nối cơ sở dữ liệu
+include('../Manager/php/db_connect.php');
+
+
+// Kết nối đến cơ sở dữ liệu
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Kiểm tra kết nối
+if ($conn->connect_error) {
+    echo "SERVER NOT FOUND";
+    exit();
+}
+
+// Kiểm tra xem có tham số sname trong URL không
+if (!isset($_GET['sname'])) {
+    header("HTTP/1.0 404 Not Found");
+    echo "404 Not Found";
+    exit();
+}
+
+$storeName = $_GET['sname'];
+
+// Khởi tạo các biến để tránh lỗi chưa khai báo
+$tel = null;
+$address = null;
+$mail = null;
+$sname = null;
+$storeid = null;
+$description = null;
+
+// Thực hiện truy vấn để lấy dữ liệu cửa hàng và thông tin người dùng
+$query = "SELECT store.storeid, store.sname, store.tel, store.address, store.description, user.mail 
+          FROM store 
+          JOIN user ON store.userid = user.userid 
+          WHERE store.sname = ?";
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $storeName);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $storeData = $result->fetch_assoc();
+    $storeid = $storeData['storeid'];
+    $sname = $storeData["sname"];
+    $tel = $storeData["tel"];
+    $address = $storeData["address"];
+    $mail = $storeData["mail"];
+    $description = $storeData["description"];
+} else {
+    header("HTTP/1.0 404 Not Found");
+    echo "404 Not Found";
+    exit();
+}
+
+// Đóng kết nối
+$stmt->close();
+$conn->close();
+
+
+?>
+
 
 
 <!DOCTYPE html>
@@ -6,7 +73,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WRB - Store Information</title>
+    <title><?= htmlspecialchars($sname) ?> - Store Information</title>
     <link rel="stylesheet" href="../styles/myPage.css">
     <link rel="stylesheet" href="../styles/storeInfor.css">
     <link rel="stylesheet" href="../styles/All.css">
@@ -30,15 +97,15 @@
         </div>
         <nav class="nav-menu">
             <ul>
-            <li><h3><?php echo $sname; ?></h3></li>
-            <li><a href="./main.php?sname=<?php echo $_GET['sname']  ?>">ホームページ</a></li>
-            <li><a href="./html/product.php">商品</a></li>
-            <li><a href="./html/storeInfor.php">お店について</a></li>
+            <li><h3><?php echo htmlspecialchars($sname); ?></h3></li>
+            <li><a href="../main.php?sname=<?php echo urlencode($storeName); ?>">ホームページ</a></li>
+            <li><a href="../main.php?sname=<?php echo urlencode($storeName); ?>">商品</a></li>
+            <li><a href="./html/storeInfor.php?sname=<?php echo urlencode($storeName); ?>">お店について</a></li>
             <li class="support-title">サポート</li>
-            <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo $tel; ?>"><?php echo $tel; ?></a></li>
-            <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a></li>
-            <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a></li>
-            </ul>
+            <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo htmlspecialchars($tel); ?>"><?php echo htmlspecialchars($tel); ?></a></li>
+            <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mailto:<?php echo htmlspecialchars($mail); ?>"><?php echo htmlspecialchars($mail); ?></a></li>
+            <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href="#"><?php echo htmlspecialchars($address); ?></a></li>
+        </ul>
         </nav>
         <div class="overlay"></div>
         <nav class="nav-myPage">
@@ -58,15 +125,16 @@
                 <img src="../images/wrb.png" alt="WRB Logo">
             </div>
              <!-- About Store Section -->
-            <div class="about-store">
+                <div class="about-store">
                 <h2>店舗紹介</h2>
-                <p><?php echo $description; ?></p>
+                <p><?php echo htmlspecialchars($description); ?></p>
 
                 <h2>所在地</h2>
-                <p><?php echo $address; ?></p>
+                <p><?php echo htmlspecialchars($address); ?></p>
 
                 <h2>電話番号</h2>
-                <p>📞<?php echo $tel; ?></p>
+                <p>📞<?php echo htmlspecialchars($tel); ?></p>
+
 
                 <h2>お客様の声</h2>
                 <p>「トレンドを押さえたセンスの良い商品がたくさんあって、お気に入りです！」</p>
