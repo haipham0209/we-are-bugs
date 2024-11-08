@@ -1,12 +1,12 @@
 <?php
 include('auth_check.php');
 include('db_connect.php');
-$conn = new mysqli($servername, $username, $password, $dbname);
+// $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Kiểm tra kết nối
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// }
 
 // Lấy thông tin người dùng
 $username = $_SESSION['username'];
@@ -193,15 +193,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
     <!-- Hiển thị hiệu ứng Lottie -->
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest"></script>
-    <lottie-player src="../images/success.json" background="transparent" speed="1.5" style="width: 250px; height: 250px;" autoplay></lottie-player>
+    <lottie-player src="../images/success.json" background="transparent" speed="1.8" style="width: 250px; height: 250px;" autoplay></lottie-player>
     <p style="font-size: 2.5em; font-weight: bold; margin-top: 20px;">商品追加しました、しばらくお待ちください。...</p>
 </div>
 
 <script>
     // Trì hoãn 3 giây trước khi chuyển hướng
     setTimeout(function() {
-        window.location.href = "../productAdd.php";
-    }, 3000); // 3000ms = 3 giây
+        window.location.href = "../product.php";
+    }, 2700); // 3000ms = 3 giây
 </script>
 
         ';
@@ -222,6 +222,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $stmt->close();
+}else{
+    header("Location: ../../error.php");
 }
 
 $conn->close();

@@ -92,7 +92,7 @@ $category_result = $category_stmt->get_result();
                                 echo "<option value='" . htmlspecialchars($row['category_id']) . "' $selected>" . htmlspecialchars($row['cname']) . "</option>";
                             }
                         } else {
-                            echo "<option value=''>Không có danh mục nào</option>";
+                            echo "<option value=''>カテゴリーがありません</option>";
                         }
                         ?>
                     </select>
@@ -114,11 +114,11 @@ $category_result = $category_stmt->get_result();
                 <br>
 
                 <label for="price">価格:</label>
-                <input type="number" id="price" name="price" value="<?= htmlspecialchars($product['price']); ?>" required min="0" step="0.01">
+                <input type="number" id="price" name="price" value="<?= htmlspecialchars($product['price']); ?>" required min="0" step="0.1">
                 <br>
 
                 <label for="costPrice">仕入れ価格:</label>
-                <input type="number" id="costPrice" name="costPrice" value="<?= htmlspecialchars($product['costPrice']); ?>" required min="0" step="0.01">
+                <input type="number" id="costPrice" name="costPrice" value="<?= htmlspecialchars($product['costPrice']); ?>" required min="0" step="0.1">
                 <br>
 
                 <label for="description">商品説明:</label>
@@ -127,7 +127,7 @@ $category_result = $category_stmt->get_result();
 
                 <!-- Số lượng tồn kho -->
                 <label for="stockQuantity">在庫数量:</label>
-                <input type="number" id="stockQuantity" name="stockQuantity" value="<?= htmlspecialchars($product['stock_quantity']); ?>" required min="0">
+                <input type="number" id="stockQuantity" name="stockQuantity" value="<?= htmlspecialchars($product['stock_quantity']); ?>" required min="1">
                 <br>
 
                 <label for="barcode">バーコード:</label>
@@ -146,7 +146,7 @@ $category_result = $category_stmt->get_result();
     <script>
         // Xóa sản phẩm
         function deleteProduct() {
-            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
+            if (confirm('商品を完全に削除します。よろしいですか')) {
                 window.location.href = './php/deleteProduct.php?id=<?= $productid ?>';
             }
         }
