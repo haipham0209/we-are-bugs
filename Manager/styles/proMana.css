@@ -260,6 +260,59 @@
         height: auto;
         display: block; 
     }
+        /* //////////////barcode/////////////////////// */
+
+        .camera-button {
+            background: none;
+            border: none;
+            padding: 0;
+            position: absolute; /* Đặt nút thành vị trí tuyệt đối
+            top: 0;
+            left: 0;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+            overflow: hidden; Đảm bảo không chiếm thêm không gian 
+        }
+        
+        .camera-icon {
+            display: block; /* Đảm bảo hình ảnh hiển thị đầy đủ */
+        }   
+        
+    #barcode-scanner {
+        width: 100%;
+        /* Hoặc chiều rộng cụ thể */
+        height: 100px;
+        /* Hoặc chiều cao cụ thể */
+        display: none;
+        /* Ẩn khi không sử dụng */
+        background-color: black;
+    }
+
+    video {
+        width: 100%;
+        /* Hoặc chiều rộng cụ thể */
+        height: 95px;
+        /* Hoặc chiều cao cụ thể */
+        object-fit: contain;
+        overflow-clip-margin: content-box;
+        overflow: clip;
+    }
+
+    #barcode-scanner__dashboard_section {
+        display: none;
+
+    }
+
+    .drawingBuffer {
+        display: none;
+    }
+
+
+    /* #start-scan {
+    
+} */
+    /* ///////////////////////////end barcode//////////////////////////////// */
 
 
 } 
