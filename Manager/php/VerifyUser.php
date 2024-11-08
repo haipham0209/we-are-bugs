@@ -54,7 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ";
 
             $mail->send();
-            echo "リセットリンクをメールに送信しました。";
+            echo "<div style='text-align: center; margin-top: 50px;'>
+                <h2>リセットリンクをメールに送信しました。</h2>
+                </div>";
         } catch (Exception $e) {
             echo "メールの送信に失敗しました: {$mail->ErrorInfo}";
         }
