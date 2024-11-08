@@ -22,7 +22,6 @@ $stmt->execute();
 $category_result = $stmt->get_result();
 
 // Truy vấn để lấy danh sách sản phẩm từ cơ sở dữ liệu
-// $product_sql = "SELECT pname, price, costPrice, description, stock_quantity, productImage FROM product WHERE storeid = ?";
 $product_sql = "
     SELECT p.pname, p.price, p.costPrice, p.description, p.stock_quantity, p.productImage, 
            u.username, c.cname 
@@ -30,13 +29,12 @@ $product_sql = "
     JOIN store s ON p.storeid = s.storeid
     JOIN user u ON s.userid = u.userid
     JOIN category c ON p.category_id = c.category_id
-    WHERE p.storeid = ?";
+    WHERE p.storeid = ? AND c.storeid = ?"; // Điều kiện lọc storeid trong cả 2 bảng
 
 $product_stmt = $conn->prepare($product_sql);
-$product_stmt->bind_param("i", $storeid);
+$product_stmt->bind_param("ii", $storeid, $storeid); // Truyền storeid 2 lần
 $product_stmt->execute();
 $product_result = $product_stmt->get_result();
-
 ?>
 
 <!DOCTYPE html>
