@@ -121,7 +121,7 @@ body {
 
 /* 財務資訊區塊 */
 .financial-info {
-    margin-top: 20px;
+    /* margin-top: 20px; */
     text-align: center;
     font-size: 22px;
     color: #333;
@@ -202,5 +202,124 @@ footer img {
     width: 25px;
     height: 25px;
 }
+}
 
+
+
+
+/* Styles for larger PC screens */
+@media (min-width: 768px) {
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #b0d9b1;
+        height: 100vh; /* Chiều cao của body bằng 100% chiều cao màn hình */
+    
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        height: calc(100vh - 40px); /* Trừ đi margin của container */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Cân đối không gian giữa các phần tử */
+    }
+
+    .menu {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap; /* Cho phép menu có thể wrap xuống khi cần thiết */
+    }
+
+    .menu-button {
+        width: 150px;
+        height: 150px;
+        border-radius: 15px;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .menu-button span {
+        font-size: 20px;
+    }
+
+    .logo {
+        font-size: 32px;
+        margin: 5px 0;
+        text-align: center;
+    }
+
+    .logo h1 {
+        font-size: 60px;
+        color: #222;
+    }
+
+    .logo p {
+        font-size: 24px;
+        color: #555;
+    }
+
+    .date-control {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .date-button {
+        padding: 15px 20px;
+        font-size: 24px;
+    }
+
+    .date-picker {
+        font-size: 20px;
+        padding: 8px 12px;
+    }
+
+    .financial-info {
+        font-size: 26px;
+        color: #333;
+        text-align: center;
+    }
+
+    .row {
+        line-height: 3;
+    }
+
+    .label {
+        font-size: 22px;
+    }
+
+    .logout-container {
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    .logout-button {
+        background-color: #f44336;
+        color: #fff;
+        padding: 14px 28px;
+        font-size: 20px;
+        border-radius: 12px;
+    }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    footer img {
+        width: 40px;
+        height: 40px;
+    }
 }
