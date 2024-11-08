@@ -72,7 +72,7 @@ $category_result = $category_stmt->get_result();
                     <div class="imageContainer">
                         <img id="imagePreview" src="../<?= htmlspecialchars($product['productImage']); ?>" alt="プレビュー画像">
                     </div>
-                    <input type="file" id="productImage" name="productImage" accept="image/*" onchange="previewImage(event)">
+                    <!-- <input type="file" id="productImage" name="productImage" accept="image/*" onchange="previewImage(event)"> -->
                 </div>
 
                  <!-- Thêm trường ẩn cho ảnh cũ -->
@@ -110,7 +110,7 @@ $category_result = $category_stmt->get_result();
 
                 <!-- Các trường khác -->
                 <label for="pname">商品名:</label>
-                <input type="text" id="pname" name="pname" value="<?= htmlspecialchars($product['pname']); ?>" required>
+                <input type="text" id="pname" name="pname" value="<?= htmlspecialchars($product['pname']); ?>" readonly>
                 <br>
 
                 <label for="price">価格:</label>
@@ -132,9 +132,9 @@ $category_result = $category_stmt->get_result();
 
                 <label for="barcode">バーコード:</label>
                 <input type="text" id="barcode" name="barcode" value="<?= htmlspecialchars($product['barcode']); ?>" readonly>
-                <button type="button" id="start-scan">カメラでスキャン</button>
+                <!-- <button type="button" id="start-scan">カメラでスキャン</button> -->
                 <!-- Div để hiển thị camera -->
-                <div id="camera" style="display: none;"></div>
+                <!-- <div id="camera" style="display: none;"></div> -->
 
                 <button type="submit">商品情報を更新する</button>
                  <!-- Thêm trường hidden để gửi productid -->
@@ -142,7 +142,7 @@ $category_result = $category_stmt->get_result();
             </form>
         </div>
     </main>
-    <script src="./scripts/camera.js"></script>
+    <!-- <script src="./scripts/camera.js"></script> -->
     <script>
         // Xóa sản phẩm
         function deleteProduct() {

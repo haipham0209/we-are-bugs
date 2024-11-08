@@ -49,7 +49,7 @@ $barcode = isset($_GET['barcode']) ? urldecode($_GET['barcode']) : '';
 
 <body>
     <main>
-        <h3>商品追加</h3>
+        <p class="addTitle">商品追加</p>
         <div class="addContainer">
             <form class="proAddForm" action="./php/addProductP.php" method="POST" enctype="multipart/form-data">
                 <!-- Trường chọn ảnh -->
