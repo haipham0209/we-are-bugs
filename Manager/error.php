@@ -56,7 +56,15 @@
                 } elseif ($error == "invalid_token") {
                     echo "無効なリンクです。再度ご確認ください。";
                     echo "EROR CODE WRB-02";
+                } elseif ($error == "updateError") {
+                    echo "商品を更新できませんでした、再度試してみてください。";
+                    echo "EROR CODE WRB-03";
+                }  elseif ($error == "notAllow") {
+                    echo "商品を更新できませんでした、再度試してみてください。";
+                    echo "EROR CODE WRB-04";
                 } 
+                
+                
             }else {
                 echo "不明なエラーが発生しました。";
                 echo "EROR CODE WRB-000";
@@ -64,7 +72,7 @@
         ?>
     </div>
     
-    <a href="./StoreLogin.php" class="home-link">ログインに戻る</a>
+    <a href="./main.php" class="home-link">ホームページに戻る</a>
 
 </body>
 </html>

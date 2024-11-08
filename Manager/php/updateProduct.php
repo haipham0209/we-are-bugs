@@ -45,7 +45,8 @@ if ($stmt->affected_rows > 0) {
     header("Location: ../product.php?status=success");
     exit();
 } else {
-    echo "Cập nhật không thành công.";
+    // echo "Cập nhật không thành công.";
+    header("Location: ../error.php");
 }
 
 $stmt->close();
