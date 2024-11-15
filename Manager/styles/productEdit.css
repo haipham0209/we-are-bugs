@@ -3,16 +3,11 @@
     body {
         font-family: Arial, sans-serif;
         height: 100vh;
-        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
-        background-size: 400% 400%;
-        animation: wave 10s ease infinite;
+        background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
+        background-size: 100% auto; /* Để nền tự điều chỉnh chiều cao */
+        background-repeat: no-repeat;
     }
 
-    @keyframes wave {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
     /* CSS thêm cho icon thùng rác */
     #deleteIcon {
         position: absolute;
@@ -167,16 +162,13 @@
 
     body {
         font-family: Arial, sans-serif;
-        height: 100vh;
-        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
-        background-size: 400% 400%;
-        animation: wave 10s ease infinite;
-    }
-
-    @keyframes wave {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+        width: 100%;
+        min-height: 100vh; /* Đảm bảo chiếm ít nhất chiều cao của màn hình */
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
+        background-size: 100% auto; /* Để nền tự điều chỉnh chiều cao */
+        background-repeat: no-repeat;
     }
 
     /* CSS cho icon thùng rác */
