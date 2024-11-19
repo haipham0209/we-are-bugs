@@ -135,3 +135,129 @@
 } */
     /* ///////////////////////////end barcode//////////////////////////////// */
 }
+ /* Screen Pc */
+/* Screen Pc */
+@media only screen and (min-width: 768px) {
+
+   /* Đảm bảo body và html bao phủ toàn bộ màn hình */
+html, body {
+    width: 100%;
+    min-height: 100vh; /* Đảm bảo chiếm ít nhất chiều cao của màn hình */
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
+    background-size: 100% auto; /* Để nền tự điều chỉnh chiều cao */
+    background-repeat: no-repeat; /* Đảm bảo không lặp lại, nếu muốn */
+}
+
+/* Đảm bảo phần main chiếm toàn bộ chiều rộng và chiều cao có thể */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh; /* Chiều cao tối thiểu là chiều cao của màn hình */
+    padding: 20px; /* Tùy chỉnh padding để cân đối nội dung */
+    box-sizing: border-box;
+}
+
+/* Đảm bảo addContainer không bị giới hạn kích thước khi phóng to màn hình */
+.addContainer {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    max-width: 600px; /* Giới hạn tối đa, tránh vượt quá độ rộng hợp lý */
+    margin: 0 auto;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+    /* Tiêu đề */
+    .addTitle {
+        text-align: center;
+        font-size: 36px; /* Tăng kích thước chữ */
+        font-weight: bold;
+        margin: 15px 0 20px 0; /* Tăng khoảng cách trên và dưới */
+    }
+
+    /* Nhãn và trường nhập */
+    label {
+        font-weight: bold;
+        margin-top: 4px; /* Tăng khoảng cách giữa các nhãn */
+        display: block;
+        font-size: 18px; /* Tăng kích thước chữ */
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px; /* Tăng padding để dễ nhìn hơn */
+        margin: 4px 0 10px 0; /* Tăng khoảng cách giữa các trường */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 16px; /* Tăng kích thước chữ */
+    }
+
+    #categoryText {
+        height: 36px; /* Tăng chiều cao */
+        width: 74%;
+        margin-right: 2%;
+    }
+
+    #category {
+        width: 24%;
+        height: 36px; /* Tăng chiều cao cho đồng bộ */
+    }
+
+    /* Nút submit */
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px; /* Tăng kích thước cho nút */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    /* Hiển thị ảnh preview */
+    img#imagePreview {
+        display: none;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        max-width: 100%;
+    }
+
+    /* Barcode scanner */
+    #barcode-scanner {
+        width: 100%;
+        height: 200px; /* Tăng chiều cao cho dễ nhìn hơn */
+        display: none;
+        background-color: black;
+        margin-top: 10px; /* Tạo khoảng cách giữa scanner và các phần khác */
+    }
+
+    video {
+        width: 100%;
+        height: 180px; /* Tăng chiều cao */
+        object-fit: contain;
+    }
+
+    #barcode-scanner__dashboard_section,
+    .drawingBuffer {
+        display: none;
+    }
+}
