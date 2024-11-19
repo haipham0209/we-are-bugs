@@ -23,8 +23,8 @@ $category_result = $stmt->get_result();
 
 // Truy vấn để lấy danh sách sản phẩm từ cơ sở dữ liệu
 $product_sql = "
-     SELECT p.productid, p.pname, p.price, p.costPrice, p.description, p.stock_quantity, p.productImage, 
-           u.username, c.cname 
+    SELECT p.productid, p.pname, p.price, p.costPrice, p.description, p.stock_quantity, p.productImage, 
+    u.username, c.cname 
     FROM product p
     JOIN store s ON p.storeid = s.storeid
     JOIN user u ON s.userid = u.userid

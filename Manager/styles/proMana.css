@@ -424,13 +424,13 @@ body {
 }
 
 .add-product button {
-    width: 40px;
-    height: 40px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background-color: #28a745;
     color: #fff;
     border: none;
-    font-size: 24px;
+    font-size: 40px;
     cursor: pointer;
     display: flex;
     align-items: center;
