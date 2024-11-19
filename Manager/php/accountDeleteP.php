@@ -33,6 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $storeStmt->close();
 
         if ($storeid) {
+
+            // todo：メールを送る処理
+
             // productテーブルの関連レコードを削除
             $deleteProductStmt = $conn->prepare("DELETE FROM product WHERE storeid = ?");
             $deleteProductStmt->bind_param("i", $storeid);
