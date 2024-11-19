@@ -73,7 +73,7 @@ if (!isset($_SESSION['userid'])) {
                         </div>
                     </div>
                     <div class="save">
-                        <button type="submit" class="save-button" >保存</button>
+                        <button type="submit" class="save-button">保存</button>
                     </div>
                 </div>
                 <script>
@@ -85,8 +85,8 @@ if (!isset($_SESSION['userid'])) {
                 </script>
 
                 <!-- Link to open the dialog -->
-                <div>
-                    <span class="edit-password-link" onclick="openDialog()">パスワードを編集</span>
+                <div class="edit-password-link">
+                    <button onclick="openDialog()">パスワードを編集</button>
                 </div>
                 <!-- Password Change Modal -->
                 <!-- Dialog password không yêu cầu trong form chính -->
@@ -149,6 +149,26 @@ if (!isset($_SESSION['userid'])) {
                     function closeDeleteDialog() {
                         document.getElementById('deleteDialog').style.display = 'none';
                     }
+
+                    // モーダル外クリックで閉じる
+                    document.addEventListener('click', function(event) {
+                        const deleteDialog = document.getElementById('deleteDialog');
+                        if (event.target === deleteDialog) {
+                            closeDeleteDialog();
+                        }
+                    });
+
+                    function closeDialog() {
+                        document.getElementById('passwordDialog').style.display = 'none';
+                    }
+
+                    // モーダル外クリックで閉じる
+                    document.addEventListener('click', function(event) {
+                        const passwordDialog = document.getElementById('passwordDialog');
+                        if (event.target === passwordDialog) {
+                            closeDialog();
+                        }
+                    });
                 </script>
 
             </form>
