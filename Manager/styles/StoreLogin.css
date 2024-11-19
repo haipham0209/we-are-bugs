@@ -118,13 +118,23 @@
         align-items: center;
         cursor: pointer;
         font-size: 14px;
-        user-select: none;
+        /* user-select: none; */
         color: #333;
     }
 
     /* チェックボックス自体は隠す */
     .custom-checkbox input {
         display: none;
+    }
+
+    #loading{
+        display: none;
+         position: fixed; 
+         top: 0; left: 0;
+          width: 50%; 
+          height: 50%; 
+          background: rgba(255, 255, 255, 0.8); 
+          justify-content: center; align-items: center;
     }
 
     /* チェックマーク部分のスタイル */
@@ -293,6 +303,7 @@
         transition: 0.3s;
         margin: 10px 0;
     }
+    
 
     .login-form button:hover {
         background-color: #0ee3bf;
@@ -334,6 +345,18 @@
 .register-link .pass{
     font-size: 18px;
 }
+
+/* llottie */
+#lottie{
+      width: 500px;
+      height: 500px;
+}
+svg {
+    width: 500px; /* Chiều rộng mong muốn */
+    height: 500px; /* Chiều cao mong muốn */
+  }
+
+/* end lottie */
     footer {
         padding: 5px;
         text-align: left;
