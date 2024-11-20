@@ -11,6 +11,46 @@
         background-size: 100% 100%;
         overflow-y: auto;
     }
+    /* Đặt logo vào một container có vị trí tương đối */
+.logo-container {
+    width: 300px; /* Chiều rộng cố định */
+    height: 200px; /* Chiều cao cố định */
+    position: relative;
+    display: inline-block; /* Để nút có thể chồng lên logo */
+    max-width: 200px;
+}
+
+/* Căn chỉnh logo */
+.logo-container img {
+    width: 300px; /* Chiều rộng cố định */
+    height: 200px; /* Chiều cao cố định */
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Định dạng và căn chỉnh nút đổi logo */
+#changeLogoButton {
+    position: absolute;
+    bottom: 0%; /* Chồng lên 1/4 phần dưới của logo */
+    left: 50%;
+    transform: translateX(-50%);
+    /* background-color: transparent; */
+    color: #363131;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+/* Hiệu ứng hover */
+#changeLogoButton:hover {
+    /* background-color: #e05555; */
+}
 
     /* 容器 */
     .container {
@@ -378,6 +418,46 @@
         flex-direction: column;
         padding: 30px;
     }
+/* Đặt logo vào một container có vị trí tương đối */
+.logo-container {
+    width: 300px; /* Chiều rộng cố định */
+    height: 200px; /* Chiều cao cố định */
+    position: relative;
+    display: inline-block; /* Để nút có thể chồng lên logo */
+    max-width: 200px;
+}
+
+/* Căn chỉnh logo */
+.logo-container img {
+    width: 300px; /* Chiều rộng cố định */
+    height: 200px; /* Chiều cao cố định */
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Định dạng và căn chỉnh nút đổi logo */
+#changeLogoButton {
+    position: absolute;
+    bottom: 0%; /* Chồng lên 1/4 phần dưới của logo */
+    left: 50%;
+    transform: translateX(-50%);
+    /* background-color: transparent; */
+    color: #363131;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+/* Hiệu ứng hover */
+#changeLogoButton:hover {
+    /* background-color: #e05555; */
+}
 
     /* Avatar */
     .avatar {

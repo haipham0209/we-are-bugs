@@ -34,7 +34,7 @@ if (!isset($_SESSION['userid'])) {
     <div class="container">
         <div class="profile-form">
             <!-- アイコン -->
-            <div class="avatar">
+            <!-- <div class="avatar">
                 <form id="logoForm" action="./php/uploadLogo.php" method="POST" enctype="multipart/form-data">
                     <input type="file" id="fileInput" name="logo" accept="image/*" style="display: none;" onchange="document.getElementById('logoForm').submit();">
                     <svg width="198" height="107" viewBox="0 0 198 107" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,11 +45,49 @@ if (!isset($_SESSION['userid'])) {
                         <img src="upload-icon.png" alt="ロゴマーク">
                     </label>
                 </form>
-            </div>
+            </div> -->
 
             <!-- form^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
             <form class="edit-form" action="./php/storeProEditP.php" method="POST">
                 <div class="form">
+                    
+                    <div class="form logo-container">
+                        <!-- Hiển thị logo -->
+                        <img id="logo" src="<?php echo $logoPath; ?>" alt="Logo" style="max-width: 300px; border: 1px solid #ccc; padding: 5px; border-radius: 5px;" />
+
+                        <!-- Nút chọn ảnh -->
+                        <button type="button" id="changeLogoButton">ロゴを変更</button>
+                        <input type="file" id="fileInput" name="logoFile" accept="image/*" style="display: none;" />
+
+                        <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
+
+                    <!-- Hiển thị logo -->
+                    </div>
+
+                    <script>
+                        const changeLogoButton = document.getElementById('changeLogoButton');
+                        const fileInput = document.getElementById('fileInput');
+                        const logo = document.getElementById('logo');
+
+                        // Khi bấm nút, giả lập click vào input file
+                        changeLogoButton.addEventListener('click', function() {
+                            fileInput.click();
+                        });
+
+                        // Khi người dùng chọn tệp
+                        fileInput.addEventListener('change', function(event) {
+                            const file = event.target.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = function(e) {
+                                    logo.src = e.target.result; // Hiển thị ảnh mới
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        });
+                    </script>
+                    <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
+
                     <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
                     <div class="form-row">
                         <label for="shop-name">店名</label>
