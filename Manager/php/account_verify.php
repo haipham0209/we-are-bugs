@@ -41,7 +41,8 @@ if (isset($_GET['token'])) {
 
     $stmt->close();
 } else {
-    echo "Không có token trong yêu cầu.";
+    // echo "Không có token trong yêu cầu.";
+    header("Location: ../error.php?error=nopermission");
 }
 
 $conn->close();

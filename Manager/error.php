@@ -62,7 +62,10 @@
                 }  elseif ($error == "notAllow") {
                     echo "商品を更新できませんでした、再度試してみてください。";
                     echo "EROR CODE WRB-04";
-                } 
+                }  elseif ($error == "nopermission") {
+                    echo "不正なリクエストです。";
+                    echo "EROR CODE WRB-05";
+                }  
                 
                 
             }else {
