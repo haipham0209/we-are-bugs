@@ -135,30 +135,41 @@ require "resources.php";
             <button class="filter-button" data-target="child">Child</button>
         </div>
         <section class="best-sellers">
-            <h2>Best Sellers</h2>
-            <div class="slider">
-                <button class="arrow left">&#10094;</button>
-                <div class="product-grid">
-                    <div class="product">
-                        <img src="./images/facebook.png" alt="Facebook" />
-                    </div>
-                    <div class="product">
-                        <img src="./images/top_button.png" alt="Top Button" />
-                    </div>
-                    <div class="product">
-                        <img src="./images/twitter.png" alt="Twitter" />
-                    </div>
-                    <div class="product">
-                        <img src="./images/twitter.png" alt="Twitter" />
-                    </div>
-                    <div class="product">
-                        <img src="./images/twitter.png" alt="Twitter" />
-                    </div>
-                </div>
-                <button class="arrow right">&#10095;</button>
+    <h2>Best Sellers</h2>
+    <div class="slider">
+        <button class="arrow left">&#10094;</button>
+        <div class="product-grid">
+            <div class="product">
+                <img src="./images/facebook.png" alt="Facebook" />
+                <p class="product-name">Facebook</p>
+                <p class="product-price">$10.00</p>
             </div>
-            <script src="./scripts/menubest.js"></script>
-        </section>
+            <div class="product">
+                <img src="./images/top_button.png" alt="Top Button" />
+                <p class="product-name">Top Button</p>
+                <p class="product-price">$15.00</p>
+            </div>
+            <div class="product">
+                <img src="./images/twitter.png" alt="Twitter" />
+                <p class="product-name">Twitter</p>
+                <p class="product-price">$12.00</p>
+            </div>
+            <div class="product">
+                <img src="./images/twitter.png" alt="Twitter" />
+                <p class="product-name">Twitter</p>
+                <p class="product-price">$12.00</p>
+            </div>
+            <div class="product">
+                <img src="./images/twitter.png" alt="Twitter" />
+                <p class="rotated-text">Twitter</p>
+                <p class="rotated-text">$12.00</p>
+            </div>
+        </div>
+        <button class="arrow right">&#10095;</button>
+    </div>
+    <script src="./scripts/menubest.js"></script>
+</section>
+
 
         <section id="product-section" class="category">
     <?php foreach ($categories as $category): ?>

@@ -445,6 +445,17 @@
     justify-content: center;
     margin-top: 10px;
 }
+/* llottie */
+#lottie{
+    width: 500px;
+    height: 500px;
+}
+svg {
+  width: 500px; /* Chiều rộng mong muốn */
+  height: 500px; /* Chiều cao mong muốn */
+}
+
+/* end lottie */
 
     /* Modal styling */
     .modal {
