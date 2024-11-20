@@ -390,6 +390,19 @@
         width: 198px;
         height: 107px;
     }
+    /* llottie */
+#lottie{
+    margin-top: 0;
+    width: 50%;
+    height: 50%;
+}
+svg {
+    margin-top: 0;
+  width: 0px; /* Chiều rộng mong muốn */
+  height: 0px; /* Chiều cao mong muốn */
+}
+
+/* end lottie */
 
     .upload-button {
         position: absolute;
