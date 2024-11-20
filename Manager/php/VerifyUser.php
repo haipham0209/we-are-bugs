@@ -67,5 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
     $conn->close();
 } else {
-    echo "不正なリクエストです。";
+    // echo "不正なリクエストです。";
+    header("Location: ../error.php?error=nopermission");
 }

@@ -23,7 +23,8 @@ if ($result->num_rows > 0) {
     $product = $result->fetch_assoc();
     echo json_encode($product);
 } else {
-    echo json_encode(['error' => 'Product not found']);
+    // echo json_encode(['error' => 'Product not found']);
+    header("Location: ../error.php?error=nopermission");
 }
 
 $stmt->close();
