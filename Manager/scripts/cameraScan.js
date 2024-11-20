@@ -43,9 +43,33 @@ function startScanner() {
 // Khi phát hiện mã, phát sự kiện 'barcodeDetected' với mã vạch
 Quagga.onDetected((data) => {
     const code = data.codeResult.code;
-    document.dispatchEvent(new CustomEvent('barcodeDetected', { detail: code }));
+
+    // Gửi mã vạch đến server
+    fetch('./php/getProductByBarcode.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ barcode: code }),
+    })
+    .then((response) => response.json())
+    .then((product) => {
+        if (product && product.productid) {
+            // Chuyển hướng đến trang chỉnh sửa sản phẩm
+            window.location.href = `./productEdit.php?id=${product.productid}`;
+        } else {
+            alert('Product not found!');
+            // console.log(product);
+            // console.log(product.productid);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
     stopScanner();
 });
+
 
 }
 
