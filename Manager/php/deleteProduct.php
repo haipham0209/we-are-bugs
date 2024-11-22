@@ -47,7 +47,8 @@ if ($productid) {
     $stmt_get_category->close();
     $stmt_check_category->close();
 } else {
-    echo "ID sản phẩm không hợp lệ.";
+    // echo "ID sản phẩm không hợp lệ.";
+    header("Location: ../error.php?error=nopermission");
 }
 
 $conn->close();

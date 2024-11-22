@@ -1,4 +1,4 @@
-@media only screen and (max-width: 767px) { 
+@media only screen and (max-width: 767px) {
     body {
         font-family: Arial, sans-serif;
         height: 100vh;
@@ -8,10 +8,19 @@
     }
 
     @keyframes wave {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
     }
+
     .main-navbar {
         display: flex;
         width: 100%;
@@ -30,14 +39,17 @@
 
     .search-bar {
         width: 100%;
-        padding: 10px 5px 10px 5px; /* Chỉnh lại padding để chừa không gian cho ảnh */
+        padding: 10px 5px 10px 5px;
+        /* Chỉnh lại padding để chừa không gian cho ảnh */
         border: 1px solid #ccc;
         border-radius: 10px;
         font-size: 16px;
         transition: border-color 0.3s ease;
     }
+
     .search-bar:focus {
-        border-color: #038610; /* Đổi màu viền khi focus */
+        border-color: #038610;
+        /* Đổi màu viền khi focus */
         outline: none;
     }
 
@@ -49,14 +61,18 @@
         top: 50%;
         justify-content: right;
         transform: translateY(-50%);
-        width: 24px; /* Kích thước của ảnh camera */
+        width: 24px;
+        /* Kích thước của ảnh camera */
         height: 24px;
         cursor: pointer;
-        opacity: 0.8; /* Tạo hiệu ứng mờ nhẹ */
+        opacity: 0.8;
+        /* Tạo hiệu ứng mờ nhẹ */
         transition: opacity 0.3s ease;
     }
+
     .camera-icon:hover {
-        opacity: 1; /* Hiệu ứng hover */
+        opacity: 1;
+        /* Hiệu ứng hover */
     }
 
     .main-home {
@@ -72,90 +88,131 @@
         font-weight: bold;
         color: #333;
     }
+
     #camera {
         display: none;
         margin: 4px;
     }
-    
-    .title{
+
+    .title {
         font-size: 30px;
-        font-weight: bold; 
+        font-weight: bold;
         margin: 15px 10px 5px 10px;
     }
-    .category{
+
+    .category {
         display: flex;
         gap: 10px;
         /* margin-bottom: 10px; */
         padding: 10px;
         justify-content: center;
-        overflow-x: auto; /* Cho phép cuộn ngang khi danh sách dài */
-        white-space: nowrap; /* Ngăn không cho các nút xuống dòng */
+        overflow-x: auto;
+        /* Cho phép cuộn ngang khi danh sách dài */
+        white-space: nowrap;
+        /* Ngăn không cho các nút xuống dòng */
     }
+
+    .category::-webkit-scrollbar {
+        display: none;
+    }
+
     /* Các nút trong category (All và các nút khác) đều có kích thước và khoảng cách giống nhau */
-    .category, .main-category {
+    .category,
+    .main-category {
         display: flex;
-        gap: 10px;  /* Khoảng cách giữa các nút */
-        justify-content: center; /* Căn giữa các nút */
-        flex-wrap: wrap; /* Cho phép cuộn khi các nút quá dài */
+        gap: 10px;
+        /* Khoảng cách giữa các nút */
+        justify-content: center;
+        /* Căn giữa các nút */
+        flex-wrap: wrap;
+        /* Cho phép cuộn khi các nút quá dài */
     }
 
     /* Nút All Categories luôn có nền đen và chữ trắng */
     .all-categories {
-        background-color: #000;  /* Nền đen */
-        color: #fff;             /* Chữ trắng */
-        border-radius: 10px;     /* Bo tròn các góc */
-        padding: 10px 20px;      /* Padding cho nút */
-        font-size: 16px;         /* Kích thước chữ */
-        border: 1px solid #000;  /* Đường viền đen */
-        cursor: pointer;        /* Hiển thị con trỏ chuột */
+        background-color: #000;
+        /* Nền đen */
+        color: #fff;
+        /* Chữ trắng */
+        border-radius: 10px;
+        /* Bo tròn các góc */
+        padding: 10px 20px;
+        /* Padding cho nút */
+        font-size: 16px;
+        /* Kích thước chữ */
+        border: 1px solid #000;
+        /* Đường viền đen */
+        cursor: pointer;
+        /* Hiển thị con trỏ chuột */
         transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        /* Đổ bóng nhẹ */
     }
 
     /* Nút All Categories khi hover (Vẫn giữ nền đen và chữ trắng) */
     .all-categories:hover {
-        background-color: #333;  /* Nền hơi sáng khi hover */
-        color: #fff;             /* Chữ vẫn trắng */
+        background-color: #333;
+        /* Nền hơi sáng khi hover */
+        color: #fff;
+        /* Chữ vẫn trắng */
     }
 
     /* Các nút trong main-category có nền sáng và chữ đen */
     .main-category button {
-        background-color: #f4f4f400;  /* Nền sáng */
-        color: #333;                /* Chữ đen */
-        border-radius: 10px;        /* Bo tròn góc */
-        padding: 10px 20px;         /* Padding cho nút */
-        font-size: 16px;            /* Kích thước chữ */
-        border: 1px solid #000;     /* Đường viền đen */
-        cursor: pointer;           /* Hiển thị con trỏ chuột */
+        background-color: #f4f4f400;
+        /* Nền sáng */
+        color: #333;
+        /* Chữ đen */
+        border-radius: 10px;
+        /* Bo tròn góc */
+        padding: 10px 20px;
+        /* Padding cho nút */
+        font-size: 16px;
+        /* Kích thước chữ */
+        border: 1px solid #000;
+        /* Đường viền đen */
+        cursor: pointer;
+        /* Hiển thị con trỏ chuột */
         transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        /* Đổ bóng nhẹ */
     }
 
     /* Các nút trong main-category khi hover (Nền chuyển sang đen, chữ chuyển sang trắng) */
     .main-category button:hover {
-        background-color: #000;  /* Nền đen khi hover */
-        color: #fff;             /* Chữ trắng khi hover */
-        transform: translateY(-3px); /* Hiệu ứng nổi lên khi hover */
-        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng mạnh hơn khi hover */
+        background-color: #000;
+        /* Nền đen khi hover */
+        color: #fff;
+        /* Chữ trắng khi hover */
+        transform: translateY(-3px);
+        /* Hiệu ứng nổi lên khi hover */
+        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+        /* Đổ bóng mạnh hơn khi hover */
     }
 
     /* Nút active trong main-category khi được chọn */
     .main-category button.active {
-        background-color: #000;  /* Nền đen khi được chọn */
-        color: #fff;             /* Chữ trắng khi được chọn */
+        background-color: #000;
+        /* Nền đen khi được chọn */
+        color: #fff;
+        /* Chữ trắng khi được chọn */
     }
 
     /* Responsive adjustments */
     @media only screen and (max-width: 767px) {
-        .all-categories, .main-category button {
-            font-size: 14px; /* Giảm kích thước chữ cho các màn hình nhỏ */
-            padding: 8px 16px; /* Giảm padding để vừa với các màn hình nhỏ */
+
+        .all-categories,
+        .main-category button {
+            font-size: 14px;
+            /* Giảm kích thước chữ cho các màn hình nhỏ */
+            padding: 8px 16px;
+            /* Giảm padding để vừa với các màn hình nhỏ */
         }
     }
 
 
-      /* Nút Add Product */
-      .add-product {
+    /* Nút Add Product */
+    .add-product {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -183,11 +240,12 @@
     }
 
     /* Định dạng product card */
-    .all-product{
+    .all-product {
         background-color: #b1aeaeff;
         border-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
     .product-card {
         display: flex;
         flex-direction: row;
@@ -196,13 +254,16 @@
         margin: 1px 0;
         position: relative;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        
+
         /* Thêm đường viền trắng giữa các sản phẩm */
-        border: 1px solid #ffffff;  /* Đường viền trắng */
-        border-radius: 8px;  /* Thêm góc bo tròn cho viền nếu muốn */
-        background-color: #f9f9f9;  /* Màu nền nhẹ cho sản phẩm */
+        border: 1px solid #ffffff;
+        /* Đường viền trắng */
+        border-radius: 8px;
+        /* Thêm góc bo tròn cho viền nếu muốn */
+        background-color: #f9f9f9;
+        /* Màu nền nhẹ cho sản phẩm */
     }
-    
+
 
     .product-card:hover {
         transform: scale(1.02);
@@ -247,29 +308,32 @@
     .edit-icon {
         position: absolute;
         top: 10px;
-        right: 10px; 
-        width: 35px; 
-        height: 35px; 
+        right: 10px;
+        width: 35px;
+        height: 35px;
         cursor: pointer;
-        opacity: 0.8; 
+        opacity: 0.8;
         transition: opacity 0.3s ease;
     }
+
     .edit-icon:hover {
-        opacity: 1; 
+        opacity: 1;
     }
 
     .edit-icon img {
-        width: 100%; 
+        width: 100%;
         height: auto;
-        display: block; 
+        display: block;
     }
-        /* //////////////barcode/////////////////////// */
 
-        .camera-button {
-            background: none;
-            border: none;
-            padding: 0;
-            position: absolute; /* Đặt nút thành vị trí tuyệt đối
+    /* //////////////barcode/////////////////////// */
+
+    .camera-button {
+        background: none;
+        border: none;
+        padding: 0;
+        position: absolute;
+        /* Đặt nút thành vị trí tuyệt đối
         }   
         
     #barcode-scanner {
@@ -292,19 +356,23 @@
         overflow-clip-margin: content-box;
         overflow: clip;
     }
+
     #camera {
         width: 320px;
         height: 240px;
         background: #ccc;
         position: relative;
-        margin: auto; /* Căn giữa nếu cần */
+        margin: auto;
+        /* Căn giữa nếu cần */
     }
 
     #stopBtn {
         position: absolute;
-        bottom: 10px; /* Đặt nút ở dưới cùng */
+        bottom: 10px;
+        /* Đặt nút ở dưới cùng */
         left: 50%;
-        transform: translateX(-50%); /* Căn giữa theo chiều ngang */
+        transform: translateX(-50%);
+        /* Căn giữa theo chiều ngang */
         padding: 5px 10px;
         background-color: red;
         color: white;
@@ -312,6 +380,7 @@
         cursor: pointer;
         z-index: 1;
     }
+
     #barcode-scanner__dashboard_section {
         display: none;
 
@@ -321,176 +390,258 @@
         display: none;
     }
 
-} 
+}
 
 @media only screen and (min-width: 768px) {
+
     /* CSS dành cho màn hình PC */
-body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
-    background-color: #B0d9b1;
-    margin: 0;
-    padding: 0;
-    color: #333;
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        background-color: #B0d9b1;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    /* Định dạng cho thanh điều hướng */
+    .main-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #fff;
+        padding: 15px 30px;
+    }
+
+    .logo {
+        font-size: 28px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .search-scan {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-bar {
+        width: 350px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .camera-icon {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    /* Container chính */
+    .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #B0d9b1;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Tiêu đề */
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* Định dạng danh mục */
+    .category {
+        display: flex;
+        gap: 10px;
+        /* margin-bottom: 10px; */
+        padding: 10px;
+        justify-content: center;
+        overflow-x: auto;
+        /* Cho phép cuộn ngang khi danh sách dài */
+        white-space: nowrap;
+        /* Ngăn không cho các nút xuống dòng */
+    }
+
+    .category::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Các nút trong category (All và các nút khác) đều có kích thước và khoảng cách giống nhau */
+    .category,
+    .main-category {
+        display: flex;
+        gap: 10px;
+        /* Khoảng cách giữa các nút */
+        justify-content: center;
+        /* Căn giữa các nút */
+        flex-wrap: wrap;
+        /* Cho phép cuộn khi các nút quá dài */
+    }
+
+    /* Nút All Categories luôn có nền đen và chữ trắng */
+    .all-categories {
+        background-color: #000;
+        /* Nền đen */
+        color: #fff;
+        /* Chữ trắng */
+        border-radius: 10px;
+        /* Bo tròn các góc */
+        padding: 10px 20px;
+        /* Padding cho nút */
+        font-size: 16px;
+        /* Kích thước chữ */
+        border: 1px solid #000;
+        /* Đường viền đen */
+        cursor: pointer;
+        /* Hiển thị con trỏ chuột */
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        /* Đổ bóng nhẹ */
+    }
+
+    /* Nút All Categories khi hover (Vẫn giữ nền đen và chữ trắng) */
+    .all-categories:hover {
+        background-color: #333;
+        /* Nền hơi sáng khi hover */
+        color: #fff;
+        /* Chữ vẫn trắng */
+    }
+
+    /* Các nút trong main-category có nền sáng và chữ đen */
+    .main-category button {
+        background-color: #f4f4f400;
+        /* Nền sáng */
+        color: #333;
+        /* Chữ đen */
+        border-radius: 10px;
+        /* Bo tròn góc */
+        padding: 10px 20px;
+        /* Padding cho nút */
+        font-size: 16px;
+        /* Kích thước chữ */
+        border: 1px solid #000;
+        /* Đường viền đen */
+        cursor: pointer;
+        /* Hiển thị con trỏ chuột */
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        /* Đổ bóng nhẹ */
+    }
+
+    /* Các nút trong main-category khi hover (Nền chuyển sang đen, chữ chuyển sang trắng) */
+    .main-category button:hover {
+        background-color: #000;
+        /* Nền đen khi hover */
+        color: #fff;
+        /* Chữ trắng khi hover */
+        transform: translateY(-3px);
+        /* Hiệu ứng nổi lên khi hover */
+        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+        /* Đổ bóng mạnh hơn khi hover */
+    }
+
+    /* Nút active trong main-category khi được chọn */
+    .main-category button.active {
+        background-color: #000;
+        /* Nền đen khi được chọn */
+        color: #fff;
+        /* Chữ trắng khi được chọn */
+    }
+
+    /* Nút thêm sản phẩm */
+    .add-product {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
+    }
+
+    .add-product button {
+        background-color: #035c0c;
+        color: #ffffff;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .add-product button:hover {
+        background-color: #000000;
+        transform: scale(1.1);
+    }
+
+    /* Định dạng thẻ sản phẩm */
+    .all-product {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-left: 35px;
+    }
+
+    .product-card {
+        width: 20%;
+        /* Hiển thị 3 sản phẩm mỗi hàng */
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        transition: transform 0.2s;
+        height: 50vh;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .product-card img {
+        width: 50%;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        height: 20vh;
+    }
+
+    .product-info p {
+        margin: 5px 0;
+    }
+
+    .stock {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Định dạng nút chỉnh sửa */
+    .edit-icon {
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+
+    .edit-icon:hover {
+        opacity: 1;
+    }
+
+    .edit-icon img {
+        margin: 0 0 0 auto;
+        width: 30px;
+        height: 30px;
+        display: block;
+    }
+
 }
-
-/* Định dạng cho thanh điều hướng */
-.main-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #fff;
-    padding: 15px 30px;
-}
-
-.logo {
-    font-size: 28px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.search-scan {
-    display: flex;
-    align-items: center;
-}
-
-.search-bar {
-    width: 350px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-right: 10px;
-}
-
-.camera-icon {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-}
-
-/* Container chính */
-.container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color:#B0d9b1;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Tiêu đề */
-.title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-/* Định dạng danh mục */
-.category {
-    display: flex;
-    flex-wrap: wrap;
-    /* margin-bottom: 20px; */
-}
-
-.main-category button,
-.all-categories {
-    margin: 5px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    background-color: #618264;
-    color: #fff;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.main-category button:hover,
-.all-categories:hover {
-    background-color: #0056b3;
-}
-
-.main-category button.active,
-.all-categories.active {
-    background-color: #000;
-    color: #fff;
-}
-
-/* Nút thêm sản phẩm */
-.add-product {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.add-product button {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    font-size: 40px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.add-product button:hover {
-    background-color: #218838;
-}
-
-/* Định dạng thẻ sản phẩm */
-.all-product {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-left: 35px;
-}
-
-.product-card {
-    width: 20%; /* Hiển thị 3 sản phẩm mỗi hàng */
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    transition: transform 0.2s;
-    height: 50vh;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-.product-card img {
-    width: 50%;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    height: 20vh;
-}
-
-.product-info p {
-    margin: 5px 0;
-}
-
-.stock {
-    margin-top: 10px;
-    font-weight: bold;
-    color: #333;
-}
-
-/* Định dạng nút chỉnh sửa */
-.edit-icon {
-    position: absolute;
-    /* top: 10px; */
-    right: 10px;
-    width: 20px;
-    height: 20px;
-}
-
-}
-
-
-
-

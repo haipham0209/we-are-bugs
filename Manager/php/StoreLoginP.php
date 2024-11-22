@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
     $conn->close();
 } else {
-    echo "POSTではない";
+    // echo "POSTではない";
+    header("Location: ../error.php?error=nopermission");
 }
 ?>

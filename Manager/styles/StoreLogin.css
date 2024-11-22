@@ -325,7 +325,10 @@
         font-size: 12px;
         cursor: pointer;
     }
+    .custom-checkbox input{
+        display: none;
 
+    }
     .custom-checkbox .checkmark {
         width: 16px;
         height: 16px;
@@ -336,6 +339,25 @@
         transition: background-color 0.3s, border-color 0.3s;
         vertical-align: middle;
     }
+/* チェックされたときのスタイル */
+.custom-checkbox input:checked+.checkmark {
+    background-color: #0ee3bf;
+    border-color: #0ee3bf;
+    position: relative;
+}
+
+/* チェックマークの表示 */
+.custom-checkbox input:checked+.checkmark::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
 
     .register-link {
         font-size: 12px; /* Giảm kích thước font của link đăng ký */
