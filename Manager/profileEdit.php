@@ -9,6 +9,9 @@ if (!isset($_SESSION['userid'])) {
     header("Location: login.php");
     exit;
 }
+// echo "55";
+// echo $store['logopath'];
+
 
 // データベースからロゴパスを取得
 // $stmt = $conn->prepare("SELECT logo_path FROM user WHERE userid = ?");
@@ -37,7 +40,7 @@ if (!isset($_SESSION['userid'])) {
                     <!--  -->
                 <p>1:3の画像をご利用ください</p>
                 <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
-                <input type="hidden" name="currentLogoPath" value="<?php echo htmlspecialchars($logoPath ?? ''); ?>">
+                <input type="hidden" name="currentLogoPath" value="<?php echo htmlspecialchars($_SESSION['logopath'] ?? ''); ?>">
                 <!--  -->
                 <div class="form">
                 <div class="form logo-container">
