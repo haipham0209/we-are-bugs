@@ -1,0 +1,232 @@
+@media only screen and (max-width: 767px) {
+    body {
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        background-size: 400% 400%;
+        animation: wave 10s ease infinite;
+    }
+    @keyframes wave {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    .main-navbar {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 0px;
+        margin: 0;
+        background-color: #e3f3e1;
+        border-radius: 8px;
+    }
+
+    .search-scan {
+        position: relative;
+        width: 70%;
+    }
+
+    .search-bar {
+        width: 100%;
+        padding: 10px 5px 10px 5px; /* Chỉnh lại padding để chừa không gian cho ảnh */
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+    }
+    .search-bar:focus {
+        border-color: #038610; /* Đổi màu viền khi focus */
+        outline: none;
+    }
+    .suggestions-list {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        width: 100%;
+        background: white;
+        border: 1px solid #ccc;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 100;
+    }
+    
+    .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
+    
+    /* Định dạng ảnh camera */
+    .camera-icon {
+        position: absolute;
+        text-align: right;
+        right: 0px;
+        top: 50%;
+        justify-content: right;
+        transform: translateY(-50%);
+        width: 24px; /* Kích thước của ảnh camera */
+        height: 24px;
+        cursor: pointer;
+        opacity: 0.8; /* Tạo hiệu ứng mờ nhẹ */
+        transition: opacity 0.3s ease;
+    }
+    .camera-icon:hover {
+        opacity: 1; /* Hiệu ứng hover */
+    }
+
+    .main-home {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .logo {
+        font-size: 24px;
+        margin: auto;
+        padding-left: 15px;
+        font-weight: bold;
+        color: #333;
+    }
+    #camera {
+        display: none;
+        margin: 4px;
+        width: 320px;
+        height: 240px;
+        background: #ccc;
+        position: relative;
+        margin: auto; /* Căn giữa nếu cần */
+    }
+    video {
+        margin-top: 3px;
+        width: 100%;
+        /* Hoặc chiều rộng cụ thể */
+        height: 100%;
+        /* Hoặc chiều cao cụ thể */
+        object-fit: contain;
+        overflow-clip-margin: content-box;
+        overflow: clip;
+    }
+    #stopBtn {
+        position: absolute;
+        bottom: 10px; /* Đặt nút ở dưới cùng */
+        left: 50%;
+        transform: translateX(-50%); /* Căn giữa theo chiều ngang */
+        padding: 5px 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+        z-index: 1;
+    }
+   /* POS Container Styling */
+    main {
+        margin: 15px;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .id-time {
+        display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử */
+        justify-content: space-between; /* Đẩy mã khách hàng sang trái và ngày giờ sang phải */
+        align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+        margin-bottom: 20px; /* Thêm khoảng cách dưới nếu cần */
+    }
+    #customer-id {
+        font-size: 18px;
+        text-align: left;
+    }
+    #datetime {
+        text-align: right;
+        font-size: 13px;
+    }
+    #datetime p {
+        margin: 0; /* Xóa margin mặc định */
+    }
+
+    /* Product Table Styling */
+    #product-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #fff;
+    }
+
+    #product-table th, #product-table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    #product-table th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+
+    #product-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    #product-table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Payment Form Styling */
+    #payment-form {
+        display: flex; 
+        margin-top: 20px;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #payment-form p {
+        font-size: 13px;
+        margin: 5px 0;
+    }
+    
+    .total{
+        width: 100%;
+    }
+    #received-amount {
+        padding: 5px;
+        font-size: 13px;
+        width: 50%;
+    }
+    .total{
+        text-align: right;
+    }
+
+    #payment-method {
+        padding: 5px;
+        font-size: 13px;
+        width: 45%;
+    }
+    /* Căn giữa nút button-pay */
+    .button-pay {
+        margin: 10px auto 0; /* Căn giữa nút */
+        text-align: center;
+        padding: 10px 20px;
+        font-size: 13px;
+        background-color: #000000;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: auto; /* Đảm bảo chiều rộng tự động */
+        display: block; /* Làm nút thành block-level element */
+    }
+
+    .button-pay:hover {
+        background-color: #45a049;
+    }
+
+    
+}
