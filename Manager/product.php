@@ -1,6 +1,7 @@
 <?php
 // Gọi file xác thực người dùng trước khi load nội dung trang
 include('./php/auth_check.php');
+// ctype_alnum
 
 // Kết nối cơ sở dữ liệu
 include('./php/db_connect.php');
