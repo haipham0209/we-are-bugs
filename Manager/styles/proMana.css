@@ -274,9 +274,10 @@
     /* Định dạng hình ảnh sản phẩm */
     .product-card img {
         width: 120px;
-        height: auto;
+        height: 130px;
         border-radius: 10px;
         margin-right: 20px;
+        object-fit: contain;
     }
 
     /* Thông tin sản phẩm */
@@ -610,10 +611,11 @@
     }
 
     .product-card img {
-        width: 50%;
+        width: 120px;
+        height: 130px;
         border-radius: 10px;
-        margin-bottom: 10px;
-        height: 20vh;
+        margin-right: 20px;
+        object-fit: contain;
     }
 
     .product-info p {
