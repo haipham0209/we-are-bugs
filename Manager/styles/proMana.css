@@ -625,7 +625,6 @@
 
     /* Định dạng nút chỉnh sửa */
     .edit-icon {
-        position: absolute;
         right: 10px;
         width: 35px;
         height: 35px;
@@ -639,8 +638,9 @@
     }
 
     .edit-icon img {
-        width: 20px;
-        height: 20px;
+        margin: 0 0 0 auto;
+        width: 30px;
+        height: 30px;
         display: block;
     }
 

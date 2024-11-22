@@ -49,6 +49,10 @@ include('./php/auth_check.php');
                 <img src="./images/profile-icon.png" alt="プロフィール" class="icon">
                 <span>プロフ</span>
             </button>
+            <button class="menu-button" onclick="location.href='#'">
+                <img src="./images/regi.png" alt="レジ" class="icon">
+                <span>レジ</span>
+            </button>
         </div>
 
         <!-- 日期顯示 -->
