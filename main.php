@@ -97,7 +97,8 @@ require "resources.php";
             <div class="logo-container">
                 <div class= "logo-div">
                     <!-- <h1 class="logo">WRB</h1> -->
-                    <img id= logo-main src="<?=$logopath?>" alt="">
+                     <a href=""><img id= logo-main src="<?=$logopath?>" alt="logo"></a>
+                    
                 </div>
                 <input type="text" class="search-bar" placeholder="Search...">
             </div>
