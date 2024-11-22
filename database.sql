@@ -12,6 +12,8 @@ sửa category và product truy vấn dựa vào storeid
 ---------------------------------------------------------------------------------------------
 SAU KHI TẠO LẠI BẢNG => ĐĂNG KÝ TÀI KHOẢN MỚI NHƯ BTH => HIỆN BẢNG CHECK EMAIL THÌ KO CẦN MỞ MAIL ==>
 DÁN LỆNH SAU LÀ LOGIN DC : (THAY TÊN USERNAME)
+ALTER TABLE store
+ADD COLUMN logopath VARCHAR(255) DEFAULT NULL AFTER tel;
 
 UPDATE user 
 SET status = 'active' 
@@ -46,6 +48,7 @@ CREATE TABLE store (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userid) REFERENCES user(userid)
 );
+
 
 CREATE TABLE category (
     category_id INT NOT NULL,
