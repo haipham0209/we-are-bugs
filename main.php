@@ -32,7 +32,7 @@ $sname = null;
 $storeid = null;
 
 // Thực hiện truy vấn để lấy dữ liệu cửa hàng và thông tin người dùng
-$query = "SELECT store.storeid, store.sname, store.tel, store.address, user.mail 
+$query = "SELECT store.storeid, store.logopath, store.sname, store.tel, store.address, user.mail 
           FROM store 
           JOIN user ON store.userid = user.userid 
           WHERE store.sname = ?";
@@ -49,6 +49,9 @@ if ($result->num_rows > 0) {
     $tel = $storeData["tel"];
     $address = $storeData["address"];
     $mail = $storeData["mail"];
+    $logopath = $storeData["logopath"];
+    $logopath = str_replace('../Manager/', './Manager/', $logopath);
+
 } else {
     header("HTTP/1.0 404 Not Found");
     echo "404 Not Found";
@@ -92,7 +95,11 @@ require "resources.php";
                 <span class="menu-icon"></span>
             </button>
             <div class="logo-container">
-                <h1 class="logo">WRB</h1>
+                <div class= "logo-div">
+                    <!-- <h1 class="logo">WRB</h1> -->
+                     <a href=""><img id= logo-main src="<?=$logopath?>" alt="logo"></a>
+                    
+                </div>
                 <input type="text" class="search-bar" placeholder="Search...">
             </div>
             <button class="account-toggle">

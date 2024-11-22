@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tel = $conn->real_escape_string($_POST['phone']);
     $currentLogoPath = $_POST['currentLogoPath'] ?? null; // Logo path cũ
     $logopath = $currentLogoPath;
+    $targetPath = $logopath;
 
     // Xử lý upload file logo
     if (isset($_FILES['logoFile']) && $_FILES['logoFile']['error'] === UPLOAD_ERR_OK) {

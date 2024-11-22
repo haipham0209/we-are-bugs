@@ -13,17 +13,16 @@
     }
     /* Đặt logo vào một container có vị trí tương đối */
 .logo-container {
-    width: 300px; /* Chiều rộng cố định */
-    height: 200px; /* Chiều cao cố định */
+
     position: relative;
     display: inline-block; /* Để nút có thể chồng lên logo */
-    max-width: 200px;
+    
 }
 
 /* Căn chỉnh logo */
 .logo-container img {
-    width: 300px; /* Chiều rộng cố định */
-    height: 200px; /* Chiều cao cố định */
+    width: 450px; /* Chiều rộng cố định */
+    height: 150px; /* Chiều cao cố định */
     display: block;
     width: 100%;
     border: 1px solid #ccc;
@@ -33,7 +32,7 @@
 /* Định dạng và căn chỉnh nút đổi logo */
 #changeLogoButton {
     position: absolute;
-    bottom: 0%; /* Chồng lên 1/4 phần dưới của logo */
+    bottom: -20px; /* Chồng lên 1/4 phần dưới của logo */
     left: 50%;
     transform: translateX(-50%);
     /* background-color: transparent; */
@@ -265,7 +264,7 @@
     }
 
     .save-button {
-        background-color: black;
+        background-color: green;
         color: white;
         border-radius: 5px;
         padding: 15px;
@@ -370,7 +369,7 @@
     }
 
     .edit-password-link button {
-        background-color: #4CAF50;
+        background-color: #3f4e40;
         /* グリーン */
         color: white;
         border-radius: 5px;
