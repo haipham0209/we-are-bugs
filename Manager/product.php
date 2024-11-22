@@ -1,6 +1,7 @@
 <?php
 // Gọi file xác thực người dùng trước khi load nội dung trang
 include('./php/auth_check.php');
+// ctype_alnum
 
 // Kết nối cơ sở dữ liệu
 include('./php/db_connect.php');
@@ -21,6 +22,9 @@ $stmt->bind_param("i", $storeid); // Ràng buộc biến storeid
 $stmt->execute();
 $category_result = $stmt->get_result();
 
+// Lấy category_id từ GET parameter (nếu có)
+$category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
+
 // Truy vấn để lấy danh sách sản phẩm từ cơ sở dữ liệu
 $product_sql = "
     SELECT p.productid, p.pname, p.price, p.costPrice, p.description, p.stock_quantity, p.productImage, 
@@ -29,10 +33,21 @@ $product_sql = "
     JOIN store s ON p.storeid = s.storeid
     JOIN user u ON s.userid = u.userid
     JOIN category c ON p.category_id = c.category_id AND p.storeid = c.storeid
-    WHERE p.storeid = ?"; 
+    WHERE p.storeid = ?
+";
+
+if ($category_id > 0) {
+    $product_sql .= " AND p.category_id = ?";
+}
 
 $product_stmt = $conn->prepare($product_sql);
-$product_stmt->bind_param("i", $storeid); // Truyền storeid 
+
+if ($category_id > 0) {
+    $product_stmt->bind_param("ii", $storeid, $category_id);
+} else {
+    $product_stmt->bind_param("i", $storeid);
+}
+
 $product_stmt->execute();
 $product_result = $product_stmt->get_result();
 ?>
@@ -51,16 +66,15 @@ $product_result = $product_stmt->get_result();
 
 <body>
     <header>
-         <!-- Header navbar -->
-         <div class="main-navbar">
-         <div class="search-scan"> 
-        <input type="text" class="search-bar" placeholder="Search...">
-        <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
-    </div>
-    <script>
-                let isCameraRunning = false; // Biến trạng thái camera
+        <!-- Header navbar -->
+        <div class="main-navbar">
+            <div class="search-scan">
+                <input type="text" class="search-bar" placeholder="Search...">
+                <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
+            </div>
+            <script>
+                let isCameraRunning = false; // カメラの状態を管理
 
-                // Hàm bật/tắt camera khi nhấn vào biểu tượng
                 function toggleCamera() {
                     if (isCameraRunning) {
                         stopScanner();
@@ -70,67 +84,35 @@ $product_result = $product_stmt->get_result();
                         isCameraRunning = true;
                     }
                 }
-
-    </script>
+            </script>
             <button class="main-home">
                 <h1 class="logo">WRB</h1>
             </button>
         </div>
-        <script>
-            //gọi hàm kích hoạt camera
-        </script>
     </header>
     <main>
-            <!-- <div id="camera" style="display: none;"></div> -->
-    <div id="camera" style="display: none;">
-        <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>
-    </div>
+        <div id="camera" style="display: none;">
+            <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>
+        </div>
         <div class="container">
             <p class="title">商品管理</p>
+
             <!-- Category -->
             <div class="category">
-                <button class="all-categories" onclick="window.location.reload();">All</button>
+                <button class="all-categories <?= $category_id === 0 ? 'active' : '' ?>" onclick="showAllCategories()">All</button>
                 <div class="main-category">
                     <?php
                     if ($category_result->num_rows > 0) {
-                        // Duyệt qua các hàng kết quả từ truy vấn
                         while ($row = $category_result->fetch_assoc()) {
-                            // Hiển thị từng danh mục dưới dạng button
-                            echo '<button>' . htmlspecialchars($row['cname'], ENT_QUOTES, 'UTF-8') . '</button>';
+                            $activeClass = ($row['category_id'] === $category_id) ? 'active' : '';
+                            echo '<button class="' . $activeClass . '" onclick="filterCategory(' . $row['category_id'] . ')">'
+                                . htmlspecialchars($row['cname'], ENT_QUOTES, 'UTF-8') . '</button>';
                         }
                     } else {
                         echo '<p>No categories found.</p>';
                     }
                     ?>
-                </div>  
-                <script>
-                    // Khi người dùng nhấn vào nút trong main-category
-                    document.querySelectorAll('.main-category button').forEach(button => {
-                        button.addEventListener('click', function() {
-                            // Xóa class 'active' ở tất cả các nút trong main-category
-                            document.querySelectorAll('.main-category button').forEach(btn => btn.classList.remove('active'));
-
-                            // Thêm class 'active' vào nút vừa được nhấn
-                            this.classList.add('active');
-
-                            // Chuyển nút 'All' thành nền trong suốt với chữ đen
-                            document.querySelector('.all-categories').classList.remove('active');
-                            document.querySelector('.all-categories').style.backgroundColor = 'transparent';
-                            document.querySelector('.all-categories').style.color = '#333'; // Chữ đen
-                        });
-                    });
-
-                    // Khi người dùng nhấn vào nút 'All', giữ trạng thái của nó
-                    document.querySelector('.all-categories').addEventListener('click', function() {
-                        // Xóa class 'active' ở tất cả các nút trong main-category
-                        document.querySelectorAll('.main-category button').forEach(btn => btn.classList.remove('active'));
-
-                        // Giữ nền đen cho 'All' và chữ trắng
-                        this.style.backgroundColor = '#000';
-                        this.style.color = '#fff';
-                    });
-                </script>
-
+                </div>
             </div>
 
             <!-- Add Product Button -->
@@ -141,15 +123,13 @@ $product_result = $product_stmt->get_result();
             </div>
 
             <!-- Product Cards -->
-             <div class="all-product">
+            <div class="all-product">
                 <?php
-                    if ($product_result->num_rows > 0) {
-                        // Duyệt qua danh sách sản phẩm và hiển thị mỗi sản phẩm dưới dạng card
-                        while ($product = $product_result->fetch_assoc()) {
-                            // Xây dựng đường dẫn ảnh từ username, cname và productImage
-                            $productImagePath = '../' .$product['productImage'];
-                            
-                            echo '
+                if ($product_result->num_rows > 0) {
+                    while ($product = $product_result->fetch_assoc()) {
+                        $productImagePath = '../' . $product['productImage'];
+
+                        echo '
                             <div class="product-card">
                                <a href="productEdit.php?id=' . $product['productid'] . '" class="edit-icon">
                                     <img src="../images/edit.png" alt="Edit">
@@ -164,17 +144,28 @@ $product_result = $product_stmt->get_result();
                                 </div>
                                 <div class="stock">在庫: ' . htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') . '</div>
                             </div>';
-                        }
-                    } else {
-                        echo '<p>No products found.</p>';
                     }
-                    
+                } else {
+                    echo '<p>No products found.</p>';
+                }
                 ?>
             </div>
         </div>
+        <script>
+            function filterCategory(categoryId) {
+                const url = new URL(window.location.href);
+                url.searchParams.set('category_id', categoryId);
+                window.location.href = url.toString();
+            }
+
+            function showAllCategories() {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('category_id');
+                window.location.href = url.toString();
+            }
+        </script>
     </main>
-    <footer>    
-    </footer>
+    <footer></footer>
 </body>
 
 </html>
