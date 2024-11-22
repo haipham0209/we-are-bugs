@@ -137,9 +137,15 @@ require "resources.php";
     <main>
         <div class="filter-buttons">
             <button class="filter-button active" data-target="all">All</button>
-            <button class="filter-button" data-target="men">Men</button>
+            <!-- <button class="filter-button" data-target="men">Men</button>
             <button class="filter-button" data-target="women">Women</button>
-            <button class="filter-button" data-target="child">Child</button>
+            <button class="filter-button" data-target="child">Child</button> -->
+            <?php foreach ($categories as $category): ?>
+                <button class="filter-button" data-target="<?php echo htmlspecialchars($category['cname']); ?>">
+                    <?php echo htmlspecialchars($category['cname']); ?>
+                </button>
+            <?php endforeach; ?>
+
         </div>
         <section class="best-sellers">
     <h2>Best Sellers</h2>
