@@ -32,7 +32,7 @@ $sname = null;
 $storeid = null;
 
 // Thực hiện truy vấn để lấy dữ liệu cửa hàng và thông tin người dùng
-$query = "SELECT store.storeid, store.sname, store.tel, store.address, user.mail 
+$query = "SELECT store.storeid, store.logopath, store.sname, store.tel, store.address, user.mail 
           FROM store 
           JOIN user ON store.userid = user.userid 
           WHERE store.sname = ?";
@@ -49,6 +49,9 @@ if ($result->num_rows > 0) {
     $tel = $storeData["tel"];
     $address = $storeData["address"];
     $mail = $storeData["mail"];
+    $logopath = $storeData["logopath"];
+    $logopath = str_replace('../Manager/', './Manager/', $logopath);
+
 } else {
     header("HTTP/1.0 404 Not Found");
     echo "404 Not Found";
@@ -75,11 +78,11 @@ require "resources.php";
     <link rel="stylesheet" href="./styles/All.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Lavishly+Yours&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Itim&family=Lavishly+Yours&display=swap" rel="stylesheet">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Lavishly+Yours&display=swap" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Itim&family=Lavishly+Yours&display=swap" rel="stylesheet"> -->
 
 
     
@@ -92,7 +95,11 @@ require "resources.php";
                 <span class="menu-icon"></span>
             </button>
             <div class="logo-container">
-                <h1 class="logo">WRB</h1>
+                <div class= "logo-div">
+                    <!-- <h1 class="logo">WRB</h1> -->
+                     <a href=""><img id= logo-main src="<?=$logopath?>" alt="logo"></a>
+                    
+                </div>
                 <input type="text" class="search-bar" placeholder="Search...">
             </div>
             <button class="account-toggle">
@@ -130,9 +137,15 @@ require "resources.php";
     <main>
         <div class="filter-buttons">
             <button class="filter-button active" data-target="all">All</button>
-            <button class="filter-button" data-target="men">Men</button>
+            <!-- <button class="filter-button" data-target="men">Men</button>
             <button class="filter-button" data-target="women">Women</button>
-            <button class="filter-button" data-target="child">Child</button>
+            <button class="filter-button" data-target="child">Child</button> -->
+            <?php foreach ($categories as $category): ?>
+                <button class="filter-button" data-target="<?php echo htmlspecialchars($category['cname']); ?>">
+                    <?php echo htmlspecialchars($category['cname']); ?>
+                </button>
+            <?php endforeach; ?>
+
         </div>
         <section class="best-sellers">
     <h2>Best Sellers</h2>

@@ -30,6 +30,7 @@ if (isset($_SESSION['storeid'])) {
         $_SESSION['address'] = $store['address']; // Địa chỉ cửa hàng
         $_SESSION['tel'] = $store['tel']; // Số điện thoại
         $_SESSION['description'] = $store['description']; // Mô tả
+        $_SESSION['logopath'] = $store['logopath']; // Mô tả
         // Có thể thêm thông tin khác nếu cần
     } else {
         header("Location: ./error.php?storeinfo36");
