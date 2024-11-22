@@ -102,6 +102,8 @@ CREATE TABLE daily_revenue (
     PRIMARY KEY (storeid, revenue_date),
     FOREIGN KEY (storeid) REFERENCES store(storeid)
 );
+ALTER TABLE store
+ADD COLUMN logopath VARCHAR(255) DEFAULT NULL AFTER tel;
 
 UPDATE user 
 SET status = 'active' 
