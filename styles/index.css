@@ -112,7 +112,7 @@
 
     /* Filter Buttons */
     .filter-buttons {
-        display: flex;
+        /* display: flex; */
         gap: 10px;
         margin-bottom: 5px;
         padding-bottom: 1px;
@@ -292,5 +292,9 @@ html {
     margin: 0;
     padding: 0;
 }
+
+
+
+
 
 

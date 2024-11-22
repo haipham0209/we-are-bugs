@@ -29,7 +29,8 @@ if (isset($_COOKIE['username']) && isset($_COOKIE['token'])) {
 
     if ($user_result->num_rows === 0) {
         // Token không hợp lệ, chuyển về trang đăng nhập
-        header("Location: StoreLogin.php?error=invalid_token");
+        // header("Location: StoreLogin.php?error=invalid_token");
+        header("Location: ../Manager/sessionout.php");
         exit();
     }
 
@@ -66,7 +67,8 @@ if (isset($_COOKIE['username']) && isset($_COOKIE['token'])) {
     session_unset();  // Xóa tất cả biến session
     session_destroy();  // Hủy session hiện tại
     // Nếu không có cookie, chuyển về trang đăng nhập
-    header("Location: StoreLogin.php?error=auth_check");
+    // header("Location: StoreLogin.php?error=auth_check");
+    header("Location: ../Manager/sessionout.php");
     exit();
 }
 ?>

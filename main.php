@@ -78,11 +78,11 @@ require "resources.php";
     <link rel="stylesheet" href="./styles/All.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Lavishly+Yours&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Itim&family=Lavishly+Yours&display=swap" rel="stylesheet">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Lavishly+Yours&display=swap" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Itim&family=Lavishly+Yours&display=swap" rel="stylesheet"> -->
 
 
     
@@ -137,9 +137,15 @@ require "resources.php";
     <main>
         <div class="filter-buttons">
             <button class="filter-button active" data-target="all">All</button>
-            <button class="filter-button" data-target="men">Men</button>
+            <!-- <button class="filter-button" data-target="men">Men</button>
             <button class="filter-button" data-target="women">Women</button>
-            <button class="filter-button" data-target="child">Child</button>
+            <button class="filter-button" data-target="child">Child</button> -->
+            <?php foreach ($categories as $category): ?>
+                <button class="filter-button" data-target="<?php echo htmlspecialchars($category['cname']); ?>">
+                    <?php echo htmlspecialchars($category['cname']); ?>
+                </button>
+            <?php endforeach; ?>
+
         </div>
         <section class="best-sellers">
     <h2>Best Sellers</h2>
