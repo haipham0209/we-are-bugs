@@ -71,7 +71,35 @@ CREATE TABLE product (
     FOREIGN KEY (storeid) REFERENCES store(storeid),
     FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, storeid)
 );
+-- Thêm bảng 2024/11/22
+-- Bảng lưu thông tin lịch sử mua hàng
+CREATE TABLE order_history (
+    orderid INT AUTO_INCREMENT PRIMARY KEY,
+    customer_code VARCHAR(10) NOT NULL,
+    storeid INT NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    order_date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (storeid) REFERENCES store(storeid)
+);
+-- Bảng lưu chi tiết đơn hàng
+CREATE TABLE order_details (
+    order_detail_id INT AUTO_INCREMENT PRIMARY KEY,
+    orderid INT NOT NULL,
+    productid INT NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (orderid) REFERENCES order_history(orderid)
+);
 
+
+-- Bảng lưu doanh thu theo ngày
+CREATE TABLE daily_revenue (
+    storeid INT NOT NULL,
+    revenue_date DATE NOT NULL,
+    total_revenue DECIMAL(10,2) NOT NULL DEFAULT 0,
+    PRIMARY KEY (storeid, revenue_date),
+    FOREIGN KEY (storeid) REFERENCES store(storeid)
+);
 
 UPDATE user 
 SET status = 'active' 
