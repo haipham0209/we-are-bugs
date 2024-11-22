@@ -172,7 +172,6 @@ $product_result = $product_stmt->get_result();
                 ?>
             </div>
         </div>
-        <script src="../scripts/camera.js"></script>
     </main>
     <footer>    
     </footer>
