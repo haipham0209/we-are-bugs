@@ -593,6 +593,7 @@
         flex-wrap: wrap;
         gap: 20px;
         margin-left: 35px;
+        margin-bottom: auto;
     }
 
     .product-card {
@@ -603,7 +604,7 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         padding: 15px;
         transition: transform 0.2s;
-        height: 50vh;
+        height: auto;
     }
 
     .product-card:hover {
