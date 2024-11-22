@@ -24,6 +24,7 @@
                 <?php
                 // Thông tin kết nối cơ sở dữ liệu
                 include('../Manager/php/db_connect.php');
+                include('../Manager/php/auth_check.php');
 
                 // Tạo kết nối
                 $conn = new mysqli($servername, $username, $password, $dbname);
