@@ -573,7 +573,7 @@ svg {
 
     /* Save button */
     .save-button {
-        background-color: black;
+        background-color: rgb(30, 170, 65);
         color: white;
         border-radius: 5px;
         padding: 15px;
@@ -596,7 +596,7 @@ svg {
     }
 
     .edit-password-link button {
-        background-color: #4CAF50; 
+        background-color: #4e5c4e; 
         /* グリーン */
         color: white;
         border-radius: 5px;
