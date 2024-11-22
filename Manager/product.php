@@ -1,7 +1,6 @@
 <?php
 // Gọi file xác thực người dùng trước khi load nội dung trang
 include('./php/auth_check.php');
-// ctype_alnum
 
 // Kết nối cơ sở dữ liệu
 include('./php/db_connect.php');
@@ -22,8 +21,8 @@ $stmt->bind_param("i", $storeid); // Ràng buộc biến storeid
 $stmt->execute();
 $category_result = $stmt->get_result();
 
-// Lấy category_id từ GET parameter (nếu có)
-$category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
+// Lấy category_ids từ GET parameter (nếu có)
+$category_ids = isset($_GET['category_ids']) ? explode(',', $_GET['category_ids']) : [];
 
 // Truy vấn để lấy danh sách sản phẩm từ cơ sở dữ liệu
 $product_sql = "
@@ -36,17 +35,17 @@ $product_sql = "
     WHERE p.storeid = ?
 ";
 
-if ($category_id > 0) {
-    $product_sql .= " AND p.category_id = ?";
+if (!empty($category_ids)) {
+    $placeholders = implode(',', array_fill(0, count($category_ids), '?'));
+    $product_sql .= " AND p.category_id IN ($placeholders)";
 }
 
 $product_stmt = $conn->prepare($product_sql);
 
-if ($category_id > 0) {
-    $product_stmt->bind_param("ii", $storeid, $category_id);
-} else {
-    $product_stmt->bind_param("i", $storeid);
-}
+// バインド変数を動的に設定
+$params = array_merge([$storeid], $category_ids);
+$types = str_repeat('i', count($params)); // 全て整数型
+$product_stmt->bind_param($types, ...$params);
 
 $product_stmt->execute();
 $product_result = $product_stmt->get_result();
@@ -60,7 +59,7 @@ $product_result = $product_stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./styles/proMana.css">
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
-    <script src="./scripts/camera.js"></script>
+    <script src="./scripts/cameraScan.js"></script>
     <title>商品管理</title>
 </head>
 
@@ -99,20 +98,18 @@ $product_result = $product_stmt->get_result();
 
             <!-- Category -->
             <div class="category">
-                <button class="all-categories <?= $category_id === 0 ? 'active' : '' ?>" onclick="showAllCategories()">All</button>
-                <div class="main-category">
-                    <?php
-                    if ($category_result->num_rows > 0) {
-                        while ($row = $category_result->fetch_assoc()) {
-                            $activeClass = ($row['category_id'] === $category_id) ? 'active' : '';
-                            echo '<button class="' . $activeClass . '" onclick="filterCategory(' . $row['category_id'] . ')">'
-                                . htmlspecialchars($row['cname'], ENT_QUOTES, 'UTF-8') . '</button>';
-                        }
-                    } else {
-                        echo '<p>No categories found.</p>';
+                <button class="all-categories <?= empty($category_ids) ? 'active' : '' ?>" onclick="showAllCategories()">All</button>
+                <?php
+                if ($category_result->num_rows > 0) {
+                    while ($row = $category_result->fetch_assoc()) {
+                        $isSelected = in_array($row['category_id'], $category_ids) ? 'active' : '';
+                        echo '<button class="' . $isSelected . '" data-category-id="' . $row['category_id'] . '">'
+                            . htmlspecialchars($row['cname'], ENT_QUOTES, 'UTF-8') . '</button>';
                     }
-                    ?>
-                </div>
+                } else {
+                    echo '<p>No categories found.</p>';
+                }
+                ?>
             </div>
 
             <!-- Add Product Button -->
@@ -131,7 +128,7 @@ $product_result = $product_stmt->get_result();
 
                         echo '
                             <div class="product-card">
-                                <a href="productEdit.php?id=' . $product['productid'] . '" class="edit-icon">
+                               <a href="productEdit.php?id=' . $product['productid'] . '" class="edit-icon">
                                     <img src="../images/edit.png" alt="Edit">
                                 </a>
                                 <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
@@ -152,15 +149,49 @@ $product_result = $product_stmt->get_result();
             </div>
         </div>
         <script>
-            function filterCategory(categoryId) {
-                const url = new URL(window.location.href);
-                url.searchParams.set('category_id', categoryId);
-                window.location.href = url.toString();
-            }
+            const selectedCategories = new Set(<?= json_encode($category_ids) ?>);
+
+            // ボタンのクリックイベントを設定
+            document.querySelectorAll('.category button').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.classList.contains('all-categories')) {
+                        // "All" がクリックされた場合、選択をクリア
+                        selectedCategories.clear();
+                        document.querySelectorAll('.category button').forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                    } else {
+                        // その他のカテゴリボタンがクリックされた場合
+                        const categoryId = this.getAttribute('data-category-id');
+
+                        if (selectedCategories.has(categoryId)) {
+                            selectedCategories.delete(categoryId);
+                            this.classList.remove('active');
+                        } else {
+                            selectedCategories.add(categoryId);
+                            this.classList.add('active');
+                        }
+
+                        // "All" ボタンの選択解除
+                        document.querySelector('.all-categories').classList.remove('active');
+                    }
+
+                    // URLを更新
+                    updateUrl();
+                });
+            });
 
             function showAllCategories() {
+                selectedCategories.clear();
+                updateUrl();
+            }
+
+            function updateUrl() {
                 const url = new URL(window.location.href);
-                url.searchParams.delete('category_id');
+                if (selectedCategories.size === 0) {
+                    url.searchParams.delete('category_ids');
+                } else {
+                    url.searchParams.set('category_ids', Array.from(selectedCategories).join(','));
+                }
                 window.location.href = url.toString();
             }
         </script>
