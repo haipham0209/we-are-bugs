@@ -34,14 +34,15 @@ if (!isset($_SESSION['userid'])) {
     <div class="container">
         <div class="profile-form">
             <form class="edit-form" action="./php/storeProEditP.php" method="POST"enctype="multipart/form-data">
+                    <!--  -->
+                <p>1:3の画像をご利用ください</p>
+                <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
+                <input type="hidden" name="currentLogoPath" value="<?php echo htmlspecialchars($logoPath ?? ''); ?>">
                 <!--  -->
-            <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
-            <input type="hidden" name="currentLogoPath" value="<?php echo htmlspecialchars($logoPath ?? ''); ?>">
-            <!--  -->
                 <div class="form">
                 <div class="form logo-container">
                     <!-- Hiển thị logo -->
-                    <img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="max-width: 300px; border: 1px solid #ccc; padding: 5px; border-radius: 5px;" />
+                    <img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="width: 240px; height: 80px; border: 1px solid #ccc; padding: 5px; border-radius: 5px;" />
 
                     <!-- Nút chọn ảnh -->
                     <button type="button" id="changeLogoButton">ロゴを変更</button>
