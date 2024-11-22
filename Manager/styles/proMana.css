@@ -117,8 +117,7 @@
     }
 
     /* Các nút trong category (All và các nút khác) đều có kích thước và khoảng cách giống nhau */
-    .category,
-    .main-category {
+    .category {
         display: flex;
         gap: 10px;
         /* Khoảng cách giữa các nút */
@@ -158,7 +157,7 @@
     }
 
     /* Các nút trong main-category có nền sáng và chữ đen */
-    .main-category button {
+    .category button {
         background-color: #f4f4f400;
         /* Nền sáng */
         color: #333;
@@ -179,7 +178,7 @@
     }
 
     /* Các nút trong main-category khi hover (Nền chuyển sang đen, chữ chuyển sang trắng) */
-    .main-category button:hover {
+    .category button:hover {
         background-color: #000;
         /* Nền đen khi hover */
         color: #fff;
@@ -191,7 +190,7 @@
     }
 
     /* Nút active trong main-category khi được chọn */
-    .main-category button.active {
+    .category button.active {
         background-color: #000;
         /* Nền đen khi được chọn */
         color: #fff;
@@ -202,7 +201,7 @@
     @media only screen and (max-width: 767px) {
 
         .all-categories,
-        .main-category button {
+        .category button {
             font-size: 14px;
             /* Giảm kích thước chữ cho các màn hình nhỏ */
             padding: 8px 16px;
