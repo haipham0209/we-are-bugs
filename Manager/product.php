@@ -93,40 +93,39 @@ $product_result = $product_stmt->get_result();
         <div id="camera" style="display: none;">
             <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>
         </div>
-        <div class="container">
-            <p class="title">商品管理</p>
+        <p class="title">商品管理</p>
 
-            <!-- Category -->
-            <div class="category">
-                <button class="all-categories <?= empty($category_ids) ? 'active' : '' ?>" onclick="showAllCategories()">All</button>
-                <?php
-                if ($category_result->num_rows > 0) {
-                    while ($row = $category_result->fetch_assoc()) {
-                        $isSelected = in_array($row['category_id'], $category_ids) ? 'active' : '';
-                        echo '<button class="' . $isSelected . '" data-category-id="' . $row['category_id'] . '">'
-                            . htmlspecialchars($row['cname'], ENT_QUOTES, 'UTF-8') . '</button>';
-                    }
-                } else {
-                    echo '<p>No categories found.</p>';
+        <!-- Category -->
+        <div class="category">
+            <button class="all-categories <?= empty($category_ids) ? 'active' : '' ?>" onclick="showAllCategories()">All</button>
+            <?php
+            if ($category_result->num_rows > 0) {
+                while ($row = $category_result->fetch_assoc()) {
+                    $isSelected = in_array($row['category_id'], $category_ids) ? 'active' : '';
+                    echo '<button class="' . $isSelected . '" data-category-id="' . $row['category_id'] . '">'
+                        . htmlspecialchars($row['cname'], ENT_QUOTES, 'UTF-8') . '</button>';
                 }
-                ?>
-            </div>
+            } else {
+                echo '<p>No categories found.</p>';
+            }
+            ?>
+        </div>
 
-            <!-- Add Product Button -->
-            <div class="add-product">
-                <a href="productAdd.php">
-                    <button>+</button>
-                </a>
-            </div>
+        <!-- Add Product Button -->
+        <div class="add-product">
+            <a href="productAdd.php">
+                <button>+</button>
+            </a>
+        </div>
 
-            <!-- Product Cards -->
-            <div class="all-product">
-                <?php
-                if ($product_result->num_rows > 0) {
-                    while ($product = $product_result->fetch_assoc()) {
-                        $productImagePath = '../' . $product['productImage'];
+        <!-- Product Cards -->
+        <div class="all-product">
+            <?php
+            if ($product_result->num_rows > 0) {
+                while ($product = $product_result->fetch_assoc()) {
+                    $productImagePath = '../' . $product['productImage'];
 
-                        echo '
+                    echo '
                             <div class="product-card">
                                <a href="productEdit.php?id=' . $product['productid'] . '" class="edit-icon">
                                     <img src="../images/edit.png" alt="Edit">
@@ -141,12 +140,11 @@ $product_result = $product_stmt->get_result();
                                 </div>
                                 <div class="stock">在庫: ' . htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') . '</div>
                             </div>';
-                    }
-                } else {
-                    echo '<p>No products found.</p>';
                 }
-                ?>
-            </div>
+            } else {
+                echo '<p>No products found.</p>';
+            }
+            ?>
         </div>
         <script>
             const selectedCategories = new Set(<?= json_encode($category_ids) ?>);
