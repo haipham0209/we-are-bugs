@@ -44,6 +44,21 @@
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     } */
+    .logo-div {
+        width: 150px; /* Kích thước theo yêu cầu */
+        height: 50px; /* Kích thước theo yêu cầu */
+        overflow: hidden; /* Ẩn phần hình ảnh vượt ra ngoài div */
+        display: flex; /* Giúp căn chỉnh hình ảnh */
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        align-items: center; /* Căn giữa theo chiều dọc */
+    }
+    
+    #logo-main {
+        width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều ngang */
+        height: 100%; /* Chiếm toàn bộ chiều cao */
+        object-fit: cover; /* Giữ tỉ lệ gốc và cắt hình ảnh nếu cần */
+    }
+    
 
     h1.logo {
         /* font-family: 'Gloria Hallelujah', sans-serif;  */
@@ -90,6 +105,7 @@
         margin: 5px;
         padding: 10px 20px;
         padding: 10px;
+        padding-top: 2px;
         /* background-color: aqua; */
         /* background: #79ac78; */
         /* background: linear-gradient(115deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
