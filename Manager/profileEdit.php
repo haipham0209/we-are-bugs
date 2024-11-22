@@ -9,6 +9,9 @@ if (!isset($_SESSION['userid'])) {
     header("Location: login.php");
     exit;
 }
+// echo "55";
+// echo $store['logopath'];
+
 
 // データベースからロゴパスを取得
 // $stmt = $conn->prepare("SELECT logo_path FROM user WHERE userid = ?");
@@ -33,23 +36,47 @@ if (!isset($_SESSION['userid'])) {
 <body>
     <div class="container">
         <div class="profile-form">
-            <!-- アイコン -->
-            <div class="avatar">
-                <form id="logoForm" action="./php/uploadLogo.php" method="POST" enctype="multipart/form-data">
-                    <input type="file" id="fileInput" name="logo" accept="image/*" style="display: none;" onchange="document.getElementById('logoForm').submit();">
-                    <svg width="198" height="107" viewBox="0 0 198 107" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <ellipse cx="99" cy="53.5" rx="99" ry="53.5" fill="#B0D9B1" />
-                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="#333"></text>
-                    </svg>
-                    <label class="upload-button" for="fileInput">
-                        <img src="upload-icon.png" alt="ロゴマーク">
-                    </label>
-                </form>
-            </div>
-
-            <!-- form^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
-            <form class="edit-form" action="./php/storeProEditP.php" method="POST">
+            <form class="edit-form" action="./php/storeProEditP.php" method="POST"enctype="multipart/form-data">
+                    <!--  -->
+                <p>1:3の画像をご利用ください</p>
+                <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
+                <input type="hidden" name="currentLogoPath" value="<?php echo htmlspecialchars($_SESSION['logopath'] ?? ''); ?>">
+                <!--  -->
                 <div class="form">
+                <div class="form logo-container">
+                    <!-- Hiển thị logo -->
+                    <img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="width: 240px; height: 80px; border: 1px solid #ccc; padding: 5px; border-radius: 5px;" />
+
+                    <!-- Nút chọn ảnh -->
+                    <button type="button" id="changeLogoButton">ロゴを変更</button>
+                    <input type="file" id="fileInput" name="logoFile" accept="image/*" style="display: none;" />
+                </div>
+
+                <script>
+                    const changeLogoButton = document.getElementById('changeLogoButton');
+                    const fileInput = document.getElementById('fileInput');
+                    const logo = document.getElementById('logo');
+
+                    // Khi bấm nút, giả lập click vào input file
+                    changeLogoButton.addEventListener('click', function() {
+                        fileInput.click();
+                    });
+
+                    // Khi người dùng chọn tệp
+                    fileInput.addEventListener('change', function(event) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                logo.src = e.target.result; // Hiển thị ảnh mới
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                </script>
+
+                    <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
+
                     <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
                     <div class="form-row">
                         <label for="shop-name">店名</label>
