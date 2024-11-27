@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         div.addEventListener('click', () => {
                             // Khi chọn sản phẩm, gán vào ô input
-                            searchBox.value = `${product.pname}`;
+                            // searchBox.value = `${product.pname}`;
+                            searchBox.value = ``;
                             suggestionList.innerHTML = ''; // Xóa danh sách gợi ý
                             suggestionList.style.display = 'none'; // Ẩn danh sách
 
@@ -64,39 +65,46 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Hàm thêm sản phẩm vào giỏ hàng (bảng)
     function addToCart(product) {
         const tableBody = document.querySelector('#product-table tbody');
-
+    
         // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-        // const existingRow = Array.from(tableBody.rows).find(row => row.querySelector('input[data-barcode]').dataset.barcode === product.barcode);
-
-        // if (existingRow) {
-        //     // Nếu có rồi, chỉ cập nhật số lượng
-        //     const quantityInput = existingRow.querySelector('input.product-quantity');
-        //     quantityInput.value = parseInt(quantityInput.value) + 1;
-        // } else {
+        const existingRow = Array.from(tableBody.rows).find(row => {
+            const barcode = row.querySelector('input.product-quantity').dataset.barcode;
+            return barcode === product.barcode;
+        });
+    
+        if (existingRow) {
+            // Nếu đã tồn tại, tăng số lượng
+            const quantityInput = existingRow.querySelector('input.product-quantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+    
+            // Cập nhật giá tổng
+            const priceCell = existingRow.querySelector('.price');
+            const unitPrice = parseFloat(product.price);
+            priceCell.textContent = `${(unitPrice * parseInt(quantityInput.value)).toFixed(2)}¥`;
+        } else {
             // Nếu chưa có, thêm sản phẩm mới vào giỏ hàng
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${product.pname}</td>
-                <td><input type="number" class="product-quantity" value="1" min="1" onchange="updateTotal()"></td>
-                <td class="product-price">${product.price}¥</td>
+                <td>
+                    <input 
+                        type="number" 
+                        class="product-quantity" 
+                        value="1" 
+                        min="1" 
+                        data-barcode="${product.barcode}" 
+                        onchange="updateProductPrice(this, ${product.price})">
+                </td>
+                <td class="product-price">${parseFloat(product.price).toFixed(2)}¥</td>
+                <td class="price">${parseFloat(product.price).toFixed(2)}¥</td>
             `;
-            row.querySelector('.product-quantity').dataset.barcode = product.barcode; // Lưu barcode để kiểm tra
             tableBody.appendChild(row);
-        // }
+        }
+    
+        // Cập nhật tổng tiền toàn giỏ hàng
+        updateTotal();
     }
-
-    // Hàm tính tổng tiền (giả sử bạn có thêm hàm này để tính tổng)
-    function updateTotal() {
-        const tableBody = document.querySelector('#product-table tbody');
-        let total = 0;
-        Array.from(tableBody.rows).forEach(row => {
-            const quantity = row.querySelector('.product-quantity').value;
-            const price = row.querySelector('.product-price').textContent.replace('¥', '');
-            total += parseFloat(price) * parseInt(quantity);
-        });
-        document.querySelector('#total-price').textContent = total + '¥';
-    }
+    
 });
