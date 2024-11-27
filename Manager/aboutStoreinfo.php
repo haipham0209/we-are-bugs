@@ -26,7 +26,9 @@ $descriptions = [];
 while ($row = $result->fetch_assoc()) {
     $descriptions[] = $row;
 }
-
+echo '<pre>';
+print_r($descriptions);
+echo '</pre>';
 // Lưu dữ liệu vào session
 $_SESSION['descriptions'] = $descriptions;
 
