@@ -143,6 +143,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
             <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
             <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
         </div>
+        <div id="suggestionList"></div>
+        <script>
+// Định nghĩa các phần tử
+const searchBox = document.getElementById('barcode-input'); // Ô nhập liệu
+const suggestionList = document.getElementById('barcode-suggestions'); // Danh sách gợi ý
+
+// Lắng nghe sự kiện input
+searchBox.addEventListener('input', function () {
+    const keyword = searchBox.value.trim();
+    if (keyword.length > 0) {
+        // Gửi yêu cầu đến PHP API
+        fetch('./php/search_product.php?keyword=' + encodeURIComponent(keyword))
+            .then(response => response.json())
+            .then(data => {
+                // Xóa gợi ý cũ
+                suggestionList.innerHTML = '';
+                suggestionList.style.display = 'block'; // Hiển thị danh sách
+
+                // Duyệt danh sách sản phẩm trả về
+                data.forEach(product => {
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-item'; // Thêm class để tiện style
+                    div.textContent = `${product.barcode} - ${product.pname}`;
+                    div.dataset.id = product.productid; // Lưu ID sản phẩm
+                    div.addEventListener('click', () => {
+                        // Khi chọn sản phẩm, gán vào ô input
+                        searchBox.value = `${product.barcode} - ${product.pname}`;
+                        suggestionList.innerHTML = ''; // Xóa danh sách gợi ý
+                        suggestionList.style.display = 'none'; // Ẩn danh sách
+                    });
+                    suggestionList.appendChild(div);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    } else {
+        // Xóa danh sách nếu từ khóa trống
+        suggestionList.innerHTML = '';
+        suggestionList.style.display = 'none';
+    }
+});
+
+// Ẩn danh sách khi click ra ngoài
+document.addEventListener('click', function (e) {
+    if (!suggestionList.contains(e.target) && e.target !== searchBox) {
+        suggestionList.innerHTML = '';
+        suggestionList.style.display = 'none';
+    }
+});
+
+    </script>
         <script>
                 let isCameraRunning = false; // カメラの状態を管理
 
