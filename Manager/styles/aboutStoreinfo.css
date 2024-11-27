@@ -1,4 +1,4 @@
-.storeForm{
+/*.storeForm{
     width: 100px;
 }
 .descriptionContainer{
@@ -6,7 +6,78 @@
 }
 textarea {
     overflow: hidden;
-    width: 100%; /* hoặc auto nếu không muốn cố định */
+    width: 100%; 
     min-height: 40px;
     box-sizing: border-box;
+}*/
+#storeForm {
+    width: 600px; /* Thay đổi chiều rộng form */
+    margin: 0 auto; /* Căn giữa form */
+}
+
+.descriptionContainer {
+    margin-bottom: 15px;
+}
+
+.descriptionGroup {
+    border: 1px solid #ccc; /* Đường viền cho khung */
+    border-radius: 5px; /* Bo góc */
+    padding: 15px; /* Khoảng cách bên trong khung */
+    margin-bottom: 5px; /* Khoảng cách giữa các khung */
+    background-color: #f9f9f9b6; /* Màu nền cho khung */
+    position: relative;
+}
+
+.removeDescription {
+    position: absolute; /* Đặt vị trí tuyệt đối */
+    top: 10px; /* Cách từ trên xuống */
+    right: 15px; /* Cách từ bên phải vào */
+    background: none; /* Không có nền */
+    border: none; /* Không có đường viền */
+    cursor: pointer; /* Con trỏ chuột khi di chuột qua nút */
+}
+
+.delete-icon {
+    position: absolute; /* Đặt vị trí tuyệt đối */
+    top: 10px; /* Cách từ trên xuống */
+    right: 15px; /* Cách từ bên phải vào */
+    width: 15px; /* Kích thước hình ảnh */
+    height: 15px; /* Kích thước hình ảnh */
+    cursor: pointer; /* Con trỏ chuột khi di chuột qua hình ảnh */
+}
+
+label {
+    display: block; /* Đặt label ở dòng mới */
+    margin-bottom: 5px; /* Khoảng cách dưới label */
+    font-weight: bold; /* Đậm chữ label */
+}
+
+input[type="text"],
+textarea {
+    width: 100%; /* Chiều rộng 100% */
+    padding: 10px; /* Khoảng cách bên trong */
+    box-sizing: border-box; /* Tính toán chiều rộng bao gồm padding */
+    border: 1px solid #ccc; /* Đường viền cho input và textarea */
+    border-radius: 4px; /* Bo góc */
+}
+
+textarea {
+    min-height: 80px; /* Chiều cao tối thiểu cho textarea */
+    resize: vertical; /* Cho phép thay đổi kích thước theo chiều dọc */
+}
+
+button {
+    background-color: #4CAF50; /* Màu nền cho nút */
+    color: white; /* Màu chữ */
+    padding: 10px 15px; /* Khoảng cách bên trong nút */
+    border: none; /* Bỏ đường viền */
+    border-radius: 4px; /* Bo góc */
+    cursor: pointer; /* Con trỏ chuột khi di chuột qua nút */
+}
+
+button:hover {
+    background-color: #45a049; /* Màu nền khi hover */
+}
+#addDescription {
+    margin-bottom: 5px; /* Giảm khoảng cách giữa nút "Add More" và nút "Submit" */
 }

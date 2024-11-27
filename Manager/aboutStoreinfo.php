@@ -54,19 +54,23 @@ $conn->close();
 <main>
         <form id="storeForm" action="./php/aboutStoreinfo.php" method="POST">
             <!-- Container để chứa các cặp title-content -->
+            <input type="hidden" id="delete_ids" name="delete_ids" value="">
             <div id="descriptionContainer">
                 <?php if (!empty($_SESSION['descriptions'])): ?>
                     <?php foreach ($_SESSION['descriptions'] as $index => $description): ?>
                         <div class="descriptionGroup">
-                            <label for="title<?= $index + 1 ?>">タイトル:</label>
-                            <input type="text" id="title<?= $index + 1 ?>" name="title<?= $index + 1 ?>" value="<?= htmlspecialchars($description['title']) ?>" required>
-                            <label for="content<?= $index + 1 ?>">内容:</label>
-                            <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content']) ?></textarea>
-                        </div>
+                        <img src="../images/delete.png" alt="Delete" class="delete-icon" data-id="<?= $description['id'] ?>" onclick="removeDescription(this)">
+                        <input type="hidden" name="id<?= $index + 1 ?>" value="<?= $description['id'] ?>"> <!-- Lưu ID để sửa -->
+                        <label for="title<?= $index + 1 ?>">タイトル:</label>
+                        <input type="text" id="title<?= $index + 1 ?>" name="title<?= $index + 1 ?>" value="<?= htmlspecialchars($description['title']) ?>" required>
+                        <label for="content<?= $index + 1 ?>">内容:</label>
+                        <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content']) ?></textarea>
+                    </div>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <!-- Hiển thị trường trống nếu không có dữ liệu -->
                     <div class="descriptionGroup">
+                        <img src="../images/delete.png" alt="Delete" class="delete-icon" data-id="<?= $description['id'] ?>" onclick="removeDescription(this)">
                         <label for="title1">タイトル:</label>
                         <input type="text" id="title1" name="title1" required>
                         <label for="content1">内容:</label>
@@ -77,10 +81,10 @@ $conn->close();
 
             <!-- Nút để thêm cặp title-content -->
             <button type="button" id="addDescription">Add More</button>
-            <br><br>
+            <!-- <br><br> -->
 
             <!-- Nút Submit -->
-            <button type="submit">Submit</button>
+            <button type="submit" id="submit">Submit</button>
         </form>
     </main>
     <script>
@@ -93,6 +97,7 @@ $conn->close();
                 const newGroup = document.createElement('div');
                 newGroup.className = 'descriptionGroup';
                 newGroup.innerHTML = `
+                    <img src="../images/delete.png" alt="Delete" class="delete-icon" onclick="removeDescription(this)">
                     <label for="title${currentCount + 1}">タイトル:</label>
                     <input type="text" id="title${currentCount + 1}" name="title${currentCount + 1}" required>
                     <label for="content${currentCount + 1}">内容:</label>
@@ -103,6 +108,65 @@ $conn->close();
                 alert('You can only add up to 10 descriptions.');
             }
         });
+        //xóa dữ liệu khi ấn x
+        function removeDescription(button) {
+            const descriptionGroup = button.closest('.descriptionGroup');
+            const descriptionId = button.getAttribute('data-id');
+
+            // Xóa cặp title-content khỏi giao diện
+            descriptionGroup.remove();
+
+            // Lưu ID vào trường ẩn để xóa
+            let deleteIds = document.getElementById('delete_ids');
+            if (!deleteIds.value) {
+                deleteIds.value = JSON.stringify([descriptionId]);
+            } else {
+                let currentIds = JSON.parse(deleteIds.value);
+                currentIds.push(descriptionId);
+                deleteIds.value = JSON.stringify(currentIds);
+            }
+        }
+        document.getElementById('storeForm').addEventListener('submit', function (e) {
+            //e.preventDefault(); // Ngăn form gửi dữ liệu mặc định
+
+            const formData = new FormData(); // Tạo FormData để gửi dữ liệu
+
+            // Lấy tất cả các nhóm title-content
+            const descriptionGroups = document.querySelectorAll('.descriptionGroup');
+            descriptionGroups.forEach((group, index) => {
+                const title = group.querySelector(`[name="title${index + 1}"]`).value;
+                const content = group.querySelector(`[name="content${index + 1}"]`).value;
+                const id = group.querySelector(`[name="id${index + 1}"]`) ? group.querySelector(`[name="id${index + 1}"]`).value : null;
+
+                // Thêm title, content và id vào formData nếu có
+                formData.append(`descriptions[${index}][title]`, title);
+                formData.append(`descriptions[${index}][content]`, content);
+                if (id) formData.append(`descriptions[${index}][id]`, id);
+            });
+
+            // Lấy danh sách ID đã xóa từ trường ẩn
+            const deleteIds = document.getElementById('delete_ids').value;
+            if (deleteIds) {
+                formData.append('delete_ids', deleteIds);
+            }
+
+            // Gửi dữ liệu đến server
+            fetch('./php/Storeinfo.php', { 
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Data saved successfully!');
+                    location.reload(); // Tải lại trang sau khi lưu thành công
+                } else {
+                    alert('Error saving data: ' + data.message);
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        });
+
     </script>
     
     <!-- INSERT INTO StoreDescriptions (storeid, title, content)
