@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-
 // Định nghĩa các phần tử
 const searchBox = document.getElementById('barcode-input'); // Ô nhập liệu
 const suggestionList = document.getElementById('barcode-suggestions'); // Danh sách gợi ý
@@ -62,6 +61,30 @@ document.addEventListener('click', function (e) {
         suggestionList.style.display = 'none';
     }
 });
+
+// Hàm thêm sản phẩm vào giỏ hàng (bảng)
+function addToCart(product) {
+    const tableBody = document.querySelector('#product-table tbody');
+
+    // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+    const existingRow = Array.from(tableBody.rows).find(row => row.querySelector('input[data-barcode]').dataset.barcode === product.barcode);
+
+    if (existingRow) {
+        // Nếu có rồi, chỉ cập nhật số lượng
+        const quantityInput = existingRow.querySelector('input.product-quantity');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+    } else {
+        // Nếu chưa có, thêm sản phẩm mới vào giỏ hàng
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${product.pname}</td>
+            <td>${product.price}</td>
+            <td><input type="number" class="product-quantity" value="1" min="1" onchange="updateTotal()"></td>
+            <td>${product.price}</td>
+        `;
+        tableBody.appendChild(row);
+    }
+}
 });
 
 
