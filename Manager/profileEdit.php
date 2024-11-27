@@ -115,6 +115,10 @@ if (!isset($_SESSION['userid'])) {
                 <div class="edit-password-link">
                     <button onclick="openDialog()">パスワードを編集</button>
                 </div>
+                <div class="edit-password-link">
+                <button onclick="location.href='./aboutStoreinfo.php';">店舗紹介情報編集</button>
+
+                </div>
                 <!-- Password Change Modal -->
                 <!-- Dialog password không yêu cầu trong form chính -->
                 <div id="passwordDialog" class="modal" style="display: none;">

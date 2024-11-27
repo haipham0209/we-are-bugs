@@ -1,0 +1,12 @@
+.storeForm{
+    width: 100px;
+}
+.descriptionContainer{
+    width: 500px;
+}
+textarea {
+    overflow: hidden;
+    width: 100%; /* hoặc auto nếu không muốn cố định */
+    min-height: 40px;
+    box-sizing: border-box;
+}

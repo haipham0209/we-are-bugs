@@ -178,12 +178,12 @@
 
     .form input {
         width: 100%;
-        padding: 10px;
+        padding: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 16px;
         outline: none;
-        margin: 10px;
+        margin: 3px;
     }
 
     .form .form-row .icon {
@@ -383,7 +383,7 @@
     }
 
     .edit-password-link button:hover {
-        background-color: #45A049;
+        /* background-color: #45A049; */
         /* ホバー時の色 */
     }
 
@@ -543,12 +543,12 @@ svg {
 
     .form input {
         width: 100%;
-        padding: 10px;
+        padding: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 16px;
         outline: none;
-        margin: 10px;
+        margin: 3px;
     }
 
     .form .form-row .icon {
@@ -610,7 +610,7 @@ svg {
     }
 
     .edit-password-link button:hover {
-        background-color: #45A049;
+        /* background-color: #45A049; */
         /* ホバー時の色 */
     }
 
