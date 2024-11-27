@@ -59,8 +59,16 @@ if ($result->num_rows > 0) {
     exit();
 }
 
+// Truy vấn để lấy mô tả cửa hàng
+$descriptionQuery = "SELECT title, content FROM StoreDescriptions WHERE storeid = ?";
+$descStmt = $conn->prepare($descriptionQuery);
+$descStmt->bind_param("i", $storeid);
+$descStmt->execute();
+$descResult = $descStmt->get_result();
+
 // Đóng kết nối
 $stmt->close();
+$descStmt->close();
 $conn->close();
 
 
@@ -126,8 +134,11 @@ $conn->close();
             </div>
              <!-- About Store Section -->
                 <div class="about-store">
-                <h2>店舗紹介</h2>
-                <p><?php echo htmlspecialchars($description); ?></p>
+                <!-- <h2>店舗紹介</h2> -->
+                <?php while ($descriptionRow = $descResult->fetch_assoc()): ?>
+                    <h3><?php echo htmlspecialchars($descriptionRow['title']); ?></h3>
+                    <p><?php echo htmlspecialchars($descriptionRow['content']); ?></p>
+                <?php endwhile; ?>
 
                 <h2>所在地</h2>
                 <p><?php echo htmlspecialchars($address); ?></p>
