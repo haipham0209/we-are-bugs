@@ -14,7 +14,7 @@ $keyword = $_GET['keyword'] ?? '';
 $storeid = $_SESSION['storeid'];
 if ($keyword !== '') {
     // Truy vấn sản phẩm theo mã sản phẩm hoặc tên sản phẩm
-    $sql = "SELECT productid, barcode, pname 
+    $sql = "SELECT productid, barcode, pname, productImage 
             FROM product 
             WHERE storeid = ? 
             AND (barcode LIKE ? OR pname LIKE ?) 
@@ -29,6 +29,9 @@ if ($keyword !== '') {
     // Tạo danh sách sản phẩm để trả về
     $products = [];
     while ($row = $result->fetch_assoc()) {
+        // Thêm dấu "../" vào đầu đường dẫn ảnh
+        $row['productImage'] = '../' . ltrim($row['productImage'], './'); // Loại bỏ dấu ./ nếu có và thêm ../ vào đầu
+        
         $products[] = $row;
     }
 

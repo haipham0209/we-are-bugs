@@ -163,18 +163,34 @@ searchBox.addEventListener('input', function () {
 
                 // Duyệt danh sách sản phẩm trả về
                 data.forEach(product => {
-                    const div = document.createElement('div');
-                    div.className = 'suggestion-item'; // Thêm class để tiện style
-                    div.textContent = `${product.barcode} - ${product.pname}`;
-                    div.dataset.id = product.productid; // Lưu ID sản phẩm
-                    div.addEventListener('click', () => {
-                        // Khi chọn sản phẩm, gán vào ô input
-                        searchBox.value = `${product.barcode} - ${product.pname}`;
-                        suggestionList.innerHTML = ''; // Xóa danh sách gợi ý
-                        suggestionList.style.display = 'none'; // Ẩn danh sách
-                    });
-                    suggestionList.appendChild(div);
-                });
+    const div = document.createElement('div');
+    div.className = 'suggestion-item'; // Thêm class để tiện style
+
+    // Tạo phần tử div cho tên sản phẩm
+    const nameDiv = document.createElement('div');
+    nameDiv.textContent = `${product.pname}`;
+    div.appendChild(nameDiv);
+
+    // Tạo phần tử img cho ảnh sản phẩm
+    const img = document.createElement('img');
+    img.src = product.productImage; // Giả sử trường productImage chứa đường dẫn đến ảnh sản phẩm
+    img.alt = product.pname;
+    img.style.width = '50px'; // Đặt kích thước ảnh (bạn có thể thay đổi theo nhu cầu)
+    img.style.marginLeft = '10px'; // Khoảng cách giữa tên sản phẩm và ảnh
+    div.appendChild(img);
+
+    div.dataset.id = product.productid; // Lưu ID sản phẩm
+
+    div.addEventListener('click', () => {
+        // Khi chọn sản phẩm, gán vào ô input
+        searchBox.value = `${product.pname}`;
+        suggestionList.innerHTML = ''; // Xóa danh sách gợi ý
+        suggestionList.style.display = 'none'; // Ẩn danh sách
+    });
+
+    suggestionList.appendChild(div);
+});
+
             })
             .catch(error => console.error('Error:', error));
     } else {

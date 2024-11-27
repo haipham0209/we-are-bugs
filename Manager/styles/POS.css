@@ -21,6 +21,24 @@
         background-color: #e3f3e1;
         border-radius: 8px;
     }
+    #suggestionList {
+        border: 1px solid #ccc;
+        max-width: 300px;
+        max-height: 200px;
+        overflow-y: auto;
+        position: absolute;
+        background: white;
+        z-index: 1000;
+    }
+
+    #suggestionList div {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    #suggestionList div:hover {
+        background-color: #f0f0f0;
+    }
 
     .search-scan {
         position: relative;
