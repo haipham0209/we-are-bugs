@@ -1,6 +1,7 @@
 <?php
 include('./php/auth_check.php'); // Kiểm tra quyền người dùng
 include('./php/db_connect.php'); // Kết nối cơ sở dữ liệu
+include('./php/POS_product.php');
 
 // Khởi tạo kết nối cơ sở dữ liệu
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -10,31 +11,50 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Khởi tạo biến sản phẩm
-$product = null;
+// Khởi tạo giỏ hàng và biến cần thiết
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
 $totalPrice = 0;
 $totalQuantity = 0;
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['barcode'])) {
+
+// Xử lý thêm sản phẩm vào giỏ hàng qua barcode
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['barcode'])) {
     $barcode = $_POST['barcode'];
+    $storeid = $_SESSION['storeid']; 
 
-    $stmt = $conn->prepare("SELECT * FROM product WHERE barcode = ?");
-    $stmt->bind_param("s", $barcode);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    $products = [];
-    while ($row = $result->fetch_assoc()) {
-        $products[] = $row;
+    // Lấy thông tin sản phẩm
+    $product = getProductByBarcode($conn, $barcode, $storeid);
+
+    if ($product) {
+        // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng hay chưa
+        $found = false;
+        foreach ($_SESSION['cart'] as &$item) {
+            if ($item['barcode'] === $barcode) {
+                $item['quantity']++;
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            // Thêm sản phẩm mới vào giỏ hàng
+            $_SESSION['cart'][] = [
+                'pname' => $product['pname'],
+                'price' => $product['price'],
+                'quantity' => 1,
+                'barcode' => $barcode
+            ];
+        }
+    } else {
+        $error_message = "Sản phẩm không tìm thấy!";
     }
-
-    // echo json_encode($products);  // Return the list of products
 }
-// Xử lý giỏ hàng và tính toán tổng giá trị
-if (isset($_SESSION['cart'])) {
-    foreach ($_SESSION['cart'] as $item) {
-        $totalPrice += $item['price'] * $item['quantity'];
-        $totalQuantity += $item['quantity'];
-    }
+
+// Tính toán tổng giá trị giỏ hàng
+foreach ($_SESSION['cart'] as $item) {
+    $totalPrice += $item['price'] * $item['quantity'];
+    $totalQuantity += $item['quantity'];
 }
 
 // Hàm tạo mã khách hàng
@@ -55,21 +75,33 @@ function generateCustomerCode($conn, $storeid) {
 // Xử lý thanh toán
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
     $storeid = $_SESSION['storeid'];
+    $customer_code = generateCustomerCode($conn, $storeid);
     $products = $_SESSION['cart'];
     $total_price = $_POST['total_price'];
     $received_amount = $_POST['received_amount'];
-    $customer_code = generateCustomerCode($conn, $storeid);
-
+   
     // Thêm đơn hàng vào order_history
     $stmt = $conn->prepare("INSERT INTO order_history (customer_code, storeid, total_price, order_date) VALUES (?, ?, ?, CURDATE())");
     $stmt->bind_param("sid", $customer_code, $storeid, $total_price);
     if (!$stmt->execute()) {
-        echo "Lỗi: " . $stmt->error;
+        echo json_encode(['error' => $stmt->error]);
+        exit;
     }
     $orderid = $conn->insert_id;
 
     // Thêm chi tiết đơn hàng vào order_details
     foreach ($products as $product) {
+         // Kiểm tra tồn kho trước khi thực hiện cập nhật
+         $stmt = $conn->prepare("SELECT stock_quantity FROM product WHERE productid = ?");
+         $stmt->bind_param("i", $product['productid']);
+         $stmt->execute();
+         $result = $stmt->get_result()->fetch_assoc();
+ 
+         if ($result['stock_quantity'] < $product['quantity']) {
+             echo json_encode(['error' => 'Số lượng tồn kho không đủ cho sản phẩm: ' . $product['pname']]);
+             exit;
+         }
+         // Chèn dữ liệu vào chi tiết đơn hàng
         $stmt = $conn->prepare("INSERT INTO order_details (orderid, productid, quantity) VALUES (?, ?, ?)");
         $stmt->bind_param("iii", $orderid, $product['productid'], $product['quantity']);
         if (!$stmt->execute()) {
@@ -84,7 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
         }
     }
 
+    $_SESSION['cart'] = []; // Xóa giỏ hàng sau khi thanh toán
     echo json_encode(['success' => true, 'order_id' => $customer_code]);
+    exit;
 }
 
 ?>
@@ -149,22 +183,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php if ($product): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($product['pname']); ?></td>
-                    <td><input type="number" value="1" min="1" class="product-quantity"></td>
-                    <td><?php echo htmlspecialchars($product['price']); ?>¥</td>
-                </tr>
+                <?php if (!empty($_SESSION['cart'])): ?>
+                    <?php $totalPrice = 0; $totalQuantity = 0; ?>
+                    <?php foreach ($_SESSION['cart'] as $item): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($item['pname']); ?></td>
+                            <td>
+                                <input 
+                                    type="number" 
+                                    value="<?php echo $item['quantity']; ?>" 
+                                    min="0" 
+                                    class="product-quantity" 
+                                    data-barcode="<?php echo $item['barcode']; ?>" 
+                                    onchange="updateQuantity(this)">
+                            </td>
+                            
+                            <td class="product-price"><?php echo number_format($item['price'] * $item['quantity'], 2); ?>¥</td>
+
+                        </tr>
+                        <?php 
+                            $totalPrice += $item['price'] * $item['quantity']; 
+                            $totalQuantity += $item['quantity'];
+                        ?>
+                    <?php endforeach; ?>
                 <?php else: ?>
-                <tr>
-                    <td colspan="3" style="text-align: center; color: gray;">商品が見つかりません</td>
-                </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: gray;">商品が追加されていません。</td>
+                    </tr>
                 <?php endif; ?>
             </tbody>
         </table>
-        <div id="empty-message" style="text-align: center; color: gray; display: none;">
-            <p>商品が追加されていません。</p>
-        </div>
         <form id="payment-form">
             <div class="pay">
                 <p>支払方法:
