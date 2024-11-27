@@ -136,7 +136,7 @@ $conn->close();
                 <div class="about-store">
                 <!-- <h2>店舗紹介</h2> -->
                 <?php while ($descriptionRow = $descResult->fetch_assoc()): ?>
-                    <h3><?php echo htmlspecialchars($descriptionRow['title']); ?></h3>
+                    <h2><?php echo htmlspecialchars($descriptionRow['title']); ?></h2>
                     <p><?php echo htmlspecialchars($descriptionRow['content']); ?></p>
                 <?php endwhile; ?>
 

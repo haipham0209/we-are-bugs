@@ -59,12 +59,13 @@ $conn->close();
                 <?php if (!empty($_SESSION['descriptions'])): ?>
                     <?php foreach ($_SESSION['descriptions'] as $index => $description): ?>
                         <div class="descriptionGroup">
-                            <img src="../images/delete.png" alt="Delete" class="delete-icon" data-id="<?= $description['id'] ?>" onclick="removeDescription(this)">
-                            <label for="title<?= $index + 1 ?>">タイトル:</label>
-                            <input type="text" id="title<?= $index + 1 ?>" name="title<?= $index + 1 ?>" value="<?= htmlspecialchars($description['title']) ?>" required>
-                            <label for="content<?= $index + 1 ?>">内容:</label>
-                            <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content']) ?></textarea>
-                        </div>
+                        <img src="../images/delete.png" alt="Delete" class="delete-icon" data-id="<?= $description['id'] ?>" onclick="removeDescription(this)">
+                        <input type="hidden" name="id<?= $index + 1 ?>" value="<?= $description['id'] ?>"> <!-- Lưu ID để sửa -->
+                        <label for="title<?= $index + 1 ?>">タイトル:</label>
+                        <input type="text" id="title<?= $index + 1 ?>" name="title<?= $index + 1 ?>" value="<?= htmlspecialchars($description['title']) ?>" required>
+                        <label for="content<?= $index + 1 ?>">内容:</label>
+                        <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content']) ?></textarea>
+                    </div>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <!-- Hiển thị trường trống nếu không có dữ liệu -->
@@ -135,35 +136,36 @@ $conn->close();
             descriptionGroups.forEach((group, index) => {
                 const title = group.querySelector(`[name="title${index + 1}"]`).value;
                 const content = group.querySelector(`[name="content${index + 1}"]`).value;
+                const id = group.querySelector(`[name="id${index + 1}"]`) ? group.querySelector(`[name="id${index + 1}"]`).value : null;
 
-            // Thêm title và content vào formData
-            formData.append(`descriptions[${index}][title]`, title);
-            formData.append(`descriptions[${index}][content]`, content);
-        });
+                // Thêm title, content và id vào formData nếu có
+                formData.append(`descriptions[${index}][title]`, title);
+                formData.append(`descriptions[${index}][content]`, content);
+                if (id) formData.append(`descriptions[${index}][id]`, id);
+            });
 
-    // Lấy danh sách ID đã xóa từ trường ẩn
-    const deleteIds = document.getElementById('delete_ids').value;
-    if (deleteIds) {
-        formData.append('delete_ids', deleteIds);
-    }
-
-    // Gửi dữ liệu đến server
-    fetch('./php/aboutStoreinfo.php', {
-        method: 'POST',
-        body: formData,
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Data saved successfully!');
-                location.reload(); // Tải lại trang sau khi lưu thành công
-            } else {
-                alert('Error saving data: ' + data.message);
+            // Lấy danh sách ID đã xóa từ trường ẩn
+            const deleteIds = document.getElementById('delete_ids').value;
+            if (deleteIds) {
+                formData.append('delete_ids', deleteIds);
             }
-        })
-        .catch(err => console.error('Error:', err));
-});
 
+            // Gửi dữ liệu đến server
+            fetch('./php/Storeinfo.php', { 
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Data saved successfully!');
+                    location.reload(); // Tải lại trang sau khi lưu thành công
+                } else {
+                    alert('Error saving data: ' + data.message);
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        });
 
     </script>
     

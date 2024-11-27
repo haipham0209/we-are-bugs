@@ -28,23 +28,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $index = str_replace('title', '', $key);
             $title = $conn->real_escape_string($value);
             $content = isset($_POST["content$index"]) ? $conn->real_escape_string($_POST["content$index"]) : '';
-
-            // Kiểm tra nếu có ID thì cập nhật
-            if (isset($_POST["id$index"])) {
-                $id = $_POST["id$index"];
+            $id = isset($_POST["id$index"]) ? $_POST["id$index"] : null;
+    
+            // Nếu có ID thì cập nhật
+            if ($id) {
                 $stmt = $conn->prepare("UPDATE StoreDescriptions SET title = ?, content = ? WHERE id = ?");
                 $stmt->bind_param('ssi', $title, $content, $id);
                 $stmt->execute();
                 $stmt->close();
             } else {
-                // Nếu không có ID thì thêm mới
+                // Nếu không có ID (chắc chắn là thêm mới)
                 $stmt = $conn->prepare("INSERT INTO StoreDescriptions (storeid, title, content) VALUES (?, ?, ?)");
                 $stmt->bind_param('iss', $storeid, $title, $content);
                 $stmt->execute();
                 $stmt->close();
             }
         }
-    }
+    }    
+
 
     // Chuyển hướng về trang profileEdit.php sau khi lưu thành công
     header('Location: ../profileEdit.php');
