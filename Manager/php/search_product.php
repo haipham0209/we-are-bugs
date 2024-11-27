@@ -14,7 +14,7 @@ $keyword = $_GET['keyword'] ?? '';
 $storeid = $_SESSION['storeid'];
 if ($keyword !== '') {
     // Truy vấn sản phẩm theo mã sản phẩm hoặc tên sản phẩm
-    $sql = "SELECT productid, barcode, pname, productImage 
+    $sql = "SELECT *
             FROM product 
             WHERE storeid = ? 
             AND (barcode LIKE ? OR pname LIKE ?) 
