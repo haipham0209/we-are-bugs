@@ -43,9 +43,18 @@ CREATE TABLE store (
     sname VARCHAR(100) NOT NULL,
     address VARCHAR(255),
     tel VARCHAR(20),
+    logopath VARCHAR(255) DEFAULT NULL,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userid) REFERENCES user(userid)
+);
+--bảng lưu about store
+CREATE TABLE StoreDescriptions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    storeid INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    FOREIGN KEY (storeid) REFERENCES store(storeid)
 );
 
 
@@ -102,8 +111,9 @@ CREATE TABLE daily_revenue (
     PRIMARY KEY (storeid, revenue_date),
     FOREIGN KEY (storeid) REFERENCES store(storeid)
 );
-ALTER TABLE store
-ADD COLUMN logopath VARCHAR(255) DEFAULT NULL AFTER tel;
+
+-- ALTER TABLE store
+-- ADD COLUMN logopath VARCHAR(255) DEFAULT NULL AFTER tel;
 
 UPDATE user 
 SET status = 'active' 
