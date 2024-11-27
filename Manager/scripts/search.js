@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', function () {
 
 // Định nghĩa các phần tử
 const searchBox = document.getElementById('barcode-input'); // Ô nhập liệu
@@ -61,5 +62,7 @@ document.addEventListener('click', function (e) {
         suggestionList.style.display = 'none';
     }
 });
+});
+
 
     
