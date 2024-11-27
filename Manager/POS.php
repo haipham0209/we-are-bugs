@@ -138,11 +138,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
     <div class="main-navbar">
         <div class="search-scan">
             <form method="POST">
-                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="Search...">
+                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">
             </form>
             <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
             <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
         </div>
+        <div id="suggestionList"></div>
+        <script src="./scripts/search.js"></script>
+
         <script>
                 let isCameraRunning = false; // カメラの状態を管理
 
@@ -175,44 +178,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
             </div>
         </div>
         <table id="product-table">
-            <thead>
-                <tr>
-                    <th>商品名</th>
-                    <th>数量</th>
-                    <th>価格</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($_SESSION['cart'])): ?>
-                    <?php $totalPrice = 0; $totalQuantity = 0; ?>
-                    <?php foreach ($_SESSION['cart'] as $item): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($item['pname']); ?></td>
-                            <td>
-                                <input 
-                                    type="number" 
-                                    value="<?php echo $item['quantity']; ?>" 
-                                    min="0" 
-                                    class="product-quantity" 
-                                    data-barcode="<?php echo $item['barcode']; ?>" 
-                                    onchange="updateQuantity(this)">
-                            </td>
-                            
-                            <td class="product-price"><?php echo number_format($item['price'] * $item['quantity'], 2); ?>¥</td>
+    <thead>
+        <tr>
+            <th>商品名</th>
+            <th>数量</th>
+            <th>単価</th>
+            <th>小計</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Nội dung giỏ hàng sẽ được thêm vào đây bằng JavaScript -->
+    </tbody>
+</table>
 
-                        </tr>
-                        <?php 
-                            $totalPrice += $item['price'] * $item['quantity']; 
-                            $totalQuantity += $item['quantity'];
-                        ?>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="3" style="text-align: center; color: gray;">商品が追加されていません。</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
         <form id="payment-form">
             <div class="pay">
                 <p>支払方法:
