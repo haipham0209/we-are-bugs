@@ -21,7 +21,10 @@
         background-color: #e3f3e1;
         border-radius: 8px;
     }
- /* Các màu xen kẽ cho bảng */
+
+
+    /* //////////////////////////table////////////////////////////////// */
+/* Màu nền xen kẽ các dòng */
 #product-table tbody tr:nth-child(even) {
     background-color: #f9f9f9; /* Màu xám nhạt */
 }
@@ -30,22 +33,40 @@
     background-color: #fff; /* Màu trắng */
 }
 
-/* Hiệu ứng khi có highlight */
+/* Hiệu ứng làm nổi bật */
 #product-table tbody tr.highlight {
-    animation: highlightEffect 1.5s ease-out; /* Thời gian 1 giây */
+    animation: highlightEffect 1.5s ease-out;
 }
 
-/* Hiệu ứng highlight (màu nền nổi bật rồi quay lại trạng thái ban đầu) */
 @keyframes highlightEffect {
     0% {
-        background-color: rgba(147, 243, 113, 0.9); /* Màu xanh nổi bật */
+        /* background-color: rgba(); Màu xanh nhạt   */
+        background-color: #45a049;
     }
     100% {
-        background-color: inherit; /* Quay lại màu nền cũ (dựa vào nth-child) */
+        background-color: inherit; /* Quay lại màu gốc */
     }
 }
 
+/* Đặt độ rộng nhỏ hơn cho cột "数量" */
+#product-table th.num, 
+#product-table td.num {
+    width: 50px; /* Chiều rộng cột số lượng */
+    text-align: center; /* Căn giữa nội dung */
+}
 
+#product-table tbody td.num input {
+    max-width: 40px; /* Đặt kích thước ô nhập liệu */
+    text-align: center;
+}
+
+/* Căn chỉnh tổng thể */
+#product-table th,
+#product-table td {
+    text-align: left;
+    padding: 8px;
+}
+/* /////////////////////////////////////////table///////////////////////////////// */
 
     #suggestionList {
         border: 1px solid #ccc;
