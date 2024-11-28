@@ -21,6 +21,32 @@
         background-color: #e3f3e1;
         border-radius: 8px;
     }
+ /* Các màu xen kẽ cho bảng */
+#product-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Màu xám nhạt */
+}
+
+#product-table tbody tr:nth-child(odd) {
+    background-color: #fff; /* Màu trắng */
+}
+
+/* Hiệu ứng khi có highlight */
+#product-table tbody tr.highlight {
+    animation: highlightEffect 1.5s ease-out; /* Thời gian 1 giây */
+}
+
+/* Hiệu ứng highlight (màu nền nổi bật rồi quay lại trạng thái ban đầu) */
+@keyframes highlightEffect {
+    0% {
+        background-color: rgba(147, 243, 113, 0.9); /* Màu xanh nổi bật */
+    }
+    100% {
+        background-color: inherit; /* Quay lại màu nền cũ (dựa vào nth-child) */
+    }
+}
+
+
+
     #suggestionList {
         border: 1px solid #ccc;
         max-width: 300px;

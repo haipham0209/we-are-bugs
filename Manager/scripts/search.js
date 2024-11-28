@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         div.addEventListener('click', () => {
                             // Khi chọn sản phẩm, gán vào ô input
-                            // searchBox.value = `${product.pname}`;
                             searchBox.value = ``;
                             suggestionList.innerHTML = ''; // Xóa danh sách gợi ý
                             suggestionList.style.display = 'none'; // Ẩn danh sách
@@ -65,24 +64,34 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Hàm thêm sản phẩm vào giỏ hàng
     function addToCart(product) {
         const tableBody = document.querySelector('#product-table tbody');
-    
+
         // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
         const existingRow = Array.from(tableBody.rows).find(row => {
             const barcode = row.querySelector('input.product-quantity').dataset.barcode;
             return barcode === product.barcode;
         });
-    
+
         if (existingRow) {
             // Nếu đã tồn tại, tăng số lượng
             const quantityInput = existingRow.querySelector('input.product-quantity');
             quantityInput.value = parseInt(quantityInput.value) + 1;
-    
+
             // Cập nhật giá tổng
             const priceCell = existingRow.querySelector('.price');
             const unitPrice = parseFloat(product.price);
             priceCell.textContent = `${(unitPrice * parseInt(quantityInput.value)).toFixed(2)}¥`;
+
+            // Thêm hiệu ứng highlight
+            existingRow.classList.add('highlight');
+            setTimeout(() => {
+                existingRow.classList.add('fade-out');
+                setTimeout(() => {
+                    existingRow.classList.remove('highlight', 'fade-out');
+                }, 1000); // Xóa class highlight và fade-out sau 1 giây
+            }, 500); // Hiệu ứng highlight kéo dài 0.5 giây
         } else {
             // Nếu chưa có, thêm sản phẩm mới vào giỏ hàng
             const row = document.createElement('tr');
@@ -101,10 +110,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td class="price">${parseFloat(product.price).toFixed(2)}¥</td>
             `;
             tableBody.appendChild(row);
+
+            // Thêm hiệu ứng highlight cho dòng mới
+            row.classList.add('highlight');
+            setTimeout(() => {
+                row.classList.add('fade-out');
+                setTimeout(() => {
+                    row.classList.remove('highlight', 'fade-out');
+                }, 1000); // Xóa class highlight và fade-out sau 1 giây
+            }, 500); // Hiệu ứng highlight kéo dài 0.5 giây
         }
-    
+
         // Cập nhật tổng tiền toàn giỏ hàng
         updateTotal();
     }
-    
+
+    // Hàm cập nhật tổng giỏ hàng
+    function updateTotal() {
+        const tableRows = document.querySelectorAll('#product-table tbody tr');
+        let total = 0;
+
+        tableRows.forEach(row => {
+            const quantityInput = row.querySelector('.product-quantity');
+            const priceCell = row.querySelector('.price');
+            const quantity = parseInt(quantityInput.value);
+            const price = parseFloat(priceCell.textContent.replace('¥', ''));
+
+            total += quantity * price;
+        });
+
+        document.querySelector('#total-price').textContent = `Tổng: ¥${total.toFixed(2)}`;
+    }
 });
