@@ -21,6 +21,53 @@
         background-color: #e3f3e1;
         border-radius: 8px;
     }
+
+
+    /* //////////////////////////table////////////////////////////////// */
+/* Màu nền xen kẽ các dòng */
+#product-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Màu xám nhạt */
+}
+
+#product-table tbody tr:nth-child(odd) {
+    background-color: #fff; /* Màu trắng */
+}
+
+/* Hiệu ứng làm nổi bật */
+#product-table tbody tr.highlight {
+    animation: highlightEffect 1.5s ease-out;
+}
+
+@keyframes highlightEffect {
+    0% {
+        /* background-color: rgba(); Màu xanh nhạt   */
+        background-color: #45a049;
+    }
+    100% {
+        background-color: inherit; /* Quay lại màu gốc */
+    }
+}
+
+/* Đặt độ rộng nhỏ hơn cho cột "数量" */
+#product-table th.num, 
+#product-table td.num {
+    width: 50px; /* Chiều rộng cột số lượng */
+    text-align: center; /* Căn giữa nội dung */
+}
+
+#product-table tbody td.num input {
+    max-width: 40px; /* Đặt kích thước ô nhập liệu */
+    text-align: center;
+}
+
+/* Căn chỉnh tổng thể */
+#product-table th,
+#product-table td {
+    text-align: left;
+    padding: 8px;
+}
+/* /////////////////////////////////////////table///////////////////////////////// */
+
     #suggestionList {
         border: 1px solid #ccc;
         max-width: 300px;
@@ -177,7 +224,7 @@
     }
 
     #product-table th, #product-table td {
-        padding: 12px;
+        padding: 6px;
         text-align: left;
         border: 1px solid #ddd;
     }

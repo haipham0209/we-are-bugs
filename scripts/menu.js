@@ -114,37 +114,6 @@ filterButtons.forEach(button => {
 });
 
 
-
-    //filter button===========================================================================
-
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     // filter button===========================================================================
-    
-    //     const filterButtons = document.querySelectorAll('.filter-button');
-    
-    //     filterButtons.forEach(button => {
-    //         button.addEventListener('click', () => {
-    //             const targetId = button.getAttribute('data-target');
-    //             const targetSection = document.querySelector(targetId);
-    
-    //             if (targetSection) {
-    //                 // Kéo đến vị trí của phần tử mục tiêu
-    //                 const headerOffset = document.querySelector('.header') ? document.querySelector('.header').offsetHeight : 0; // Thay '.header' bằng selector của header của bạn
-    //                 const elementPosition = targetSection.getBoundingClientRect().top;
-    //                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset; // Thêm bù
-    
-    //                 window.scrollTo({
-    //                     top: offsetPosition,
-    //                     behavior: 'smooth' // hiệu ứng cuộn mượt
-    //                 });
-    //             } else {
-    //                 console.error(`No target section found for ID: ${targetId}`);
-    //             }
-    //         });
-    //     });
-    // });
-    
-
 //////////////////////////////////////////////////////////show more button/////////////////////////////////////
 document.addEventListener("DOMContentLoaded", function () {
     const groups = document.querySelectorAll(".group");
@@ -160,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             // Chỉ hiển thị 3 sản phẩm ban đầu
             productContents.forEach((product, index) => {
-                if (index >= 3) product.style.display = "none";
+                if (index >= 4) product.style.display = "none";
             });
 
             let isExpanded = false; // Trạng thái mở rộng
@@ -172,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     setTimeout(() => {
                         // Ẩn các sản phẩm sau 3 sản phẩm sau khi hiệu ứng chạy xong
                         productContents.forEach((product, index) => {
-                            if (index >= 3) product.style.display = "none";
+                            if (index >= 4) product.style.display = "none";
                         });
                     }, 600); // Đợi 0.6s cho hiệu ứng chạy xong
                     showMoreButton.textContent = "Show More";

@@ -138,77 +138,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
     <div class="main-navbar">
         <div class="search-scan">
             <form method="POST">
-                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="Search...">
+                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">
             </form>
             <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
             <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
         </div>
         <div id="suggestionList"></div>
-        <script>
-// Định nghĩa các phần tử
-const searchBox = document.getElementById('barcode-input'); // Ô nhập liệu
-const suggestionList = document.getElementById('barcode-suggestions'); // Danh sách gợi ý
+        <script src="./scripts/search.js"></script>
 
-// Lắng nghe sự kiện input
-searchBox.addEventListener('input', function () {
-    const keyword = searchBox.value.trim();
-    if (keyword.length > 0) {
-        // Gửi yêu cầu đến PHP API
-        fetch('./php/search_product.php?keyword=' + encodeURIComponent(keyword))
-            .then(response => response.json())
-            .then(data => {
-                // Xóa gợi ý cũ
-                suggestionList.innerHTML = '';
-                suggestionList.style.display = 'block'; // Hiển thị danh sách
-
-                // Duyệt danh sách sản phẩm trả về
-                data.forEach(product => {
-    const div = document.createElement('div');
-    div.className = 'suggestion-item'; // Thêm class để tiện style
-
-    // Tạo phần tử div cho tên sản phẩm
-    const nameDiv = document.createElement('div');
-    nameDiv.textContent = `${product.pname}`;
-    div.appendChild(nameDiv);
-
-    // Tạo phần tử img cho ảnh sản phẩm
-    const img = document.createElement('img');
-    img.src = product.productImage; // Giả sử trường productImage chứa đường dẫn đến ảnh sản phẩm
-    img.alt = product.pname;
-    img.style.width = '50px'; // Đặt kích thước ảnh (bạn có thể thay đổi theo nhu cầu)
-    img.style.marginLeft = '10px'; // Khoảng cách giữa tên sản phẩm và ảnh
-    div.appendChild(img);
-
-    div.dataset.id = product.productid; // Lưu ID sản phẩm
-
-    div.addEventListener('click', () => {
-        // Khi chọn sản phẩm, gán vào ô input
-        searchBox.value = `${product.pname}`;
-        suggestionList.innerHTML = ''; // Xóa danh sách gợi ý
-        suggestionList.style.display = 'none'; // Ẩn danh sách
-    });
-
-    suggestionList.appendChild(div);
-});
-
-            })
-            .catch(error => console.error('Error:', error));
-    } else {
-        // Xóa danh sách nếu từ khóa trống
-        suggestionList.innerHTML = '';
-        suggestionList.style.display = 'none';
-    }
-});
-
-// Ẩn danh sách khi click ra ngoài
-document.addEventListener('click', function (e) {
-    if (!suggestionList.contains(e.target) && e.target !== searchBox) {
-        suggestionList.innerHTML = '';
-        suggestionList.style.display = 'none';
-    }
-});
-
-    </script>
         <script>
                 let isCameraRunning = false; // カメラの状態を管理
 
@@ -241,44 +178,19 @@ document.addEventListener('click', function (e) {
             </div>
         </div>
         <table id="product-table">
-            <thead>
-                <tr>
-                    <th>商品名</th>
-                    <th>数量</th>
-                    <th>価格</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($_SESSION['cart'])): ?>
-                    <?php $totalPrice = 0; $totalQuantity = 0; ?>
-                    <?php foreach ($_SESSION['cart'] as $item): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($item['pname']); ?></td>
-                            <td>
-                                <input 
-                                    type="number" 
-                                    value="<?php echo $item['quantity']; ?>" 
-                                    min="0" 
-                                    class="product-quantity" 
-                                    data-barcode="<?php echo $item['barcode']; ?>" 
-                                    onchange="updateQuantity(this)">
-                            </td>
-                            
-                            <td class="product-price"><?php echo number_format($item['price'] * $item['quantity'], 2); ?>¥</td>
+    <thead>
+        <tr>
+            <th>商品名</th>
+            <th class="num">数量</th>
+            <th>単価</th>
+            <th>小計</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Nội dung giỏ hàng sẽ được thêm vào đây bằng JavaScript -->
+    </tbody>
+</table>
 
-                        </tr>
-                        <?php 
-                            $totalPrice += $item['price'] * $item['quantity']; 
-                            $totalQuantity += $item['quantity'];
-                        ?>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="3" style="text-align: center; color: gray;">商品が追加されていません。</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
         <form id="payment-form">
             <div class="pay">
                 <p>支払方法:
