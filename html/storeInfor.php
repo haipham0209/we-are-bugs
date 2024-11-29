@@ -32,10 +32,10 @@ $address = null;
 $mail = null;
 $sname = null;
 $storeid = null;
-$description = null;
+// $description = null;
 
 // Thực hiện truy vấn để lấy dữ liệu cửa hàng và thông tin người dùng
-$query = "SELECT store.storeid, store.sname, store.tel, store.address, store.description, user.mail 
+$query = "SELECT store.storeid,store.logopath, store.sname, store.tel, store.address, user.mail 
           FROM store 
           JOIN user ON store.userid = user.userid 
           WHERE store.sname = ?";
@@ -52,7 +52,10 @@ if ($result->num_rows > 0) {
     $tel = $storeData["tel"];
     $address = $storeData["address"];
     $mail = $storeData["mail"];
-    $description = $storeData["description"];
+    // $description = $storeData["description"];
+    $logopath = $storeData["logopath"];
+    $logopath = str_replace('.../Manager/', '../Manager/', $logopath);
+
 } else {
     header("HTTP/1.0 404 Not Found");
     echo "404 Not Found";
@@ -71,6 +74,7 @@ $stmt->close();
 $descStmt->close();
 $conn->close();
 
+//require "resources.php";
 
 ?>
 
@@ -82,7 +86,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($sname) ?> - Store Information</title>
-    <link rel="stylesheet" href="../styles/myPage.css">
+    <!-- <link rel="stylesheet" href="../styles/myPage.css"> -->
     <link rel="stylesheet" href="../styles/storeInfor.css">
     <link rel="stylesheet" href="../styles/All.css">
     <link rel="stylesheet" href="../styles/index.css">
@@ -94,20 +98,20 @@ $conn->close();
         <!-- Navbar -->
         <div class="navbar">
             <button class="menu-toggle" aria-label="Toggle navigation">
-            <span class="menu-icon"></span>
+                <span class="menu-icon"></span>
             </button>
             <div class="logobar">
-                <p>WRB</p>   
+                <a href="../main.php?sname=<?php echo $_GET['sname']?>"><img id= logo-main src="<?=$logopath?>" alt="logo"></a>
             </div>
-            <button class="avatar-toggle">
-                <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User">
-            </button>
+
+            <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User" onclick="window.location.href='myPage.php?sname=<?php echo $_GET['sname']  ?>';">
+
         </div>
         <nav class="nav-menu">
             <ul>
             <li><h3><?php echo htmlspecialchars($sname); ?></h3></li>
             <li><a href="../main.php?sname=<?php echo urlencode($storeName); ?>">ホームページ</a></li>
-            <li><a href="../main.php?sname=<?php echo urlencode($storeName); ?>">商品</a></li>
+            <!-- <li><a href="../main.php?sname=<?php echo urlencode($storeName); ?>">商品</a></li> -->
             <li><a href="./html/storeInfor.php?sname=<?php echo urlencode($storeName); ?>">お店について</a></li>
             <li class="support-title">サポート</li>
             <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo htmlspecialchars($tel); ?>"><?php echo htmlspecialchars($tel); ?></a></li>
@@ -128,9 +132,8 @@ $conn->close();
     <main>
         <!-- Store Information Section -->
         <div class="store-info">
-            <!-- Logo Section -->
             <div class="logo">
-                <img src="../images/wrb.png" alt="WRB Logo">
+                <img src="../images/welcome.png" alt=" ">
             </div>
              <!-- About Store Section -->
                 <div class="about-store">
