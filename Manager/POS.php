@@ -156,19 +156,19 @@ function generateCustomerCode($conn, $storeid) {
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Thêm 10 hàng trống vào đây -->
-                <tr class="">
-                    <td class="sttt"></td> <!-- Cột STT -->
+                    <!-- Thêm trống vào đây -->
+                <!-- <tr class="e">
+                    <td class="sttt"></td> 
                     <td></td>
                     <td class="num1">
                         <input type="number" class="product-quantity" value="" min="1" data-barcode="" onchange="">
                     </td>
                     <td></td>
-                    <td class="price"></td>
+                    <td class="price2"></td>
                     <td>
                         <button class="delete-btn" title=""></button>
                     </td>
-                </tr>
+                </tr> -->
                 
 
                 </tbody>
@@ -186,7 +186,7 @@ function generateCustomerCode($conn, $storeid) {
                 </p>
             </div>
             <div class="total">
-                <p>合計: <span id="total-price">0¥</span></p>
+                <p>合計: <span id="total-price">￥</span></p>
                 <p>(税込10%)</p>
                 <p>割引き: 
                     <input type="number" id="waribiki-input" value="0" min="0" max="100" onchange="updateTotal()"> %
