@@ -26,8 +26,8 @@ $category_ids = isset($_GET['category_ids']) ? explode(',', $_GET['category_ids'
 
 // Truy vấn để lấy danh sách sản phẩm từ cơ sở dữ liệu
 $product_sql = "
-    SELECT p.productid, p.pname, p.price, p.costPrice, p.description, p.stock_quantity, p.productImage, 
-    u.username, c.cname 
+    SELECT p.productid, p.pname, p.price, p.costPrice, p.description, p.stock_quantity, 
+           p.productImage, u.username, c.cname, p.category_id
     FROM product p
     JOIN store s ON p.storeid = s.storeid
     JOIN user u ON s.userid = u.userid
@@ -84,9 +84,9 @@ $product_result = $product_stmt->get_result();
                     }
                 }
             </script>
-            <button class="main-home">
-                <h1 class="logo">WRB</h1>
-            </button>
+            <div class="logo">
+                <a href="../main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>"><img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="width: 240px; height: 80px; padding: 5px; border-radius: 5px;" /></a>
+            </div>
         </div>
     </header>
     <main>
@@ -109,6 +109,7 @@ $product_result = $product_stmt->get_result();
                 echo '<p>No categories found.</p>';
             }
             ?>
+
         </div>
 
         <!-- Add Product Button -->
@@ -124,22 +125,23 @@ $product_result = $product_stmt->get_result();
             if ($product_result->num_rows > 0) {
                 while ($product = $product_result->fetch_assoc()) {
                     $productImagePath = '../' . $product['productImage'];
+                    $categoryId = !empty($product['category_id']) ? htmlspecialchars($product['category_id'], ENT_QUOTES, 'UTF-8') : '';
 
                     echo '
-                            <div class="product-card">
-                               <a href="productEdit.php?id=' . $product['productid'] . '" class="edit-icon">
-                                    <img src="../images/edit.png" alt="Edit">
-                                </a>
-                                <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
-                                <div class="product-info">
-                                    <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
-                                    <p><strong>カテゴリー：</strong>' . htmlspecialchars($product['cname'], ENT_QUOTES, 'UTF-8') . '</p>
-                                    <p><strong>原価：</strong>' . htmlspecialchars($product['costPrice'], ENT_QUOTES, 'UTF-8') . '</p>
-                                    <p><strong>値段：</strong>' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '</p>
-                                    <p><strong>説明：</strong>' . htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') . '</p>
-                                </div>
-                                <div class="stock">在庫: ' . htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') . '</div>
-                            </div>';
+                        <div class="product-card" data-category-id="' . $categoryId . '">
+                            <a href="productEdit.php?id=' . $product['productid'] . '" class="edit-icon">
+                                <img src="../images/edit.png" alt="Edit">
+                            </a>
+                            <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
+                            <div class="product-info">
+                                <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
+                                <p class="productCategory"><strong>カテゴリー：</strong>' . htmlspecialchars($product['cname'], ENT_QUOTES, 'UTF-8') . '</p>
+                                <p><strong>原価：</strong>' . htmlspecialchars($product['costPrice'], ENT_QUOTES, 'UTF-8') . '</p>
+                                <p><strong>値段：</strong>' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '</p>
+                                <p><strong>説明：</strong>' . htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') . '</p>
+                            </div>
+                            <div class="stock">在庫: ' . htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') . '</div>
+                        </div>';
                 }
             } else {
                 echo '<p>No products found.</p>';
@@ -147,52 +149,63 @@ $product_result = $product_stmt->get_result();
             ?>
         </div>
         <script>
-            const selectedCategories = new Set(<?= json_encode($category_ids) ?>);
+            document.addEventListener('DOMContentLoaded', function() {
+                const categoryButtons = document.querySelectorAll('.category button');
+                const productCards = document.querySelectorAll('.product-card');
+                const selectedCategories = new Set(); // 選択されたカテゴリを管理
 
-            // ボタンのクリックイベントを設定
-            document.querySelectorAll('.category button').forEach(button => {
-                button.addEventListener('click', function() {
-                    if (this.classList.contains('all-categories')) {
-                        // "All" がクリックされた場合、選択をクリア
-                        selectedCategories.clear();
-                        document.querySelectorAll('.category button').forEach(btn => btn.classList.remove('active'));
-                        this.classList.add('active');
-                    } else {
-                        // その他のカテゴリボタンがクリックされた場合
+                categoryButtons.forEach(button => {
+                    button.addEventListener('click', function() {
                         const categoryId = this.getAttribute('data-category-id');
 
+                        // "All"ボタンがクリックされた場合、すべてをリセット
+                        if (!categoryId) {
+                            selectedCategories.clear();
+                            categoryButtons.forEach(btn => btn.classList.remove('active'));
+                            this.classList.add('active');
+
+                            // 全商品を表示
+                            productCards.forEach(card => card.style.display = 'block');
+                            return;
+                        }
+
+                        // "All"以外のカテゴリを選択
                         if (selectedCategories.has(categoryId)) {
+                            // すでに選択済みの場合は選択を解除
                             selectedCategories.delete(categoryId);
                             this.classList.remove('active');
                         } else {
+                            // 新しく選択された場合は追加
                             selectedCategories.add(categoryId);
                             this.classList.add('active');
                         }
 
-                        // "All" ボタンの選択解除
-                        document.querySelector('.all-categories').classList.remove('active');
+                        // 商品をフィルタリング
+                        filterProducts();
+                    });
+                });
+
+                function filterProducts() {
+                    if (selectedCategories.size === 0) {
+                        // 何も選択されていない場合は全商品を表示
+                        productCards.forEach(card => card.style.display = 'block');
+                        return;
                     }
 
-                    // URLを更新
-                    updateUrl();
-                });
-            });
-
-            function showAllCategories() {
-                selectedCategories.clear();
-                updateUrl();
-            }
-
-            function updateUrl() {
-                const url = new URL(window.location.href);
-                if (selectedCategories.size === 0) {
-                    url.searchParams.delete('category_ids');
-                } else {
-                    url.searchParams.set('category_ids', Array.from(selectedCategories).join(','));
+                    // 選択されたカテゴリのいずれかに一致する商品を表示
+                    productCards.forEach(card => {
+                        const cardCategoryId = card.getAttribute('data-category-id');
+                        if (selectedCategories.has(cardCategoryId)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 }
-                window.location.href = url.toString();
-            }
+            });
         </script>
+
+
     </main>
     <footer></footer>
 </body>
