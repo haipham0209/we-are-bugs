@@ -101,17 +101,17 @@ $conn->close();
                 <span class="menu-icon"></span>
             </button>
             <div class="logobar">
-                <a href=""><img id= logo-main src="<?=$logopath?>" alt="logo"></a>
+                <a href="../main.php?sname=<?php echo $_GET['sname']?>"><img id= logo-main src="<?=$logopath?>" alt="logo"></a>
             </div>
 
-            <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User" onclick="window.location.href='myPage.php';">
+            <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User" onclick="window.location.href='myPage.php?sname=<?php echo $_GET['sname']  ?>';">
 
         </div>
         <nav class="nav-menu">
             <ul>
             <li><h3><?php echo htmlspecialchars($sname); ?></h3></li>
             <li><a href="../main.php?sname=<?php echo urlencode($storeName); ?>">ホームページ</a></li>
-            <li><a href="../main.php?sname=<?php echo urlencode($storeName); ?>">商品</a></li>
+            <!-- <li><a href="../main.php?sname=<?php echo urlencode($storeName); ?>">商品</a></li> -->
             <li><a href="./html/storeInfor.php?sname=<?php echo urlencode($storeName); ?>">お店について</a></li>
             <li class="support-title">サポート</li>
             <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo htmlspecialchars($tel); ?>"><?php echo htmlspecialchars($tel); ?></a></li>

@@ -1,11 +1,89 @@
 
 
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Thông tin kết nối cơ sở dữ liệu
+include('../Manager/php/db_connect.php');
+
+
+// Kết nối đến cơ sở dữ liệu
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Kiểm tra kết nối
+if ($conn->connect_error) {
+    echo "SERVER NOT FOUND";
+    exit();
+}
+
+// Kiểm tra xem có tham số sname trong URL không
+if (!isset($_GET['sname'])) {
+    header("HTTP/1.0 404 Not Found");
+    echo "404 Not Found";
+    exit();
+}
+
+$storeName = $_GET['sname'];
+
+// Khởi tạo các biến để tránh lỗi chưa khai báo
+$tel = null;
+$address = null;
+$mail = null;
+$sname = null;
+$storeid = null;
+// $description = null;
+
+// Thực hiện truy vấn để lấy dữ liệu cửa hàng và thông tin người dùng
+$query = "SELECT store.storeid,store.logopath, store.sname, store.tel, store.address, user.mail 
+          FROM store 
+          JOIN user ON store.userid = user.userid 
+          WHERE store.sname = ?";
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $storeName);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $storeData = $result->fetch_assoc();
+    $storeid = $storeData['storeid'];
+    $sname = $storeData["sname"];
+    $tel = $storeData["tel"];
+    $address = $storeData["address"];
+    $mail = $storeData["mail"];
+    // $description = $storeData["description"];
+    $logopath = $storeData["logopath"];
+    $logopath = str_replace('.../Manager/', '../Manager/', $logopath);
+
+} else {
+    header("HTTP/1.0 404 Not Found");
+    echo "404 Not Found";
+    exit();
+}
+
+// Truy vấn để lấy mô tả cửa hàng
+$descriptionQuery = "SELECT title, content FROM StoreDescriptions WHERE storeid = ?";
+$descStmt = $conn->prepare($descriptionQuery);
+$descStmt->bind_param("i", $storeid);
+$descStmt->execute();
+$descResult = $descStmt->get_result();
+
+// Đóng kết nối
+$stmt->close();
+$descStmt->close();
+$conn->close();
+
+//require "resources.php";
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WRB - My Page</title>
+    <title>My Page</title>
     <link rel="stylesheet" href="../styles/All.css">
     <link rel="stylesheet" href="../styles/index.css">
     <link rel="stylesheet" href="../styles/myPage.css">
@@ -20,8 +98,7 @@
             <span class="menu-icon"></span>
             </button>
             <div class="logobar">
-                <!-- <img src="../images/wrb-logo.png" alt="Store Logo"> -->
-                <h2>WRB</h2> 
+                <a href="../main.php?sname=<?php echo $_GET['sname']  ?>"><img id= logo-main src="<?=$logopath?>" alt="logo"></a>
             </div>
             <button class="avatar-toggle">
                 <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User">
@@ -31,9 +108,10 @@
     <nav class="nav-menu">
         <ul>
         <li><h3><?php echo $sname; ?></h3></li>
-          <li><a href="./main.php?sname=<?php echo $_GET['sname']  ?>">ホームページ</a></li>
-          <li><a href="./html/product.php">商品</a></li>
-          <li><a href="./html/storeInfor.php">お店について</a></li>
+          <li><a href="../main.php?sname=<?php echo $_GET['sname']?>">ホームページ</a></li>
+          <!-- <li><a href="./html/product.php?sname=<?php echo $_GET['sname']?>">商品</a></li> -->
+          <li><a href="./storeInfor.php?sname=<?php echo $_GET['sname']?>">お店について</a></li>
+          <li><a href="./html/myPage.php?sname=<?php echo $_GET['sname']  ?>">マイページ</a></li>
           <li class="support-title">サポート</li>
           <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo $tel; ?>"><?php echo $tel; ?></a></li>
           <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a></li>
