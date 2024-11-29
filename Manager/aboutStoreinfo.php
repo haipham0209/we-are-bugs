@@ -68,6 +68,10 @@ $conn->close();
                         <!-- <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content']) ?></textarea> -->
                         <!-- <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars(nl2br($description['content']), ENT_QUOTES, 'UTF-8') ?></textarea> -->
                         <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content'], ENT_QUOTES, 'UTF-8') ?></textarea>
+                        <!-- <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required>
+                            <?= htmlspecialchars(str_replace("\n", "\n", $description['content'])) ?>
+                        </textarea> -->
+
                     </div>
                     <?php endforeach; ?>
                 <?php else: ?>
