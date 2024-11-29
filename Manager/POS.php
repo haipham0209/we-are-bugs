@@ -131,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
     <script src="./scripts/camera.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     <script src="./scripts/POS.js"></script>
+    <script src="./scripts/search.js"></script>
     <title>POS</title>
 </head>
 <body>
@@ -144,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
             <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
         </div>
         <div id="suggestionList"></div>
-        <script src="./scripts/search.js"></script>
+        
 
         <script>
                 let isCameraRunning = false; // カメラの状態を管理
