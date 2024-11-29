@@ -143,21 +143,38 @@ function generateCustomerCode($conn, $storeid) {
                 <p id="time"></p>
             </div>
         </div>
-        <table id="product-table">
-    <thead>
-        <tr>
-            <th>行</th>
-            <th>商品名</th>
-            <th class="num">数量</th>
-            <th>単価</th>
-            <th>小計</th>
-            <th> </th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Nội dung giỏ hàng sẽ được thêm vào đây bằng JavaScript -->
-    </tbody>
-</table>
+        <div class="table-wrapper">
+            <table id="product-table">
+                <thead>
+                    <tr>
+                        <th>行</th>
+                        <th>商品名</th>
+                        <th class="num">数量</th>
+                        <th>単価</th>
+                        <th>小計</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Thêm 10 hàng trống vào đây -->
+                <tr class="">
+                    <td class="sttt"></td> <!-- Cột STT -->
+                    <td></td>
+                    <td class="num1">
+                        <input type="number" class="product-quantity" value="" min="1" data-barcode="" onchange="">
+                    </td>
+                    <td></td>
+                    <td class="price"></td>
+                    <td>
+                        <button class="delete-btn" title=""></button>
+                    </td>
+                </tr>
+                
+
+                </tbody>
+            </table>
+        </div>
+
 
         <form id="payment-form">
             <div class="pay">

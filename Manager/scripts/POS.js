@@ -41,26 +41,36 @@ function addToCart(product) {
                 <button class="delete-btn" title="Xóa">X</button>
             </td>
         `;
-        tableBody.appendChild(row);
+
+        // Thêm dòng mới vào đầu bảng (đẩy các dòng trống xuống)
+        tableBody.insertBefore(row, tableBody.firstChild);
 
         // Thêm sự kiện xóa hàng
         row.querySelector('.delete-btn').addEventListener('click', () => {
-            row.remove(); // Xóa hàng
-            updateSerialNumbers(); // Cập nhật lại STT sau khi xóa
-            updateTotal(); // Cập nhật tổng tiền
+            row.classList.add('fade-out'); // Thêm lớp hiệu ứng làm mờ dần
+
+            // Chờ hiệu ứng hoàn tất (300ms) rồi xóa hàng
+            setTimeout(() => {
+                row.remove(); // Xóa hàng
+                updateSerialNumbers(); // Cập nhật lại STT
+                updateTotal(); // Cập nhật tổng tiền
+            }, 300);
         });
 
+        // Thêm hiệu ứng làm nổi bật dòng mới
         row.classList.add('highlight');
         setTimeout(() => {
             row.classList.remove('highlight');
         }, 1500);
     }
 
-    updateSerialNumbers(); // Cập nhật STT mỗi lần thêm
-    updateTotal(); // Cập nhật tổng tiền mỗi lần thêm
-    // Cập nhật tổng tiền giỏ hàng
-    // updateTotal();
+    // Cập nhật lại số thứ tự (STT)
+    updateSerialNumbers();
+
+    // Cập nhật tổng tiền mỗi lần thêm sản phẩm
+    updateTotal();
 }
+
 function updateSerialNumbers() {
     const tableRows = document.querySelectorAll('#product-table tbody tr');
     tableRows.forEach((row, index) => {
