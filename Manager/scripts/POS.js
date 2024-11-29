@@ -1,14 +1,14 @@
 function addToCart(product) {
     const tableBody = document.querySelector('#product-table tbody');
 
-    // Tìm hàng sản phẩm đã tồn tại dựa trên barcode
+    // Kiểm tra xem sản phẩm đã tồn tại trong bảng chưa
     const existingRow = Array.from(tableBody.rows).find(row => {
         const barcode = row.querySelector('input.product-quantity').dataset.barcode;
         return barcode === product.barcode;
     });
 
     if (existingRow) {
-        // Nếu sản phẩm đã tồn tại, chỉ cập nhật số lượng và tính lại giá
+        // Nếu sản phẩm đã tồn tại, tăng số lượng
         const quantityInput = existingRow.querySelector('input.product-quantity');
         quantityInput.value = parseInt(quantityInput.value) + 1;
 
@@ -16,15 +16,15 @@ function addToCart(product) {
         const unitPrice = parseFloat(product.price);
         priceCell.textContent = `${(unitPrice * parseInt(quantityInput.value)).toFixed(2)}¥`;
 
-        // Làm nổi bật hàng để báo người dùng biết đã cập nhật
         existingRow.classList.add('highlight');
         setTimeout(() => {
             existingRow.classList.remove('highlight');
         }, 1500);
     } else {
-        // Nếu sản phẩm chưa tồn tại, thêm hàng mới vào bảng
+        // Nếu sản phẩm chưa tồn tại, thêm hàng mới
         const row = document.createElement('tr');
         row.innerHTML = `
+            <td class="stt"></td> <!-- Cột STT -->
             <td>${product.pname}</td>
             <td class="num">
                 <input 
@@ -37,19 +37,38 @@ function addToCart(product) {
             </td>
             <td>${parseFloat(product.price).toFixed(2)}¥</td>
             <td class="price">${parseFloat(product.price).toFixed(2)}¥</td>
+            <td>
+                <button class="delete-btn" title="Xóa">X</button>
+            </td>
         `;
         tableBody.appendChild(row);
 
-        // Làm nổi bật hàng mới thêm
+        // Thêm sự kiện xóa hàng
+        row.querySelector('.delete-btn').addEventListener('click', () => {
+            row.remove(); // Xóa hàng
+            updateSerialNumbers(); // Cập nhật lại STT sau khi xóa
+            updateTotal(); // Cập nhật tổng tiền
+        });
+
         row.classList.add('highlight');
         setTimeout(() => {
             row.classList.remove('highlight');
         }, 1500);
     }
 
+    updateSerialNumbers(); // Cập nhật STT mỗi lần thêm
+    updateTotal(); // Cập nhật tổng tiền mỗi lần thêm
     // Cập nhật tổng tiền giỏ hàng
     // updateTotal();
 }
+function updateSerialNumbers() {
+    const tableRows = document.querySelectorAll('#product-table tbody tr');
+    tableRows.forEach((row, index) => {
+        const sttCell = row.querySelector('.stt');
+        sttCell.textContent = index + 1; // Gán STT bắt đầu từ 1
+    });
+}
+
 
 function updateProductPrice(inputElement, unitPrice) {
     const quantity = parseInt(inputElement.value); // Lấy số lượng từ ô input
@@ -64,6 +83,22 @@ function updateProductPrice(inputElement, unitPrice) {
     // Cập nhật tổng giỏ hàng nếu cần
     // updateTotal();
 }
+function updateTotal() {
+    const tableRows = document.querySelectorAll('#product-table tbody tr');
+    let total = 0;
+
+    tableRows.forEach(row => {
+        const quantityInput = row.querySelector('.product-quantity');
+        const priceCell = row.querySelector('.price');
+        const quantity = parseInt(quantityInput.value);
+        const price = parseFloat(priceCell.textContent.replace('¥', ''));
+
+        total += quantity * price;
+    });
+
+    document.querySelector('#total-price').textContent = `${total.toFixed(2)}¥`;
+}
+
 
 
 

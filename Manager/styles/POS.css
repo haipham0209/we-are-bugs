@@ -23,7 +23,30 @@
     }
 
 
+    .drawingBuffer {
+        position: absolute; /* Hoặc giữ nguyên nếu đã dùng */
+        top: 0;
+        left: 0;
+        z-index: 1; /* Đặt thấp hơn các input fields */
+        pointer-events: none; /* Vô hiệu hóa tương tác với chuột */
+    }
+    
+
     /* //////////////////////////table////////////////////////////////// */
+    button.delete-btn {
+        /* background-color: black; */
+        background: none;
+        color: black;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        font-size: 17px;
+        cursor: pointer;
+    }
+    
+
+    
 /* Màu nền xen kẽ các dòng */
 #product-table tbody tr:nth-child(even) {
     background-color: #f9f9f9; /* Màu xám nhạt */
@@ -195,7 +218,7 @@
     h2 {
         text-align: center;
         font-size: 24px;
-        margin-bottom: 20px;
+        margin: 0px;
     }
     .id-time {
         display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử */
@@ -204,6 +227,7 @@
         margin-bottom: 20px; /* Thêm khoảng cách dưới nếu cần */
     }
     #customer-id {
+
         font-size: 18px;
         text-align: left;
     }

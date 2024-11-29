@@ -150,10 +150,12 @@ function generateCustomerCode($conn, $storeid) {
         <table id="product-table">
     <thead>
         <tr>
+            <th>行</th>
             <th>商品名</th>
             <th class="num">数量</th>
             <th>単価</th>
             <th>小計</th>
+            <th> </th>
         </tr>
     </thead>
     <tbody>
