@@ -154,6 +154,9 @@ $product_result = $product_stmt->get_result();
                 const productCards = document.querySelectorAll('.product-card');
                 const selectedCategories = new Set(); // 選択されたカテゴリを管理
 
+                // "All"ボタンを取得
+                const allCategoriesButton = document.querySelector('.all-categories');
+
                 categoryButtons.forEach(button => {
                     button.addEventListener('click', function() {
                         const categoryId = this.getAttribute('data-category-id');
@@ -162,7 +165,7 @@ $product_result = $product_stmt->get_result();
                         if (!categoryId) {
                             selectedCategories.clear();
                             categoryButtons.forEach(btn => btn.classList.remove('active'));
-                            this.classList.add('active');
+                            this.classList.add('active'); // "All"ボタンをアクティブに
 
                             // 全商品を表示
                             productCards.forEach(card => card.style.display = 'block');
@@ -178,6 +181,13 @@ $product_result = $product_stmt->get_result();
                             // 新しく選択された場合は追加
                             selectedCategories.add(categoryId);
                             this.classList.add('active');
+                        }
+
+                        // "All"ボタンの状態を更新
+                        if (selectedCategories.size === 0) {
+                            allCategoriesButton.classList.add('active');
+                        } else {
+                            allCategoriesButton.classList.remove('active');
                         }
 
                         // 商品をフィルタリング
