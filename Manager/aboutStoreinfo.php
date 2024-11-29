@@ -52,6 +52,7 @@ $conn->close();
 
 <body>
 <main>
+    <h2>お店について</h2>
         <form id="storeForm" action="./php/aboutStoreinfo.php" method="POST">
             <!-- Container để chứa các cặp title-content -->
             <input type="hidden" id="delete_ids" name="delete_ids" value="">
@@ -64,7 +65,9 @@ $conn->close();
                         <label for="title<?= $index + 1 ?>">タイトル:</label>
                         <input type="text" id="title<?= $index + 1 ?>" name="title<?= $index + 1 ?>" value="<?= htmlspecialchars($description['title']) ?>" required>
                         <label for="content<?= $index + 1 ?>">内容:</label>
-                        <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content']) ?></textarea>
+                        <!-- <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content']) ?></textarea> -->
+                        <!-- <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars(nl2br($description['content']), ENT_QUOTES, 'UTF-8') ?></textarea> -->
+                        <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content'], ENT_QUOTES, 'UTF-8') ?></textarea>
                     </div>
                     <?php endforeach; ?>
                 <?php else: ?>
