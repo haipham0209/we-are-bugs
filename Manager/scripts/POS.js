@@ -142,6 +142,68 @@ function calculateChange() {
     document.getElementById('change-amount').textContent = `${Math.floor(change)}¥`;
 }
 
+////////////////////thanh toan //////////////////////
+function getCartData() {
+    const cartItems = [];
+    const rows = document.querySelectorAll('#product-table tbody tr');
+    
+    rows.forEach(row => {
+        const barcode = row.querySelector('.product-quantity').dataset.barcode;
+        const quantity = parseInt(row.querySelector('.product-quantity').value);
+        const price = parseFloat(row.querySelector('.price').textContent.replace('¥', ''));
+        
+        cartItems.push({
+            barcode: barcode,
+            quantity: quantity,
+            price: price
+        });
+    });
+    
+    return cartItems;
+}
+document.querySelector('.button-pay').addEventListener('click', function(event) {
+    event.preventDefault();  // Ngừng hành động mặc định của form
+
+    // Lấy dữ liệu giỏ hàng
+    const cartData = getCartData();
+    const totalPrice = parseFloat(document.getElementById('total-price').textContent.replace('¥', '')) || 0;
+    const receivedAmount = parseFloat(document.getElementById('received-amount').value) || 0;
+
+    // Kiểm tra số tiền nhận có đủ không
+    if (receivedAmount < totalPrice) {
+        alert("Số tiền nhận không đủ.");
+        return;
+    }
+
+    // Gửi dữ liệu qua AJAX
+    fetch('./php/process_payment.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            complete: true,
+            total_price: totalPrice,
+            received_amount: receivedAmount,
+            cart: cartData
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Thanh toán thành công! Mã đơn hàng: ${data.order_id}`);
+            // Làm mới giỏ hàng hoặc chuyển hướng trang
+        } else {
+            alert(`Lỗi: ${data.error}`);
+        }
+    })
+    .catch(err => {
+        console.error("Lỗi kết nối:", err);
+        alert("Không thể kết nối tới server.");
+    });
+});
+//////////////////end thanh toan///////////////////
+
 
 
 

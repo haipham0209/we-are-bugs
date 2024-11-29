@@ -197,11 +197,30 @@ function generateCustomerCode($conn, $storeid) {
             </div>
 
         </form>
-        <form method="POST">
-            <input type="hidden" name="total_price" id="hidden-total-price" value="0">
-            <input type="hidden" name="received_amount" id="hidden-received-amount" value="0">
-            <button type="submit" name="complete" class="button-pay">完了</button>
-        </form>
+
+        <!-- /////////////////////////////////form//////////////////////////// -->
+        <form method="POST" action="./php/process_payment.php">
+    <!-- Gửi tổng giá trị và số tiền đã nhận -->
+    <input type="hidden" name="total_price" id="hidden-total-price" value="0"> <!-- Tổng tiền -->
+    <input type="hidden" name="received_amount" id="hidden-received-amount" value="0"> <!-- Số tiền đã nhận -->
+
+    <!-- Gửi thông tin các sản phẩm trong giỏ hàng -->
+    <?php
+    if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+        foreach ($_SESSION['cart'] as $index => $product) {
+            ?>
+            <input type="hidden" name="cart[<?php echo $index; ?>][productid]" value="<?php echo $product['productid']; ?>">
+            <input type="hidden" name="cart[<?php echo $index; ?>][quantity]" value="<?php echo $product['quantity']; ?>">
+            <input type="hidden" name="cart[<?php echo $index; ?>][price]" value="<?php echo $product['price']; ?>">
+            <?php
+        }
+    }
+    ?>
+
+    <button type="submit" name="complete" class="button-pay">完了</button>
+</form>
+<!-- /////////////////////////////form///////////////////////////////////////// -->
+
     </div>
 </main>
 </body>
