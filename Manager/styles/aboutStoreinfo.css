@@ -1,4 +1,4 @@
-@media only screen and (max-width: 767px) {
+/* @media only screen and (max-width: 767px) { */
     /*.storeForm{
         width: 100px;
     }
@@ -82,4 +82,4 @@
     #addDescription {
         margin-bottom: 5px; /* Giảm khoảng cách giữa nút "Add More" và nút "Submit" */
     }
-}
+/* } */
