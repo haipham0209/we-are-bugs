@@ -104,8 +104,31 @@ function updateTotal() {
         total += quantity * price;
     });
 
-    document.querySelector('#total-price').textContent = `${total.toFixed(2)}¥`;
+    const discountInput = document.getElementById('waribiki-input');
+    const discount = parseFloat(discountInput.value) || 0;
+
+    // Áp dụng giảm giá
+    const discountedTotal = total - (total * (discount / 100));
+
+    // Làm tròn xuống để chỉ giữ phần nguyên
+    document.getElementById('total-price').textContent = `${Math.floor(discountedTotal)}¥`;
 }
+
+function calculateChange() {
+    const totalElement = document.getElementById('total-price');
+    const total = parseFloat(totalElement.textContent.replace('¥', '')) || 0;
+
+    const receivedAmountInput = document.getElementById('received-amount');
+    const receivedAmount = parseFloat(receivedAmountInput.value) || 0;
+
+    const change = receivedAmount - total;
+
+    // Hiển thị tiền thừa là số nguyên
+    document.getElementById('change-amount').textContent = `${Math.floor(change)}¥`;
+}
+
+
+
 
 
 
