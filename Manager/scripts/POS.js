@@ -1,3 +1,4 @@
+
 function addToCart(product) {
     const tableBody = document.querySelector('#product-table tbody');
 
@@ -41,26 +42,38 @@ function addToCart(product) {
                 <button class="delete-btn" title="Xóa">X</button>
             </td>
         `;
-        tableBody.appendChild(row);
+
+        // Thêm dòng mới vào đầu bảng (đẩy các dòng trống xuống)
+        tableBody.insertBefore(row, tableBody.firstChild);
 
         // Thêm sự kiện xóa hàng
         row.querySelector('.delete-btn').addEventListener('click', () => {
-            row.remove(); // Xóa hàng
-            updateSerialNumbers(); // Cập nhật lại STT sau khi xóa
-            updateTotal(); // Cập nhật tổng tiền
+            row.classList.add('fade-out'); // Thêm lớp hiệu ứng làm mờ dần
+
+            // Chờ hiệu ứng hoàn tất (300ms) rồi xóa hàng
+            setTimeout(() => {
+                row.remove(); // Xóa hàng
+                updateSerialNumbers(); // Cập nhật lại STT
+                updateTotal(); // Cập nhật tổng tiền
+                calculateChange();
+            }, 300);
         });
 
+        // Thêm hiệu ứng làm nổi bật dòng mới
         row.classList.add('highlight');
         setTimeout(() => {
             row.classList.remove('highlight');
         }, 1500);
     }
 
-    updateSerialNumbers(); // Cập nhật STT mỗi lần thêm
-    updateTotal(); // Cập nhật tổng tiền mỗi lần thêm
-    // Cập nhật tổng tiền giỏ hàng
-    // updateTotal();
+    // Cập nhật lại số thứ tự (STT)
+    updateSerialNumbers();
+
+    // Cập nhật tổng tiền mỗi lần thêm sản phẩm
+    updateTotal();
+    calculateChange();
 }
+
 function updateSerialNumbers() {
     const tableRows = document.querySelectorAll('#product-table tbody tr');
     tableRows.forEach((row, index) => {
@@ -79,6 +92,7 @@ function updateProductPrice(input, unitPrice) {
         row.remove(); // Xóa hàng khỏi bảng
         updateSerialNumbers(); // Cập nhật lại số thứ tự (STT)
         updateTotal(); // Cập nhật lại tổng tiền
+        calculateChange();
         return; // Kết thúc hàm để không tiếp tục tính toán
     }
 
@@ -89,6 +103,7 @@ function updateProductPrice(input, unitPrice) {
 
     // Cập nhật tổng tiền
     updateTotal();
+    calculateChange();
 }
 //tổng tiền
 function updateTotal() {
@@ -100,8 +115,8 @@ function updateTotal() {
         const priceCell = row.querySelector('.price');
         const quantity = parseInt(quantityInput.value);
         const price = parseFloat(priceCell.textContent.replace('¥', ''));
-
-        total += quantity * price;
+//price là giá x số lượng
+        total +=  price;
     });
 
     const discountInput = document.getElementById('waribiki-input');
@@ -126,6 +141,68 @@ function calculateChange() {
     // Hiển thị tiền thừa là số nguyên
     document.getElementById('change-amount').textContent = `${Math.floor(change)}¥`;
 }
+
+////////////////////thanh toan //////////////////////
+function getCartData() {
+    const cartItems = [];
+    const rows = document.querySelectorAll('#product-table tbody tr');
+    
+    rows.forEach(row => {
+        const barcode = row.querySelector('.product-quantity').dataset.barcode;
+        const quantity = parseInt(row.querySelector('.product-quantity').value);
+        const price = parseFloat(row.querySelector('.price').textContent.replace('¥', ''));
+        
+        cartItems.push({
+            barcode: barcode,
+            quantity: quantity,
+            price: price
+        });
+    });
+    
+    return cartItems;
+}
+document.querySelector('.button-pay').addEventListener('click', function(event) {
+    event.preventDefault();  // Ngừng hành động mặc định của form
+
+    // Lấy dữ liệu giỏ hàng
+    const cartData = getCartData();
+    const totalPrice = parseFloat(document.getElementById('total-price').textContent.replace('¥', '')) || 0;
+    const receivedAmount = parseFloat(document.getElementById('received-amount').value) || 0;
+
+    // Kiểm tra số tiền nhận có đủ không
+    if (receivedAmount < totalPrice) {
+        alert("Số tiền nhận không đủ.");
+        return;
+    }
+
+    // Gửi dữ liệu qua AJAX
+    fetch('./php/process_payment.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            complete: true,
+            total_price: totalPrice,
+            received_amount: receivedAmount,
+            cart: cartData
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Thanh toán thành công! Mã đơn hàng: ${data.order_id}`);
+            // Làm mới giỏ hàng hoặc chuyển hướng trang
+        } else {
+            alert(`Lỗi: ${data.error}`);
+        }
+    })
+    .catch(err => {
+        console.error("Lỗi kết nối:", err);
+        alert("Không thể kết nối tới server.");
+    });
+});
+//////////////////end thanh toan///////////////////
 
 
 

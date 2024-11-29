@@ -143,21 +143,38 @@ function generateCustomerCode($conn, $storeid) {
                 <p id="time"></p>
             </div>
         </div>
-        <table id="product-table">
-    <thead>
-        <tr>
-            <th>行</th>
-            <th>商品名</th>
-            <th class="num">数量</th>
-            <th>単価</th>
-            <th>小計</th>
-            <th> </th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Nội dung giỏ hàng sẽ được thêm vào đây bằng JavaScript -->
-    </tbody>
-</table>
+        <div class="table-wrapper">
+            <table id="product-table">
+                <thead>
+                    <tr>
+                        <th>行</th>
+                        <th>商品名</th>
+                        <th class="num">数量</th>
+                        <th>単価</th>
+                        <th>小計</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Thêm trống vào đây -->
+                <!-- <tr class="e">
+                    <td class="sttt"></td> 
+                    <td></td>
+                    <td class="num1">
+                        <input type="number" class="product-quantity" value="" min="1" data-barcode="" onchange="">
+                    </td>
+                    <td></td>
+                    <td class="price2"></td>
+                    <td>
+                        <button class="delete-btn" title=""></button>
+                    </td>
+                </tr> -->
+                
+
+                </tbody>
+            </table>
+        </div>
+
 
         <form id="payment-form">
             <div class="pay">
@@ -169,7 +186,7 @@ function generateCustomerCode($conn, $storeid) {
                 </p>
             </div>
             <div class="total">
-                <p>合計: <span id="total-price">0¥</span></p>
+                <p>合計: <span id="total-price">￥</span></p>
                 <p>(税込10%)</p>
                 <p>割引き: 
                     <input type="number" id="waribiki-input" value="0" min="0" max="100" onchange="updateTotal()"> %
@@ -180,11 +197,30 @@ function generateCustomerCode($conn, $storeid) {
             </div>
 
         </form>
-        <form method="POST">
-            <input type="hidden" name="total_price" id="hidden-total-price" value="0">
-            <input type="hidden" name="received_amount" id="hidden-received-amount" value="0">
-            <button type="submit" name="complete" class="button-pay">完了</button>
-        </form>
+
+        <!-- /////////////////////////////////form//////////////////////////// -->
+        <form method="POST" action="./php/process_payment.php">
+    <!-- Gửi tổng giá trị và số tiền đã nhận -->
+    <input type="hidden" name="total_price" id="hidden-total-price" value="0"> <!-- Tổng tiền -->
+    <input type="hidden" name="received_amount" id="hidden-received-amount" value="0"> <!-- Số tiền đã nhận -->
+
+    <!-- Gửi thông tin các sản phẩm trong giỏ hàng -->
+    <?php
+    if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+        foreach ($_SESSION['cart'] as $index => $product) {
+            ?>
+            <input type="hidden" name="cart[<?php echo $index; ?>][productid]" value="<?php echo $product['productid']; ?>">
+            <input type="hidden" name="cart[<?php echo $index; ?>][quantity]" value="<?php echo $product['quantity']; ?>">
+            <input type="hidden" name="cart[<?php echo $index; ?>][price]" value="<?php echo $product['price']; ?>">
+            <?php
+        }
+    }
+    ?>
+
+    <button type="submit" name="complete" class="button-pay">完了</button>
+</form>
+<!-- /////////////////////////////form///////////////////////////////////////// -->
+
     </div>
 </main>
 </body>

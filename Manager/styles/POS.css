@@ -45,6 +45,42 @@
         cursor: pointer;
     }
     
+    .table-wrapper {
+        max-height: 320px; /* Chiều cao tối đa, tương đương khoảng 10 dòng */
+        overflow-y: auto; /* Bật thanh cuộn dọc nếu vượt quá chiều cao */
+        /* border: 1px solid #ccc; Thêm viền để dễ nhìn */
+        /* margin-top: 10px; */
+        width: 100%;
+    }
+    /* Hiệu ứng làm mờ dần và thu nhỏ hàng trước khi xóa */
+.fade-out {
+    opacity: 0; /* Làm mờ dần */
+    transform: scaleY(0); /* Thu nhỏ dần chiều cao */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Hiệu ứng kéo dài 0.3s */
+}
+
+    
+    /* Đảm bảo bảng luôn chiếm hết chiều rộng */
+    #product-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    #product-table th,
+    #product-table td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    
+    /* Làm nổi bật header */
+    #product-table thead {
+        background-color: #f5f5f5;
+        position: sticky; /* Cố định tiêu đề khi cuộn */
+        top: 0;
+        z-index: 1;
+    }
+    
 
     
 /* Màu nền xen kẽ các dòng */
@@ -79,6 +115,19 @@
 }
 
 #product-table tbody td.num input {
+    max-width: 40px; /* Đặt kích thước ô nhập liệu */
+    text-align: center;
+}
+
+/* Đặt độ rộng nhỏ hơn cho cột "数量" */
+#product-table th.num1, 
+#product-table td.num1 {
+    width: 50px; /* Chiều rộng cột số lượng */
+    text-align: center; /* Căn giữa nội dung */
+    display: none;
+}
+
+#product-table tbody td.num1 input {
     max-width: 40px; /* Đặt kích thước ô nhập liệu */
     text-align: center;
 }
@@ -221,10 +270,11 @@
         margin: 0px;
     }
     .id-time {
+        height: 20px;
         display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử */
         justify-content: space-between; /* Đẩy mã khách hàng sang trái và ngày giờ sang phải */
         align-items: center; /* Căn giữa các phần tử theo chiều dọc */
-        margin-bottom: 20px; /* Thêm khoảng cách dưới nếu cần */
+        /* margin-bottom: 20px; Thêm khoảng cách dưới nếu cần */
     }
     #customer-id {
 
@@ -277,7 +327,7 @@
     }
 
     #payment-form p {
-        font-size: 13px;
+        /* font-size: 13px; */
         margin: 5px 0;
     }
     
