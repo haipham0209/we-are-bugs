@@ -76,7 +76,7 @@ Quagga.onDetected((data) => {
         // Sau 3 giây, cho phép nhận mã quét mới
         setTimeout(() => {
             isProcessing = false; // Reset trạng thái để nhận mã mới
-        }, 0);
+        }, 1000);
     });
 });
 
