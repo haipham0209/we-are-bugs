@@ -41,8 +41,16 @@ function startScanner() {
 
     // Khi phát hiện mã, tắt camera và điền vào ô barcode
 // Khi phát hiện mã, phát sự kiện 'barcodeDetected' với mã vạch
+let isProcessing = false; // Biến kiểm soát trạng thái quét mã
+
+// Khi phát hiện mã, kiểm tra và xử lý
 Quagga.onDetected((data) => {
+    if (isProcessing) return; // Nếu đang xử lý, bỏ qua mã quét mới
+
+    isProcessing = true; // Đặt trạng thái đang xử lý
     const code = data.codeResult.code;
+
+    console.log(`Barcode detected: ${code}`); // Log mã để kiểm tra
 
     // Gửi mã vạch đến server
     fetch('./php/getProductByBarcode.php', {
@@ -55,21 +63,23 @@ Quagga.onDetected((data) => {
     .then((response) => response.json())
     .then((product) => {
         if (product && product.productid) {
-            // Chuyển hướng đến trang chỉnh sửa sản phẩm
-            // window.location.href = `./productEdit.php?id=${product.productid}`;
+            // Thêm sản phẩm vào giỏ hàng
             addToCart(product);
         } else {
             alert('Product not found!');
-            // console.log(product);
-            // console.log(product.productid);
         }
     })
     .catch((error) => {
         console.error('Error:', error);
+    })
+    .finally(() => {
+        // Sau 3 giây, cho phép nhận mã quét mới
+        setTimeout(() => {
+            isProcessing = false; // Reset trạng thái để nhận mã mới
+        }, 0);
     });
-
-    stopScanner();
 });
+
 
 
 }

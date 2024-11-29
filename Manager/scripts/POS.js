@@ -48,7 +48,7 @@ function addToCart(product) {
     }
 
     // Cập nhật tổng tiền giỏ hàng
-    updateTotal();
+    // updateTotal();
 }
 
 function updateProductPrice(inputElement, unitPrice) {
