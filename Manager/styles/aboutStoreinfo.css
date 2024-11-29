@@ -11,6 +11,7 @@ textarea {
     min-height: 40px;
     box-sizing: border-box;
 }*/
+
 #storeForm {
     width: 600px; /* Thay đổi chiều rộng form */
     margin: 0 auto; /* Căn giữa form */
@@ -55,29 +56,31 @@ label {
 
 input[type="text"],
 textarea {
-    width: 100%; /* Chiều rộng 100% */
-    padding: 10px; /* Khoảng cách bên trong */
-    box-sizing: border-box; /* Tính toán chiều rộng bao gồm padding */
-    border: 1px solid #ccc; /* Đường viền cho input và textarea */
-    border-radius: 4px; /* Bo góc */
+    width: 100%;
+    padding: 10px; 
+    box-sizing: border-box; 
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+    white-space: pre-wrap; /* Xử lý xuống dòng */
+    word-wrap: break-word; /* Tự động ngắt dòng nếu vượt quá chiều rộng */
 }
 
 textarea {
-    min-height: 80px; /* Chiều cao tối thiểu cho textarea */
-    resize: vertical; /* Cho phép thay đổi kích thước theo chiều dọc */
+    min-height: 80px;
+    resize: vertical; 
 }
 
 button {
-    background-color: #4CAF50; /* Màu nền cho nút */
-    color: white; /* Màu chữ */
-    padding: 10px 15px; /* Khoảng cách bên trong nút */
-    border: none; /* Bỏ đường viền */
-    border-radius: 4px; /* Bo góc */
-    cursor: pointer; /* Con trỏ chuột khi di chuột qua nút */
+    background-color: #000000; 
+    color: white; 
+    padding: 10px 15px; 
+    border: none; 
+    border-radius: 4px;
+    cursor: pointer; 
 }
 
 button:hover {
-    background-color: #45a049; /* Màu nền khi hover */
+    background-color: #45a049; 
 }
 #addDescription {
     margin-bottom: 5px; /* Giảm khoảng cách giữa nút "Add More" và nút "Submit" */
