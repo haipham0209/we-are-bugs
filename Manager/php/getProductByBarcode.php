@@ -12,7 +12,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 $barcode = $data['barcode'];
 
 // Truy vấn sản phẩm dựa trên mã vạch
-$sql = "SELECT productid FROM product WHERE barcode = ?";
+$sql = "SELECT * FROM product WHERE barcode = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('s', $barcode);
 $stmt->execute();

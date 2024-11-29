@@ -1,3 +1,153 @@
+function addToCart(product) {
+    const tableBody = document.querySelector('#product-table tbody');
+
+    // Kiểm tra xem sản phẩm đã tồn tại trong bảng chưa
+    const existingRow = Array.from(tableBody.rows).find(row => {
+        const barcode = row.querySelector('input.product-quantity').dataset.barcode;
+        return barcode === product.barcode;
+    });
+
+    if (existingRow) {
+        // Nếu sản phẩm đã tồn tại, tăng số lượng
+        const quantityInput = existingRow.querySelector('input.product-quantity');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+
+        const priceCell = existingRow.querySelector('.price');
+        const unitPrice = parseFloat(product.price);
+        priceCell.textContent = `${(unitPrice * parseInt(quantityInput.value)).toFixed(2)}¥`;
+
+        existingRow.classList.add('highlight');
+        setTimeout(() => {
+            existingRow.classList.remove('highlight');
+        }, 1500);
+    } else {
+        // Nếu sản phẩm chưa tồn tại, thêm hàng mới
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td class="stt"></td> <!-- Cột STT -->
+            <td>${product.pname}</td>
+            <td class="num">
+                <input 
+                    type="number" 
+                    class="product-quantity" 
+                    value="1" 
+                    min="1" 
+                    data-barcode="${product.barcode}" 
+                    onchange="updateProductPrice(this, ${product.price})">
+            </td>
+            <td>${parseFloat(product.price).toFixed(2)}¥</td>
+            <td class="price">${parseFloat(product.price).toFixed(2)}¥</td>
+            <td>
+                <button class="delete-btn" title="Xóa">X</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+
+        // Thêm sự kiện xóa hàng
+        row.querySelector('.delete-btn').addEventListener('click', () => {
+            row.remove(); // Xóa hàng
+            updateSerialNumbers(); // Cập nhật lại STT sau khi xóa
+            updateTotal(); // Cập nhật tổng tiền
+        });
+
+        row.classList.add('highlight');
+        setTimeout(() => {
+            row.classList.remove('highlight');
+        }, 1500);
+    }
+
+    updateSerialNumbers(); // Cập nhật STT mỗi lần thêm
+    updateTotal(); // Cập nhật tổng tiền mỗi lần thêm
+    // Cập nhật tổng tiền giỏ hàng
+    // updateTotal();
+}
+function updateSerialNumbers() {
+    const tableRows = document.querySelectorAll('#product-table tbody tr');
+    tableRows.forEach((row, index) => {
+        const sttCell = row.querySelector('.stt');
+        sttCell.textContent = index + 1; // Gán STT bắt đầu từ 1
+    });
+}
+
+//tổng tiền từng món hàng
+function updateProductPrice(input, unitPrice) {
+    const quantity = parseInt(input.value);
+
+    // Kiểm tra nếu số lượng <= 0, tự động xóa hàng
+    if (isNaN(quantity) || quantity <= 0) {
+        const row = input.closest('tr'); // Lấy hàng chứa ô nhập liệu
+        row.remove(); // Xóa hàng khỏi bảng
+        updateSerialNumbers(); // Cập nhật lại số thứ tự (STT)
+        updateTotal(); // Cập nhật lại tổng tiền
+        return; // Kết thúc hàm để không tiếp tục tính toán
+    }
+
+    // Tính toán lại giá thành tiền khi số lượng hợp lệ
+    const row = input.closest('tr'); // Lấy hàng chứa ô nhập liệu
+    const priceCell = row.querySelector('.price'); // Tìm ô giá của hàng
+    priceCell.textContent = `${(unitPrice * quantity).toFixed(2)}¥`; // Cập nhật giá tiền
+
+    // Cập nhật tổng tiền
+    updateTotal();
+}
+//tổng tiền
+function updateTotal() {
+    const tableRows = document.querySelectorAll('#product-table tbody tr');
+    let total = 0;
+
+    tableRows.forEach(row => {
+        const quantityInput = row.querySelector('.product-quantity');
+        const priceCell = row.querySelector('.price');
+        const quantity = parseInt(quantityInput.value);
+        const price = parseFloat(priceCell.textContent.replace('¥', ''));
+
+        total += quantity * price;
+    });
+
+    const discountInput = document.getElementById('waribiki-input');
+    const discount = parseFloat(discountInput.value) || 0;
+
+    // Áp dụng giảm giá
+    const discountedTotal = total - (total * (discount / 100));
+
+    // Làm tròn xuống để chỉ giữ phần nguyên
+    document.getElementById('total-price').textContent = `${Math.floor(discountedTotal)}¥`;
+}
+
+function calculateChange() {
+    const totalElement = document.getElementById('total-price');
+    const total = parseFloat(totalElement.textContent.replace('¥', '')) || 0;
+
+    const receivedAmountInput = document.getElementById('received-amount');
+    const receivedAmount = parseFloat(receivedAmountInput.value) || 0;
+
+    const change = receivedAmount - total;
+
+    // Hiển thị tiền thừa là số nguyên
+    document.getElementById('change-amount').textContent = `${Math.floor(change)}¥`;
+}
+
+
+
+
+
+
+
+// let totalAmount = 1;
+// function updateTotal() {
+//     const discountInput = document.getElementById('waribiki-input');
+//     const totalPriceElement = document.getElementById('total-price');
+    
+//     let discountPercentage = parseFloat(discountInput.value) || 0; // Lấy giá trị giảm giá
+//     if (discountPercentage > 100 || discountPercentage < 0) {
+//         alert("割引きは0から100の間で指定してください");
+//         return;
+//     }
+    
+//     // Tính tổng tiền sau khi giảm giá
+//     let discountedTotal = totalAmount * (1 - discountPercentage / 100);
+//     totalPriceElement.textContent = `${discountedTotal.toFixed(2)}¥`; // Hiển thị tổng tiền
+// }
 // document.addEventListener("DOMContentLoaded", () => {
 //     // Cập nhật ngày và giờ theo thời gian thực
 //     const updateDateTime = () => {
