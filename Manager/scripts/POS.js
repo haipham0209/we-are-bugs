@@ -70,19 +70,27 @@ function updateSerialNumbers() {
 }
 
 
-function updateProductPrice(inputElement, unitPrice) {
-    const quantity = parseInt(inputElement.value); // Lấy số lượng từ ô input
-    const priceCell = inputElement.closest('tr').querySelector('.price'); // Lấy ô chứa giá tiền
+function updateProductPrice(input, unitPrice) {
+    const quantity = parseInt(input.value);
 
-    // Tính tổng tiền cho sản phẩm
-    const totalPrice = (quantity * unitPrice).toFixed(2);
+    // Kiểm tra nếu số lượng <= 0, tự động xóa hàng
+    if (isNaN(quantity) || quantity <= 0) {
+        const row = input.closest('tr'); // Lấy hàng chứa ô nhập liệu
+        row.remove(); // Xóa hàng khỏi bảng
+        updateSerialNumbers(); // Cập nhật lại số thứ tự (STT)
+        updateTotal(); // Cập nhật lại tổng tiền
+        return; // Kết thúc hàm để không tiếp tục tính toán
+    }
 
-    // Cập nhật giá tiền vào ô
-    priceCell.textContent = `${totalPrice}¥`;
+    // Tính toán lại giá thành tiền khi số lượng hợp lệ
+    const row = input.closest('tr'); // Lấy hàng chứa ô nhập liệu
+    const priceCell = row.querySelector('.price'); // Tìm ô giá của hàng
+    priceCell.textContent = `${(unitPrice * quantity).toFixed(2)}¥`; // Cập nhật giá tiền
 
-    // Cập nhật tổng giỏ hàng nếu cần
-    // updateTotal();
+    // Cập nhật tổng tiền
+    updateTotal();
 }
+
 function updateTotal() {
     const tableRows = document.querySelectorAll('#product-table tbody tr');
     let total = 0;
