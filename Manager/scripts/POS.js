@@ -69,7 +69,7 @@ function updateSerialNumbers() {
     });
 }
 
-
+//tổng tiền từng món hàng
 function updateProductPrice(input, unitPrice) {
     const quantity = parseInt(input.value);
 
@@ -90,7 +90,7 @@ function updateProductPrice(input, unitPrice) {
     // Cập nhật tổng tiền
     updateTotal();
 }
-
+//tổng tiền
 function updateTotal() {
     const tableRows = document.querySelectorAll('#product-table tbody tr');
     let total = 0;

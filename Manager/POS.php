@@ -107,15 +107,11 @@ function generateCustomerCode($conn, $storeid) {
 <header>
     <div class="main-navbar">
         <div class="search-scan">
-            <form method="POST">
-                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">
-            </form>
+                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">            
             <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
             <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
         </div>
         <div id="suggestionList"></div>
-        
-
         <script>
                 let isCameraRunning = false; // カメラの状態を管理
 
@@ -128,7 +124,7 @@ function generateCustomerCode($conn, $storeid) {
                         isCameraRunning = true;
                     }
                 }
-            </script>
+        </script>
         <button class="main-home">
             <h1 class="logo">WRB</h1>
         </button>
