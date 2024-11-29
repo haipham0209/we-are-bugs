@@ -53,6 +53,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    function updateProductPrice(inputElement, unitPrice) {
+        const quantity = parseInt(inputElement.value); // Lấy số lượng từ ô input
+        const priceCell = inputElement.closest('tr').querySelector('.price'); // Lấy ô chứa giá tiền
+    
+        // Tính tổng tiền cho sản phẩm
+        const totalPrice = (quantity * unitPrice).toFixed(2);
+    
+        // Cập nhật giá tiền vào ô
+        priceCell.textContent = `${totalPrice}¥`;
+    
+        // Cập nhật tổng giỏ hàng nếu cần
+        updateTotal();
+    }
+    
+
     function addToCart(product) {
         const tableBody = document.querySelector('#product-table tbody');
         const existingRow = Array.from(tableBody.rows).find(row => {
@@ -114,4 +129,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.querySelector('#total-price').textContent = `${total.toFixed(2)}￥`;
     }
+    updateProductPrice();
 });
