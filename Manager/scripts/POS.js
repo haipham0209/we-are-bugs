@@ -1,3 +1,87 @@
+function addToCart(product) {
+    const tableBody = document.querySelector('#product-table tbody');
+
+    // Tìm hàng sản phẩm đã tồn tại dựa trên barcode
+    const existingRow = Array.from(tableBody.rows).find(row => {
+        const barcode = row.querySelector('input.product-quantity').dataset.barcode;
+        return barcode === product.barcode;
+    });
+
+    if (existingRow) {
+        // Nếu sản phẩm đã tồn tại, chỉ cập nhật số lượng và tính lại giá
+        const quantityInput = existingRow.querySelector('input.product-quantity');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+
+        const priceCell = existingRow.querySelector('.price');
+        const unitPrice = parseFloat(product.price);
+        priceCell.textContent = `${(unitPrice * parseInt(quantityInput.value)).toFixed(2)}¥`;
+
+        // Làm nổi bật hàng để báo người dùng biết đã cập nhật
+        existingRow.classList.add('highlight');
+        setTimeout(() => {
+            existingRow.classList.remove('highlight');
+        }, 1500);
+    } else {
+        // Nếu sản phẩm chưa tồn tại, thêm hàng mới vào bảng
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${product.pname}</td>
+            <td class="num">
+                <input 
+                    type="number" 
+                    class="product-quantity" 
+                    value="1" 
+                    min="1" 
+                    data-barcode="${product.barcode}" 
+                    onchange="updateProductPrice(this, ${product.price})">
+            </td>
+            <td>${parseFloat(product.price).toFixed(2)}¥</td>
+            <td class="price">${parseFloat(product.price).toFixed(2)}¥</td>
+        `;
+        tableBody.appendChild(row);
+
+        // Làm nổi bật hàng mới thêm
+        row.classList.add('highlight');
+        setTimeout(() => {
+            row.classList.remove('highlight');
+        }, 1500);
+    }
+
+    // Cập nhật tổng tiền giỏ hàng
+    updateTotal();
+}
+
+function updateProductPrice(inputElement, unitPrice) {
+    const quantity = parseInt(inputElement.value); // Lấy số lượng từ ô input
+    const priceCell = inputElement.closest('tr').querySelector('.price'); // Lấy ô chứa giá tiền
+
+    // Tính tổng tiền cho sản phẩm
+    const totalPrice = (quantity * unitPrice).toFixed(2);
+
+    // Cập nhật giá tiền vào ô
+    priceCell.textContent = `${totalPrice}¥`;
+
+    // Cập nhật tổng giỏ hàng nếu cần
+    // updateTotal();
+}
+
+
+
+// let totalAmount = 1;
+// function updateTotal() {
+//     const discountInput = document.getElementById('waribiki-input');
+//     const totalPriceElement = document.getElementById('total-price');
+    
+//     let discountPercentage = parseFloat(discountInput.value) || 0; // Lấy giá trị giảm giá
+//     if (discountPercentage > 100 || discountPercentage < 0) {
+//         alert("割引きは0から100の間で指定してください");
+//         return;
+//     }
+    
+//     // Tính tổng tiền sau khi giảm giá
+//     let discountedTotal = totalAmount * (1 - discountPercentage / 100);
+//     totalPriceElement.textContent = `${discountedTotal.toFixed(2)}¥`; // Hiển thị tổng tiền
+// }
 // document.addEventListener("DOMContentLoaded", () => {
 //     // Cập nhật ngày và giờ theo thời gian thực
 //     const updateDateTime = () => {
