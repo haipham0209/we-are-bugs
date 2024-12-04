@@ -60,19 +60,13 @@ $conn->close();
                 <?php if (!empty($_SESSION['descriptions'])): ?>
                     <?php foreach ($_SESSION['descriptions'] as $index => $description): ?>
                         <div class="descriptionGroup">
-                        <img src="../images/delete.png" alt="Delete" class="delete-icon" data-id="<?= $description['id'] ?>" onclick="removeDescription(this)">
-                        <input type="hidden" name="id<?= $index + 1 ?>" value="<?= $description['id'] ?>"> <!-- Lưu ID để sửa -->
-                        <label for="title<?= $index + 1 ?>">タイトル:</label>
-                        <input type="text" id="title<?= $index + 1 ?>" name="title<?= $index + 1 ?>" value="<?= htmlspecialchars($description['title']) ?>" required>
-                        <label for="content<?= $index + 1 ?>">内容:</label>
-                        <!-- <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content']) ?></textarea> -->
-                        <!-- <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars(nl2br($description['content']), ENT_QUOTES, 'UTF-8') ?></textarea> -->
-                        <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content'], ENT_QUOTES, 'UTF-8') ?></textarea>
-                        <!-- <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required>
-                            <?= htmlspecialchars(str_replace("\n", "\n", $description['content'])) ?>
-                        </textarea> -->
-
-                    </div>
+                            <img src="../images/delete.png" alt="Delete" class="delete-icon" data-id="<?= $description['id'] ?>" onclick="removeDescription(this)">
+                            <input type="hidden" name="id<?= $index + 1 ?>" value="<?= $description['id'] ?>"> 
+                            <label for="title<?= $index + 1 ?>">タイトル:</label>
+                            <input type="text" id="title<?= $index + 1 ?>" name="title<?= $index + 1 ?>" value="<?= htmlspecialchars($description['title']) ?>" required>
+                            <label for="content<?= $index + 1 ?>">内容:</label>
+                            <textarea id="content<?= $index + 1 ?>" name="content<?= $index + 1 ?>" required><?= htmlspecialchars($description['content'], ENT_QUOTES, 'UTF-8') ?></textarea>
+                        </div>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <!-- Hiển thị trường trống nếu không có dữ liệu -->
