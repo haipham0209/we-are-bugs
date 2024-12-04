@@ -435,6 +435,9 @@
         align-items: center;
         color: #fff;
         padding: 15px 30px;
+        border-radius: 8px;
+        background-color: #e3f3e1;
+        margin: 10px;
     }
 
     .logo {
@@ -447,6 +450,9 @@
         display: flex;
         align-items: center;
         margin: 0 auto;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #fff;
     }
 
     .search-bar {

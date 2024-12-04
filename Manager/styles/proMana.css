@@ -92,8 +92,10 @@
     }
 
     .logo img {
-        width: 120px !important; /* サイズを強制 */
-        height: 40px !important; /* 高さを比率に応じて調整 */
+        width: 120px !important;
+        /* サイズを強制 */
+        height: 40px !important;
+        /* 高さを比率に応じて調整 */
         object-fit: contain;
     }
 
@@ -416,6 +418,9 @@
 
     main {
         margin-bottom: 100px;
+        position: relative;
+        overflow: visible;
+        text-align: center;
     }
 
     /* Định dạng cho thanh điều hướng */
@@ -425,6 +430,9 @@
         align-items: center;
         color: #fff;
         padding: 15px 30px;
+        border-radius: 8px;
+        background-color: #e3f3e1;
+        margin: 10px;
     }
 
     .logo {
@@ -437,6 +445,9 @@
         display: flex;
         align-items: center;
         margin: 0 auto;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #fff;
     }
 
     .search-bar {
