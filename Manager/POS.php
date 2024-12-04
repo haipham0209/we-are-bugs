@@ -101,6 +101,7 @@ function generateCustomerCode($conn, $storeid) {
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     <script src="./scripts/POS.js"></script>
     <script src="./scripts/search.js"></script>
+
     <title>POS</title>
 </head>
 <body>
@@ -176,7 +177,7 @@ function generateCustomerCode($conn, $storeid) {
         </div>
 
 
-        <form id="payment-form">
+        <div id="payment-form">
             <div class="pay">
                 <p>支払方法:
                     <select id="payment-method">
@@ -196,32 +197,29 @@ function generateCustomerCode($conn, $storeid) {
                 <p>お釣り: <span id="change-amount">0¥</span></p>
             </div>
 
-        </form>
-
+        </div>
+            <!-- //////////////////////data 取得////////////////////////////// -->
+<script src="./scripts/payment_cash.js"></script>
+<!-- //////////////////////data 取得////////////////////////////// -->
         <!-- /////////////////////////////////form//////////////////////////// -->
-        <form method="POST" action="./php/process_payment.php">
-    <!-- Gửi tổng giá trị và số tiền đã nhận -->
-    <input type="hidden" name="total_price" id="hidden-total-price" value="0"> <!-- Tổng tiền -->
-    <input type="hidden" name="received_amount" id="hidden-received-amount" value="0"> <!-- Số tiền đã nhận -->
+    <form method="POST" action="./php/process_payment.php">
+        <!-- Gửi tổng giá trị và số tiền đã nhận -->
+        <input type="hidden" name="total_price" id="hidden-total-price" value="0"> <!-- Tổng tiền -->
+        <input type="hidden" name="received_amount" id="hidden-received-amount" value="0"> <!-- Số tiền đã nhận -->
 
-    <!-- Gửi thông tin các sản phẩm trong giỏ hàng -->
-    <?php
-    if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-        foreach ($_SESSION['cart'] as $index => $product) {
-            ?>
-            <input type="hidden" name="cart[<?php echo $index; ?>][productid]" value="<?php echo $product['productid']; ?>">
-            <input type="hidden" name="cart[<?php echo $index; ?>][quantity]" value="<?php echo $product['quantity']; ?>">
-            <input type="hidden" name="cart[<?php echo $index; ?>][price]" value="<?php echo $product['price']; ?>">
-            <?php
-        }
-    }
-    ?>
+        <!-- Gửi thông tin các sản phẩm trong giỏ hàng -->
 
-    <button type="submit" name="complete" class="button-pay">完了</button>
-</form>
+        <!-- <button type="submit" name="complete" class="button-pay">完了</button> -->
+        <button class="button-pay" type="button" onclick="sendDataToServer()">完了</button>
+
+    </form>
 <!-- /////////////////////////////form///////////////////////////////////////// -->
 
     </div>
+    <!-- <script>const data = prepareFormData(); console.log("2222222222222222222222");console.log(data);</script> -->
 </main>
 </body>
 </html>
+
+
+

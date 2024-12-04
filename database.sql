@@ -86,6 +86,8 @@ CREATE TABLE product (
     FOREIGN KEY (storeid) REFERENCES store(storeid),
     FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, storeid)
 );
+-- 1 cửa hàng ko trùng barcode nhưng cửa hàng khác nhau thì ok
+ALTER TABLE product ADD CONSTRAINT unique_barcode_per_store UNIQUE (storeid, barcode);
 
 CREATE TABLE discounts (
     discount_id INT AUTO_INCREMENT PRIMARY KEY,
