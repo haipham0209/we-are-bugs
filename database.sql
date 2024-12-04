@@ -76,19 +76,27 @@ CREATE TABLE product (
     pname VARCHAR(255) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     costPrice DECIMAL(10,2) NOT NULL,
+    discounted_price DECIMAL(10, 2),
     description TEXT,
     stock_quantity INT NOT NULL,
     barcode VARCHAR(13) NOT NULL,
     productImage VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (storeid) REFERENCES store(storeid),
     FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, storeid)
 );
 
 CREATE TABLE discounts (
     discount_id INT AUTO_INCREMENT PRIMARY KEY,
-    productid INT NOT NULL
-)
+    productid INT NOT NULL,
+    discount_value DECIMAL(5, 2) NOT NULL,
+    start_date DATETIME,
+    end_date DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (productid) REFERENCES product(productid)
+);
 
 -- Thêm bảng 2024/11/22
 -- Bảng lưu đơn hàng
