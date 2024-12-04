@@ -206,7 +206,9 @@ $product_result = $product_stmt->get_result();
             <div class="dialog-content">
                 <p><strong>商品名：</strong><span id="dialog-product-name"></span></p>
                 <p><strong>値段：</strong><span id="dialog-product-price"></span></p>
-                <button onclick="closeDialog()">閉じる</button>
+                <p><input type="text">割引</p>
+                <button onclick="">確認</button>
+                <button onclick="closeDialog()">キャンセル</button>
             </div>
         </div>
     </main>
