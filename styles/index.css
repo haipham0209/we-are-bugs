@@ -281,6 +281,17 @@
         right: 10px;
         /* Đặt nút bên phải */
     }
+    .nav-menupc {
+        display: none; /* Ẩn nav-menupc trên màn hình nhỏ */
+    }
+    
+    .nav-menu {
+        display: block; /* Hiển thị nav-menu trên màn hình nhỏ */
+    }
+
+    .menu-toggle {
+        display: block; /* Hiển thị button menu-toggle trên màn hình nhỏ */
+    }
 
     /* ---------------------------------------- END -besstseleers------------------------------ */
 
@@ -292,6 +303,27 @@ html {
     margin: 0;
     padding: 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Giao diện PC */
 @media only screen and (min-width: 768px) {
@@ -319,13 +351,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 10px;
 }
 
 .navbar .logo-div img {
-    width: 210px;
-    height: 70px;
-    margin-right: 20px;
+    width: 250px;
+    height: 80px;
+    /* margin-right: 20px; */
 }
 
 .search-bar {
@@ -340,8 +372,8 @@ header {
 
 .account-toggle .avatar {
     width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    height: 35px;
+    /* border-radius: 50%; */
 }
 .nav-myPage.open {
     width: 100px;
@@ -547,6 +579,8 @@ footer {
 
 
 .account-toggle {
+    border: none;
+    background: none;
     margin-right: 30px;
     border-radius: 50px;
     position: relative; /* Đặt vị trí tương đối cho account-toggle */
@@ -594,6 +628,29 @@ footer {
 
 .menu-icon::before {
     content: '☰';
+}
+.nav-menupc {
+    display: block; /* Hiển thị nav-menupc trên màn hình lớn */
+}
+
+.nav-menu {
+    display: none; /* Ẩn nav-menu trên màn hình lớn */
+}
+.nav-menu.open{
+    display: none;
+}
+
+.menu-toggle {
+    display: none; /* Ẩn button menu-toggle trên màn hình lớn */
+}
+.support-list{
+margin-left: 1000px;
+margin-top: 0;
+}
+.nav-menupc img{
+    margin-right: 25px;
+    width: 50px;
+    height: 35px;
 }
 }
 
