@@ -59,7 +59,8 @@ $best_sellers_result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./styles/setBestSel.css">
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
-    <script src="./scripts/cameraScan.js"></script>
+    <script src="./scripts/cameraPos.js"></script>
+    <script src="./scripts/search.js"></script>
     <title>Best Sellers</title>
 </head>
 
@@ -67,9 +68,12 @@ $best_sellers_result = $stmt->get_result();
     <header>
         <div class="main-navbar">
             <div class="search-scan">
-                <input type="text" class="search-bar" placeholder="Search...">
+                <!-- <input type="text" class="search-bar" placeholder="Search..."> -->
+                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">            
+                <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
                 <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
             </div>
+            <div id="suggestionList"></div>
             <script>
                 let isCameraRunning = false; 
 
