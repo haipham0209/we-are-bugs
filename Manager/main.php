@@ -28,6 +28,10 @@ include('./php/auth_check.php');
                 <img src="./images/product-icon.png" alt="商品" class="icon">
                 <span>商品</span>
             </button>
+            <button class="menu-button" onclick="location.href='setBestSel.php'">
+                <img src="./images/bestseller.png" alt="BestSellers" class="icon">
+                <span>ベストセラー</span>
+            </button>
             <button class="menu-button" onclick="location.href='discount.php'">
                 <img src="./images/sale-icon.png" alt="割引" class="icon">
                 <span>割引</span>

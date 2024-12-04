@@ -42,27 +42,29 @@ function sendDataToServer() {
         body: JSON.stringify(data),
     })
         .then(response => {
-            if (!response.ok) {
-                throw new Error("HTTP error " + response.status);
-            }
-            return response.json();
+            console.log("HTTP status code:", response.status);
+            return response.text();  // Lấy nội dung phản hồi dưới dạng text
         })
-        .then(result => {
-            console.log("Kết quả từ server:", result);
-
-            if (result.success) {
-                alert(`Thanh toán hoàn tất! Mã đơn hàng: ${result.order_id}`);
-            } else if (result.error) {
-                alert(`Lỗi: ${result.error}`);
-                console.log("333333333333333333");
-                console.log(data);
+        .then(text => {
+            console.log("Nội dung trả về từ server:", text);  // Log nội dung trả về từ server
+            try {
+                const result = JSON.parse(text);  // Chuyển đổi text thành JSON
+                console.log("Kết quả từ server:", result);
+                if (result.success) {
+                    alert(`Thanh toán hoàn tất! Mã đơn hàng: ${result.order_id}`);
+                } else if (result.error) {
+                    alert(`Lỗi: ${result.error}`);
+                }
+            } catch (e) {
+                console.error("Lỗi khi parse JSON:", e);
+                alert("Đã xảy ra lỗi khi xử lý dữ liệu trả về từ server.");
             }
         })
         .catch(error => {
             console.error("Lỗi:", error);
-            // console.log(products);
-            alert(error);
+            alert("Có lỗi xảy ra: " + error.message);
         });
+    
 }
 
 // Gắn sự kiện bấm nút "完了"
