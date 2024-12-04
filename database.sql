@@ -107,6 +107,7 @@ drop table order_details;
 drop table orders;
 drop table daily_revenue;
 -- Bảng lưu đơn hàng
+-- Tạo bảng orders sau khi sửa lỗi
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     store_id INT NOT NULL,  -- ID cửa hàng
@@ -114,15 +115,11 @@ CREATE TABLE orders (
     total_price DECIMAL(10, 2) NOT NULL,  -- Tổng tiền đơn hàng
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Ngày giờ đặt hàng
     status ENUM('pending', 'completed', 'canceled') DEFAULT 'pending',  -- Trạng thái đơn hàng
+    received_amount DECIMAL(10, 2) NULL,
     FOREIGN KEY (store_id) REFERENCES store(storeid)  -- Tham chiếu đến bảng cửa hàng
-    -- FOREIGN KEY (customer_id) REFERENCES customers(customer_id)  -- Nếu có bảng customers
 );
-ALTER TABLE orders
-ADD COLUMN received_amount DECIMAL(10, 2) NULL;
 
-
-
--- Bảng lưu chi tiết đơn hàng
+-- Tạo bảng order_details sau khi bảng orders đã tồn tại
 CREATE TABLE order_details (
     order_detail_id INT AUTO_INCREMENT PRIMARY KEY,
     orderid INT NOT NULL,  -- ID đơn hàng
@@ -131,6 +128,7 @@ CREATE TABLE order_details (
     FOREIGN KEY (orderid) REFERENCES orders(order_id),  -- Tham chiếu đến bảng orders
     FOREIGN KEY (productid) REFERENCES product(productid)  -- Tham chiếu đến bảng sản phẩm
 );
+
 
 -- Bảng lưu doanh thu theo ngày
 CREATE TABLE daily_revenue (
