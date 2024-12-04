@@ -16,7 +16,15 @@ document.addEventListener('DOMContentLoaded', function () {
         card.addEventListener('click', function () {
             // 商品名と値段を取得
             const productName = card.querySelector('.product-info p:nth-child(1)').textContent.replace('名前：', '').trim();
-            const productPrice = parseFloat(card.querySelector('.product-info p:nth-child(3)').textContent.replace('値段：', '').trim());
+            const productPriceText = card.querySelector('.product-info p:nth-child(3)').textContent.replace('元値段：', '').trim();
+            const productPrice = parseFloat(productPriceText);
+
+            // 商品価格が有効かどうかチェック
+            if (isNaN(productPrice)) {
+                console.error('商品価格が無効です:', productPriceText);
+                alert('商品の価格が正しく取得できませんでした');
+                return;
+            }
 
             // 現在の商品情報を保存
             currentProduct = {
