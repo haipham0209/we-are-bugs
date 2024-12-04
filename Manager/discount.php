@@ -85,7 +85,7 @@ $product_result = $product_stmt->get_result();
                 }
             </script>
             <div class="logo">
-                <a href="../main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>"><img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="width: 240px; height: 80px; padding: 5px; border-radius: 5px;" /></a>
+                <a href="./main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>"><img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="width: 240px; height: 80px; padding: 5px; border-radius: 5px;" /></a>
             </div>
         </div>
     </header>
@@ -121,7 +121,7 @@ $product_result = $product_stmt->get_result();
                     $categoryId = !empty($product['category_id']) ? htmlspecialchars($product['category_id'], ENT_QUOTES, 'UTF-8') : '';
 
                     echo '
-                        <div class="product-card" data-category-id="' . $categoryId . '">
+                        <div class="product-card" data-product-id="' . htmlspecialchars($product['productid'], ENT_QUOTES, 'UTF-8') . '" data-category-id="' . $categoryId . '">
                             <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
                             <div class="product-info">
                                 <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
@@ -206,9 +206,12 @@ $product_result = $product_stmt->get_result();
             <div class="dialog-content">
                 <p><strong>商品名：</strong><span id="dialog-product-name"></span></p>
                 <p><strong>値段：</strong><span id="dialog-product-price"></span></p>
-                <p><input type="text">割引</p>
-                <button onclick="">確認</button>
-                <button onclick="closeDialog()">キャンセル</button>
+                <p><strong>割引率：</strong>
+                    <input type="number" id="discount-rate" placeholder="割引率 (%)" min="0" max="100" step="1">
+                </p>
+                <p><strong>割引後の値段：</strong>¥<span id="discounted-price"></span></p>
+                <button id="apply-discount">確認</button>
+                <button id="cancel-discount">キャンセル</button>
             </div>
         </div>
     </main>
