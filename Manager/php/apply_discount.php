@@ -3,6 +3,12 @@
 include('./auth_check.php');
 include('./db_connect.php');
 
+$conn = new mysqli($servername, $username, $password, $dbname);
+// 接続エラーチェック
+if ($conn->connect_error) {
+    die(json_encode(['success' => false, 'message' => 'データベース接続に失敗しました: ' . $conn->connect_error]));
+}
+
 // JSON形式でデータを受信
 $requestData = json_decode(file_get_contents('php://input'), true);
 

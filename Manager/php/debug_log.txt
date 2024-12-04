@@ -1,6 +1,6 @@
 Array
 (
     [productId] => 2
-    [discountRate] => 50
-    [discountedPrice] => 100.00
+    [discountRate] => 5
+    [discountedPrice] => 190.00
 )

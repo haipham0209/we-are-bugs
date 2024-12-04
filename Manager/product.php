@@ -26,7 +26,7 @@ $category_ids = isset($_GET['category_ids']) ? explode(',', $_GET['category_ids'
 
 // Truy vấn để lấy danh sách sản phẩm từ cơ sở dữ liệu
 $product_sql = "
-    SELECT p.productid, p.pname, p.price, p.costPrice, p.description, p.stock_quantity, 
+    SELECT p.productid, p.pname, p.price, p.costPrice, p.discounted_price, p.description, p.stock_quantity, 
            p.productImage, u.username, c.cname, p.category_id
     FROM product p
     JOIN store s ON p.storeid = s.storeid
@@ -127,21 +127,34 @@ $product_result = $product_stmt->get_result();
                     $productImagePath = '../' . $product['productImage'];
                     $categoryId = !empty($product['category_id']) ? htmlspecialchars($product['category_id'], ENT_QUOTES, 'UTF-8') : '';
 
+                    // 割引後の値段か、元の値段を表示
+                    $priceToDisplay = isset($product['discounted_price']) && !is_null($product['discounted_price']) ? $product['discounted_price'] : $product['price'];
+
+                    // 割引価格があるかチェック
+                    $discounted_price = $product['discounted_price']; // 商品に割引があるか確認
+
                     echo '
-                        <div class="product-card" data-category-id="' . $categoryId . '">
-                            <a href="productEdit.php?id=' . $product['productid'] . '" class="edit-icon">
-                                <img src="../images/edit.png" alt="Edit">
-                            </a>
-                            <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
-                            <div class="product-info">
-                                <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p class="productCategory"><strong>カテゴリー：</strong>' . htmlspecialchars($product['cname'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p><strong>原価：</strong>' . htmlspecialchars($product['costPrice'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p><strong>値段：</strong>' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p><strong>説明：</strong>' . htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') . '</p>
-                            </div>
-                            <div class="stock">在庫: ' . htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') . '</div>
-                        </div>';
+            <div class="product-card" data-category-id="' . $categoryId . '">
+                <a href="productEdit.php?id=' . $product['productid'] . '" class="edit-icon">
+                    <img src="../images/edit.png" alt="Edit">
+                </a>
+                <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
+                <div class="product-info">
+                    <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
+                    <p class="productCategory"><strong>カテゴリー：</strong>' . htmlspecialchars($product['cname'], ENT_QUOTES, 'UTF-8') . '</p>
+                    <p><strong>原価：</strong>' . htmlspecialchars($product['costPrice'], ENT_QUOTES, 'UTF-8') . '</p>';
+                    // 割引がある場合、割引価格を表示
+                    if ($discounted_price !== null) {
+                        echo '
+                        <p style="color: red;"><strong>値段：</strong>' . htmlspecialchars($priceToDisplay, ENT_QUOTES, 'UTF-8') . '</p>
+                        <p class="discountNotice" style="color: red;">割引中</p>';
+                    } else {
+                        echo '<p><strong>値段：</strong>' . htmlspecialchars($priceToDisplay, ENT_QUOTES, 'UTF-8') . '</p>';
+                    }
+                    echo ' <p><strong>説明：</strong>' . htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') . '</p>
+                </div>
+                <div class="stock">在庫: ' . htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') . '</div>
+            </div>';
                 }
             } else {
                 echo '<p>No products found.</p>';
