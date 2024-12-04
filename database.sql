@@ -92,18 +92,25 @@ CREATE TABLE discounts (
 
 -- Thêm bảng 2024/11/22
 -- Bảng lưu đơn hàng
-drop table orders;
+ALTER TABLE order_details DROP FOREIGN KEY order_details_ibfk_1;
 drop table order_details;
+drop table orders;
 drop table daily_revenue;
 -- Bảng lưu đơn hàng
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
+    store_id INT NOT NULL,  -- ID cửa hàng
     customer_id INT NULL,  -- Tham chiếu đến bảng customers nếu có
     total_price DECIMAL(10, 2) NOT NULL,  -- Tổng tiền đơn hàng
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Ngày giờ đặt hàng
-    status ENUM('pending', 'completed', 'canceled') DEFAULT 'pending'  -- Trạng thái đơn hàng
+    status ENUM('pending', 'completed', 'canceled') DEFAULT 'pending',  -- Trạng thái đơn hàng
+    FOREIGN KEY (store_id) REFERENCES store(storeid)  -- Tham chiếu đến bảng cửa hàng
     -- FOREIGN KEY (customer_id) REFERENCES customers(customer_id)  -- Nếu có bảng customers
 );
+ALTER TABLE orders
+ADD COLUMN received_amount DECIMAL(10, 2) NULL;
+
+
 
 -- Bảng lưu chi tiết đơn hàng
 CREATE TABLE order_details (
@@ -117,12 +124,13 @@ CREATE TABLE order_details (
 
 -- Bảng lưu doanh thu theo ngày
 CREATE TABLE daily_revenue (
-    storeid INT NOT NULL,  -- ID cửa hàng
+    store_id INT NOT NULL,  -- ID cửa hàng
     revenue_date DATE NOT NULL,  -- Ngày doanh thu
     total_revenue DECIMAL(10, 2) NOT NULL DEFAULT 0,  -- Tổng doanh thu trong ngày
-    PRIMARY KEY (storeid, revenue_date),
-    FOREIGN KEY (storeid) REFERENCES store(storeid)  -- Tham chiếu đến bảng store (cửa hàng)
+    PRIMARY KEY (store_id, revenue_date),
+    FOREIGN KEY (store_id) REFERENCES store(storeid)  -- Tham chiếu đến bảng cửa hàng
 );
+
 
 
 
