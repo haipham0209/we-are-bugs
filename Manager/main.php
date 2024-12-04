@@ -20,8 +20,6 @@ include('./php/auth_check.php');
         <!-- ロゴ部分 -->
         <div class="logo">
             <a href="../main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>"><img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="width: 240px; height: 80px; padding: 5px; border-radius: 5px;" /></a>
-        
-            
         </div>
 
         <!-- 左側のボタンメニュー -->
@@ -30,7 +28,7 @@ include('./php/auth_check.php');
                 <img src="./images/product-icon.png" alt="商品" class="icon">
                 <span>商品</span>
             </button>
-            <button class="menu-button">
+            <button class="menu-button" onclick="location.href='discount.php'">
                 <img src="./images/sale-icon.png" alt="割引" class="icon">
                 <span>割引</span>
             </button>

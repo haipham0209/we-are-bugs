@@ -343,6 +343,22 @@ header {
     height: 50px;
     border-radius: 50%;
 }
+.nav-myPage.open {
+    width: 100px;
+    margin-right: 25px;
+    margin-top: 10px;
+}
+
+.nav-myPage.open ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    margin-left: 10px;
+    padding: 0;
+    text-align: left;
+}
+
 
 /* Sidebar Navigation */
 .nav-menu {
@@ -361,7 +377,7 @@ header {
 }
 
 .nav-menu.open {
-    margin-top: 67px;
+    margin-top: 80px;
     display: block;
     transform: translateX(0);
 }

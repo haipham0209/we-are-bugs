@@ -1,57 +1,29 @@
-.logobar {
-    display: flex; /* Căn giữa hình ảnh */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    justify-content: center; /* Căn giữa theo chiều ngang (nếu cần) */
-    height: 80%; /* Đảm bảo chiều cao phù hợp với thanh bar */
-    padding: 0 25px;
-}
-
 .avatar {
-    margin-right: 10px;
+    /* margin-right: 10px; */
     width: 50px;
     height: 50px;
     border-radius: 50%;
     cursor: pointer;
 }
    /* Ẩn  theo mặc định */
-.nav-myPage {
-    position: fixed;
-    right: -100%;
-    width: 50%;
-    height: 30%;
-    background-color: rgba(0, 0, 0, 0.9);
-    color: white;
-    display: flex;
-    flex-direction: column; 
-    justify-content: flex-start;
-    transition: right 0.7s ease;
-    z-index: 1000;
-    border-radius: 15px 0 0 15px ; /* Bo góc bên trái trên và dưới */
-}
-
 .nav-myPage.open {
-    right: 0;
-    margin-right: 5px;
+    width: 100px;
+    margin-right: 25px;
+    margin-top: 10px;
 }
 
-.nav-myPage ul {
-    margin-top: 50px;
+.nav-myPage.open ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
     margin-left: 10px;
-    list-style: none;
     padding: 0;
     text-align: left;
 }
 
-.nav-myPage ul li {
-    margin: 30px 0;
-}
 
-.nav-myPage ul li a {
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-    margin-left: 15px;
-}
+
 
 
 .hidden {
@@ -77,12 +49,9 @@
 /* =============================END nav avatar------------------------------ */
     /* ---------------------------------nav button ------------------------------------- */
     .avatar-toggle {
-        margin: auto;
-        justify-content: center; 
-        background: none;
-        border: none;
-        font-size: 24px; /* Adjust size as needed */
-        cursor: pointer;
+        margin-right: 30px;
+        border-radius: 50px;
+        position: relative;
     }
     
     .avatar {
@@ -103,6 +72,7 @@
 
 /* Phần của từng mục (lịch sử, giỏ hàng, danh sách yêu thích) */
 .order-history, .cart, .favorites {
+    margin-top: 25px;
     margin-bottom: 25px;
     padding-bottom: 15px;
     border-bottom: 1px solid #e0e0e0;
@@ -180,6 +150,14 @@ h2 {
     display: flex;
     justify-content: space-between;
     gap: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+    .navbar .logobar img{
+        width: 330px;
+        height: 85px;
+        margin-right: 20px;
+    }
 }
 
 

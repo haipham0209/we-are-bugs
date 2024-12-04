@@ -57,10 +57,10 @@ $product_result = $product_stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="./styles/proMana.css">
+    <link rel="stylesheet" href="./styles/discount.css">
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     <script src="./scripts/cameraScan.js"></script>
-    <title>商品管理</title>
+    <title>割引</title>
 </head>
 
 <body>
@@ -85,7 +85,7 @@ $product_result = $product_stmt->get_result();
                 }
             </script>
             <div class="logo">
-                <a href="./main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>"><img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="width: 240px; height: 80px; padding: 5px; border-radius: 5px;" /></a>
+                <a href="../main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>"><img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="width: 240px; height: 80px; padding: 5px; border-radius: 5px;" /></a>
             </div>
         </div>
     </header>
@@ -93,7 +93,7 @@ $product_result = $product_stmt->get_result();
         <div id="camera" style="display: none;">
             <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>
         </div>
-        <p class="title">商品管理</p>
+        <p class="title">商品割引管理</p>
 
         <!-- Category -->
         <div class="category">
@@ -112,13 +112,6 @@ $product_result = $product_stmt->get_result();
 
         </div>
 
-        <!-- Add Product Button -->
-        <div class="add-product">
-            <a href="productAdd.php">
-                <button>+</button>
-            </a>
-        </div>
-
         <!-- Product Cards -->
         <div class="all-product">
             <?php
@@ -129,18 +122,12 @@ $product_result = $product_stmt->get_result();
 
                     echo '
                         <div class="product-card" data-category-id="' . $categoryId . '">
-                            <a href="productEdit.php?id=' . $product['productid'] . '" class="edit-icon">
-                                <img src="../images/edit.png" alt="Edit">
-                            </a>
                             <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
                             <div class="product-info">
                                 <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
                                 <p class="productCategory"><strong>カテゴリー：</strong>' . htmlspecialchars($product['cname'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p><strong>原価：</strong>' . htmlspecialchars($product['costPrice'], ENT_QUOTES, 'UTF-8') . '</p>
                                 <p><strong>値段：</strong>' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p><strong>説明：</strong>' . htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') . '</p>
                             </div>
-                            <div class="stock">在庫: ' . htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') . '</div>
                         </div>';
                 }
             } else {
@@ -215,9 +202,19 @@ $product_result = $product_stmt->get_result();
             });
         </script>
 
-
+        <div id="product-dialog" class="dialog" style="display: none;">
+            <div class="dialog-content">
+                <p><strong>商品名：</strong><span id="dialog-product-name"></span></p>
+                <p><strong>値段：</strong><span id="dialog-product-price"></span></p>
+                <p><input type="text">割引</p>
+                <button onclick="">確認</button>
+                <button onclick="closeDialog()">キャンセル</button>
+            </div>
+        </div>
     </main>
-    <footer></footer>
+    <footer>
+        <script src="./scripts/discount.js"></script>
+    </footer>
 </body>
 
 </html>

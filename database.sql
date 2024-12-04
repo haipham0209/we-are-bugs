@@ -82,6 +82,12 @@ CREATE TABLE product (
     FOREIGN KEY (storeid) REFERENCES store(storeid),
     FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, storeid)
 );
+
+CREATE TABLE discounts (
+    discount_id INT AUTO_INCREMENT PRIMARY KEY,
+    productid INT NOT NULL
+)
+
 -- Thêm bảng 2024/11/22
 -- Bảng lưu thông tin lịch sử mua hàng
 CREATE TABLE order_history (
@@ -109,7 +115,7 @@ CREATE TABLE daily_revenue (
     revenue_date DATE NOT NULL,
     total_revenue DECIMAL(10,2) NOT NULL DEFAULT 0,
     PRIMARY KEY (storeid, revenue_date),
-    FOREIGN KEY (storeid) REFERENCES store(storeid)
+    FOREIGN KEY (storeid) R EFERENCES store(storeid)
 );
 
 -- ALTER TABLE store
