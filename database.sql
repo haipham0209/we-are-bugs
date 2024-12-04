@@ -66,6 +66,8 @@ CREATE TABLE category (
     FOREIGN KEY (storeid) REFERENCES store(storeid)
 );
 
+CREATE INDEX idx_productid ON product(productid);
+
 CREATE TABLE product (
     -- productid INT AUTO_INCREMENT PRIMARY KEY,
     productid INT NOT NULL,
@@ -89,34 +91,40 @@ CREATE TABLE discounts (
 )
 
 -- Thêm bảng 2024/11/22
--- Bảng lưu thông tin lịch sử mua hàng
-CREATE TABLE order_history (
-    orderid INT AUTO_INCREMENT PRIMARY KEY,
-    customer_code VARCHAR(10) NOT NULL,
-    storeid INT NOT NULL,
-    total_price DECIMAL(10,2) NOT NULL,
-    order_date DATE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (storeid) REFERENCES store(storeid)
+-- Bảng lưu đơn hàng
+drop table orders;
+drop table order_details;
+drop table daily_revenue;
+-- Bảng lưu đơn hàng
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NULL,  -- Tham chiếu đến bảng customers nếu có
+    total_price DECIMAL(10, 2) NOT NULL,  -- Tổng tiền đơn hàng
+    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Ngày giờ đặt hàng
+    status ENUM('pending', 'completed', 'canceled') DEFAULT 'pending'  -- Trạng thái đơn hàng
+    -- FOREIGN KEY (customer_id) REFERENCES customers(customer_id)  -- Nếu có bảng customers
 );
+
 -- Bảng lưu chi tiết đơn hàng
 CREATE TABLE order_details (
     order_detail_id INT AUTO_INCREMENT PRIMARY KEY,
-    orderid INT NOT NULL,
-    productid INT NOT NULL,
-    quantity INT NOT NULL,
-    FOREIGN KEY (orderid) REFERENCES order_history(orderid)
+    orderid INT NOT NULL,  -- ID đơn hàng
+    productid INT NOT NULL,  -- ID sản phẩm
+    quantity INT NOT NULL,  -- Số lượng sản phẩm
+    FOREIGN KEY (orderid) REFERENCES orders(order_id),  -- Tham chiếu đến bảng orders
+    FOREIGN KEY (productid) REFERENCES product(productid)  -- Tham chiếu đến bảng sản phẩm
 );
-
 
 -- Bảng lưu doanh thu theo ngày
 CREATE TABLE daily_revenue (
-    storeid INT NOT NULL,
-    revenue_date DATE NOT NULL,
-    total_revenue DECIMAL(10,2) NOT NULL DEFAULT 0,
+    storeid INT NOT NULL,  -- ID cửa hàng
+    revenue_date DATE NOT NULL,  -- Ngày doanh thu
+    total_revenue DECIMAL(10, 2) NOT NULL DEFAULT 0,  -- Tổng doanh thu trong ngày
     PRIMARY KEY (storeid, revenue_date),
-    FOREIGN KEY (storeid) R EFERENCES store(storeid)
+    FOREIGN KEY (storeid) REFERENCES store(storeid)  -- Tham chiếu đến bảng store (cửa hàng)
 );
+
+
 
 -- ALTER TABLE store
 -- ADD COLUMN logopath VARCHAR(255) DEFAULT NULL AFTER tel;
