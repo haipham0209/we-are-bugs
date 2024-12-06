@@ -451,7 +451,7 @@
     .dialog-content button {
         padding: 10px 20px;
         margin: 5px;
-        background: #007BFF;
+        background: #0ecb00ac;
         color: #fff;
         border: none;
         border-radius: 5px;
@@ -459,7 +459,7 @@
     }
 
     .dialog-content button:hover {
-        background: #0056b3;
+        background: #0a8f01a2;
     }
 
     .dialog-content #cancel-discount-btn {
@@ -468,6 +468,14 @@
 
     .dialog-content #cancel-discount-btn:hover {
         background: #b20000;
+    }
+
+    .dialog-content #cancel-discount {
+        background: #007BFF;
+    }
+
+    .dialog-content #cancel-discount:hover {
+        background: #0056b3;
     }
 
 }
@@ -821,7 +829,7 @@
     .dialog-content button {
         padding: 10px 20px;
         margin: 5px;
-        background: #007BFF;
+        background: #0ecb00ac;
         color: #fff;
         border: none;
         border-radius: 5px;
@@ -829,7 +837,7 @@
     }
 
     .dialog-content button:hover {
-        background: #0056b3;
+        background: #0a8f01a2;
     }
 
     .dialog-content #cancel-discount-btn {
@@ -838,6 +846,14 @@
 
     .dialog-content #cancel-discount-btn:hover {
         background: #b20000;
+    }
+
+    .dialog-content #cancel-discount {
+        background: #007BFF;
+    }
+
+    .dialog-content #cancel-discount:hover {
+        background: #0056b3;
     }
 
 }

@@ -231,9 +231,9 @@ $product_result = $product_stmt->get_result();
                     <input type="number" id="discount-rate" placeholder="割引率 (%)" min="0" max="100" step="1">
                 </p>
                 <p><strong>割引後の値段：</strong>¥<span id="discounted-price"></span></p>
-                <button id="apply-discount">確認</button>
-                <button id="cancel-discount">キャンセル</button>
+                <button id="apply-discount">確定</button>
                 <button id="cancel-discount-btn">割引キャンセル</button>
+                <button id="cancel-discount">キャンセル</button>
             </div>
         </div>
     </main>
