@@ -1,0 +1,191 @@
+@media only screen and (max-width: 767px) {
+    body {
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        background-size: 400% 400%;
+        animation: wave 10s ease infinite;
+    }
+
+    @keyframes wave {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    header{
+        margin-top: 20px;
+    }
+    .main-navbar {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+        background-color: #e3f3e1;
+        border-radius: 8px;
+    }
+    .home {
+        margin: 0 10px 0 10px;
+        width: 30px;
+        height: 30px;
+    }
+    #suggestionList {
+        border: 1px solid #ccc;
+        max-width: 300px;
+        max-height: 200px;
+        overflow-y: auto;
+        position: absolute;
+        background: white;
+        z-index: 1000;
+    }
+    #suggestionList div {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    #suggestionList div:hover {
+        background-color: #f0f0f0;
+    }
+    .search-scan {
+        margin: 0 10px 0 10px;
+        position: relative;
+        width: 100%;
+    }
+
+    .search-bar {
+        width: 100%;
+        padding: 10px 5px 10px 5px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-bar:focus {
+        border-color: #038610;
+        outline: none;
+    }
+    .suggestions-list {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        width: 100%;
+        background: white;
+        border: 1px solid #ccc;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 100;
+    }
+    
+    .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
+    .camera-icon {
+        position: absolute;
+        text-align: right;
+        right: 0px;
+        top: 50%;
+        justify-content: right;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+
+    .camera-icon:hover {
+        opacity: 1;
+    }
+
+    .main-home {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    #camera {
+        display: none;
+        margin: 4px;
+        width: 320px;
+        height: 240px;
+        background: #ccc;
+        position: relative;
+        margin: auto; 
+    }
+    .title {
+        font-size: 30px;
+        font-weight: bold;
+        margin: 15px 10px 5px 10px;
+        text-align: center;
+    }
+    .date-control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 10px;
+    }
+    
+    .date-button {
+        background-color: #f1f1f1;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 20px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s;
+    }
+    
+    .date-button:hover {
+        background-color: #e0e0e0;
+    }
+    
+    .date-picker {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 5px 10px;
+        font-size: 18px;
+    }
+    .order-list {
+        margin-top: 10px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .order-list th,
+    .order-list td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    .order-list thead {
+        background-color: #f5f5f5;
+        position: sticky; 
+        top: 0;
+        z-index: 1;
+    }
+    
+    .order-list tbody tr:nth-child(even) {
+        background-color: #f9f9f9; 
+    }
+
+    .order-list tbody tr:nth-child(odd) {
+        background-color: #fff; 
+    }
+    .order-list tbody tr.highlight {
+        animation: highlightEffect 1.5s ease-out;
+    }    
+
+}
