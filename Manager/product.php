@@ -65,14 +65,15 @@ $product_result = $product_stmt->get_result();
 
 <body>
     <header>
-        <!-- Header navbar -->
         <div class="main-navbar">
             <div class="search-scan">
-                <input type="text" class="search-bar" placeholder="Search...">
+                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">
+                <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
                 <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
             </div>
+            <div id="suggestionList"></div>
             <script>
-                let isCameraRunning = false; // カメラの状態を管理
+                let isCameraRunning = false;
 
                 function toggleCamera() {
                     if (isCameraRunning) {
@@ -84,9 +85,9 @@ $product_result = $product_stmt->get_result();
                     }
                 }
             </script>
-            <div class="logo">
-                <a href="./main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>"><img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="width: 240px; height: 80px; padding: 5px; border-radius: 5px;" /></a>
-            </div>
+            <a href="main.php">
+                <img class="home" src="./images/home.png" alt="Home Mana">
+            </a>
         </div>
     </header>
     <main>

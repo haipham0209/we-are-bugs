@@ -64,15 +64,16 @@ $product_result = $product_stmt->get_result();
 </head>
 
 <body>
-    <header>
-        <!-- Header navbar -->
+<header>
         <div class="main-navbar">
             <div class="search-scan">
-                <input type="text" class="search-bar" placeholder="Search...">
+                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">            
+                <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
                 <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
             </div>
+            <div id="suggestionList"></div>
             <script>
-                let isCameraRunning = false; // カメラの状態を管理
+                let isCameraRunning = false; 
 
                 function toggleCamera() {
                     if (isCameraRunning) {
@@ -84,9 +85,9 @@ $product_result = $product_stmt->get_result();
                     }
                 }
             </script>
-            <div class="logo">
-                <a href="./main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>"><img id="logo" src="<?php echo htmlspecialchars($_SESSION['logopath'] ?? 'default-logo.png'); ?>" alt="Logo" style="width: 240px; height: 80px; padding: 5px; border-radius: 5px;" /></a>
-            </div>
+            <a href="main.php">
+                <img class="home" src="./images/home.png" alt="Home Mana">
+            </a>
         </div>
     </header>
     <main>
@@ -119,24 +120,41 @@ $product_result = $product_stmt->get_result();
                 while ($product = $product_result->fetch_assoc()) {
                     $productImagePath = '../' . $product['productImage'];
                     $categoryId = !empty($product['category_id']) ? htmlspecialchars($product['category_id'], ENT_QUOTES, 'UTF-8') : '';
+                    $discountedPrice = !is_null($product['discounted_price']) ? htmlspecialchars($product['discounted_price'], ENT_QUOTES, 'UTF-8') : '';
 
                     echo '
-                        <div class="product-card" data-product-id="' . htmlspecialchars($product['productid'], ENT_QUOTES, 'UTF-8') . '" data-category-id="' . $categoryId . '" data-original-price="' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '" data-store-id="' . htmlspecialchars($product['storeid'], ENT_QUOTES, 'UTF-8') . '">
-                            <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
-                            <div class="product-info">
-                                <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p class="productCategory"><strong>カテゴリー：</strong>' . htmlspecialchars($product['cname'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <p><strong>元値段：</strong>' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '</p>
-                                <div class="discount">
-                                    <span><strong>割引後の値段：</strong></span> <span  class="discounted-price">' . (!is_null($product['discounted_price']) ? htmlspecialchars($product['discounted_price'], ENT_QUOTES, 'UTF-8') : '') . '</span>
-                                </div>
-                            </div>
-                        </div>';
+            <div class="product-card" 
+                 data-product-id="' . htmlspecialchars($product['productid'], ENT_QUOTES, 'UTF-8') . '" 
+                 data-category-id="' . $categoryId . '" 
+                 data-original-price="' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '" 
+                 data-store-id="' . htmlspecialchars($product['storeid'], ENT_QUOTES, 'UTF-8') . '">';
+
+                    // 割引中の場合、「セール中」のラベルを表示
+                    if (!is_null($product['discounted_price'])) {
+                        echo '
+                <div class="sale-label">
+                    <img src="./images/sale.png" alt="セール中">
+                </div>';
+                    }
+
+                    echo '
+                <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
+                <div class="product-info">
+                    <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
+                    <p class="productCategory"><strong>カテゴリー：</strong>' . htmlspecialchars($product['cname'], ENT_QUOTES, 'UTF-8') . '</p>
+                    <p><strong>元値段：</strong>' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '</p>
+                    <div class="discount">
+                        <span><strong>割引後の値段：</strong></span> 
+                        <span class="discounted-price">' . $discountedPrice . '</span>
+                    </div>
+                </div>
+            </div>';
                 }
             } else {
                 echo '<p>No products found.</p>';
             }
             ?>
+
         </div>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
