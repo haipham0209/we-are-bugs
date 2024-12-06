@@ -18,11 +18,9 @@
             background-position: 0% 50%;
         }
     }
-
     header{
         margin-top: 20px;
     }
-
     .main-navbar {
         display: flex;
         width: 100%;
@@ -125,108 +123,69 @@
         position: relative;
         margin: auto; 
     }
-
     .title {
         font-size: 30px;
         font-weight: bold;
         margin: 15px 10px 5px 10px;
         text-align: center;
     }
-
-    .category {
+    .date-control {
         display: flex;
-        gap: 10px;
-        padding: 10px;
-        justify-content: center;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    .category::-webkit-scrollbar {
-        display: none;
-    }
-    .category {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    .all-categories {
-        background-color: #000;
-        color: #fff;
-        border-radius: 10px;
-        padding: 10px 20px;
-        font-size: 16px;
-        border: 1px solid #000;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .all-categories:hover {
-        background-color: #333;
-        color: #fff;
-    }
-    .category button {
-        background-color: #f4f4f400;
-        color: #333;
-        border-radius: 10px;
-        padding: 10px 20px;
-        font-size: 16px;
-        border: 1px solid #000;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .category button:hover {
-        background-color: #000;
-        color: #fff;
-        transform: translateY(-3px);
-        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-    }
-    .category button.active {
-        background-color: #000;
-        color: #fff;
-    }
-
-    /* Responsive adjustments */
-    @media only screen and (max-width: 767px) {
-
-        .all-categories,
-        .category button {
-            font-size: 14px;
-            padding: 8px 16px;
-        }
-    }
-    .all-product {
-        margin-top: 10px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        margin-bottom: auto;
-    }
-    .product-card {
-        width: 85%;
-        margin: auto;
         align-items: center;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 15px;
-        transition: transform 0.2s;
-        height: auto;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 10px;
+    }
+    
+    .date-button {
+        background-color: #f1f1f1;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 20px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s;
+    }
+    
+    .date-button:hover {
+        background-color: #e0e0e0;
+    }
+    
+    .date-picker {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 5px 10px;
+        font-size: 18px;
+    }
+    .order-list {
+        margin-top: 10px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .order-list th,
+    .order-list td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    .order-list thead {
+        background-color: #f5f5f5;
+        position: sticky; 
+        top: 0;
+        z-index: 1;
+    }
+    
+    .order-list tbody tr:nth-child(even) {
+        background-color: #f9f9f9; 
     }
 
-    .product-card:hover {
-        transform: translateY(-5px);
+    .order-list tbody tr:nth-child(odd) {
+        background-color: #fff; 
     }
-
-    .product-card img {
-        width: 120px;
-        height: 130px;
-        border-radius: 10px;
-        margin: 0 auto;
-        object-fit: contain;
-        display: block; 
-    }
+    .order-list tbody tr.highlight {
+        animation: highlightEffect 1.5s ease-out;
+    }    
 
 }

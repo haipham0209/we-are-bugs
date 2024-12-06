@@ -255,10 +255,15 @@
         object-fit: contain;
         /* Đảm bảo hình ảnh được thu nhỏ để vừa khung mà không bị cắt */
         border-radius: 10px;
-        border: 2px solid #e5dfdf;
+        border: 2px solid #e5dfdf00;
 
     }
-
+    .best-sellers .product-name,
+    .best-sellers .product-price {
+        text-align: center; /* Căn giữa văn bản */
+        margin: 5px 0; /* Tùy chỉnh khoảng cách */
+        font-size: 20px;
+    }
     .arrow {
         background-color: rgba(240, 240, 240, 0.7);
         /* Màu nền nhẹ cho nút */
@@ -273,11 +278,13 @@
     }
 
     .arrow.left {
+        margin-bottom: 60px;
         left: 10px;
         /* Đặt nút bên trái */
     }
 
     .arrow.right {
+        margin-bottom: 60px;
         right: 10px;
         /* Đặt nút bên phải */
     }
@@ -442,9 +449,9 @@ header {
 /* Filter Buttons */
 .filter-buttons {
     display: flex;
-    justify-content: center;
-    margin: 20px 0;
     gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 .filter-buttons button{
     font-size: 19px;
