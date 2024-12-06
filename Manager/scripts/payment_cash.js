@@ -51,9 +51,14 @@ function sendDataToServer() {
                 const result = JSON.parse(text);  // Chuyển đổi text thành JSON
                 console.log("Kết quả từ server:", result);
                 if (result.success) {
-                    // alert(`Thanh toán hoàn tất! Mã đơn hàng: ${result.order_id}`);
+                    // Hiển thị thông báo thành công
                     alert(`請求成功しました。: ${result.order_number}`);
-                } else if (result.error) {
+                    
+                    // Điều hướng đến trang khác
+                    // window.location.href = '/success-page.php?order_number=' + result.order_number;
+                    location.reload();
+                }
+                 else if (result.error) {
                     // alert(`Lỗi: ${result.error}`);
                     alert(`エラー: ${result.error}`);
                 }
