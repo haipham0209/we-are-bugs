@@ -52,7 +52,7 @@ function sendDataToServer() {
                 console.log("Kết quả từ server:", result);
                 if (result.success) {
                     // alert(`Thanh toán hoàn tất! Mã đơn hàng: ${result.order_id}`);
-                    alert(`請求成功しました。: ${result.order_id}`);
+                    alert(`請求成功しました。: ${result.order_number}`);
                 } else if (result.error) {
                     // alert(`Lỗi: ${result.error}`);
                     alert(`エラー: ${result.error}`);

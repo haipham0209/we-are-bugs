@@ -34,11 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Bắt đầu giao dịch
         $conn->begin_transaction();
 
+        $order_number = $_SESSION['order_number'];
+        // echo $order_number;
         // Lưu đơn hàng vào bảng orders
-        $stmt = $conn->prepare("INSERT INTO orders (store_id, customer_id, total_price, status, received_amount) VALUES (?, ?, ?, 'pending', ?)");
-        $stmt->bind_param("ddsd", $store_id, $customer_id, $total_price, $received_amount);
+        $stmt = $conn->prepare("INSERT INTO orders (order_number, store_id, customer_id, total_price, status, received_amount) VALUES (?, ?, ?, ?, 'pending', ?)");
+        $stmt->bind_param("sddsd",$order_number, $store_id, $customer_id, $total_price, $received_amount);
         $stmt->execute();
-        $order_id = $stmt->insert_id;
+        // $order_id = $stmt->insert_id;
 
         // Lưu chi tiết đơn hàng vào bảng order_details
         foreach ($products as $item) {
@@ -58,9 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Kiểm tra nếu productid tồn tại
             if ($productid) {
                 // Thêm chi tiết vào bảng order_details
-                $stmt = $conn->prepare("INSERT INTO order_details (orderid, productid, quantity) VALUES (?, ?, ?)");
-                $stmt->bind_param("iii", $order_id, $productid, $quantity);
+                $stmt = $conn->prepare("INSERT INTO order_details (order_number, productid, quantity) VALUES (?, ?, ?)");
+                $stmt->bind_param("sii", $order_number, $productid, $quantity);
                 $stmt->execute();
+                
 
                 // Cập nhật tồn kho sản phẩm
                 $stmt = $conn->prepare("UPDATE product SET stock_quantity = stock_quantity - ? WHERE productid = ?");
@@ -76,7 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Commit giao dịch nếu tất cả lệnh thành công
         $conn->commit();
-        echo json_encode(['success' => true, 'order_id' => $order_id]);
+        echo json_encode(['success' => true, 'order_number' => $order_number]);
+
     } catch (Exception $e) {
         // Rollback nếu có lỗi
         $conn->rollback();

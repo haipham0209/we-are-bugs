@@ -1,6 +1,7 @@
 <?php
 include('./php/auth_check.php'); // Kiểm tra quyền người dùng
 include('./php/db_connect.php'); // Kết nối cơ sở dữ liệu
+include('./php/POS_process.php'); // Kết nối cơ sở dữ liệu
 // include('./php/POS_product.php');
 
 // Khởi tạo kết nối cơ sở dữ liệu
@@ -10,86 +11,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-// Khởi tạo giỏ hàng và biến cần thiết
-// if (!isset($_SESSION['cart'])) {
-//     $_SESSION['cart'] = [];
-// }
-
-// $totalPrice = 0;
-// $totalQuantity = 0;
-
-
-// // Tính toán tổng giá trị giỏ hàng
-// foreach ($_SESSION['cart'] as $item) {
-//     $totalPrice += $item['price'] * $item['quantity'];
-//     $totalQuantity += $item['quantity'];
-// }
-
-// Hàm tạo mã khách hàng
-function generateCustomerCode($conn, $storeid) {
-    $today = date('Y-m-d');
-    $month = date('m');
-    $day = date('d');
-
-    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM order_history WHERE storeid = ? AND order_date = ?");
-    $stmt->bind_param("is", $storeid, $today);
-    $stmt->execute();
-    $result = $stmt->get_result()->fetch_assoc();
-
-    $order_number = str_pad($result['count'] + 1, 3, "0", STR_PAD_LEFT);
-    return $month . $day . $order_number;
-}
-
-// // Xử lý thanh toán
-// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
-//     $storeid = $_SESSION['storeid'];
-//     $customer_code = generateCustomerCode($conn, $storeid);
-//     $products = $_SESSION['cart'];
-//     $total_price = $_POST['total_price'];
-//     $received_amount = $_POST['received_amount'];
-   
-//     // Thêm đơn hàng vào order_history
-//     $stmt = $conn->prepare("INSERT INTO order_history (customer_code, storeid, total_price, order_date) VALUES (?, ?, ?, CURDATE())");
-//     $stmt->bind_param("sid", $customer_code, $storeid, $total_price);
-//     if (!$stmt->execute()) {
-//         echo json_encode(['error' => $stmt->error]);
-//         exit;
-//     }
-//     $orderid = $conn->insert_id;
-
-//     // Thêm chi tiết đơn hàng vào order_details
-//     foreach ($products as $product) {
-//          // Kiểm tra tồn kho trước khi thực hiện cập nhật
-//          $stmt = $conn->prepare("SELECT stock_quantity FROM product WHERE productid = ?");
-//          $stmt->bind_param("i", $product['productid']);
-//          $stmt->execute();
-//          $result = $stmt->get_result()->fetch_assoc();
- 
-//          if ($result['stock_quantity'] < $product['quantity']) {
-//              echo json_encode(['error' => 'Số lượng tồn kho không đủ cho sản phẩm: ' . $product['pname']]);
-//              exit;
-//          }
-//          // Chèn dữ liệu vào chi tiết đơn hàng
-//         $stmt = $conn->prepare("INSERT INTO order_details (orderid, productid, quantity) VALUES (?, ?, ?)");
-//         $stmt->bind_param("iii", $orderid, $product['productid'], $product['quantity']);
-//         if (!$stmt->execute()) {
-//             echo "Lỗi: " . $stmt->error;
-//         }
-
-//         // Cập nhật số lượng tồn kho
-//         $stmt = $conn->prepare("UPDATE product SET stock_quantity = stock_quantity - ? WHERE productid = ?");
-//         $stmt->bind_param("ii", $product['quantity'], $product['productid']);
-//         if (!$stmt->execute()) {
-//             echo "Lỗi: " . $stmt->error;
-//         }
-//     }
-
-//     $_SESSION['cart'] = []; // Xóa giỏ hàng sau khi thanh toán
-//     echo json_encode(['success' => true, 'order_id' => $customer_code]);
-//     exit;
-// }
-
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -138,7 +59,7 @@ function generateCustomerCode($conn, $storeid) {
     <div class="pos">
         <h2>会計</h2>
         <div class="id-time">
-            <p id="customer-id">注文番号: <?php echo generateCustomerCode($conn, $_SESSION['storeid']); ?></p>
+            <p id="customer-id">注文番号: <?php echo generateOrderNumber($conn, $_SESSION['storeid']); ?></p>
             <div id="datetime">
                 <p id="date"></p>
                 <p id="time"></p>

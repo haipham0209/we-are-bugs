@@ -119,6 +119,7 @@ drop table daily_revenue;
 -- Tạo bảng orders sau khi sửa lỗi
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_number VARCHAR(50) NOT NULL UNIQUE,
     store_id INT NOT NULL,  -- ID cửa hàng
     customer_id INT NULL,  -- Tham chiếu đến bảng customers nếu có
     total_price DECIMAL(10, 2) NOT NULL,  -- Tổng tiền đơn hàng
@@ -128,15 +129,17 @@ CREATE TABLE orders (
     FOREIGN KEY (store_id) REFERENCES store(storeid)  -- Tham chiếu đến bảng cửa hàng
 );
 
+
 -- Tạo bảng order_details sau khi bảng orders đã tồn tại
 CREATE TABLE order_details (
-    order_detail_id INT AUTO_INCREMENT PRIMARY KEY,
-    orderid INT NOT NULL,  -- ID đơn hàng
-    productid INT NOT NULL,  -- ID sản phẩm
-    quantity INT NOT NULL,  -- Số lượng sản phẩm
-    FOREIGN KEY (orderid) REFERENCES orders(order_id),  -- Tham chiếu đến bảng orders
-    FOREIGN KEY (productid) REFERENCES product(productid)  -- Tham chiếu đến bảng sản phẩm
+    order_detail_id INT AUTO_INCREMENT PRIMARY KEY,  -- ID tự tăng cho từng dòng chi tiết đơn hàng
+    order_number VARCHAR(50) NOT NULL,               -- Số đơn hàng, tham chiếu đến bảng orders
+    productid INT NOT NULL,                          -- ID sản phẩm
+    quantity INT NOT NULL,                           -- Số lượng sản phẩm
+    FOREIGN KEY (order_number) REFERENCES orders(order_number), -- Ràng buộc khóa ngoại đến bảng orders
+    FOREIGN KEY (productid) REFERENCES product(productid)      -- Ràng buộc khóa ngoại đến bảng product
 );
+
 
 
 -- Bảng lưu doanh thu theo ngày
