@@ -21,12 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Kiểm tra dữ liệu nhận được
     if (empty($products)) {
-        echo json_encode(['success' => false, 'error' => 'Giỏ hàng trống.']);
+        echo json_encode(['success' => false, 'error' => 'エラー発生しました。']);
         exit;
     }
 
     if ($total_price <= 0 || $received_amount < $total_price) {
-        echo json_encode(['success' => false, 'error' => 'Dữ liệu không hợp lệ hoặc số tiền nhận được không đủ.']);
+        echo json_encode(['success' => false, 'error' => '金額不足している']);
         exit;
     }
 
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute();
             } else {
                 // Nếu không tìm thấy productid, trả về lỗi
-                echo json_encode(['success' => false, 'error' => 'Sản phẩm không tồn tại trong cửa hàng này.']);
+                echo json_encode(['success' => false, 'error' => '商品存在しない']);
                 $conn->rollback();
                 exit;
             }

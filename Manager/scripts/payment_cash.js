@@ -32,7 +32,7 @@ function sendDataToServer() {
     const data = prepareFormData();
 
     // Gửi qua fetch
-    console.log("Dữ liệu JSON gửi đi:", JSON.stringify(data));
+    // console.log("Dữ liệu JSON gửi đi:", JSON.stringify(data));
 
     fetch('./php/process_payment.php', {
         method: 'POST',
@@ -51,18 +51,20 @@ function sendDataToServer() {
                 const result = JSON.parse(text);  // Chuyển đổi text thành JSON
                 console.log("Kết quả từ server:", result);
                 if (result.success) {
-                    alert(`Thanh toán hoàn tất! Mã đơn hàng: ${result.order_id}`);
+                    // alert(`Thanh toán hoàn tất! Mã đơn hàng: ${result.order_id}`);
+                    alert(`請求成功しました。: ${result.order_id}`);
                 } else if (result.error) {
-                    alert(`Lỗi: ${result.error}`);
+                    // alert(`Lỗi: ${result.error}`);
+                    alert(`エラー: ${result.error}`);
                 }
             } catch (e) {
-                console.error("Lỗi khi parse JSON:", e);
-                alert("Đã xảy ra lỗi khi xử lý dữ liệu trả về từ server.");
+                // console.error("Lỗi khi parse JSON:", e);
+                alert("エラー発生しました。");
             }
         })
         .catch(error => {
             console.error("Lỗi:", error);
-            alert("Có lỗi xảy ra: " + error.message);
+            alert("エラー" + error.message);
         });
     
 }

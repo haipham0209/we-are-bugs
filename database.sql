@@ -86,6 +86,15 @@ CREATE TABLE product (
     FOREIGN KEY (storeid) REFERENCES store(storeid),
     FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, storeid)
 );
+CREATE TABLE order_history (
+    orderid INT AUTO_INCREMENT PRIMARY KEY,             -- Mã đơn hàng, tự động tăng
+    customer_code VARCHAR(10) NOT NULL,                 -- Mã khách hàng (không cho phép NULL)
+    storeid INT NOT NULL,                               -- Mã cửa hàng (không cho phép NULL)
+    total_price DECIMAL(10,2) NOT NULL,                 -- Tổng giá trị đơn hàng (không cho phép NULL)
+    order_date DATE NOT NULL,                           -- Ngày đặt hàng (không cho phép NULL)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP      -- Thời gian tạo đơn hàng, giá trị mặc định là thời gian hiện tại
+);
+
 -- 1 cửa hàng ko trùng barcode nhưng cửa hàng khác nhau thì ok
 ALTER TABLE product ADD CONSTRAINT unique_barcode_per_store UNIQUE (storeid, barcode);
 
