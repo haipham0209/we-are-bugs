@@ -1,6 +1,5 @@
 <?php
 include('./php/auth_check.php');
-
 include('./php/db_connect.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -24,6 +23,7 @@ $best_sellers_sql = "
         p.pname, 
         p.price, 
         p.productImage, 
+        p.category_id,
         SUM(od.quantity) AS total_quantity
     FROM product p
     JOIN order_details od ON p.productid = od.productid
@@ -36,7 +36,7 @@ if (!empty($category_ids)) {
 }
 
 $best_sellers_sql .= "
-    GROUP BY p.productid, p.pname, p.price, p.productImage
+    GROUP BY p.productid, p.pname, p.price, p.productImage, p.category_id
     ORDER BY total_quantity DESC
     LIMIT 3
 ";
@@ -48,7 +48,6 @@ $stmt->bind_param($types, ...$params);
 
 $stmt->execute();
 $best_sellers_result = $stmt->get_result();
-
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +67,6 @@ $best_sellers_result = $stmt->get_result();
     <header>
         <div class="main-navbar">
             <div class="search-scan">
-                <!-- <input type="text" class="search-bar" placeholder="Search..."> -->
                 <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">            
                 <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
                 <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
@@ -113,7 +111,7 @@ $best_sellers_result = $stmt->get_result();
             }
             ?>
         </div>
-        <!-- ベストセラー商品 -->
+        <!-- Best sellers products -->
         <div class="all-product">
             <?php
             if ($best_sellers_result->num_rows > 0) {
@@ -121,7 +119,7 @@ $best_sellers_result = $stmt->get_result();
                     $productImagePath = '../' . $product['productImage']; 
 
                     echo '
-                        <div class="product-card">
+                        <div class="product-card" data-category-id="' . htmlspecialchars($product['category_id'], ENT_QUOTES, 'UTF-8') . '">
                             <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
                             <div class="product-info">
                                 <p><strong>商品名:</strong> ' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
@@ -133,6 +131,72 @@ $best_sellers_result = $stmt->get_result();
             } 
             ?>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const categoryButtons = document.querySelectorAll('.category button');
+                const productCards = document.querySelectorAll('.product-card');
+                const selectedCategories = new Set(); // Manage selected categories
+
+                // "All" button
+                const allCategoriesButton = document.querySelector('.all-categories');
+
+                categoryButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const categoryId = this.getAttribute('data-category-id');
+
+                        // Reset if "All" button is clicked
+                        if (!categoryId) {
+                            selectedCategories.clear();
+                            categoryButtons.forEach(btn => btn.classList.remove('active'));
+                            this.classList.add('active'); // Mark "All" button as active
+
+                            // Show all products
+                            productCards.forEach(card => card.style.display = 'block');
+                            return;
+                        }
+
+                        // Handle other category selections
+                        if (selectedCategories.has(categoryId)) {
+                            // Deselect if already selected
+                            selectedCategories.delete(categoryId);
+                            this.classList.remove('active');
+                        } else {
+                            // Add to selected categories if not selected
+                            selectedCategories.add(categoryId);
+                            this.classList.add('active');
+                        }
+
+                        // Update "All" button status
+                        if (selectedCategories.size === 0) {
+                            allCategoriesButton.classList.add('active');
+                        } else {
+                            allCategoriesButton.classList.remove('active');
+                        }
+
+                        // Filter products
+                        filterProducts();
+                    });
+                });
+
+                function filterProducts() {
+                    if (selectedCategories.size === 0) {
+                        // Show all products if no category is selected
+                        productCards.forEach(card => card.style.display = 'block');
+                        return;
+                    }
+
+                    // Show only products that match selected categories
+                    productCards.forEach(card => {
+                        const cardCategoryId = card.getAttribute('data-category-id');
+                        if (selectedCategories.has(cardCategoryId)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        </script>
     </main>
     <footer></footer>
 </body>
