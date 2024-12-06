@@ -24,6 +24,8 @@ if ($conn->connect_error) {
     <script src="./scripts/POS.js"></script>
     <script src="./scripts/search.js"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <title>POS</title>
 </head>
 <body>
@@ -115,7 +117,7 @@ if ($conn->connect_error) {
                     <input type="number" id="waribiki-input" value="0" min="0" max="100" onchange="updateTotal()"> %
                 </p>
                 <label for="received-amount">お預かり:</label>
-                <input type="number" id="received-amount" oninput="calculateChange()">
+                <input type="number" id="received-amount" onchange="calculateChange()">
                 <p>お釣り: <span id="change-amount">0¥</span></p>
             </div>
 
@@ -132,7 +134,11 @@ if ($conn->connect_error) {
         <!-- Gửi thông tin các sản phẩm trong giỏ hàng -->
 
         <!-- <button type="submit" name="complete" class="button-pay">完了</button> -->
+        <div class="btn_container d-flex justify-content-between">
+        <button class="button-pay" type="button" onclick="location.reload()">CLEAR</button>
         <button class="button-pay" type="button" onclick="sendDataToServer()">完了</button>
+        </div>
+
 
     </form>
 <!-- /////////////////////////////form///////////////////////////////////////// -->

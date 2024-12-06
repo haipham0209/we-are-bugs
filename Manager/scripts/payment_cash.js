@@ -46,17 +46,17 @@ function sendDataToServer() {
             return response.text();  // Lấy nội dung phản hồi dưới dạng text
         })
         .then(text => {
-            console.log("Nội dung trả về từ server:", text);  // Log nội dung trả về từ server
+            // console.log("Nội dung trả về từ server:", text);  // Log nội dung trả về từ server
             try {
                 const result = JSON.parse(text);  // Chuyển đổi text thành JSON
-                console.log("Kết quả từ server:", result);
+                // console.log("Kết quả từ server:", result);
                 if (result.success) {
                     // Hiển thị thông báo thành công
                     alert(`請求成功しました。: ${result.order_number}`);
                     
                     // Điều hướng đến trang khác
                     // window.location.href = '/success-page.php?order_number=' + result.order_number;
-                    location.reload();
+                    // location.reload();
                 }
                  else if (result.error) {
                     // alert(`Lỗi: ${result.error}`);
@@ -64,11 +64,11 @@ function sendDataToServer() {
                 }
             } catch (e) {
                 // console.error("Lỗi khi parse JSON:", e);
-                alert("エラー発生しました。");
+                alert("操作違います");
             }
         })
         .catch(error => {
-            console.error("Lỗi:", error);
+            // console.error("Lỗi:", error);
             alert("エラー" + error.message);
         });
     
