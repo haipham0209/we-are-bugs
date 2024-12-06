@@ -86,6 +86,7 @@ CREATE TABLE product (
     FOREIGN KEY (storeid) REFERENCES store(storeid),
     FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, storeid)
 );
+-- alter table product add discounted_price decimal(10, 2) after costPrice;
 CREATE TABLE order_history (
     orderid INT AUTO_INCREMENT PRIMARY KEY,             -- Mã đơn hàng, tự động tăng
     customer_code VARCHAR(10) NOT NULL,                 -- Mã khách hàng (không cho phép NULL)
