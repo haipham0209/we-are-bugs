@@ -86,6 +86,15 @@ CREATE TABLE product (
     FOREIGN KEY (storeid) REFERENCES store(storeid),
     FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, storeid)
 );
+CREATE TABLE order_history (
+    orderid INT AUTO_INCREMENT PRIMARY KEY,             -- Mã đơn hàng, tự động tăng
+    customer_code VARCHAR(10) NOT NULL,                 -- Mã khách hàng (không cho phép NULL)
+    storeid INT NOT NULL,                               -- Mã cửa hàng (không cho phép NULL)
+    total_price DECIMAL(10,2) NOT NULL,                 -- Tổng giá trị đơn hàng (không cho phép NULL)
+    order_date DATE NOT NULL,                           -- Ngày đặt hàng (không cho phép NULL)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP      -- Thời gian tạo đơn hàng, giá trị mặc định là thời gian hiện tại
+);
+
 -- 1 cửa hàng ko trùng barcode nhưng cửa hàng khác nhau thì ok
 ALTER TABLE product ADD CONSTRAINT unique_barcode_per_store UNIQUE (storeid, barcode);
 
@@ -110,6 +119,7 @@ drop table daily_revenue;
 -- Tạo bảng orders sau khi sửa lỗi
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_number VARCHAR(50) NOT NULL UNIQUE,
     store_id INT NOT NULL,  -- ID cửa hàng
     customer_id INT NULL,  -- Tham chiếu đến bảng customers nếu có
     total_price DECIMAL(10, 2) NOT NULL,  -- Tổng tiền đơn hàng
@@ -119,25 +129,32 @@ CREATE TABLE orders (
     FOREIGN KEY (store_id) REFERENCES store(storeid)  -- Tham chiếu đến bảng cửa hàng
 );
 
+
 -- Tạo bảng order_details sau khi bảng orders đã tồn tại
 CREATE TABLE order_details (
-    order_detail_id INT AUTO_INCREMENT PRIMARY KEY,
-    orderid INT NOT NULL,  -- ID đơn hàng
-    productid INT NOT NULL,  -- ID sản phẩm
-    quantity INT NOT NULL,  -- Số lượng sản phẩm
-    FOREIGN KEY (orderid) REFERENCES orders(order_id),  -- Tham chiếu đến bảng orders
-    FOREIGN KEY (productid) REFERENCES product(productid)  -- Tham chiếu đến bảng sản phẩm
+    order_detail_id INT AUTO_INCREMENT PRIMARY KEY,  -- ID tự tăng cho từng dòng chi tiết đơn hàng
+    order_number VARCHAR(50) NOT NULL,               -- Số đơn hàng, tham chiếu đến bảng orders
+    productid INT NOT NULL,                          -- ID sản phẩm
+    quantity INT NOT NULL,                           -- Số lượng sản phẩm
+    FOREIGN KEY (order_number) REFERENCES orders(order_number), -- Ràng buộc khóa ngoại đến bảng orders
+    FOREIGN KEY (productid) REFERENCES product(productid)      -- Ràng buộc khóa ngoại đến bảng product
 );
+
 
 
 -- Bảng lưu doanh thu theo ngày
+DROP TABLE IF EXISTS daily_revenue;
+
 CREATE TABLE daily_revenue (
-    store_id INT NOT NULL,  -- ID cửa hàng
-    revenue_date DATE NOT NULL,  -- Ngày doanh thu
-    total_revenue DECIMAL(10, 2) NOT NULL DEFAULT 0,  -- Tổng doanh thu trong ngày
+    store_id INT NOT NULL,              -- ID của cửa hàng
+    revenue_date DATE NOT NULL,         -- Ngày tính doanh thu
+    total_revenue DECIMAL(10, 2) NOT NULL DEFAULT 0.00,  -- Tổng doanh thu
+    total_cost DECIMAL(10, 2) NOT NULL DEFAULT 0.00,     -- Tổng chi phí
+    total_profit DECIMAL(10, 2) NOT NULL DEFAULT 0.00,   -- Lợi nhuận
     PRIMARY KEY (store_id, revenue_date),
-    FOREIGN KEY (store_id) REFERENCES store(storeid)  -- Tham chiếu đến bảng cửa hàng
+    FOREIGN KEY (store_id) REFERENCES store(storeid)
 );
+
 
 
 

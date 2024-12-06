@@ -1,6 +1,7 @@
 <?php
 include('./php/auth_check.php'); // Kiểm tra quyền người dùng
 include('./php/db_connect.php'); // Kết nối cơ sở dữ liệu
+include('./php/POS_process.php'); // Kết nối cơ sở dữ liệu
 // include('./php/POS_product.php');
 
 // Khởi tạo kết nối cơ sở dữ liệu
@@ -10,86 +11,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-// Khởi tạo giỏ hàng và biến cần thiết
-// if (!isset($_SESSION['cart'])) {
-//     $_SESSION['cart'] = [];
-// }
-
-// $totalPrice = 0;
-// $totalQuantity = 0;
-
-
-// // Tính toán tổng giá trị giỏ hàng
-// foreach ($_SESSION['cart'] as $item) {
-//     $totalPrice += $item['price'] * $item['quantity'];
-//     $totalQuantity += $item['quantity'];
-// }
-
-// Hàm tạo mã khách hàng
-function generateCustomerCode($conn, $storeid) {
-    $today = date('Y-m-d');
-    $month = date('m');
-    $day = date('d');
-
-    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM order_history WHERE storeid = ? AND order_date = ?");
-    $stmt->bind_param("is", $storeid, $today);
-    $stmt->execute();
-    $result = $stmt->get_result()->fetch_assoc();
-
-    $order_number = str_pad($result['count'] + 1, 3, "0", STR_PAD_LEFT);
-    return $month . $day . $order_number;
-}
-
-// // Xử lý thanh toán
-// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
-//     $storeid = $_SESSION['storeid'];
-//     $customer_code = generateCustomerCode($conn, $storeid);
-//     $products = $_SESSION['cart'];
-//     $total_price = $_POST['total_price'];
-//     $received_amount = $_POST['received_amount'];
-   
-//     // Thêm đơn hàng vào order_history
-//     $stmt = $conn->prepare("INSERT INTO order_history (customer_code, storeid, total_price, order_date) VALUES (?, ?, ?, CURDATE())");
-//     $stmt->bind_param("sid", $customer_code, $storeid, $total_price);
-//     if (!$stmt->execute()) {
-//         echo json_encode(['error' => $stmt->error]);
-//         exit;
-//     }
-//     $orderid = $conn->insert_id;
-
-//     // Thêm chi tiết đơn hàng vào order_details
-//     foreach ($products as $product) {
-//          // Kiểm tra tồn kho trước khi thực hiện cập nhật
-//          $stmt = $conn->prepare("SELECT stock_quantity FROM product WHERE productid = ?");
-//          $stmt->bind_param("i", $product['productid']);
-//          $stmt->execute();
-//          $result = $stmt->get_result()->fetch_assoc();
- 
-//          if ($result['stock_quantity'] < $product['quantity']) {
-//              echo json_encode(['error' => 'Số lượng tồn kho không đủ cho sản phẩm: ' . $product['pname']]);
-//              exit;
-//          }
-//          // Chèn dữ liệu vào chi tiết đơn hàng
-//         $stmt = $conn->prepare("INSERT INTO order_details (orderid, productid, quantity) VALUES (?, ?, ?)");
-//         $stmt->bind_param("iii", $orderid, $product['productid'], $product['quantity']);
-//         if (!$stmt->execute()) {
-//             echo "Lỗi: " . $stmt->error;
-//         }
-
-//         // Cập nhật số lượng tồn kho
-//         $stmt = $conn->prepare("UPDATE product SET stock_quantity = stock_quantity - ? WHERE productid = ?");
-//         $stmt->bind_param("ii", $product['quantity'], $product['productid']);
-//         if (!$stmt->execute()) {
-//             echo "Lỗi: " . $stmt->error;
-//         }
-//     }
-
-//     $_SESSION['cart'] = []; // Xóa giỏ hàng sau khi thanh toán
-//     echo json_encode(['success' => true, 'order_id' => $customer_code]);
-//     exit;
-// }
-
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -97,6 +18,7 @@ function generateCustomerCode($conn, $storeid) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/POS.css">
+    <link rel="stylesheet" href="./styles/setBestSel.css">
     <script src="./scripts/cameraPos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     <script src="./scripts/POS.js"></script>
@@ -106,15 +28,15 @@ function generateCustomerCode($conn, $storeid) {
 </head>
 <body>
 <header>
-    <div class="main-navbar">
-        <div class="search-scan">
+        <div class="main-navbar">
+            <div class="search-scan">
                 <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">            
-            <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
-            <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
-        </div>
-        <div id="suggestionList"></div>
-        <script>
-                let isCameraRunning = false; // カメラの状態を管理
+                <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
+                <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
+            </div>
+            <div id="suggestionList"></div>
+            <script>
+                let isCameraRunning = false; 
 
                 function toggleCamera() {
                     if (isCameraRunning) {
@@ -125,12 +47,12 @@ function generateCustomerCode($conn, $storeid) {
                         isCameraRunning = true;
                     }
                 }
-        </script>
-        <button class="main-home">
-            <h1 class="logo">WRB</h1>
-        </button>
-    </div>
-</header>
+            </script>
+            <a href="main.php">
+                <img class="home" src="./images/home.png" alt="Home Mana">
+            </a>
+        </div>
+    </header>
 <main>
     <div id="camera" style="display: none;">
         <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>
@@ -138,7 +60,7 @@ function generateCustomerCode($conn, $storeid) {
     <div class="pos">
         <h2>会計</h2>
         <div class="id-time">
-            <p id="customer-id">注文番号: <?php echo generateCustomerCode($conn, $_SESSION['storeid']); ?></p>
+            <p id="customer-id">注文番号: <?php echo generateOrderNumber($conn, $_SESSION['storeid']); ?></p>
             <div id="datetime">
                 <p id="date"></p>
                 <p id="time"></p>
