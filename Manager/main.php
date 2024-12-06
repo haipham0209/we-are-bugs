@@ -40,7 +40,7 @@ include('./php/auth_check.php');
                 <img src="./images/stock-icon.png" alt="在庫" class="icon"  >
                 <span>在庫</span>
             </button>
-            <button class="menu-button">
+            <button class="menu-button" onclick="location.href='order.php'">
                 <img src="./images/order-icon.png" alt="注文" class="icon">
                 <span>注文</span>
             </button>
