@@ -18,6 +18,7 @@ if ($conn->connect_error) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/POS.css">
+    <link rel="stylesheet" href="./styles/setBestSel.css">
     <script src="./scripts/cameraPos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     <script src="./scripts/POS.js"></script>
@@ -27,15 +28,15 @@ if ($conn->connect_error) {
 </head>
 <body>
 <header>
-    <div class="main-navbar">
-        <div class="search-scan">
+        <div class="main-navbar">
+            <div class="search-scan">
                 <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">            
-            <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
-            <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
-        </div>
-        <div id="suggestionList"></div>
-        <script>
-                let isCameraRunning = false; // カメラの状態を管理
+                <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
+                <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
+            </div>
+            <div id="suggestionList"></div>
+            <script>
+                let isCameraRunning = false; 
 
                 function toggleCamera() {
                     if (isCameraRunning) {
@@ -46,12 +47,12 @@ if ($conn->connect_error) {
                         isCameraRunning = true;
                     }
                 }
-        </script>
-        <button class="main-home">
-            <h1 class="logo">WRB</h1>
-        </button>
-    </div>
-</header>
+            </script>
+            <a href="main.php">
+                <img class="home" src="./images/home.png" alt="Home Mana">
+            </a>
+        </div>
+    </header>
 <main>
     <div id="camera" style="display: none;">
         <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>

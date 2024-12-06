@@ -143,13 +143,18 @@ CREATE TABLE order_details (
 
 
 -- Bảng lưu doanh thu theo ngày
+DROP TABLE IF EXISTS daily_revenue;
+
 CREATE TABLE daily_revenue (
-    store_id INT NOT NULL,  -- ID cửa hàng
-    revenue_date DATE NOT NULL,  -- Ngày doanh thu
-    total_revenue DECIMAL(10, 2) NOT NULL DEFAULT 0,  -- Tổng doanh thu trong ngày
+    store_id INT NOT NULL,              -- ID của cửa hàng
+    revenue_date DATE NOT NULL,         -- Ngày tính doanh thu
+    total_revenue DECIMAL(10, 2) NOT NULL DEFAULT 0.00,  -- Tổng doanh thu
+    total_cost DECIMAL(10, 2) NOT NULL DEFAULT 0.00,     -- Tổng chi phí
+    total_profit DECIMAL(10, 2) NOT NULL DEFAULT 0.00,   -- Lợi nhuận
     PRIMARY KEY (store_id, revenue_date),
-    FOREIGN KEY (store_id) REFERENCES store(storeid)  -- Tham chiếu đến bảng cửa hàng
+    FOREIGN KEY (store_id) REFERENCES store(storeid)
 );
+
 
 
 
