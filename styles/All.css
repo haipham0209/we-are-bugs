@@ -103,7 +103,7 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
-        align-items: flex-end;
+        /* align-items: flex-end; */
         margin: 5px;
         padding: 10px 20px;
         padding: 10px;
@@ -139,7 +139,7 @@
         width: 45px; /* Chiều rộng nút */
         height: 45px; /* Chiều cao nút */
         padding: 0; /* Xóa khoảng cách mặc định */
-        padding-top: 10px;
+        padding-top: 25px;
         align-items: flex-end;
     }
     

@@ -92,7 +92,7 @@
 /* =============================END nav avatar------------------------------ */
     /* ---------------------------------nav button ------------------------------------- */
     .account-toggle {
-        margin: auto;
+        /* margin: auto; */
         justify-content: center; 
         background: none;
         border: none;
@@ -292,6 +292,9 @@
     .menu-toggle {
         display: block; /* Hiển thị button menu-toggle trên màn hình nhỏ */
     }
+    .navbar{
+        /* align-items: flex-end; */
+    }
 
     /* ---------------------------------------- END -besstseleers------------------------------ */
 
@@ -371,6 +374,7 @@ header {
 }
 
 .account-toggle .avatar {
+    margin-right: 20px;
     width: 50px;
     height: 35px;
     /* border-radius: 50%; */
@@ -630,6 +634,7 @@ footer {
     content: '☰';
 }
 .nav-menupc {
+    /* margin-left: 320px; */
     display: block; /* Hiển thị nav-menupc trên màn hình lớn */
 }
 
@@ -644,8 +649,19 @@ footer {
     display: none; /* Ẩn button menu-toggle trên màn hình lớn */
 }
 .support-list{
+
+width: 210px;
+background-color: #fff;
+/* border: 2px solid black; */
+border-radius: 10px;
 margin-left: 1000px;
 margin-top: 0;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.support-list .support{
+margin-top: 10px;
+display: flex;
+margin-left: 10px;
 }
 .nav-menupc img{
     margin-right: 25px;
