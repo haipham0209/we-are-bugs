@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Kiểm tra dữ liệu nhận được
     if (empty($products)) {
-        echo json_encode(['success' => false, 'error' => 'エラー発生しました。']);
+        echo json_encode(['success' => false, 'error' => '操作違います']);
         exit;
     }
 

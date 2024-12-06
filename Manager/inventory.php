@@ -34,9 +34,15 @@
                     die("Kết nối thất bại: " . $conn->connect_error);
                 }
 
-                // Truy vấn dữ liệu từ bảng sản phẩm
-                $sql = "SELECT barcode, pname, stock_quantity FROM product";
-                $result = $conn->query($sql);
+                // Lấy storeid từ session
+                $storeid = $_SESSION['storeid'];
+
+                // Truy vấn dữ liệu từ bảng sản phẩm với điều kiện storeid
+                $sql = "SELECT barcode, pname, stock_quantity FROM product WHERE storeid = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $storeid);  // "i" cho kiểu dữ liệu int
+                $stmt->execute();
+                $result = $stmt->get_result();
 
                 // Kiểm tra và hiển thị dữ liệu
                 if ($result->num_rows > 0) {
@@ -46,8 +52,9 @@
                         echo "<tr><td>" . $count++ . "</td><td>" . htmlspecialchars($row["barcode"]) . "</td><td>" . htmlspecialchars($row["pname"]) . "</td><td>" . htmlspecialchars($row["stock_quantity"]) . "</td></tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='4'>Không có sản phẩm nào</td></tr>";
+                    echo "<tr><td colspan='4'>商品見つかりません</td></tr>";
                 }
+
                 // Đóng kết nối
                 $conn->close();
                 ?>

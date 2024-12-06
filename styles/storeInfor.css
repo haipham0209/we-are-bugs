@@ -2,8 +2,12 @@
     display: flex; /* Căn giữa hình ảnh */
     align-items: center; /* Căn giữa theo chiều dọc */
     justify-content: center; /* Căn giữa theo chiều ngang (nếu cần) */
-    height: 80%; /* Đảm bảo chiều cao phù hợp với thanh bar */
+    /* height: 80%;  */
     padding: 0 25px;
+}
+.account-toggle{
+    margin-top: 0;
+    margin-right: 10px;
 }
 
 .logo {
@@ -89,8 +93,18 @@
 }
 
 .navbar .logobar img{
-    width: 330px;
-    height: 85px;
+    width: 400px;
+    height: 90px;
+    margin-right: 20px;
+}
+.nav-menupc{
+    margin-left: 320px;
+}
+.account-toggle{
+    margin-right: 20px;
+    margin-bottom: 28px;
+}
+.account-toggle img{
     margin-right: 20px;
 }
 }

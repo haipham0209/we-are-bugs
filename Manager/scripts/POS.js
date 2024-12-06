@@ -55,7 +55,7 @@ function addToCart(product) {
                 row.remove(); // Xóa hàng
                 updateSerialNumbers(); // Cập nhật lại STT
                 updateTotal(); // Cập nhật tổng tiền
-                calculateChange();
+                // calculateChange();
             }, 300);
         });
 
@@ -71,7 +71,7 @@ function addToCart(product) {
 
     // Cập nhật tổng tiền mỗi lần thêm sản phẩm
     updateTotal();
-    calculateChange();
+    // calculateChange();
 }
 
 function updateSerialNumbers() {
@@ -92,7 +92,7 @@ function updateProductPrice(input, unitPrice) {
         row.remove(); // Xóa hàng khỏi bảng
         updateSerialNumbers(); // Cập nhật lại số thứ tự (STT)
         updateTotal(); // Cập nhật lại tổng tiền
-        calculateChange();
+        // calculateChange();
         return; // Kết thúc hàm để không tiếp tục tính toán
     }
 
@@ -103,7 +103,7 @@ function updateProductPrice(input, unitPrice) {
 
     // Cập nhật tổng tiền
     updateTotal();
-    calculateChange();
+    // calculateChange();
 }
 //tổng tiền
 function updateTotal() {

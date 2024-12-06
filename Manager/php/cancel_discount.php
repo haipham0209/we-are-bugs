@@ -6,19 +6,28 @@ include('./db_connect.php');
 // リクエストデータを取得
 $requestData = json_decode(file_get_contents('php://input'), true);
 
-if (isset($requestData['productId'])) {
+if (isset($requestData['productId']) && isset($requestData['storeId'])) {
     $productId = $requestData['productId'];
+    $storeId = $requestData['storeId'];
 
     // データベース接続
     $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) {
         die(json_encode(['success' => false, 'message' => 'データベース接続に失敗しました']));
+        exit;
     }
 
     // `discounted_price` が NULL かどうかを確認
     $checkSql = "SELECT discounted_price FROM product WHERE productid = ?";
     $checkStmt = $conn->prepare($checkSql);
     $checkStmt->bind_param("i", $productId);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
+
+    // `discounted_price` が NULL かどうかを確認
+    $checkSql = "SELECT discounted_price FROM product WHERE productid = ? AND storeid = ?";
+    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt->bind_param("ii", $productId, $storeId);
     $checkStmt->execute();
     $checkResult = $checkStmt->get_result();
 
@@ -41,10 +50,10 @@ if (isset($requestData['productId'])) {
 
     $checkStmt->close();
 
-    // discounted_price を NULL に更新
-    $sql = "UPDATE product SET discounted_price = NULL WHERE productid = ?";
+    // 割引をキャンセル（`discounted_price` を NULL に更新）
+    $sql = "UPDATE product SET discounted_price = NULL WHERE productid = ? AND storeid = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $productId);
+    $stmt->bind_param("ii", $productId, $storeId);
 
     if ($stmt->execute()) {
         echo json_encode(['success' => true, 'message' => '割引がキャンセルされました']);

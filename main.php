@@ -144,7 +144,7 @@ require "resources.php";
                     <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo $tel; ?>"><?php echo $tel; ?></a></li>
                     <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mailto:<?php echo $mail; ?>"><?php echo $mail; ?></a></li>
                     <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a></li>
-            </ul>
+        </ul>
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
                         const supportTitle = document.querySelector('.support-title');

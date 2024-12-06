@@ -3,6 +3,7 @@
 function generateOrderNumber($conn, $storeid) {
     // Lấy ngày hiện tại
     $today = date('Y-m-d');
+
     $month = date('m');
     $day = date('d');
 
@@ -19,7 +20,7 @@ function generateOrderNumber($conn, $storeid) {
     $order_number = str_pad($result['count'] + 1, 3, "0", STR_PAD_LEFT);
 
     // Tạo mã đơn hàng hoàn chỉnh
-    $order_code = $month . $day . $order_number;
+    $order_code = $month . $day . $storeid . $order_number;
 
     // Lưu mã vào session (nếu cần)
     $_SESSION['order_number'] = $order_code;

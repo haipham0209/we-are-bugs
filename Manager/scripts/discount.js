@@ -72,27 +72,31 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 productId: currentProduct.productId,
+                storeId: selectedStoreId,
                 discountRate: discountRate,
                 discountedPrice: discountedPrice.toFixed(2)
             })
         })
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
-                if (data.success) {
-                    alert('割引が適用されました！');
-                    closeDialog();
-                    location.reload(); // ページをリロードして更新を反映
-                } else {
-                    alert('割引の適用に失敗しました: ' + data.message);
-                    console.log({
-                        productId: currentProduct.productId,
-                        discountRate: discountRate,
-                        discountedPrice: discountedPrice.toFixed(2)
-                    });
+                console.log('Raw Response:', data);
+                try {
+                    const jsonData = JSON.parse(data); // JSON にパース
+                    if (jsonData.success) {
+                        alert('割引が適用されました！');
+                        closeDialog();
+                        location.reload();
+                    } else {
+                        alert('割引の適用に失敗しました: ' + jsonData.message);
+                    }
+                } catch (error) {
+                    console.error('JSON パースエラー:', error);
+                    console.error('サーバーレスポンス:', data);
+                    alert('サーバーレスポンスが無効です');
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Fetch Error:', error);
                 alert('割引の適用中にエラーが発生しました');
             });
     });
@@ -103,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', function () {
             selectedProductId = this.getAttribute('data-product-id'); // 商品IDを取得
+            selectedStoreId = this.getAttribute('data-store-id'); // 店舗IDを取得
             const productName = this.querySelector('.product-info strong').textContent;
             const productPrice = this.querySelector('.product-info .product-price').textContent;
 
@@ -152,7 +157,10 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ productId: selectedProductId }),
+            body: JSON.stringify({
+                productId: selectedProductId,
+                storeId: selectedStoreId,
+            }),
         })
             .then(response => response.json())
             .then(data => {
