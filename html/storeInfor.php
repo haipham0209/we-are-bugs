@@ -103,8 +103,14 @@ $conn->close();
             <div class="logobar">
                 <a href="../main.php?sname=<?php echo $_GET['sname']?>"><img id= logo-main src="<?=$logopath?>" alt="logo"></a>
             </div>
+            <nav class="nav-menupc">
+                <a href="./main.php?sname=<?php echo $_GET['sname']  ?>" ><img class="avatar" src="../images/home.png"></a>
+                <a href="./html/storeInfor.php?sname=<?php echo urlencode($sname); ?>"><img class="avatar" src="../images/info.png"></a>
+                <a href="./html/myPage.php?sname=<?php echo $_GET['sname']  ?>"><img class="avatar" src="../images/myself.png"></a>
+                <a class="support-title"><img class="avatar" src="../images/phone.png"></a>
+            </nav>
             <button class="account-toggle">
-                <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User"<?php echo $_GET['sname']  ?>>
+                <img class="avatar" src="../images/lock.png" alt="Avatar User"<?php echo $_GET['sname']  ?>>
                 <!-- <img class="avatar" src="../images/avataricon.jpg" alt="Avatar User" onclick="window.location.href='myPage.php?sname=<?php echo $_GET['sname']  ?>';"> -->
             </button>
         </div>
@@ -128,6 +134,26 @@ $conn->close();
             </ul>
         </nav>
         <div class="overlay-avatar"></div>
+        <ul class="support-list" style="display: none;"> <!-- Ẩn danh sách ban đầu -->
+                    <li class="support"><i class="fa fa-phone"></i><a class="support" href="tel:<?php echo $tel; ?>"><?php echo $tel; ?></a></li>
+                    <li class="support"><i class="fa fa-envelope"></i><a class="support" href="mailto:<?php echo $mail; ?>"><?php echo $mail; ?></a></li>
+                    <li class="support"><i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a></li>
+        </ul>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const supportTitle = document.querySelector('.support-title');
+                        const supportList = document.querySelector('.support-list');
+
+                        supportTitle.addEventListener('click', function() {
+                            // Kiểm tra trạng thái hiển thị của danh sách hỗ trợ
+                            if (supportList.style.display === "none" || supportList.style.display === "") {
+                                supportList.style.display = "block"; // Hiển thị danh sách
+                            } else {
+                                supportList.style.display = "none"; // Ẩn danh sách
+                            }
+                        });
+                    });
+                </script>
     </header>
 
     <main>

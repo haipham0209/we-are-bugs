@@ -7,16 +7,15 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // 接続エラーチェック
 if ($conn->connect_error) {
     die(json_encode(['success' => false, 'message' => 'データベース接続に失敗しました: ' . $conn->connect_error]));
+    exit;
 }
 
 // JSON形式でデータを受信
 $requestData = json_decode(file_get_contents('php://input'), true);
 
-// デバッグ用ログ出力
-file_put_contents('debug_log.txt', print_r($requestData, true));
-
 // データを取得
 $productId = $requestData['productId'] ?? null;
+$storeId = $requestData['storeId'] ?? null;
 $discountRate = $requestData['discountRate'] ?? null;
 $discountedPrice = $requestData['discountedPrice'] ?? null;
 
@@ -26,16 +25,25 @@ if (!$productId || !is_numeric($productId) || !$discountRate || !is_numeric($dis
     exit;
 }
 
-// データベースに接続し割引を適用
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    echo json_encode(['success' => false, 'message' => 'データベース接続エラー']);
+// 商品が存在するか確認
+$checkSql = "SELECT productid FROM product WHERE productid = ? AND storeid = ?";
+$checkStmt = $conn->prepare($checkSql);
+$checkStmt->bind_param("ii", $productId, $storeId);
+$checkStmt->execute();
+$checkResult = $checkStmt->get_result();
+
+if ($checkResult->num_rows === 0) {
+    echo json_encode(['success' => false, 'message' => '指定された商品が見つかりません']);
+    $checkStmt->close();
+    $conn->close();
     exit;
 }
+$checkStmt->close();
 
-$sql = "UPDATE product SET discounted_price = ? WHERE productid = ?";
+// 割引を適用（discounted_price を更新）
+$sql = "UPDATE product SET discounted_price = ? WHERE productid = ? AND storeid = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("di", $discountedPrice, $productId);
+$stmt->bind_param("dii", $discountedPrice, $productId, $storeId);
 
 if ($stmt->execute()) {
     echo json_encode(['success' => true, 'message' => '割引が適用されました']);
