@@ -26,21 +26,45 @@
         width: 100%;
         justify-content: center;
         align-items: center;
-        padding: 15px 0px;
-        margin: 0;
+        padding: 10px 0;
         background-color: #e3f3e1;
         border-radius: 8px;
     }
 
+    .home {
+        margin: 0 10px 0 10px;
+        width: 30px;
+        height: 30px;
+    }
+
+    #suggestionList {
+        border: 1px solid #ccc;
+        max-width: 300px;
+        max-height: 200px;
+        overflow-y: auto;
+        position: absolute;
+        background: white;
+        z-index: 1000;
+    }
+
+    #suggestionList div {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    #suggestionList div:hover {
+        background-color: #f0f0f0;
+    }
+
     .search-scan {
+        margin: 0 10px 0 10px;
         position: relative;
-        width: 70%;
+        width: 100%;
     }
 
     .search-bar {
         width: 100%;
         padding: 10px 5px 10px 5px;
-        /* Chỉnh lại padding để chừa không gian cho ảnh */
         border: 1px solid #ccc;
         border-radius: 10px;
         font-size: 16px;
@@ -49,11 +73,30 @@
 
     .search-bar:focus {
         border-color: #038610;
-        /* Đổi màu viền khi focus */
         outline: none;
     }
 
-    /* Định dạng ảnh camera */
+    .suggestions-list {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        width: 100%;
+        background: white;
+        border: 1px solid #ccc;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 100;
+    }
+
+    .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
+
     .camera-icon {
         position: absolute;
         text-align: right;
@@ -62,17 +105,14 @@
         justify-content: right;
         transform: translateY(-50%);
         width: 24px;
-        /* Kích thước của ảnh camera */
         height: 24px;
         cursor: pointer;
         opacity: 0.8;
-        /* Tạo hiệu ứng mờ nhẹ */
         transition: opacity 0.3s ease;
     }
 
     .camera-icon:hover {
         opacity: 1;
-        /* Hiệu ứng hover */
     }
 
     .main-home {
@@ -81,27 +121,14 @@
         cursor: pointer;
     }
 
-    .logo {
-        font-size: 24px;
-        margin: auto;
-        font-weight: bold;
-        color: #333;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .logo img {
-        width: 120px !important;
-        /* サイズを強制 */
-        height: 40px !important;
-        /* 高さを比率に応じて調整 */
-        object-fit: contain;
-    }
-
     #camera {
         display: none;
         margin: 4px;
+        width: 320px;
+        height: 240px;
+        background: #ccc;
+        position: relative;
+        margin: auto;
     }
 
     .title {
@@ -423,56 +450,114 @@
         text-align: center;
     }
 
-    /* Định dạng cho thanh điều hướng */
     .main-navbar {
         display: flex;
-        justify-content: space-between;
+        width: 100%;
+        justify-content: center;
         align-items: center;
-        color: #fff;
-        padding: 15px 30px;
-        border-radius: 8px;
+        padding: 10px 0;
         background-color: #e3f3e1;
-        margin: 10px;
+        border-radius: 8px;
     }
 
-    .logo {
-        font-size: 28px;
-        font-weight: bold;
-        text-decoration: none;
-    }
-
-    .search-scan {
-        display: flex;
-        align-items: center;
-        margin: 0 auto;
-        padding: 10px;
-        border-radius: 10px;
-        background-color: #fff;
-    }
-
-    .search-bar {
-        width: 350px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        margin-right: 10px;
-    }
-
-    .camera-icon {
+    .home {
+        margin: 0 10px 0 10px;
         width: 30px;
         height: 30px;
+    }
+
+    #suggestionList {
+        border: 1px solid #ccc;
+        max-width: 300px;
+        max-height: 200px;
+        overflow-y: auto;
+        position: absolute;
+        background: white;
+        z-index: 1000;
+    }
+
+    #suggestionList div {
+        padding: 8px;
         cursor: pointer;
     }
 
-    /* Container chính */
-    .container {
-        max-width: 1200px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #B0d9b1;
+    #suggestionList div:hover {
+        background-color: #f0f0f0;
+    }
+
+    .search-scan {
+        margin: 0 10px 0 10px;
+        position: relative;
+        width: 100%;
+    }
+
+    .search-bar {
+        width: 100%;
+        padding: 10px 5px 10px 5px;
+        border: 1px solid #ccc;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-bar:focus {
+        border-color: #038610;
+        outline: none;
+    }
+
+    .suggestions-list {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        width: 100%;
+        background: white;
+        border: 1px solid #ccc;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 100;
+    }
+
+    .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
+
+    .camera-icon {
+        position: absolute;
+        text-align: right;
+        right: 0px;
+        top: 50%;
+        justify-content: right;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+
+    .camera-icon:hover {
+        opacity: 1;
+    }
+
+    .main-home {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    #camera {
+        display: none;
+        margin: 4px;
+        width: 320px;
+        height: 240px;
+        background: #ccc;
+        position: relative;
+        margin: auto;
     }
 
     /* Tiêu đề */
