@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const discountRateInput = document.getElementById('discount-rate');
     const discountedPriceElem = document.getElementById('discounted-price');
     const applyDiscountButton = document.getElementById('apply-discount');
+    const cancelDiscountButton = document.getElementById('cancel-discount-btn')
     const cancelButton = document.getElementById('cancel-discount');
 
     let currentProduct = null; // 現在操作中の商品を保存
@@ -95,6 +96,83 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('割引の適用中にエラーが発生しました');
             });
     });
+
+    let selectedProductId = null; // グローバル変数として初期化
+
+    // 商品カードクリック時にダイアログを表示し、selectedProductIdを設定
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', function () {
+            selectedProductId = this.getAttribute('data-product-id'); // 商品IDを取得
+            const productName = this.querySelector('.product-info strong').textContent;
+            const productPrice = this.querySelector('.product-info .product-price').textContent;
+
+            // ダイアログ内に商品情報をセット
+            document.getElementById('dialog-product-name').textContent = productName;
+            document.getElementById('dialog-product-price').textContent = productPrice;
+
+            // ダイアログを表示
+            document.getElementById('product-dialog').style.display = 'block';
+        });
+    });
+
+    function updateProductUI(productId) {
+        // 該当する商品カードを検索
+        const productCard = document.querySelector(`.product-card[data-product-id="${productId}"]`);
+        if (!productCard) {
+            console.warn(`商品ID ${productId} に対応するカードが見つかりません`);
+            return;
+        }
+
+        // UIを更新（例: 割引情報をリセット）
+        const productPriceElement = productCard.querySelector('.product-price');
+        if (productPriceElement) {
+            // 割引が適用されていない元の値段を表示（ここでは仮に"元値"とする）
+            const originalPrice = productCard.getAttribute('data-original-price');
+            if (originalPrice) {
+                productPriceElement.textContent = `¥${originalPrice}`;
+            } else {
+                console.warn(`商品ID ${productId} の元値が設定されていません`);
+            }
+        }
+    }
+
+
+    document.getElementById('cancel-discount-btn').addEventListener('click', function () {
+        if (!selectedProductId) {
+            alert('商品が選択されていません');
+            return;
+        }
+
+        if (!confirm('本当に割引をキャンセルしますか？')) {
+            return;
+        }
+
+        fetch('./php/cancel_discount.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productId: selectedProductId }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('割引がキャンセルされました');
+                    document.getElementById('discount-rate').value = '';
+                    document.getElementById('discounted-price').textContent = '';
+                    updateProductUI(selectedProductId);
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('割引のキャンセル中にエラーが発生しました');
+            });
+    });
+
+
 
     // キャンセルボタンまたはダイアログの外側をクリックしたときにダイアログを閉じる処理
     window.closeDialog = function () {
