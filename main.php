@@ -194,52 +194,47 @@ require "resources.php";
                     <?php echo htmlspecialchars($category['cname']); ?>
                 </button>
             <?php endforeach; ?>
-
         </div>
         <section class="best-sellers">
-    <h2>Best Sellers</h2>
-    <div class="slider">
-        <button class="arrow left">&#10094;</button>
-        <div class="product-grid">
-            <?php
-            if ($best_sellers_result->num_rows > 0) {
-                while ($product = $best_sellers_result->fetch_assoc()) {
-                    $productImagePath = '' . $product['productImage']; 
-                    echo '
-                    <div class="product">
-                        <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '" />
-                        <p class="product-name">' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
-                        <p class="product-price">¥' . number_format($product['price'], 0) . '</p>
-                    </div>';
-                }
-            } 
-            ?>
-        </div>
-
-        <button class="arrow right">&#10095;</button>
-    </div>
-    <script src="./scripts/menubest.js"></script>
-</section>
-
-
-        <section id="product-section" class="category">
-    <?php foreach ($categories as $category): ?>
-        <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
-            <h3 class="title"><?= htmlspecialchars($category['cname']) ?></h3>
-            <div class="product-showcase">
-                <?php foreach ($category['products'] as $product): ?>
-                    <div class="product-content">
-                        <img src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" />
-                        <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
-                    </div>
-                <?php endforeach; ?>
+            <h2>Best Sellers</h2>
+            <div class="slider">
+                <button class="arrow left">&#10094;</button>
+                <div class="product-grid">
+                    <?php
+                    if ($best_sellers_result->num_rows > 0) {
+                        while ($product = $best_sellers_result->fetch_assoc()) {
+                            $productImagePath = '' . $product['productImage']; 
+                            echo '
+                            <div class="product">
+                                <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '" />
+                                <p class="product-name">' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
+                                <p class="product-price">¥' . number_format($product['price'], 0) . '</p>
+                            </div>';
+                        }
+                    } 
+                    ?>
+                </div>
+                <button class="arrow right">&#10095;</button>
             </div>
-            <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>">Show More</button>
-        </div>
-    <?php endforeach; ?>
-</section>
-
-
+            <script src="./scripts/menubest.js"></script>
+        </section>
+        <section id="product-section" class="category">
+            <?php foreach ($categories as $category): ?>
+                <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
+                    <h3 class="title"><?= htmlspecialchars($category['cname']) ?></h3>
+                    <div class="product-showcase">
+                        <?php foreach ($category['products'] as $product): ?>
+                            <div class="product-content">
+                                <img src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" />
+                                <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>">Show More</button>
+                </div>
+            <?php endforeach; ?>
+        </section>
+        
        </main>
     <footer>
         <script src="./scripts/menu.js"></script>
