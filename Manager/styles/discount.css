@@ -399,6 +399,7 @@
 
     .dialog-content button {
         padding: 10px 20px;
+        margin: 5px;
         background: #007BFF;
         color: #fff;
         border: none;
@@ -408,6 +409,14 @@
 
     .dialog-content button:hover {
         background: #0056b3;
+    }
+
+    .dialog-content #cancel-discount-btn {
+        background: red;
+    }
+
+    .dialog-content #cancel-discount-btn:hover {
+        background: #b20000;
     }
 
 }
@@ -676,6 +685,7 @@
 
     .dialog-content button {
         padding: 10px 20px;
+        margin: 5px;
         background: #007BFF;
         color: #fff;
         border: none;
@@ -685,6 +695,14 @@
 
     .dialog-content button:hover {
         background: #0056b3;
+    }
+
+    .dialog-content #cancel-discount-btn {
+        background: red;
+    }
+
+    .dialog-content #cancel-discount-btn:hover {
+        background: #b20000;
     }
 
 }

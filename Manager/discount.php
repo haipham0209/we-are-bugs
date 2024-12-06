@@ -121,7 +121,7 @@ $product_result = $product_stmt->get_result();
                     $categoryId = !empty($product['category_id']) ? htmlspecialchars($product['category_id'], ENT_QUOTES, 'UTF-8') : '';
 
                     echo '
-                        <div class="product-card" data-product-id="' . htmlspecialchars($product['productid'], ENT_QUOTES, 'UTF-8') . '" data-category-id="' . $categoryId . '">
+                        <div class="product-card" data-product-id="' . htmlspecialchars($product['productid'], ENT_QUOTES, 'UTF-8') . '" data-category-id="' . $categoryId . '" data-original-price="' . htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') . '">
                             <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" alt="Product Image">
                             <div class="product-info">
                                 <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
@@ -213,6 +213,7 @@ $product_result = $product_stmt->get_result();
                 <p><strong>割引後の値段：</strong>¥<span id="discounted-price"></span></p>
                 <button id="apply-discount">確認</button>
                 <button id="cancel-discount">キャンセル</button>
+                <button id="cancel-discount-btn">割引キャンセル</button>
             </div>
         </div>
     </main>
