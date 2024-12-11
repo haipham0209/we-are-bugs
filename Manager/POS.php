@@ -112,7 +112,7 @@ if ($conn->connect_error) {
             </div>
             <div class="total">
                 <p>合計: <span id="total-price">￥</span></p>
-                <p>(税込10%)</p>
+                <!-- <p>(税込10%)</p> -->
                 <p>割引き: 
                     <input type="number" id="waribiki-input" value="0" min="0" max="100" onchange="updateTotal()"> %
                 </p>

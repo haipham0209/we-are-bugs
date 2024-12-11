@@ -50,7 +50,9 @@ if ($result->num_rows > 0) {
     $address = $storeData["address"];
     $mail = $storeData["mail"];
     $logopath = $storeData["logopath"];
-    $logopath = str_replace('../Manager/', './Manager/', $logopath);
+    if ($logopath!= null){
+        $logopath = str_replace('../Manager/', './Manager/', $logopath);
+    }
 
 } else {
     header("HTTP/1.0 404 Not Found");

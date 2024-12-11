@@ -9,6 +9,10 @@
 <body>
     <div class="container">
         <h1>在庫管理</h1>
+        <!-- <div class="bar">
+            <h1>在庫管理</h1>
+            <img src="./images/back_button2.png" alt="Back Icon" onclick="location.href='main.php'">
+        </div> -->
         <input type="text" id="search" placeholder="商品を探" onkeyup="searchProducts()">
         <div class="table-container">
             <table id="productTable">
