@@ -84,9 +84,9 @@ include('./php/auth_check.php');
 </div>
 </body>
 <footer style="text-align: center">
-        <a href="#">
+        <!-- <a href="#">
             <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;" onclick="location.href='StoreLogin.php'">
-        </a>
+        </a> -->
 </footer>
 
 </html>
