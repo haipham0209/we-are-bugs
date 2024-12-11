@@ -2,12 +2,14 @@
     body {
         font-family: Arial, sans-serif;
         height: 100vh;
-        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        /* background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff); */
+        background-color: #B0d9b1;
+        background-attachment: fixed;
         background-size: 400% 400%;
         animation: wave 10s ease infinite;
     }
 
-    @keyframes wave {
+    /* @keyframes wave {
         0% {
             background-position: 0% 50%;
         }
@@ -19,7 +21,7 @@
         100% {
             background-position: 0% 50%;
         }
-    }
+    } */
 
     .main-navbar {
         display: flex;
@@ -299,7 +301,7 @@
     /* Định dạng product card */
     .all-product {
         margin-top: 10px;
-        background-color: #b1aeaeff;
+        background-color: transparent;
         border-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
@@ -310,6 +312,7 @@
         align-items: flex-start;
         padding: 20px;
         margin: 1px 0;
+        margin-top: 1.5px;
         position: relative;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -795,16 +798,16 @@ video {
     .product-card {
         width: 20%;
         height: 380px;
-        /* max-height: 600px; */
         margin: 10px;
-        /* Hiển thị 3 sản phẩm mỗi hàng */
         background-color: #fff;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Đổ bóng từ dưới phải */
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2); /* Bóng đổ từ dưới phải */
         padding: 15px;
         transition: transform 0.2s;
-        /* height: auto; */
     }
+    
+    
 
     .product-card:hover {
         transform: translateY(-5px);

@@ -35,6 +35,7 @@ body {
 /* 按鈕設計 */
 .menu-button {
     background-color: #f1f1f1;
+    margin: 1px;
     border: none;
     border-radius: 12px;
     height: 110px;
@@ -43,7 +44,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2); /* Bóng đổ từ dưới phải */
     transition: background-color 0.3s;
     cursor: pointer;
 

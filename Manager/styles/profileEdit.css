@@ -1,4 +1,8 @@
-@media only screen and (max-width: 767px) {
+    main {
+        display: flex;
+    align-items: center;
+    margin: 5px;
+    }
     body {
         font-family: Arial, sans-serif;
         display: flex;
@@ -11,6 +15,8 @@
         background-size: 100% 100%;
         overflow-y: auto;
     }
+@media only screen and (max-width: 767px) {
+
     /* Đặt logo vào một container có vị trí tương đối */
 .logo-container {
 
@@ -331,10 +337,10 @@
         align-items: center;
     }
 
-    footer img {
-        margin-right: 10px;
-        width: 25px;
-        height: 25px;
+    .back_button img {
+        margin-right: 2px;
+        width: 70px;
+        height: 70px;
     }
 
     /* アカウント削除ボタンのスタイル */
@@ -382,19 +388,16 @@
         transition: background-color 0.3s;
     }
 
-    .edit-password-link button:hover {
-        /* background-color: #45A049; */
-        /* ホバー時の色 */
-    }
+
 
 }
-
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 
 
 /* Styles for larger PC screens */
 @media only screen and (min-width: 768px) {
-    body {
+    /* body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
@@ -403,19 +406,29 @@
         justify-content: center;
         align-items: flex-start;
         min-height: 100vh;
-    }
+    } */
 
     .container {
         background-color: white;
         /* margin-top: 30px; */
         border-radius: 10px;
         margin: 40px 0;
+        /* width: 10px; Chiều rộng cố định */
+        
+        background-color: #ccc; /* Màu nền chỉ để dễ nhìn */
+        display: flex;
+        align-items: stretch; /* Căn giữa nút */
+        justify-content: center; /* Căn giữa theo chiều ngang */
     }
 
     .profile-form {
+        padding: 30px;
+        border-radius: 20px;
+        width: 80%;
+        height: 100%;
         display: flex;
         flex-direction: column;
-        padding: 30px;
+        background-color: white;
     }
     /* Định dạng và căn chỉnh nút đổi logo */
 #changeLogoButton {
@@ -435,9 +448,7 @@
 }
 
 /* Hiệu ứng hover */
-#changeLogoButton:hover {
-    /* background-color: #e05555; */
-}
+
 /* Đặt logo vào một container có vị trí tương đối */
 .logo-container {
 
@@ -474,10 +485,14 @@
     transition: background-color 0.3s ease;
 }
 
-/* Hiệu ứng hover */
-#changeLogoButton:hover {
-    /* background-color: #e05555; */
+.back_button img {
+    margin-right: 2px;
+    width: 70px;
+    height: 70px;
 }
+
+/* Hiệu ứng hover */
+
 
     /* Avatar */
     .avatar {
@@ -609,10 +624,7 @@ svg {
         transition: background-color 0.3s;
     }
 
-    .edit-password-link button:hover {
-        /* background-color: #45A049; */
-        /* ホバー時の色 */
-    }
+
 
     /* Modal styling */
     .modal {
