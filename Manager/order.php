@@ -22,8 +22,8 @@ if ($conn->connect_error) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./styles/order.css">
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
-    <script src="./scripts/cameraPos.js"></script>
-    <script src="./scripts/search.js"></script>
+    <!-- <script src="./scripts/cameraPos.js"></script> -->
+    <!-- <script src="./scripts/search.js"></script> -->
     
 
     <title>Order History</title>
@@ -67,8 +67,8 @@ if ($conn->connect_error) {
             <input type="date" id="date-picker" class="date-picker">
             <button id="next-date" class="date-button">▶</button>
         </div>
-        <script src="./scripts/date.js"></script>
-        <script src="./scripts/order.js"></script>
+        <script src="./scripts/dateorder.js"></script>
+        <!-- <script src="./scripts/order.js"></script> -->
         <!-- Bảng danh sách đơn hàng -->
         <table class="order-list">
             <thead>

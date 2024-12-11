@@ -11,9 +11,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "ssssssssss";
+// echo "ssssssssss";
 // Lấy danh sách đơn hàng cho ngày đã chọn
 if (isset($_POST['selected_date'])) {
+    echo"333333333333333";
     $selectedDate = $_POST['selected_date'];
     $storeId = $_COOKIE['store_id']; // Lấy store_id từ cookie
 
@@ -38,29 +39,32 @@ if (isset($_POST['selected_date'])) {
     echo json_encode($orders);
     exit();
 }
-
+// echo "ssssssssss";
 // Lấy chi tiết đơn hàng khi người dùng yêu cầu
 if (isset($_POST['order_number'])) {
     $orderNumber = $_POST['order_number'];
-
+// echo "ssssssssss";
+// echo $orderNumber;
     // Truy vấn chi tiết đơn hàng
     $payment_method = "現金"; // mặc định thanh toán bằng tiền mặt, vì chưa có cột hình thức thanh toán
-    $sql = "SELECT p.pname, od.quantity, p.price, o.received_amount, o.discount
+    $sql = "SELECT p.pname, od.quantity, p.price, o.received_amount
             FROM order_details od
             JOIN product p ON od.productid = p.productid
             JOIN orders o ON od.order_number = o.order_number
             WHERE od.order_number = ?";
+            // echo "ssssssssss";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $orderNumber);
     $stmt->execute();
     $result = $stmt->get_result();
-
+// echo "ssssssssss";
     $orderDetails = [];
     while ($row = $result->fetch_assoc()) {
         $orderDetails[] = $row;
     }
 
     // Trả về dữ liệu chi tiết đơn hàng dưới dạng JSON
+    // echo "ssssssssss";
     echo json_encode($orderDetails);
     exit();
 }
