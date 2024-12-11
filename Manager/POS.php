@@ -17,15 +17,16 @@ if ($conn->connect_error) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/proMana.css">
     <link rel="stylesheet" href="./styles/POS.css">
-    <link rel="stylesheet" href="./styles/setBestSel.css">
+    
     <script src="./scripts/cameraPos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     <script src="./scripts/POS.js"></script>
     <script src="./scripts/search.js"></script>
-
+<!-- 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> -->
     <title>POS</title>
 </head>
 <body>
@@ -134,10 +135,12 @@ if ($conn->connect_error) {
         <!-- Gửi thông tin các sản phẩm trong giỏ hàng -->
 
         <!-- <button type="submit" name="complete" class="button-pay">完了</button> -->
-        <div class="btn_container d-flex justify-content-between">
-        <button class="button-pay" type="button" onclick="location.reload()">CLEAR</button>
-        <button class="button-pay" type="button" onclick="sendDataToServer()">完了</button>
+        <div class="btn_container">
+            <button class="button-pay clear-btn" type="button" onclick="location.reload()">CLEAR</button>
+            <button class="button-pay complete-btn" type="button" onclick="sendDataToServer()">完了</button>
         </div>
+
+
 
 
     </form>
