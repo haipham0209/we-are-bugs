@@ -1,0 +1,42 @@
+@media only screen and (max-width: 767px) {
+    body {
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        background-size: 400% 400%;
+        animation: wave 10s ease infinite;
+    }
+
+    @keyframes wave {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+}
+
+@media only screen and (min-width: 768px) {
+
+    /* CSS dành cho màn hình PC */
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        background-color: #B0d9b1;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    main {
+        margin-bottom: 100px;
+    }
+
+}
