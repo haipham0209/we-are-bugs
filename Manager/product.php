@@ -91,6 +91,7 @@ $product_result = $product_stmt->get_result();
         </div>
     </header>
     <main>
+        <div id="overlay" style="display: none;"></div>
         <div id="camera" style="display: none;">
             <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>
         </div>

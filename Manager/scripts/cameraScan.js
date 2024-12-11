@@ -15,7 +15,10 @@ function startScanner() {
 
     scannerRunning = true;
     const cameraDiv = document.getElementById('camera');
+    const overlay = document.getElementById('overlay');
     cameraDiv.style.display = 'block'; // Hiện camera
+    overlay.style.display = 'block'; // Hiện camera
+    
 
     Quagga.init(
         {
@@ -79,8 +82,19 @@ function stopScanner() {
 
     Quagga.stop();
     document.getElementById('camera').style.display = 'none'; // Ẩn camera
+    document.getElementById('overlay').style.display = 'none'; // Ẩn camera
     scannerRunning = false;
 }
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { // Nếu phím được nhấn là ESC
+        stopScanner(); // Gọi hàm để tắt camera và ẩn overlay
+    }
+});
+
+// Lắng nghe sự kiện click vào overlay
+document.getElementById('overlay').addEventListener('click', function () {
+    stopScanner(); // Tắt camera khi overlay được click
+});
 
 // Gắn sự kiện cho nút bắt đầu quét
 document.getElementById('start-scan').addEventListener('click', toggleScanner);
