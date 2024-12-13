@@ -105,7 +105,8 @@ body {
     padding: 10px 15px;
     cursor: pointer;
     font-size: 20px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); */
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s;
 }
 
@@ -114,6 +115,7 @@ body {
 }
 
 .date-picker {
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 5px 10px;
@@ -162,23 +164,19 @@ body {
 
     /* ------------------------------log out--------------------------------- */
     /* Định dạng tổng thể cho phần chứa nút */
-.logout-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    .logout-container {
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
 
-/* Kiểu dáng cho nút logout */
-.logout-button {
-    text-decoration: none;
-    background-color:618264;
-    color:red;
-    padding: 12px 24px;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
+    .logout-button {
+        text-decoration: none;
+        background-color: #f44336;
+        color: #fff;
+        padding: 14px 28px;
+        font-size: 20px;
+        border-radius: 12px;
+    }
 footer {
     position: fixed;
     bottom: 0;
@@ -302,6 +300,7 @@ footer img {
     }
 
     .logout-button {
+        text-decoration: none;
         background-color: #f44336;
         color: #fff;
         padding: 14px 28px;

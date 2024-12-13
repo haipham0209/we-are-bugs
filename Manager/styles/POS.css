@@ -13,6 +13,8 @@
         100% { background-position: 0% 50%; }
     } */
     .main-navbar {
+        box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2);
+
         display: flex;
         width: 100%;
         justify-content: center;
@@ -70,11 +72,13 @@
 
 /* Tùy chỉnh từng nút */
 .clear-btn {
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2);
     background-color: #f8d7da; /* Màu đỏ nhạt */
     color: #721c24;           /* Màu chữ đỏ đậm */
 }
 
 .complete-btn {
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2);
     background-color: #d4edda; /* Màu xanh nhạt */
     color: #155724;           /* Màu chữ xanh đậm */
 }
