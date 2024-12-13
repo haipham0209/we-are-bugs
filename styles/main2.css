@@ -179,7 +179,7 @@
         width: 35%;
         margin: 20px auto;
         padding: 10px 20px;
-        background-color: none;
+        background-color: transparent;
         color: black;
         border: 0.1px solid #000000;
         border-radius: 5px;
