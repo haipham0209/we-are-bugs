@@ -210,7 +210,7 @@ require "resources.php";
                 <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
                     <h3 class="title"><?= htmlspecialchars($category['cname']) ?></h3>
                     <div class="product-showcase">
-                        <!-- Hiển thị tối đa 2 sản phẩm -->
+                        <!-- Hiển thị tối đa 4 sản phẩm -->
                         <?php 
                         $productCount = 0;
                         foreach ($category['products'] as $product): 
@@ -223,14 +223,9 @@ require "resources.php";
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
+                    <!-- Nếu số lượng sản phẩm > 4, hiển thị nút Show More -->
                     <?php if (count($category['products']) > 2): ?>
-                        <button class="show-more-btn" 
-                                data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
-                                onclick="toggleShowMore(this, <?= htmlspecialchars(json_encode($category['products'])) ?>)">
-                            Show More
-                        </button>
-
+                        <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">Show More</button>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
@@ -251,14 +246,15 @@ require "resources.php";
                 once: true // Hiệu ứng chỉ diễn ra một lần khi cuộn
             });
         });
-        function toggleShowMore(button, products) {
-    // Lấy phần danh sách sản phẩm trong nhóm
-    const productShowcase = button.previousElementSibling;
-    const displayedProducts = productShowcase.querySelectorAll('.product-content');
+        function showMore(products) {
+        // Lấy danh sách các sản phẩm hiện tại đã được hiển thị
+        const productShowcase = event.target.previousElementSibling;
+        const displayedProducts = productShowcase.querySelectorAll('.product-content');
 
-    if (button.textContent === 'Show More') {
-        // Hiển thị tất cả sản phẩm
-        products.forEach(product => {
+        // Chỉ lấy các sản phẩm chưa hiển thị
+        const remainingProducts = products.slice(displayedProducts.length);
+
+        remainingProducts.forEach(product => {
             const productContent = document.createElement('div');
             productContent.classList.add('product-content');
             productContent.setAttribute('data-aos', 'fade-up');
@@ -269,15 +265,12 @@ require "resources.php";
             `;
             productShowcase.appendChild(productContent);
         });
-        button.textContent = 'Hide'; // Đổi nút thành "Hide"
-    } else {
-        // Ẩn chỉ hiển thị lại 2 sản phẩm đầu tiên
-        while (productShowcase.children.length > 2) {
-            productShowcase.removeChild(productShowcase.lastChild);
+
+        // Ẩn nút "Show More" sau khi nhấn nếu không còn sản phẩm để hiển thị
+        if (remainingProducts.length === 0) {
+            event.target.style.display = 'none';
         }
-        button.textContent = 'Show More'; // Đổi nút thành "Show More"
     }
-}
 
     </script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
