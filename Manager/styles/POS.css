@@ -1,16 +1,17 @@
-@media only screen and (max-width: 767px) {
+/* @media only screen and (max-width: 767px) { */
     body {
         font-family: Arial, sans-serif;
         height: 100vh;
-        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        /* background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff); */
+        background-color: #B0D9B1;
         background-size: 400% 400%;
         animation: wave 10s ease infinite;
     }
-    @keyframes wave {
+    /* @keyframes wave {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
-    }
+    } */
     .main-navbar {
         display: flex;
         width: 100%;
@@ -44,7 +45,41 @@
         font-size: 17px;
         cursor: pointer;
     }
-    
+    /* //////////////////////////////////////////////////////////// */
+    /* Đảm bảo các nút nằm ngang hàng */
+.btn_container {
+    display: flex;          /* Sử dụng Flexbox */
+    justify-content: space-between; /* Tạo khoảng cách giữa hai nút */
+    margin-top: 20px;       /* Khoảng cách phía trên */
+}
+
+/* Thiết lập style cơ bản cho nút */
+.button-pay {
+    flex: 1;                /* Để hai nút chiếm đều chiều ngang */
+    padding: 10px 20px;     /* Kích thước nút */
+    font-size: 16px;        /* Cỡ chữ */
+    border: none;           /* Xóa viền */
+    border-radius: 5px;     /* Bo góc */
+    cursor: pointer;        /* Hiệu ứng con trỏ */
+    margin: 0 10px;          /* Khoảng cách giữa hai nút */
+}
+
+/* Tùy chỉnh từng nút */
+.clear-btn {
+    background-color: #f8d7da; /* Màu đỏ nhạt */
+    color: #721c24;           /* Màu chữ đỏ đậm */
+}
+
+.complete-btn {
+    background-color: #d4edda; /* Màu xanh nhạt */
+    color: #155724;           /* Màu chữ xanh đậm */
+}
+
+/* Thêm hiệu ứng hover */
+.button-pay:hover {
+    opacity: 0.9;
+}
+/* //////////////////////////////////////// */
     .table-wrapper {
         max-height: 320px; /* Chiều cao tối đa, tương đương khoảng 10 dòng */
         overflow-y: auto; /* Bật thanh cuộn dọc nếu vượt quá chiều cao */
@@ -348,24 +383,6 @@
         font-size: 13px;
         width: 45%;
     }
-    /* Căn giữa nút button-pay */
-    .button-pay {
-        margin: 10px auto 0; /* Căn giữa nút */
-        text-align: center;
-        padding: 10px 20px;
-        font-size: 13px;
-        background-color: #000000;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        width: auto; /* Đảm bảo chiều rộng tự động */
-        display: block; /* Làm nút thành block-level element */
-    }
-
-    .button-pay:hover {
-        background-color: #45a049;
-    }
 
     
-}
+/* } */

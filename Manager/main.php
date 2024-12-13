@@ -40,7 +40,7 @@ include('./php/auth_check.php');
                 <img src="./images/stock-icon.png" alt="在庫" class="icon"  >
                 <span>在庫</span>
             </button>
-            <button class="menu-button">
+            <button class="menu-button" onclick="location.href='order.php'">
                 <img src="./images/order-icon.png" alt="注文" class="icon">
                 <span>注文</span>
             </button>
@@ -84,9 +84,9 @@ include('./php/auth_check.php');
 </div>
 </body>
 <footer style="text-align: center">
-        <a href="#">
+        <!-- <a href="#">
             <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;" onclick="location.href='StoreLogin.php'">
-        </a>
+        </a> -->
 </footer>
 
 </html>

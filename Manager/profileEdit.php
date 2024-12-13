@@ -34,6 +34,16 @@ if (!isset($_SESSION['userid'])) {
 </head>
 
 <body>
+    <header>
+
+    </header>
+    <main>
+    <div class = "back_button">
+        <a href="#">
+        <!-- <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;" onclick="location.href='main.php'"> -->
+        <img src="./images/back_button2.png" alt="Back Icon" onclick="location.href='main.php'">
+        </a>
+    </div>
     <div class="container">
         <div class="profile-form">
             <form class="edit-form" action="./php/storeProEditP.php" method="POST"enctype="multipart/form-data">
@@ -239,11 +249,11 @@ if (!isset($_SESSION['userid'])) {
     </script>
 
     <!-- loading -->
-</body>
-<footer style="text-align: center">
-    <a href="#">
-        <img src="./images/backicon.png" alt="Back Icon" style="width: 40px; height: 40px;" onclick="location.href='main.php'">
-    </a>
+    </main>
+    <footer style="text-align: center">
+
 </footer>
+</body>
+
 
 </html>

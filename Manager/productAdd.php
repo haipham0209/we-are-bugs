@@ -144,7 +144,11 @@ $barcode = isset($_GET['barcode']) ? urldecode($_GET['barcode']) : '';
                 <input type="text" id="barcode" name="barcode" required value="<?php echo htmlspecialchars($barcode); ?>">
                 <button type="button" id="start-scan">カメラでスキャン</button>
                 <!-- Div để hiển thị camera -->
-                <div id="camera" style="display: none;"></div>
+                <!-- <div id="camera" style="display: none;"></div> -->
+                <div id="overlay" style="display: none;" onclick="toggleScanner()"></div>
+                <div id="camera" style="display: none;">
+                    <button id="stopBtn"type="button" onclick="toggleScanner()">カメラ停止</button>
+                </div>
 
                 <button type="submit">商品を追加する</button>
             </form>

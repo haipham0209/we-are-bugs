@@ -72,25 +72,13 @@ $product_result = $product_stmt->get_result();
                 <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
             </div>
             <div id="suggestionList"></div>
-            <script>
-                let isCameraRunning = false;
-
-                function toggleCamera() {
-                    if (isCameraRunning) {
-                        stopScanner();
-                        isCameraRunning = false;
-                    } else {
-                        startScanner();
-                        isCameraRunning = true;
-                    }
-                }
-            </script>
             <a href="main.php">
                 <img class="home" src="./images/home.png" alt="Home Mana">
             </a>
         </div>
     </header>
     <main>
+        <div id="overlay" style="display: none;" onclick="toggleCamera()"></div>
         <div id="camera" style="display: none;">
             <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>
         </div>
