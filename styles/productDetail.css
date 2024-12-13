@@ -38,7 +38,7 @@
         flex-direction: column;
         width: auto;
         height: auto;
-        margin: 20px;
+        margin: 20px 0;
     }
 
     .product-img {
@@ -148,7 +148,7 @@
         width: auto;
         height: auto;
         margin: 10px 40px;
-        padding: 0 30%;
+        padding: 0 20%;
     }
 
     .product-img {
