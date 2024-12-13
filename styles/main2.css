@@ -6,6 +6,20 @@
     header {
         padding-top: 0;
     }
+    .btn-outline-primary {
+        --bs-btn-color: #000000 !important;
+        --bs-btn-border-color:  #000000 !important;
+        --bs-btn-hover-bg:  #000000 !important;
+        --bs-btn-hover-border-color:  #000000 !important;
+        --bs-btn-active-bg:  #000000 !important;
+        --bs-btn-active-border-color:  #000000 !important;
+        --bs-btn-disabled-color:  #000000 !important;
+        --bs-btn-disabled-border-color:  #000000 !important;
+    }
+    .form-control:focus {
+        border-color: #adafb1 !important;
+        box-shadow: 0 0 0 .25rem rgba(89, 90, 91, 0.25) !important;
+    }
     .custom-navbar .container-fluid{
         height: 80px;
     }
@@ -165,17 +179,15 @@
         width: 35%;
         margin: 20px auto;
         padding: 10px 20px;
-        background-color: #0d6efd;
-        color: rgb(255, 255, 255);
-        border: none;
+        background-color: none;
+        color: black;
+        border: 0.1px solid #000000;
         border-radius: 5px;
-        cursor: pointer;
+        
     }
-    
-    .show-more-btn:hover {
-        background-color: #0d6efd;
-        color: white;
+    .h3, h3{
+        font-size: 35px !important;
+        font-weight: bold;
     }
-    
     
 }
