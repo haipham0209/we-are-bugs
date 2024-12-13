@@ -101,7 +101,7 @@ $conn->close();
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#"><img id="logo-main" src="<?= $logopath ?>" alt="logo"></a>
+                <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -121,23 +121,37 @@ $conn->close();
                         </li>
                     </ul>
                 </div>
-                <button id="searchBtn" class="btn btn-outline-primary me-2"><i class="fa fa-search"></i> </button>
-                <!-- <div class="d-flex">
-                    <div id="searchContainer" class="d-none">
-                        <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
-                    </div>
-                    <button id="searchBtn" class="btn btn-outline-primary me-2"><i class="fa fa-search"></i> </button>
-                </div> -->
+                <div id="searchContainer" class="d-none">
+                    <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
+                </div>
+                <button id="searchBtn" class="btn btn-outline-primary me-2">
+                    <i class="fa fa-search"></i>
+                </button>
+               
             </div>
         </nav>
     </header>
     <script>
-        // JavaScript to toggle search input visibility
-        document.getElementById('searchBtn').addEventListener('click', function() {
-            var searchContainer = document.getElementById('searchContainer');
-            searchContainer.classList.toggle('d-none'); // Toggle visibility
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchBtn = document.getElementById("searchBtn");
+            const searchContainer = document.getElementById("searchContainer");
+            const logoContainer = document.getElementById("logoContainer");
+
+            searchBtn.addEventListener("click", function () {
+                if (searchContainer.classList.contains("d-none")) {
+                    // Hiển thị thanh tìm kiếm và ẩn logo
+                    searchContainer.classList.remove("d-none");
+                    logoContainer.classList.add("hidden");
+                    document.getElementById("searchInput").focus(); // Đặt con trỏ vào thanh input
+                } else {
+                    // Ẩn thanh tìm kiếm và hiển thị logo
+                    searchContainer.classList.add("d-none");
+                    logoContainer.classList.remove("hidden");
+                }
+            });
         });
     </script>
+
 
     <main class="container mt-4">
         <!-- Best Sellers Section -->
