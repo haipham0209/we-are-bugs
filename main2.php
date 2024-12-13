@@ -104,6 +104,8 @@ $conn->close();
                 <div class="nav-menu">
                     <ul class="navbar-nav">
                         <li class="nav-item">
+                            <h3><?php echo $sname; ?></h3>
+                        <li class="nav-item">
                             <a class="nav-link" href="./main.php?sname=<?= urlencode($sname) ?>">ホームページ</a>
                         </li>
                         <li class="nav-item">
@@ -112,15 +114,19 @@ $conn->close();
                         <li class="nav-item">
                             <a class="nav-link" href="./html/myPage.php?sname=<?= urlencode($sname) ?>">マイページ</a>
                         </li>
+                        <li class="support-title">サポート</li>
                         <li class="nav-item">
-                            <a href="tel:<?= $tel ?>"><i class="fa fa-phone"></i> <?= $tel ?></a>
+                            <i class="fa fa-phone"></i><a class="support" href="tel:"><?php echo $tel; ?></a>
                         </li>
                         <li class="nav-item">
-                            <a href="mailto:<?= $mail ?>"><i class="fa fa-envelope"></i> <?= $mail ?></a>
+                            <i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a>
+                        </li>
+                        <li class="nav-item">
+                        <i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a>
                         </li>
                     </ul>
                 </div>
-                <div class="overlay"></div>
+                <!-- <div class="overlay"></div> -->
                 <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
                 <div id="searchContainer" class="d-none">
                     <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
