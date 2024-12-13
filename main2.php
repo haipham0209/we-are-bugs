@@ -204,7 +204,7 @@ require "resources.php";
             }
             ?>
         </div> -->
-        <p>------------------------------------------------------------------------</p>
+        <!-- <p>------------------------------------------------------------------------</p> -->
         <section id="product-section" class="category">
             <?php foreach ($categories as $category): ?>
                 <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
