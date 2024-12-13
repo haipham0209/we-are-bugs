@@ -208,7 +208,7 @@ require "resources.php";
                 <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
                     <h3 class="title"><?= htmlspecialchars($category['cname']) ?></h3>
                     <div class="product-showcase">
-                        <!-- Hiển thị tối đa 4 sản phẩm -->
+                        <!-- Hiển thị tối đa 2 sản phẩm -->
                         <?php 
                         $productCount = 0;
                         foreach ($category['products'] as $product): 
@@ -221,9 +221,14 @@ require "resources.php";
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <!-- Nếu số lượng sản phẩm > 4, hiển thị nút Show More -->
+                    <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
                     <?php if (count($category['products']) > 2): ?>
                         <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">Show More</button>
+                        <!-- <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>"
+                            onclick="toggleShowMore(this, <?= htmlspecialchars(json_encode($category['products'])) ?>)">
+                            Show More
+                        </button> -->
+
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
