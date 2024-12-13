@@ -17,9 +17,9 @@ if ($conn->connect_error) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/proMana.css">
-    <link rel="stylesheet" href="./styles/POS.css">
     
+    <link rel="stylesheet" href="./styles/POS.css">
+    <!-- <link rel="stylesheet" href="./styles/proMana.css"> -->
     <script src="./scripts/cameraPos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     <script src="./scripts/POS.js"></script>
@@ -63,7 +63,9 @@ if ($conn->connect_error) {
     <div class="pos">
         <h2>会計</h2>
         <div class="id-time">
-            <p id="customer-id">注文番号: <?php echo generateOrderNumber($conn, $_SESSION['storeid']); ?></p>
+            
+            <p id="customer-id" hidden><?php echo generateOrderNumber($conn, $_SESSION['storeid']); ?></p>
+
             <div id="datetime">
                 <p id="date"></p>
                 <p id="time"></p>

@@ -52,7 +52,7 @@ function sendDataToServer() {
                 // console.log("Kết quả từ server:", result);
                 if (result.success) {
                     // Hiển thị thông báo thành công
-                    alert(`請求成功しました。: ${result.order_number}`);
+                    alert(`請求成功しました。注文番号は： ${result.order_number}`);
                     
                     // Điều hướng đến trang khác
                     // window.location.href = '/success-page.php?order_number=' + result.order_number;
@@ -60,7 +60,8 @@ function sendDataToServer() {
                 }
                  else if (result.error) {
                     // alert(`Lỗi: ${result.error}`);
-                    alert(`エラー: ${result.error}`);
+                    alert(`${result.error}`);
+                    // alert(`エラー: ${result.error}`);
                 }
             } catch (e) {
                 // console.error("Lỗi khi parse JSON:", e);

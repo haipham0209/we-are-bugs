@@ -1,13 +1,14 @@
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 499px) {
     body {
         font-family: Arial, sans-serif;
         height: 100vh;
-        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        /* background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff); */
+        background-color: #B0d9b1;
         background-size: 400% 400%;
         animation: wave 10s ease infinite;
     }
 
-    @keyframes wave {
+    /* @keyframes wave {
         0% {
             background-position: 0% 50%;
         }
@@ -19,7 +20,7 @@
         100% {
             background-position: 0% 50%;
         }
-    }
+    } */
 
     .main-navbar {
         display: flex;
@@ -196,7 +197,7 @@
 
     /* Các nút trong main-category có nền sáng và chữ đen */
     .category button {
-        background-color: #f4f4f400;
+        /* background-color: #f4f4f400; */
         /* Nền sáng */
         color: #333;
         /* Chữ đen */
@@ -236,16 +237,6 @@
     }
 
     /* Responsive adjustments */
-    @media only screen and (max-width: 767px) {
-
-        .all-categories,
-        .category button {
-            font-size: 14px;
-            /* Giảm kích thước chữ cho các màn hình nhỏ */
-            padding: 8px 16px;
-            /* Giảm padding để vừa với các màn hình nhỏ */
-        }
-    }
 
     /* Định dạng product card */
     .all-product {
@@ -480,12 +471,12 @@
 
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 500px) {
 
     /* CSS dành cho màn hình PC */
     body {
         font-family: 'Arial', sans-serif;
-        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        /* background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff); */
         background-color: #B0d9b1;
         margin: 0;
         padding: 0;
@@ -671,7 +662,7 @@
 
     /* Các nút trong main-category có nền sáng và chữ đen */
     .category button {
-        background-color: #f4f4f400;
+        /* background-color: #f4f4f400; */
         /* Nền sáng */
         color: #333;
         /* Chữ đen */
@@ -718,7 +709,9 @@
         gap: 20px;
         margin-left: 35px;
         margin-bottom: auto;
+        justify-content: space-around;
     }
+    
 
     .product-card {
         width: 20%;

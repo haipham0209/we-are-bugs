@@ -17,12 +17,16 @@
         width: 100%;
         justify-content: center;
         align-items: center;
-        padding: 15px 0px;
-        margin: 0;
+        padding: 10px 0;
         background-color: #e3f3e1;
         border-radius: 8px;
     }
-
+    .home {
+        margin: 0 10px 0 10px;
+        margin-left: 30px;
+        width: 30px;
+        height: 30px;
+    }
 
     .drawingBuffer {
         position: absolute; /* Hoặc giữ nguyên nếu đã dùng */
@@ -80,13 +84,25 @@
     opacity: 0.9;
 }
 /* //////////////////////////////////////// */
-    .table-wrapper {
-        max-height: 320px; /* Chiều cao tối đa, tương đương khoảng 10 dòng */
-        overflow-y: auto; /* Bật thanh cuộn dọc nếu vượt quá chiều cao */
-        /* border: 1px solid #ccc; Thêm viền để dễ nhìn */
-        /* margin-top: 10px; */
-        width: 100%;
-    }
+.table-wrapper {
+    max-height: 320px;
+    overflow-y: auto;
+    margin-top: 10px;
+    width: 100%;
+    
+    /* Bo góc nhẹ */
+    border-radius: 8px;
+
+    /* Đổ bóng phía dưới bên phải */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+
+    /* Viền mỏng để tạo điểm nhấn */
+    border: 1px solid #e0e0e0;
+
+    /* Thêm nền trắng để tách biệt với nền */
+    background-color: #ffffff;
+}
+
     /* Hiệu ứng làm mờ dần và thu nhỏ hàng trước khi xóa */
 .fade-out {
     opacity: 0; /* Làm mờ dần */
@@ -201,7 +217,7 @@
 
     .search-bar {
         width: 100%;
-        padding: 10px 5px 10px 5px; /* Chỉnh lại padding để chừa không gian cho ảnh */
+        padding: 10px 5px 10px 5px;
         border: 1px solid #ccc;
         border-radius: 10px;
         font-size: 16px;
@@ -240,10 +256,10 @@
         top: 50%;
         justify-content: right;
         transform: translateY(-50%);
-        width: 24px; /* Kích thước của ảnh camera */
+        width: 24px;
         height: 24px;
         cursor: pointer;
-        opacity: 0.8; /* Tạo hiệu ứng mờ nhẹ */
+        opacity: 0.8;
         transition: opacity 0.3s ease;
     }
     .camera-icon:hover {
@@ -328,15 +344,11 @@
     #product-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
+        /* margin-top: 1    px; */
         background-color: #fff;
     }
 
-    #product-table th, #product-table td {
-        padding: 6px;
-        text-align: left;
-        border: 1px solid #ddd;
-    }
+
 
     #product-table th {
         background-color: #f4f4f4;
@@ -350,7 +362,13 @@
     #product-table tbody tr:hover {
         background-color: #f1f1f1;
     }
-
+    #product-table th, #product-table td {
+        text-align: center; /* Căn giữa theo chiều ngang */
+        vertical-align: middle; /* Căn giữa theo chiều dọc */
+        padding: 6px;
+        /* text-align: left; */
+        border: 1px solid #ddd;
+    }
     /* Payment Form Styling */
     #payment-form {
         display: flex; 
@@ -372,7 +390,7 @@
     #received-amount {
         padding: 5px;
         font-size: 13px;
-        width: 50%;
+        width: 100px;
     }
     .total{
         text-align: right;
