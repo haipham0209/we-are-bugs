@@ -10,8 +10,8 @@ function prepareFormData() {
             price: parseFloat(row.querySelector("td:nth-child(4)").textContent.replace("¥", "").trim()),
         };
         products.push(product);
-        console.log("11111111111111");
-        console.log(products);
+        // console.log("11111111111111");
+        // console.log(products);
     });
 
     // Thu thập dữ liệu thanh toán
