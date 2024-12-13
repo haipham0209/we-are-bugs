@@ -46,7 +46,9 @@
         width: 35px; /* Giảm kích thước nút */
         height: 35px;
         padding: 5px;
+        /* color: #ffc800; */
     }
+    
     .custom-navbar .navbar-toggler-icon {
         width: 1.5rem;
         height: 1.5rem;
@@ -160,18 +162,19 @@
     
     .show-more-btn {
         display: block;
-        width: 30%;
+        width: 35%;
         margin: 20px auto;
         padding: 10px 20px;
-        background-color: #ffc800;
-        color: rgb(0, 0, 0);
+        background-color: #0d6efd;
+        color: rgb(255, 255, 255);
         border: none;
         border-radius: 5px;
         cursor: pointer;
     }
     
     .show-more-btn:hover {
-        background-color: #0056b3;
+        background-color: #0d6efd;
+        color: white;
     }
     
     
