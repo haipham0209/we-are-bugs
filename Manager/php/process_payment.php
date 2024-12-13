@@ -36,6 +36,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->begin_transaction();
 
         $order_number = $_SESSION['order_number'];
+        ///////////////////////////////kiem tra ma don hang
+        // Kiểm tra xem order_number đã tồn tại hay chưa
+        $stmt_check_order = $conn->prepare("SELECT COUNT(*) FROM orders WHERE order_number = ?");
+        $stmt_check_order->bind_param("s", $order_number);
+        $stmt_check_order->execute();
+        $stmt_check_order->bind_result($order_count);
+        $stmt_check_order->fetch();
+        $stmt_check_order->free_result();
+
+        if ($order_count > 0) {
+            echo json_encode(['success' => false, 'error' => '解決済みのオーダーです。CLEARしてください']); // Order number already exists
+            $conn->rollback();
+            exit;
+        }
+
+        ///////////////////////////////////////////////////////////////
         // echo $order_number;
         // Lưu đơn hàng vào bảng orders
         $stmt = $conn->prepare("INSERT INTO orders (order_number, store_id, customer_id, total_price, status, received_amount) VALUES (?, ?, ?, ?, 'pending', ?)");
