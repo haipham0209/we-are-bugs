@@ -133,15 +133,15 @@ $product_result = $product_stmt->get_result();
                             <p><strong>名前：</strong>' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</p>
                             <p class="productCategory"><strong>カテゴリー：</strong>' . htmlspecialchars($product['cname'], ENT_QUOTES, 'UTF-8') . '</p>
                             <p><strong>原価：</strong>' . htmlspecialchars($product['costPrice'], ENT_QUOTES, 'UTF-8') . '</p>';
-                            // 割引がある場合、割引価格を表示
-                            if ($discounted_price !== null) {
-                                echo '
+                    // 割引がある場合、割引価格を表示
+                    if ($discounted_price !== null) {
+                        echo '
                                 <p style="color: red;"><strong>値段：</strong>' . htmlspecialchars($priceToDisplay, ENT_QUOTES, 'UTF-8') . '</p>
                                 <p class="discountNotice" style="color: red;">割引中</p>';
-                            } else {
-                                echo '<p><strong>値段：</strong>' . htmlspecialchars($priceToDisplay, ENT_QUOTES, 'UTF-8') . '</p>';
-                            }
-                            echo ' <p><strong>説明：</strong>' . htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') . '</p>
+                    } else {
+                        echo '<p><strong>値段：</strong>' . htmlspecialchars($priceToDisplay, ENT_QUOTES, 'UTF-8') . '</p>';
+                    }
+                    echo ' <p><strong>説明：</strong>' . htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') . '</p>
                         </div>
                         <div class="stock">在庫: ' . htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') . '</div>
                     </div>';
@@ -156,60 +156,45 @@ $product_result = $product_stmt->get_result();
             document.addEventListener('DOMContentLoaded', function() {
                 const categoryButtons = document.querySelectorAll('.category button');
                 const productCards = document.querySelectorAll('.product-card');
-                const selectedCategories = new Set(); // 選択されたカテゴリを管理
-
-                // "All"ボタンを取得
                 const allCategoriesButton = document.querySelector('.all-categories');
 
+                // カテゴリボタンをクリックした時の動作
                 categoryButtons.forEach(button => {
                     button.addEventListener('click', function() {
-                        const categoryId = this.getAttribute('data-category-id');
+                        const isAll = this.classList.contains('all-categories');
 
-                        // "All"ボタンがクリックされた場合、すべてをリセット
-                        if (!categoryId) {
-                            selectedCategories.clear();
+                        // "All"がクリックされた場合
+                        if (isAll) {
                             categoryButtons.forEach(btn => btn.classList.remove('active'));
-                            this.classList.add('active'); // "All"ボタンをアクティブに
-
-                            // 全商品を表示
-                            productCards.forEach(card => card.style.display = 'block');
-                            return;
-                        }
-
-                        // "All"以外のカテゴリを選択
-                        if (selectedCategories.has(categoryId)) {
-                            // すでに選択済みの場合は選択を解除
-                            selectedCategories.delete(categoryId);
-                            this.classList.remove('active');
-                        } else {
-                            // 新しく選択された場合は追加
-                            selectedCategories.add(categoryId);
                             this.classList.add('active');
-                        }
-
-                        // "All"ボタンの状態を更新
-                        if (selectedCategories.size === 0) {
-                            allCategoriesButton.classList.add('active');
+                            // 全ての商品を表示
+                            filterProducts([]);
                         } else {
+                            // 他のカテゴリボタンがクリックされた場合
+                            this.classList.toggle('active');
                             allCategoriesButton.classList.remove('active');
-                        }
 
-                        // 商品をフィルタリング
-                        filterProducts();
+                            // 選択されたカテゴリIDを取得
+                            const selectedCategories = [...document.querySelectorAll('.category button.active')]
+                                .map(btn => btn.dataset.categoryId);
+
+                            // 全カテゴリを解除した場合、"All"をアクティブにする
+                            if (selectedCategories.length === 0) {
+                                allCategoriesButton.classList.add('active');
+                                filterProducts([]);
+                            } else {
+                                filterProducts(selectedCategories);
+                            }
+                        }
                     });
                 });
 
-                function filterProducts() {
-                    if (selectedCategories.size === 0) {
-                        // 何も選択されていない場合は全商品を表示
-                        productCards.forEach(card => card.style.display = 'block');
-                        return;
-                    }
-
-                    // 選択されたカテゴリのいずれかに一致する商品を表示
+                // 商品をフィルタリングする関数
+                function filterProducts(categoryIds) {
                     productCards.forEach(card => {
-                        const cardCategoryId = card.getAttribute('data-category-id');
-                        if (selectedCategories.has(cardCategoryId)) {
+                        const cardCategoryId = card.dataset.categoryId;
+                        // カテゴリが選択されていないか、選択されたカテゴリに一致する場合は表示
+                        if (categoryIds.length === 0 || categoryIds.includes(cardCategoryId)) {
                             card.style.display = 'block';
                         } else {
                             card.style.display = 'none';
@@ -218,7 +203,6 @@ $product_result = $product_stmt->get_result();
                 }
             });
         </script>
-
 
     </main>
     <footer></footer>
