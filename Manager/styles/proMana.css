@@ -218,7 +218,7 @@
 
     /* Các nút trong main-category có nền sáng và chữ đen */
     .category button {
-        background-color: #f4f4f400;
+        /* background-color: #f4f4f400; */
         /* Nền sáng */
         color: #333;
         /* Chữ đen */
@@ -716,7 +716,7 @@ video {
 
     /* Các nút trong main-category có nền sáng và chữ đen */
     .category button {
-        background-color: #f4f4f400;
+        /* background-color: #f4f4f400; */
         /* Nền sáng */
         color: #333;
         /* Chữ đen */

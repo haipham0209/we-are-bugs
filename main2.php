@@ -78,6 +78,7 @@ $best_sellers_result = $stmt_best_sellers->get_result();
 $stmt->close();
 $stmt_best_sellers->close();
 $conn->close();
+require "resources.php";
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +88,9 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WRB - Home</title>
     <!-- Bootstrap CSS (cục bộ) -->
-    
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="./styles/main2.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -101,6 +104,7 @@ $conn->close();
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
                 <div class="nav-menu">
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -127,7 +131,6 @@ $conn->close();
                     </ul>
                 </div>
                 <!-- <div class="overlay"></div> -->
-                <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
                 <div id="searchContainer" class="d-none">
                     <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
                 </div>
@@ -181,7 +184,7 @@ $conn->close();
 
     <main class="container mt-4">
         <!-- Best Sellers Section -->
-        <h2 class="mb-4">Best Sellers</h2>
+        <!-- <h2 class="mb-4">Best Sellers</h2>
         <div class="row">
             <?php
             if ($best_sellers_result->num_rows > 0) {
@@ -200,10 +203,69 @@ $conn->close();
                 }
             }
             ?>
-        </div>
+        </div> -->
+        <p>------------------------------------------------------------------------</p>
+        <section id="product-section" class="category">
+            <?php foreach ($categories as $category): ?>
+                <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
+                    <h3 class="title"><?= htmlspecialchars($category['cname']) ?></h3>
+                    <div class="product-showcase">
+                        <!-- Hiển thị tối đa 4 sản phẩm -->
+                        <?php 
+                        $productCount = 0;
+                        foreach ($category['products'] as $product): 
+                            if ($productCount >= 4) break; // Dừng khi đã hiển thị đủ 4 sản phẩm
+                            $productCount++;
+                        ?>
+                            <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
+                                <img src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image"/>
+                                <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <!-- Nếu số lượng sản phẩm > 4, hiển thị nút Show More -->
+                    <?php if (count($category['products']) > 4): ?>
+                        <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">Show More</button>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </section>
+
+
     </main>
 
     <!-- Bootstrap JS (cục bộ) -->
+     <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            AOS.init({
+                duration: 1000, // Thời gian hiệu ứng (ms)
+                easing: 'ease-in-out', // Loại easing cho hiệu ứng
+                once: true // Hiệu ứng chỉ diễn ra một lần khi cuộn
+            });
+        });
+        function showMore(products) {
+            // Tạo thêm HTML cho các sản phẩm còn lại
+            const productShowcase = event.target.previousElementSibling;
+            products.forEach(product => {
+                const productContent = document.createElement('div');
+                productContent.classList.add('product-content');
+                productContent.setAttribute('data-aos', 'fade-up');
+                productContent.setAttribute('data-aos-duration', '1000');
+                productContent.innerHTML = `
+                    <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
+                    <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+                `;
+                productShowcase.appendChild(productContent);
+            });
+            // Ẩn nút "Show More" sau khi nhấn
+            event.target.style.display = 'none';
+        }
+
+
+    </script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

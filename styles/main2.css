@@ -136,5 +136,42 @@
     .overlay.show {
         display: block; /* Hiển thị overlay khi menu mở */
     }
+    .product-showcase {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 cột */
+        gap: 15px; /* Khoảng cách giữa các sản phẩm */
+    }
+    
+    .product-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .product-image {
+        width: 100%; /* Đặt chiều rộng bằng 100% để ảnh luôn chiếm hết không gian */
+        height: 200px; /* Cố định chiều cao của ảnh */
+        object-fit: cover; /* Giữ tỷ lệ hình ảnh và cắt phần dư thừa nếu cần */
+        border-radius: 8px; /* Thêm bo góc để hình ảnh có kiểu dáng đẹp */
+    }
+    
+    .show-more-btn {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .show-more-btn:hover {
+        background-color: #0056b3;
+    }
+    
     
 }
