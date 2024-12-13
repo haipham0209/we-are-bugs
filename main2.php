@@ -245,30 +245,39 @@ require "resources.php";
             });
         });
         function showMore(products) {
-        // Lấy danh sách các sản phẩm hiện tại đã được hiển thị
-        const productShowcase = event.target.previousElementSibling;
-        const displayedProducts = productShowcase.querySelectorAll('.product-content');
+    // Lấy danh sách các sản phẩm hiện tại đã được hiển thị
+    const productShowcase = event.target.previousElementSibling;
+    const displayedProducts = productShowcase.querySelectorAll('.product-content');
 
-        // Chỉ lấy các sản phẩm chưa hiển thị
-        const remainingProducts = products.slice(displayedProducts.length);
+    // Chỉ lấy các sản phẩm chưa hiển thị
+    const remainingProducts = products.slice(displayedProducts.length);
 
-        remainingProducts.forEach(product => {
-            const productContent = document.createElement('div');
-            productContent.classList.add('product-content');
-            productContent.setAttribute('data-aos', 'fade-up');
-            productContent.setAttribute('data-aos-duration', '1000');
-            productContent.innerHTML = `
-                <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-                <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
-            `;
-            productShowcase.appendChild(productContent);
-        });
+    remainingProducts.forEach(product => {
+        const productContent = document.createElement('div');
+        productContent.classList.add('product-content');
+        productContent.setAttribute('data-aos', 'fade-up');
+        productContent.setAttribute('data-aos-duration', '1000');
+        productContent.innerHTML = `
+            <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
+            <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+        `;
+        productShowcase.appendChild(productContent);
+    });
 
-        // Ẩn nút "Show More" sau khi nhấn nếu không còn sản phẩm để hiển thị
-        if (remainingProducts.length === 0) {
-            event.target.style.display = 'none';
+    // Nếu không còn sản phẩm để hiển thị
+    if (remainingProducts.length === 0) {
+        // Chuyển nội dung nút thành "Show Less"
+        event.target.textContent = "Show Less";
+    } else {
+        // Xử lý logic chuyển đổi "Show More" và "Show Less"
+        if (event.target.textContent === "Show More") {
+            event.target.textContent = "Show Less";
+        } else {
+            event.target.textContent = "Show More";
         }
     }
+}
+
 
     </script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
