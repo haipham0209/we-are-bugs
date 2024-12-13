@@ -11,6 +11,7 @@ if ($conn->connect_error) {
 $data = json_decode(file_get_contents('php://input'), true);
 $barcode = $data['barcode'];
 
+
 // Truy vấn sản phẩm dựa trên mã vạch
 $sql = "SELECT * FROM product WHERE barcode = ?";
 $stmt = $conn->prepare($sql);
@@ -23,8 +24,8 @@ if ($result->num_rows > 0) {
     $product = $result->fetch_assoc();
     echo json_encode($product);
 } else {
-    // echo json_encode(['error' => 'Product not found']);
-    header("Location: ../error.php?error=nopermission");
+    echo json_encode(['error' => 'Product not found']);
+    // header("Location: ../error.php?error=nopermission");
 }
 
 $stmt->close();
