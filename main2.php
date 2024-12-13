@@ -108,7 +108,7 @@ require "resources.php";
                 <div class="nav-menu">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="./main.php?sname=<?= urlencode($sname) ?>">ホームページ</a>
+                            <a class="nav-link" href="./main2.php?sname=<?= urlencode($sname) ?>">ホームページ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./html/storeInfor.php?sname=<?= urlencode($sname) ?>">お店について</a>
