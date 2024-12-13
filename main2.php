@@ -245,36 +245,48 @@ require "resources.php";
             });
         });
         function showMore(products) {
-    // Lấy danh sách các sản phẩm hiện tại đã được hiển thị
     const productShowcase = event.target.previousElementSibling;
+    const button = event.target; // Nút Show More/Show Less hiện tại
     const displayedProducts = productShowcase.querySelectorAll('.product-content');
 
-    // Chỉ lấy các sản phẩm chưa hiển thị
-    const remainingProducts = products.slice(displayedProducts.length);
+    // Kiểm tra trạng thái của nút
+    if (button.textContent === "Show More") {
+        // Chỉ lấy các sản phẩm chưa hiển thị
+        const remainingProducts = products.slice(displayedProducts.length);
 
-    remainingProducts.forEach(product => {
-        const productContent = document.createElement('div');
-        productContent.classList.add('product-content');
-        productContent.setAttribute('data-aos', 'fade-up');
-        productContent.setAttribute('data-aos-duration', '1000');
-        productContent.innerHTML = `
-            <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-            <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
-        `;
-        productShowcase.appendChild(productContent);
-    });
+        remainingProducts.forEach(product => {
+            const productContent = document.createElement('div');
+            productContent.classList.add('product-content');
+            productContent.setAttribute('data-aos', 'fade-up');
+            productContent.setAttribute('data-aos-duration', '1000');
+            productContent.innerHTML = `
+                <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
+                <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+            `;
+            productShowcase.appendChild(productContent);
+        });
 
-    // Nếu không còn sản phẩm để hiển thị
-    if (remainingProducts.length === 0) {
-        // Chuyển nội dung nút thành "Show Less"
-        event.target.textContent = "Show Less";
+        // Đổi nút thành Show Less
+        button.textContent = "Show Less";
     } else {
-        // Xử lý logic chuyển đổi "Show More" và "Show Less"
-        if (event.target.textContent === "Show More") {
-            event.target.textContent = "Show Less";
-        } else {
-            event.target.textContent = "Show More";
-        }
+        // Quay về trạng thái chỉ hiển thị 2 sản phẩm đầu tiên
+        productShowcase.innerHTML = ''; // Xóa toàn bộ sản phẩm hiện tại
+
+        // Chỉ hiển thị 2 sản phẩm đầu
+        products.slice(0, 2).forEach(product => {
+            const productContent = document.createElement('div');
+            productContent.classList.add('product-content');
+            productContent.setAttribute('data-aos', 'fade-up');
+            productContent.setAttribute('data-aos-duration', '1000');
+            productContent.innerHTML = `
+                <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
+                <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+            `;
+            productShowcase.appendChild(productContent);
+        });
+
+        // Đổi nút thành Show More
+        button.textContent = "Show More";
     }
 }
 
