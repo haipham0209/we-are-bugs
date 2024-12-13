@@ -214,7 +214,7 @@ require "resources.php";
                         <?php 
                         $productCount = 0;
                         foreach ($category['products'] as $product): 
-                            if ($productCount >= 4) break; // Dừng khi đã hiển thị đủ 4 sản phẩm
+                            if ($productCount >= 2) break; // Dừng khi đã hiển thị đủ 4 sản phẩm
                             $productCount++;
                         ?>
                             <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
@@ -224,8 +224,13 @@ require "resources.php";
                         <?php endforeach; ?>
                     </div>
                     <!-- Nếu số lượng sản phẩm > 4, hiển thị nút Show More -->
-                    <?php if (count($category['products']) > 4): ?>
-                        <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">Show More</button>
+                    <?php if (count($category['products']) > 2): ?>
+                        <button class="show-more-btn" 
+                                data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
+                                onclick="toggleShowMore(this, <?= htmlspecialchars(json_encode($category['products'])) ?>)">
+                            Show More
+                        </button>
+
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
@@ -246,24 +251,33 @@ require "resources.php";
                 once: true // Hiệu ứng chỉ diễn ra một lần khi cuộn
             });
         });
-        function showMore(products) {
-            // Tạo thêm HTML cho các sản phẩm còn lại
-            const productShowcase = event.target.previousElementSibling;
-            products.forEach(product => {
-                const productContent = document.createElement('div');
-                productContent.classList.add('product-content');
-                productContent.setAttribute('data-aos', 'fade-up');
-                productContent.setAttribute('data-aos-duration', '1000');
-                productContent.innerHTML = `
-                    <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-                    <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
-                `;
-                productShowcase.appendChild(productContent);
-            });
-            // Ẩn nút "Show More" sau khi nhấn
-            event.target.style.display = 'none';
-        }
+        function toggleShowMore(button, products) {
+    // Lấy phần danh sách sản phẩm trong nhóm
+    const productShowcase = button.previousElementSibling;
+    const displayedProducts = productShowcase.querySelectorAll('.product-content');
 
+    if (button.textContent === 'Show More') {
+        // Hiển thị tất cả sản phẩm
+        products.forEach(product => {
+            const productContent = document.createElement('div');
+            productContent.classList.add('product-content');
+            productContent.setAttribute('data-aos', 'fade-up');
+            productContent.setAttribute('data-aos-duration', '1000');
+            productContent.innerHTML = `
+                <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
+                <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+            `;
+            productShowcase.appendChild(productContent);
+        });
+        button.textContent = 'Hide'; // Đổi nút thành "Hide"
+    } else {
+        // Ẩn chỉ hiển thị lại 2 sản phẩm đầu tiên
+        while (productShowcase.children.length > 2) {
+            productShowcase.removeChild(productShowcase.lastChild);
+        }
+        button.textContent = 'Show More'; // Đổi nút thành "Show More"
+    }
+}
 
     </script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
