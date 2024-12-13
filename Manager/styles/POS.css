@@ -299,8 +299,8 @@
         height: 100%;
         /* Hoặc chiều cao cụ thể */
         object-fit: contain;
-        overflow-clip-margin: content-box;
-        overflow: clip;
+        /* overflow-clip-margin: content-box; */
+        /* overflow: clip; */
     }
     #stopBtn {
         position: absolute;
