@@ -101,8 +101,7 @@ $conn->close();
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="nav-menu">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="./main.php?sname=<?= urlencode($sname) ?>">ホームページ</a>
@@ -121,6 +120,8 @@ $conn->close();
                         </li>
                     </ul>
                 </div>
+                <div class="overlay"></div>
+                <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
                 <div id="searchContainer" class="d-none">
                     <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
                 </div>
@@ -129,6 +130,7 @@ $conn->close();
                 </button>
                
             </div>
+           
         </nav>
     </header>
     <script>
@@ -150,6 +152,24 @@ $conn->close();
                 }
             });
         });
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuButton = document.querySelector(".navbar-toggler");
+            const navMenu = document.querySelector(".nav-menu");
+            const overlay = document.querySelector(".overlay");
+
+            // Xử lý mở menu
+            menuButton.addEventListener("click", function () {
+                navMenu.classList.toggle("open");
+                overlay.classList.toggle("show");
+            });
+
+            // Xử lý đóng menu khi nhấn overlay
+            overlay.addEventListener("click", function () {
+                navMenu.classList.remove("open");
+                overlay.classList.remove("show");
+            });
+        });
+
     </script>
 
 

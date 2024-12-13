@@ -72,4 +72,65 @@
         opacity: 0;
         visibility: hidden;
     }
+     /* Ẩn menu theo mặc định */
+     .nav-menu {
+        position: fixed;
+        top: 0;
+        left: -100%; /* Ẩn menu ban đầu */
+        width: 60%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        color: white;
+        display: flex;
+        flex-direction: column; /* Hiển thị mục theo cột */
+        justify-content: flex-start;
+        transition: left 0.3s ease-in-out; /* Hiệu ứng khi mở menu */
+        z-index: 1000;
+        padding: 20px; /* Thêm khoảng cách bên trong */
+        border-radius: 5px 15px 15px 0;
+    }
+    
+    .nav-menu.open {
+        left: 0; /* Hiển thị menu khi mở */
+        height: auto;
+        margin-top: 90px;
+    }
+    
+    .nav-menu ul {
+        list-style: none; /* Loại bỏ dấu đầu dòng */
+        padding: 0;
+        margin: 0;
+    }
+    
+    .nav-menu ul li {
+        margin: 15px 0; /* Khoảng cách giữa các mục */
+    }
+    
+    .nav-menu ul li a {
+        text-decoration: none; /* Loại bỏ gạch chân */
+        color: white; /* Màu chữ */
+        font-size: 18px;
+        display: block;
+        transition: color 0.3s;
+    }
+    
+    .nav-menu ul li a:hover {
+        color: #ddd; /* Hiệu ứng khi rê chuột */
+    }
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Màu nền overlay */
+        display: none; /* Ẩn overlay mặc định */
+        z-index: 999; /* Phía sau menu */
+    }
+    
+    .overlay.show {
+        display: block; /* Hiển thị overlay khi menu mở */
+    }
+    
 }
