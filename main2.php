@@ -108,8 +108,6 @@ require "resources.php";
                 <div class="nav-menu">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <h3><?php echo $sname; ?></h3>
-                        <li class="nav-item">
                             <a class="nav-link" href="./main.php?sname=<?= urlencode($sname) ?>">ホームページ</a>
                         </li>
                         <li class="nav-item">
