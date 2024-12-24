@@ -6,6 +6,13 @@
     header {
         padding-top: 0;
     }
+    .rotated-text{
+        color: #000000;
+
+    }
+    a{
+        text-decoration: none;
+    }
     .btn-outline-primary {
         --bs-btn-color: #000000 !important;
         --bs-btn-border-color:  #000000 !important;

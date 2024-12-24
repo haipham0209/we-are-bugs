@@ -178,71 +178,69 @@ require "resources.php";
         });
 
     </script>
-
-
+    
     <main class="container mt-4">
-        <!-- Best Sellers Section -->
-        <!-- <h2 class="mb-4">Best Sellers</h2>
-        <div class="row">
+        
+        
+        
             <?php
-            if ($best_sellers_result->num_rows > 0) {
-                while ($product = $best_sellers_result->fetch_assoc()) {
-                    $productImagePath = $product['productImage'];
-                    echo '
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '">
-                            <div class="card-body">
-                                <h5 class="card-title">' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</h5>
-                                <p class="card-text">¥' . number_format($product['price'], 0) . '</p>
-                            </div>
-                        </div>
-                    </div>';
-                }
-            }
+            // if ($best_sellers_result->num_rows > 0) {
+            //     while ($product = $best_sellers_result->fetch_assoc()) {
+            //         $productImagePath = $product['productImage'];
+            //         echo '
+            //         <div class="col-md-4 mb-4">
+            //             <div class="card">
+            //                 <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '">
+            //                 <div class="card-body">
+            //                     <h5 class="card-title">' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</h5>
+            //                     <p class="card-text">¥' . number_format($product['price'], 0) . '</p>
+            //                 </div>
+            //             </div>
+            //         </div>';
+            //     }
+            // }
             ?>
-        </div> -->
-        <!-- <p>------------------------------------------------------------------------</p> -->
-        <section id="product-section" class="category">
-            <?php foreach ($categories as $category): ?>
-                <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
-                    <h3 class="title"><?= htmlspecialchars($category['cname']) ?></h3>
-                    <div class="product-showcase">
-                        <!-- Hiển thị tối đa 2 sản phẩm -->
-                        <?php 
-                        $productCount = 0;
-                        foreach ($category['products'] as $product): 
-                            if ($productCount >= 2) break; // Dừng khi đã hiển thị đủ 4 sản phẩm
-                            $productCount++;
-                        ?>
-                            <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
-                                <img src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image"/>
-                                <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
-                    <?php if (count($category['products']) > 2): ?>
-                        <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">Show More</button>
-                        <!-- <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>"
-                            onclick="toggleShowMore(this, <?= htmlspecialchars(json_encode($category['products'])) ?>)">
-                            Show More
-                        </button> -->
+        
+         <!-- <p>------------------------------------------------------------------------</p> -->
+         <section id="product-section" class="category">
+    <?php foreach ($categories as $category): ?>
+        <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
+            <h3 class="title" data-aos="fade-right" data-aos-duration="1000">
+                <?= htmlspecialchars($category['cname']) ?>
+            </h3>
 
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
-        </section>
+            <div class="product-showcase">
+                <!-- Hiển thị sản phẩm (Tối đa 2 sản phẩm) -->
+                <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
+                    <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
+                        <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
+                            <img src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image"/>
+                            <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
 
+            <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
+            <?php if (count($category['products']) > 2): ?>
+                <button 
+                    class="show-more-btn" 
+                    data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
+                    data-aos="fade-up" 
+                    data-aos-duration="1000" 
+                    onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">
+                    全て表示
+                </button>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+</section>
 
     </main>
 
-    <!-- Bootstrap JS (cục bộ) -->
-     <!-- AOS JS -->
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // const button = event.target;
             AOS.init({
                 duration: 1000, // Thời gian hiệu ứng (ms)
                 easing: 'ease-in-out', // Loại easing cho hiệu ứng
@@ -254,8 +252,12 @@ require "resources.php";
     const button = event.target; // Nút Show More/Show Less hiện tại
     const displayedProducts = productShowcase.querySelectorAll('.product-content');
 
+    const buttonText = button.textContent.trim(); // Loại bỏ khoảng trắng thừa
+
     // Kiểm tra trạng thái của nút
-    if (button.textContent === "Show More") {
+    if (buttonText === "全て表示") {
+        console.log("Hiển thị thêm sản phẩm");
+
         // Chỉ lấy các sản phẩm chưa hiển thị
         const remainingProducts = products.slice(displayedProducts.length);
 
@@ -264,16 +266,30 @@ require "resources.php";
             productContent.classList.add('product-content');
             productContent.setAttribute('data-aos', 'fade-up');
             productContent.setAttribute('data-aos-duration', '1000');
-            productContent.innerHTML = `
+            
+            // Tạo liên kết đến trang chi tiết sản phẩm
+            const productLink = document.createElement('a');
+            productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
+            
+            // Thêm nội dung của sản phẩm vào trong liên kết
+            productLink.innerHTML = `
                 <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
                 <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
             `;
+            
+            // Thêm sản phẩm vào giao diện
+            productContent.appendChild(productLink);
             productShowcase.appendChild(productContent);
         });
 
+        // Khởi tạo lại hiệu ứng AOS
+        AOS.refresh();
+
         // Đổi nút thành Show Less
-        button.textContent = "Show Less";
-    } else {
+        button.textContent = "閉じる";
+    } else if (buttonText === "閉じる") {
+        console.log("Ẩn bớt sản phẩm");
+
         // Quay về trạng thái chỉ hiển thị 2 sản phẩm đầu tiên
         productShowcase.innerHTML = ''; // Xóa toàn bộ sản phẩm hiện tại
 
@@ -281,24 +297,43 @@ require "resources.php";
         products.slice(0, 2).forEach(product => {
             const productContent = document.createElement('div');
             productContent.classList.add('product-content');
-            // productContent.setAttribute('data-aos', 'fade-up');
-            // productContent.setAttribute('data-aos-duration', '1000');
-            productContent.innerHTML = `
+            
+            // Tạo liên kết đến trang chi tiết sản phẩm
+            const productLink = document.createElement('a');
+            productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
+            
+            // Thêm nội dung của sản phẩm vào trong liên kết
+            productLink.innerHTML = `
                 <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
                 <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
             `;
+            
+            // Thêm sản phẩm vào giao diện
+            productContent.appendChild(productLink);
             productShowcase.appendChild(productContent);
         });
+        
         productShowcase.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+        // Khởi tạo lại hiệu ứng AOS
+        AOS.refresh();
+
         // Đổi nút thành Show More
-        button.textContent = "Show More";
+        button.textContent = "全て表示";
+    } else {
+        console.log(`Không nhận diện được trạng thái của nút: "${buttonText}"`);
     }
-}
+}全て表示
+
+
 
     </script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+         <!-- AOS JS -->
+         <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 </body>
-<body onload="window.scrollTo(0, 0);">
-
+<!-- <body onload="window.scrollTo(0, 0);"> -->
+<footer>
+    
+</footer>
 </html>
