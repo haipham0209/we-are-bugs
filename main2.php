@@ -281,22 +281,24 @@ require "resources.php";
         products.slice(0, 2).forEach(product => {
             const productContent = document.createElement('div');
             productContent.classList.add('product-content');
-            productContent.setAttribute('data-aos', 'fade-up');
-            productContent.setAttribute('data-aos-duration', '1000');
+            // productContent.setAttribute('data-aos', 'fade-up');
+            // productContent.setAttribute('data-aos-duration', '1000');
             productContent.innerHTML = `
                 <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
                 <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
             `;
             productShowcase.appendChild(productContent);
         });
+        productShowcase.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
         // Đổi nút thành Show More
         button.textContent = "Show More";
     }
 }
 
-
     </script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
+<body onload="window.scrollTo(0, 0);">
+
 </html>
