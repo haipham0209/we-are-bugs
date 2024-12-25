@@ -96,7 +96,10 @@ require "resources.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     <!-- Thêm vào phần <head> của HTML -->
-<link href="https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap" rel="stylesheet">
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
 </head>
 <body>
@@ -143,25 +146,27 @@ require "resources.php";
            
         </nav>
         <div class="spacer"></div>
+        <!-- ---------------hiện navbar khi cuộn------------------------------- -->
         <script>
             let lastScrollTop = 0;
-const navbar = document.querySelector('.navbar');
+            const navbar = document.querySelector('.navbar');
 
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    const isScrollingDown = currentScroll > lastScrollTop;
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                const isScrollingDown = currentScroll > lastScrollTop;
 
-    if (isScrollingDown && currentScroll > navbar.offsetHeight) {
-        navbar.classList.add('navbar-hidden');
-    } else {
-        navbar.classList.remove('navbar-hidden');
-    }
+                if (isScrollingDown && currentScroll > navbar.offsetHeight) {
+                    navbar.classList.add('navbar-hidden');
+                } else {
+                    navbar.classList.remove('navbar-hidden');
+                }
 
-    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Tránh giá trị âm
-});
-
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Tránh giá trị âm
+            });
         </script>
+        <!-- --------------------------------------------------------------- -->
     </header>
+    <!-- -----------------------search--------------------------------- -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const searchBtn = document.getElementById("searchBtn");
@@ -182,38 +187,35 @@ window.addEventListener('scroll', () => {
             });
         });
         document.addEventListener("DOMContentLoaded", function () {
-    const menuButton = document.querySelector(".navbar-toggler");
-    const navMenu = document.querySelector(".nav-menu");
-    const overlay = document.querySelector(".overlay");
-    const body = document.body; // Tham chiếu đến body
+            const menuButton = document.querySelector(".navbar-toggler");
+            const navMenu = document.querySelector(".nav-menu");
+            const overlay = document.querySelector(".overlay");
+            const body = document.body; // Tham chiếu đến body
 
-    // Xử lý mở menu
-    menuButton.addEventListener("click", function () {
-        navMenu.classList.toggle("open");
-        overlay.classList.toggle("show");
-        
-        // Thêm hoặc xóa lớp khóa cuộn cho body
-        if (navMenu.classList.contains("open")) {
-            body.classList.add("no-scroll");
-        } else {
-            body.classList.remove("no-scroll");
-        }
-    });
+            // Xử lý mở menu
+            menuButton.addEventListener("click", function () {
+                navMenu.classList.toggle("open");
+                overlay.classList.toggle("show");
+                
+                // Thêm hoặc xóa lớp khóa cuộn cho body
+                if (navMenu.classList.contains("open")) {
+                    body.classList.add("no-scroll");
+                } else {
+                    body.classList.remove("no-scroll");
+                }
+            });
 
-    // Xử lý đóng menu khi nhấn overlay
-    overlay.addEventListener("click", function () {
-        navMenu.classList.remove("open");
-        overlay.classList.remove("show");
-        body.classList.remove("no-scroll"); // Bỏ khóa cuộn
-    });
-});
-
-
+            // Xử lý đóng menu khi nhấn overlay
+            overlay.addEventListener("click", function () {
+                navMenu.classList.remove("open");
+                overlay.classList.remove("show");
+                body.classList.remove("no-scroll"); // Bỏ khóa cuộn
+            });
+        });
     </script>
+    <!-- ------------------------------------------------------ -->
     
     <main class="container mt-4">
-        
-        
         
             <?php
             // if ($best_sellers_result->num_rows > 0) {
@@ -234,138 +236,134 @@ window.addEventListener('scroll', () => {
             ?>
         
          <!-- <p>------------------------------------------------------------------------</p> -->
-         <section id="product-section" class="category">
-    <?php foreach ($categories as $category): ?>
-        <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
-            <h3 class="title" data-aos="fade-right" data-aos-duration="1000">
-                <?= htmlspecialchars($category['cname']) ?>
-            </h3>
+        <section id="product-section" class="category">
+            <?php foreach ($categories as $category): ?>
+                <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
+                    <h3 class="title" data-aos="fade-right" data-aos-duration="1000">
+                        <?= htmlspecialchars($category['cname']) ?>
+                    </h3>
 
-            <div class="product-showcase">
-                <!-- Hiển thị sản phẩm (Tối đa 2 sản phẩm) -->
-                <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
-                    <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
-                        <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
-                            <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
-                            <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
-            </div>
+                    <div class="product-showcase">
+                        <!-- Hiển thị sản phẩm (Tối đa 2 sản phẩm) -->
+                        <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
+                            <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
+                                <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
+                                    <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+                                    <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
 
-            <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
-            <?php if (count($category['products']) > 2): ?>
-                <button 
-                    class="show-more-btn" 
-                    data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
-                    data-aos="fade-up" 
-                    data-aos-duration="1000" 
-                    onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">
-                    全て表示
-                </button>
-            <?php endif; ?>
-        </div>
-    <?php endforeach; ?>
-</section>
+                    <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
+                    <?php if (count($category['products']) > 2): ?>
+                        <button 
+                            class="show-more-btn" 
+                            data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
+                            data-aos="fade-up" 
+                            data-aos-duration="1000" 
+                            onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">
+                            全て表示
+                        </button>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </section>
 
     </main>
+</body>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // const button = event.target;
-            AOS.init({
-                duration: 1000, // Thời gian hiệu ứng (ms)
-                easing: 'ease-in-out', // Loại easing cho hiệu ứng
-                once: true // Hiệu ứng chỉ diễn ra một lần khi cuộn
+    document.addEventListener("DOMContentLoaded", function () {
+        // Khởi tạo hiệu ứng AOS
+        AOS.init({
+            duration: 1000, // Thời gian hiệu ứng (ms)
+            easing: 'ease-in-out', // Loại easing cho hiệu ứng
+            once: true // Hiệu ứng chỉ diễn ra một lần khi cuộn
+        });
+    });
+
+    function showMore(products) {
+        const productShowcase = event.target.previousElementSibling;
+        const button = event.target; // Nút Show More/Show Less hiện tại
+        const displayedProducts = productShowcase.querySelectorAll('.product-content');
+        const buttonText = button.textContent.trim(); // Loại bỏ khoảng trắng thừa
+
+        // Kiểm tra trạng thái của nút
+        if (buttonText === "全て表示") {
+            console.log("Hiển thị thêm sản phẩm");
+
+            // Chỉ lấy các sản phẩm chưa hiển thị
+            const remainingProducts = products.slice(displayedProducts.length);
+
+            remainingProducts.forEach(product => {
+                const productContent = document.createElement('div');
+                productContent.classList.add('product-content');
+                productContent.setAttribute('data-aos', 'fade-up');
+                productContent.setAttribute('data-aos-duration', '1000');
+
+                // Tạo liên kết đến trang chi tiết sản phẩm
+                const productLink = document.createElement('a');
+                productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
+
+                // Thêm nội dung của sản phẩm vào trong liên kết
+                productLink.innerHTML = `
+                    <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
+                    <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+                `;
+
+                // Thêm sản phẩm vào giao diện
+                productContent.appendChild(productLink);
+                productShowcase.appendChild(productContent);
             });
-        });
-        function showMore(products) {
-    const productShowcase = event.target.previousElementSibling;
-    const button = event.target; // Nút Show More/Show Less hiện tại
-    const displayedProducts = productShowcase.querySelectorAll('.product-content');
 
-    const buttonText = button.textContent.trim(); // Loại bỏ khoảng trắng thừa
+            // Khởi tạo lại hiệu ứng AOS
+            AOS.refresh();
 
-    // Kiểm tra trạng thái của nút
-    if (buttonText === "全て表示") {
-        console.log("Hiển thị thêm sản phẩm");
+            // Đổi nút thành Show Less
+            button.textContent = "閉じる";
+        } else if (buttonText === "閉じる") {
+            console.log("Ẩn bớt sản phẩm");
 
-        // Chỉ lấy các sản phẩm chưa hiển thị
-        const remainingProducts = products.slice(displayedProducts.length);
+            // Quay về trạng thái chỉ hiển thị 2 sản phẩm đầu tiên
+            productShowcase.innerHTML = ''; // Xóa toàn bộ sản phẩm hiện tại
 
-        remainingProducts.forEach(product => {
-            const productContent = document.createElement('div');
-            productContent.classList.add('product-content');
-            productContent.setAttribute('data-aos', 'fade-up');
-            productContent.setAttribute('data-aos-duration', '1000');
-            
-            // Tạo liên kết đến trang chi tiết sản phẩm
-            const productLink = document.createElement('a');
-            productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
-            
-            // Thêm nội dung của sản phẩm vào trong liên kết
-            productLink.innerHTML = `
-                <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-                <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
-            `;
-            
-            // Thêm sản phẩm vào giao diện
-            productContent.appendChild(productLink);
-            productShowcase.appendChild(productContent);
-        });
+            // Chỉ hiển thị 2 sản phẩm đầu
+            products.slice(0, 2).forEach(product => {
+                const productContent = document.createElement('div');
+                productContent.classList.add('product-content');
 
-        // Khởi tạo lại hiệu ứng AOS
-        AOS.refresh();
+                // Tạo liên kết đến trang chi tiết sản phẩm
+                const productLink = document.createElement('a');
+                productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
 
-        // Đổi nút thành Show Less
-        button.textContent = "閉じる";
-    } else if (buttonText === "閉じる") {
-        console.log("Ẩn bớt sản phẩm");
+                // Thêm nội dung của sản phẩm vào trong liên kết
+                productLink.innerHTML = `
+                    <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
+                    <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+                `;
 
-        // Quay về trạng thái chỉ hiển thị 2 sản phẩm đầu tiên
-        productShowcase.innerHTML = ''; // Xóa toàn bộ sản phẩm hiện tại
+                // Thêm sản phẩm vào giao diện
+                productContent.appendChild(productLink);
+                productShowcase.appendChild(productContent);
+            });
 
-        // Chỉ hiển thị 2 sản phẩm đầu
-        products.slice(0, 2).forEach(product => {
-            const productContent = document.createElement('div');
-            productContent.classList.add('product-content');
-            
-            // Tạo liên kết đến trang chi tiết sản phẩm
-            const productLink = document.createElement('a');
-            productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
-            
-            // Thêm nội dung của sản phẩm vào trong liên kết
-            productLink.innerHTML = `
-                <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-                <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
-            `;
-            
-            // Thêm sản phẩm vào giao diện
-            productContent.appendChild(productLink);
-            productShowcase.appendChild(productContent);
-        });
-        
-        productShowcase.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            productShowcase.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-        // Khởi tạo lại hiệu ứng AOS
-        AOS.refresh();
+            // Khởi tạo lại hiệu ứng AOS
+            AOS.refresh();
 
-        // Đổi nút thành Show More
-        button.textContent = "全て表示";
-    } else {
-        console.log(`Không nhận diện được trạng thái của nút: "${buttonText}"`);
+            // Đổi nút thành Show More
+            button.textContent = "全て表示";
+        } else {
+            // console.log(`Không nhận diện được trạng thái của nút: "${buttonText}"`);
+            console.log("1");
+        }
     }
-}
+</script>
 
 
-
-    </script>
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-         <!-- AOS JS -->
-         <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-</body>
-<!-- <body onload="window.scrollTo(0, 0);"> -->
 <footer>
     
 </footer>
