@@ -139,6 +139,54 @@ require "resources.php";
             </div>
            
         </nav>
+        <div class="spacer"></div>
+        <script>
+    let lastScrollTop = 0; // Lưu vị trí cuộn cuối cùng
+    const navbar = document.querySelector('.navbar');
+    const delta = 10; // Khoảng cách cuộn tối thiểu để thay đổi trạng thái
+
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+
+        if (Math.abs(currentScroll - lastScrollTop) <= delta) {
+            // Nếu cuộn không vượt quá delta, bỏ qua
+            return;
+        }
+
+        if (currentScroll > lastScrollTop && currentScroll > navbar.offsetHeight) {
+            // Cuộn xuống và đã vượt qua chiều cao navbar -> Ẩn
+            navbar.classList.add('hidden');
+        } else if (currentScroll < lastScrollTop) {
+            // Cuộn lên -> Hiện
+            navbar.classList.remove('hidden');
+        }
+
+        // Cập nhật vị trí cuộn cuối cùng
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Tránh giá trị âm
+    });
+</script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            const navbar = document.querySelector(".navbar");
+            let lastScrollY = window.scrollY;
+
+            window.addEventListener("scroll", function () {
+                const currentScrollY = window.scrollY;
+
+                if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                    // Khi cuộn xuống, ẩn navbar
+                    navbar.classList.add("navbar-hidden");
+                } else {
+                    // Khi cuộn lên, hiển thị navbar
+                    navbar.classList.remove("navbar-hidden");
+                }
+
+                // Cập nhật vị trí cuộn
+                lastScrollY = currentScrollY;
+            });
+        });
+        </script>
     </header>
     <script>
         document.addEventListener("DOMContentLoaded", function () {

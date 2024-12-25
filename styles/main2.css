@@ -3,6 +3,30 @@
         width: 100%;
         box-sizing: border-box;
     }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        height: 200vh; /* Tăng chiều cao để kiểm tra cuộn */
+    }
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .navbar-hidden {
+        transform: translateY(-100%);
+    }
+    .content {
+        padding: 100px 20px;
+    }
+    .spacer {
+        height: 80px; /* Chiều cao này nên khớp với chiều cao thực tế của navbar */
+    }
+    
     header {
         padding-top: 0;
     }
