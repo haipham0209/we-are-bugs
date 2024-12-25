@@ -166,7 +166,7 @@ require "resources.php";
         </script>
         <!-- --------------------------------------------------------------- -->
     </header>
-    <!-- -----------------------search--------------------------------- -->
+    <!-- -----------------------search + navmenu--------------------------------- -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const searchBtn = document.getElementById("searchBtn");
@@ -203,13 +203,6 @@ require "resources.php";
                 } else {
                     body.classList.remove("no-scroll");
                 }
-            });
-
-            // Xử lý đóng menu khi nhấn overlay
-            overlay.addEventListener("click", function () {
-                navMenu.classList.remove("open");
-                overlay.classList.remove("show");
-                body.classList.remove("no-scroll"); // Bỏ khóa cuộn
             });
         });
     </script>
