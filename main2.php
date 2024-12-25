@@ -128,7 +128,7 @@ require "resources.php";
                         </li>
                     </ul>
                 </div>
-                <!-- <div class="overlay"></div> -->
+                <div class="overlay"></div>
                 <div id="searchContainer" class="d-none">
                     <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
                 </div>
@@ -141,51 +141,22 @@ require "resources.php";
         </nav>
         <div class="spacer"></div>
         <script>
-    let lastScrollTop = 0; // Lưu vị trí cuộn cuối cùng
-    const navbar = document.querySelector('.navbar');
-    const delta = 10; // Khoảng cách cuộn tối thiểu để thay đổi trạng thái
+            let lastScrollTop = 0;
+const navbar = document.querySelector('.navbar');
 
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    const isScrollingDown = currentScroll > lastScrollTop;
 
-        if (Math.abs(currentScroll - lastScrollTop) <= delta) {
-            // Nếu cuộn không vượt quá delta, bỏ qua
-            return;
-        }
+    if (isScrollingDown && currentScroll > navbar.offsetHeight) {
+        navbar.classList.add('navbar-hidden');
+    } else {
+        navbar.classList.remove('navbar-hidden');
+    }
 
-        if (currentScroll > lastScrollTop && currentScroll > navbar.offsetHeight) {
-            // Cuộn xuống và đã vượt qua chiều cao navbar -> Ẩn
-            navbar.classList.add('hidden');
-        } else if (currentScroll < lastScrollTop) {
-            // Cuộn lên -> Hiện
-            navbar.classList.remove('hidden');
-        }
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Tránh giá trị âm
+});
 
-        // Cập nhật vị trí cuộn cuối cùng
-        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Tránh giá trị âm
-    });
-</script>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-            const navbar = document.querySelector(".navbar");
-            let lastScrollY = window.scrollY;
-
-            window.addEventListener("scroll", function () {
-                const currentScrollY = window.scrollY;
-
-                if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                    // Khi cuộn xuống, ẩn navbar
-                    navbar.classList.add("navbar-hidden");
-                } else {
-                    // Khi cuộn lên, hiển thị navbar
-                    navbar.classList.remove("navbar-hidden");
-                }
-
-                // Cập nhật vị trí cuộn
-                lastScrollY = currentScrollY;
-            });
-        });
         </script>
     </header>
     <script>
@@ -208,22 +179,32 @@ require "resources.php";
             });
         });
         document.addEventListener("DOMContentLoaded", function () {
-            const menuButton = document.querySelector(".navbar-toggler");
-            const navMenu = document.querySelector(".nav-menu");
-            const overlay = document.querySelector(".overlay");
+    const menuButton = document.querySelector(".navbar-toggler");
+    const navMenu = document.querySelector(".nav-menu");
+    const overlay = document.querySelector(".overlay");
+    const body = document.body; // Tham chiếu đến body
 
-            // Xử lý mở menu
-            menuButton.addEventListener("click", function () {
-                navMenu.classList.toggle("open");
-                overlay.classList.toggle("show");
-            });
+    // Xử lý mở menu
+    menuButton.addEventListener("click", function () {
+        navMenu.classList.toggle("open");
+        overlay.classList.toggle("show");
+        
+        // Thêm hoặc xóa lớp khóa cuộn cho body
+        if (navMenu.classList.contains("open")) {
+            body.classList.add("no-scroll");
+        } else {
+            body.classList.remove("no-scroll");
+        }
+    });
 
-            // Xử lý đóng menu khi nhấn overlay
-            overlay.addEventListener("click", function () {
-                navMenu.classList.remove("open");
-                overlay.classList.remove("show");
-            });
-        });
+    // Xử lý đóng menu khi nhấn overlay
+    overlay.addEventListener("click", function () {
+        navMenu.classList.remove("open");
+        overlay.classList.remove("show");
+        body.classList.remove("no-scroll"); // Bỏ khóa cuộn
+    });
+});
+
 
     </script>
     
@@ -262,7 +243,8 @@ require "resources.php";
                 <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
                     <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
                         <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
-                            <img src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image"/>
+                            <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
                             <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
                         </div>
                     </a>
