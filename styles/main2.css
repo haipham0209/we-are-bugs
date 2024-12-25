@@ -6,7 +6,7 @@
     body {
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
+        font-family: 'Murecho', sans-serif;
         height: 200vh; /* Tăng chiều cao để kiểm tra cuộn */
         z-index: 10;
     }
@@ -67,7 +67,7 @@
     }
     .custom-navbar .navbar-nav .nav-link, 
     .custom-navbar .navbar-nav .btn {
-        font-family: Arial, Helvetica, sans-serif;
+        /* font-family: sans-serif; */
         font-size: 20px; 
         padding: 10px 5px; 
         line-height: 1;
