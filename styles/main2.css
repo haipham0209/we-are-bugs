@@ -43,10 +43,11 @@
         --bs-btn-border-color:  #000000 !important;
         --bs-btn-hover-bg:  #000000 !important;
         --bs-btn-hover-border-color:  #000000 !important;
-        --bs-btn-active-bg:  #000000 !important;
+        /* --bs-btn-active-bg:  #000000 !important; */
         --bs-btn-active-border-color:  #000000 !important;
         --bs-btn-disabled-color:  #000000 !important;
         --bs-btn-disabled-border-color:  #000000 !important;
+        font-size: 25px;
     }
     .form-control:focus {
         border-color: #adafb1 !important;
@@ -88,16 +89,18 @@
     .custom-navbar .navbar-toggler {
         padding: 5px;
         height: 50%; /* Tăng chiều cao nút hamburger */
+        border: none;
     }
     .custom-navbar button {
-        width: 35px; /* Giảm kích thước nút */
-        height: 35px;
+        width: 45px; /* Giảm kích thước nút */
+        height: 45px;
         padding: 5px;
+        border: none;
     }
     
     .custom-navbar .navbar-toggler-icon {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 2rem;
+        height: 2rem;
     }
     .custom-navbar .d-flex {
         gap: 5px; /* Giảm khoảng cách giữa các nút trong phần tìm kiếm */
