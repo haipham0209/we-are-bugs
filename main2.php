@@ -353,7 +353,7 @@ window.addEventListener('scroll', () => {
     } else {
         console.log(`Không nhận diện được trạng thái của nút: "${buttonText}"`);
     }
-}全て表示
+}
 
 
 
