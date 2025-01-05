@@ -232,5 +232,62 @@
         font-size: 35px !important;
         font-weight: bold;
     }
+/* Tăng kích thước của nút */
+.navbar-toggler {
+    width: 29px; /* Chiều rộng tăng thêm 5px */
+    height: 29px; /* Chiều cao tăng thêm 5px */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* Có thể thêm màu nền nếu cần */
+    border: none; /* Loại bỏ viền nút */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+/* Tăng kích thước của icon 3 gạch */
+.menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 29px; /* Chiều rộng tăng thêm 5px */
+    height: 24px; /* Chiều cao tăng thêm 5px */
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Kích thước và khoảng cách của các thanh */
+.bar {
+    height: 4px; /* Độ dày của thanh tăng thêm 1px */
+    width: 100%;
+    background-color: #000; /* Màu của thanh */
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Trạng thái khi chuyển thành dấu X */
+.menu-icon.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px); /* Tăng khoảng cách chuyển đổi */
+}
+
+.menu-icon.active .bar:nth-child(2) {
+    opacity: 0; /* Ẩn thanh giữa */
+}
+
+.menu-icon.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px); /* Tăng khoảng cách chuyển đổi */
+}
+
+/* Tùy chỉnh hiệu ứng hover cho nút */
+.navbar-toggler:hover {
+    transform: scale(1.1); /* Phóng to nhẹ khi hover */
+}
+
+
+    .navbar-toggler:focus {
+        outline: none; /* Loại bỏ viền mặc định khi nhấn */
+        box-shadow: none; /* Loại bỏ hiệu ứng bóng nếu có */
+    }
+    
     
 }

@@ -107,9 +107,14 @@ require "resources.php";
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
             <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <button class="navbar-toggler" type="button" onclick="toggleMenu()">
+    <div class="menu-icon">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+</button>
+
                 <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
                 <div class="nav-menu">
                     <ul class="navbar-nav">
@@ -191,12 +196,14 @@ require "resources.php";
             const navMenu = document.querySelector(".nav-menu");
             const overlay = document.querySelector(".overlay");
             const body = document.body; // Tham chiếu đến body
+            const menuIcon = document.querySelector(".menu-icon"); // Tham chiếu đến icon 3 gạch
 
             // Xử lý mở menu
             menuButton.addEventListener("click", function () {
                 navMenu.classList.toggle("open");
                 overlay.classList.toggle("show");
-                
+                menuIcon.classList.toggle("active"); // Thêm/xóa lớp chuyển đổi dấu "X"
+
                 // Thêm hoặc xóa lớp khóa cuộn cho body
                 if (navMenu.classList.contains("open")) {
                     body.classList.add("no-scroll");
@@ -205,6 +212,7 @@ require "resources.php";
                 }
             });
         });
+
     </script>
     <!-- ------------------------------------------------------ -->
     
