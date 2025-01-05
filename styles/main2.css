@@ -49,6 +49,12 @@
         --bs-btn-disabled-border-color:  #000000 !important;
         font-size: 25px;
     }
+    .btn:hover {
+        background-color: transparent !important; /* Xóa màu nền */
+        border-color: transparent !important;     /* Xóa màu viền */
+        color: inherit !important;                /* Giữ nguyên màu chữ, hoặc chỉnh theo ý bạn */
+    }
+    
     .form-control:focus {
         border-color: #adafb1 !important;
         box-shadow: 0 0 0 .25rem rgba(89, 90, 91, 0.25) !important;
