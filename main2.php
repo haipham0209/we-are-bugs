@@ -140,9 +140,7 @@ require "resources.php";
                     </ul>
                 </div>
                 <div class="overlay"></div>
-                <div id="searchContainer" class="d-none">
-                    <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
-                </div>
+
                 <button id="searchBtn" class="btn btn-outline-primary me-2">
                     <i class="fa fa-search"></i>
                 </button>
@@ -171,26 +169,43 @@ require "resources.php";
         </script>
         <!-- --------------------------------------------------------------- -->
     </header>
+    <div id="searchContainer" class="d-none">
+        <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
+    </div>
+    
     <!-- -----------------------search + navmenu--------------------------------- -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const searchBtn = document.getElementById("searchBtn");
-            const searchContainer = document.getElementById("searchContainer");
-            const logoContainer = document.getElementById("logoContainer");
+document.addEventListener("DOMContentLoaded", function () {
+    const searchBtn = document.getElementById("searchBtn");
+    const searchContainer = document.getElementById("searchContainer");
+    const logoContainer = document.getElementById("logoContainer");
+    const overlay = document.querySelector(".overlay");
 
-            searchBtn.addEventListener("click", function () {
-                if (searchContainer.classList.contains("d-none")) {
-                    // Hiển thị thanh tìm kiếm và ẩn logo
-                    searchContainer.classList.remove("d-none");
-                    logoContainer.classList.add("hidden");
-                    document.getElementById("searchInput").focus(); // Đặt con trỏ vào thanh input
-                } else {
-                    // Ẩn thanh tìm kiếm và hiển thị logo
-                    searchContainer.classList.add("d-none");
-                    logoContainer.classList.remove("hidden");
-                }
-            });
-        });
+    // Sự kiện click vào nút tìm kiếm
+    searchBtn.addEventListener("click", function () {
+        if (searchContainer.classList.contains("d-none")) {
+            // Hiển thị thanh tìm kiếm và ẩn logo
+            searchContainer.classList.remove("d-none");
+            logoContainer.classList.add("hidden");
+            overlay.classList.add("show"); // Hiển thị overlay
+            document.getElementById("searchInput").focus(); // Đặt con trỏ vào thanh input
+        } else {
+            // Ẩn thanh tìm kiếm và hiển thị logo
+            searchContainer.classList.add("d-none");
+            logoContainer.classList.remove("hidden");
+            overlay.classList.remove("show"); // Ẩn overlay khi đóng thanh tìm kiếm
+        }
+    });
+
+    // Sự kiện click vào overlay để đóng thanh tìm kiếm
+    overlay.addEventListener("click", function () {
+        // Ẩn thanh tìm kiếm và hiển thị logo
+        searchContainer.classList.add("d-none");
+        logoContainer.classList.remove("hidden");
+        overlay.classList.remove("show"); // Ẩn overlay
+    });
+});
+
         document.addEventListener("DOMContentLoaded", function () {
             const menuButton = document.querySelector(".navbar-toggler");
             const navMenu = document.querySelector(".nav-menu");
