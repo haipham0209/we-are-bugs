@@ -87,19 +87,17 @@ $product_result = $product_stmt->get_result();
 
         <!-- Category -->
         <div class="category">
-            <button class="all-categories <?= empty($category_ids) ? 'active' : '' ?>" onclick="showAllCategories()">All</button>
+            <button class="category-button active" data-category-id="all">All</button>
             <?php
             if ($category_result->num_rows > 0) {
                 while ($row = $category_result->fetch_assoc()) {
-                    $isSelected = in_array($row['category_id'], $category_ids) ? 'active' : '';
-                    echo '<button class="' . $isSelected . '" data-category-id="' . $row['category_id'] . '">'
+                    echo '<button class="category-button" data-category-id="' . $row['category_id'] . '">'
                         . htmlspecialchars($row['cname'], ENT_QUOTES, 'UTF-8') . '</button>';
                 }
             } else {
                 echo '<p>No categories found.</p>';
             }
             ?>
-
         </div>
 
         <!-- Add Product Button -->
@@ -154,47 +152,60 @@ $product_result = $product_stmt->get_result();
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const categoryButtons = document.querySelectorAll('.category button');
+                const categoryButtons = document.querySelectorAll('.category-button');
                 const productCards = document.querySelectorAll('.product-card');
-                const allCategoriesButton = document.querySelector('.all-categories');
+                const selectedCategories = new Set(); // 選択されたカテゴリを保存するSet
 
-                // カテゴリボタンをクリックした時の動作
                 categoryButtons.forEach(button => {
                     button.addEventListener('click', function() {
-                        const isAll = this.classList.contains('all-categories');
+                        const categoryId = this.dataset.categoryId;
 
-                        // "All"がクリックされた場合
-                        if (isAll) {
+                        // "All"ボタンがクリックされた場合、すべてをリセット
+                        if (categoryId === 'all') {
+                            selectedCategories.clear(); // 選択状態をリセット
                             categoryButtons.forEach(btn => btn.classList.remove('active'));
-                            this.classList.add('active');
-                            // 全ての商品を表示
-                            filterProducts([]);
-                        } else {
-                            // 他のカテゴリボタンがクリックされた場合
-                            this.classList.toggle('active');
-                            allCategoriesButton.classList.remove('active');
+                            this.classList.add('active'); // "All"ボタンをアクティブに
 
-                            // 選択されたカテゴリIDを取得
-                            const selectedCategories = [...document.querySelectorAll('.category button.active')]
-                                .map(btn => btn.dataset.categoryId);
-
-                            // 全カテゴリを解除した場合、"All"をアクティブにする
-                            if (selectedCategories.length === 0) {
-                                allCategoriesButton.classList.add('active');
-                                filterProducts([]);
-                            } else {
-                                filterProducts(selectedCategories);
-                            }
+                            // 全商品を表示
+                            productCards.forEach(card => card.style.display = 'block');
+                            return;
                         }
+
+                        // "All"以外のカテゴリがクリックされた場合
+                        if (selectedCategories.has(categoryId)) {
+                            // 選択済みの場合は解除
+                            selectedCategories.delete(categoryId);
+                            this.classList.remove('active');
+                        } else {
+                            // 新しく選択された場合は追加
+                            selectedCategories.add(categoryId);
+                            this.classList.add('active');
+                        }
+
+                        // "All"ボタンのアクティブ状態を解除
+                        document.querySelector('[data-category-id="all"]').classList.remove('active');
+
+                        // 選択されているカテゴリがなくなったら "All" をアクティブに戻す
+                        if (selectedCategories.size === 0) {
+                            document.querySelector('[data-category-id="all"]').classList.add('active');
+                        }
+
+                        // 商品をフィルタリング
+                        filterProducts();
                     });
                 });
 
-                // 商品をフィルタリングする関数
-                function filterProducts(categoryIds) {
+                function filterProducts() {
+                    if (selectedCategories.size === 0) {
+                        // 何も選択されていない場合は全商品を表示
+                        productCards.forEach(card => card.style.display = 'block');
+                        return;
+                    }
+
+                    // 選択されたカテゴリのいずれかに一致する商品を表示
                     productCards.forEach(card => {
                         const cardCategoryId = card.dataset.categoryId;
-                        // カテゴリが選択されていないか、選択されたカテゴリに一致する場合は表示
-                        if (categoryIds.length === 0 || categoryIds.includes(cardCategoryId)) {
+                        if (selectedCategories.has(cardCategoryId)) {
                             card.style.display = 'block';
                         } else {
                             card.style.display = 'none';
