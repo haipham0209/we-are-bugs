@@ -1,5 +1,5 @@
 <?php
-include('./Manager/php/auth_check.php');
+// include('./Manager/php/auth_check.php');
 
 include('./Manager/php/db_connect.php');
 $conn = new mysqli($servername, $username, $password, $dbname);

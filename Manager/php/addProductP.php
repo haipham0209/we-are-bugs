@@ -49,7 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Lấy tên danh mục nếu người dùng chọn "新しいカテゴリーを追加"
     if ($category === "new") {
         if (!empty($_POST['categoryText'])) {
-            $category_name = strtolower(trim($_POST['categoryText']));
+            // $category_name = strtolower(trim($_POST['categoryText']));
+            $category_name = trim($_POST['categoryText']);
+
 
             // Kiểm tra nếu danh mục mới đã tồn tại
             $check_category_sql = "SELECT category_id FROM category WHERE LOWER(cname) = ? AND storeid = ?";

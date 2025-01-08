@@ -95,15 +95,26 @@ require "resources.php";
     <link href="./styles/main2.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    <!-- Thêm vào phần <head> của HTML -->
+    <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap" rel="stylesheet">
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
 </head>
 <body>
     <header>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
             <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <button class="navbar-toggler" type="button" onclick="toggleMenu()">
+    <div class="menu-icon">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+</button>
+
                 <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
                 <div class="nav-menu">
                     <ul class="navbar-nav">
@@ -128,10 +139,8 @@ require "resources.php";
                         </li>
                     </ul>
                 </div>
-                <!-- <div class="overlay"></div> -->
-                <div id="searchContainer" class="d-none">
-                    <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
-                </div>
+                <div class="overlay"></div>
+
                 <button id="searchBtn" class="btn btn-outline-primary me-2">
                     <i class="fa fa-search"></i>
                 </button>
@@ -139,138 +148,239 @@ require "resources.php";
             </div>
            
         </nav>
-    </header>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const searchBtn = document.getElementById("searchBtn");
-            const searchContainer = document.getElementById("searchContainer");
-            const logoContainer = document.getElementById("logoContainer");
+        <div class="spacer"></div>
+        <!-- ---------------hiện navbar khi cuộn------------------------------- -->
+        <script>
+            let lastScrollTop = 0;
+            const navbar = document.querySelector('.navbar');
 
-            searchBtn.addEventListener("click", function () {
-                if (searchContainer.classList.contains("d-none")) {
-                    // Hiển thị thanh tìm kiếm và ẩn logo
-                    searchContainer.classList.remove("d-none");
-                    logoContainer.classList.add("hidden");
-                    document.getElementById("searchInput").focus(); // Đặt con trỏ vào thanh input
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                const isScrollingDown = currentScroll > lastScrollTop;
+
+                if (isScrollingDown && currentScroll > navbar.offsetHeight) {
+                    navbar.classList.add('navbar-hidden');
                 } else {
-                    // Ẩn thanh tìm kiếm và hiển thị logo
-                    searchContainer.classList.add("d-none");
-                    logoContainer.classList.remove("hidden");
+                    navbar.classList.remove('navbar-hidden');
                 }
+
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Tránh giá trị âm
             });
-        });
+        </script>
+        <!-- --------------------------------------------------------------- -->
+    </header>
+    <div id="searchContainer" class="d-none">
+        <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
+    </div>
+    
+    <!-- -----------------------search + navmenu--------------------------------- -->
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const searchBtn = document.getElementById("searchBtn");
+    const searchContainer = document.getElementById("searchContainer");
+    const logoContainer = document.getElementById("logoContainer");
+    const overlay = document.querySelector(".overlay");
+
+    // Sự kiện click vào nút tìm kiếm
+    searchBtn.addEventListener("click", function () {
+        if (searchContainer.classList.contains("d-none")) {
+            // Hiển thị thanh tìm kiếm và ẩn logo
+            searchContainer.classList.remove("d-none");
+            logoContainer.classList.add("hidden");
+            overlay.classList.add("show"); // Hiển thị overlay
+            document.getElementById("searchInput").focus(); // Đặt con trỏ vào thanh input
+        } else {
+            // Ẩn thanh tìm kiếm và hiển thị logo
+            searchContainer.classList.add("d-none");
+            logoContainer.classList.remove("hidden");
+            overlay.classList.remove("show"); // Ẩn overlay khi đóng thanh tìm kiếm
+        }
+    });
+
+    // Sự kiện click vào overlay để đóng thanh tìm kiếm
+    overlay.addEventListener("click", function () {
+        // Ẩn thanh tìm kiếm và hiển thị logo
+        searchContainer.classList.add("d-none");
+        logoContainer.classList.remove("hidden");
+        overlay.classList.remove("show"); // Ẩn overlay
+    });
+});
+
         document.addEventListener("DOMContentLoaded", function () {
             const menuButton = document.querySelector(".navbar-toggler");
             const navMenu = document.querySelector(".nav-menu");
             const overlay = document.querySelector(".overlay");
+            const body = document.body; // Tham chiếu đến body
+            const menuIcon = document.querySelector(".menu-icon"); // Tham chiếu đến icon 3 gạch
 
             // Xử lý mở menu
             menuButton.addEventListener("click", function () {
                 navMenu.classList.toggle("open");
                 overlay.classList.toggle("show");
-            });
+                menuIcon.classList.toggle("active"); // Thêm/xóa lớp chuyển đổi dấu "X"
 
-            // Xử lý đóng menu khi nhấn overlay
-            overlay.addEventListener("click", function () {
-                navMenu.classList.remove("open");
-                overlay.classList.remove("show");
+                // Thêm hoặc xóa lớp khóa cuộn cho body
+                if (navMenu.classList.contains("open")) {
+                    body.classList.add("no-scroll");
+                } else {
+                    body.classList.remove("no-scroll");
+                }
             });
         });
 
     </script>
-
-
+    <!-- ------------------------------------------------------ -->
+    
     <main class="container mt-4">
-        <!-- Best Sellers Section -->
-        <!-- <h2 class="mb-4">Best Sellers</h2>
-        <div class="row">
+        
             <?php
-            if ($best_sellers_result->num_rows > 0) {
-                while ($product = $best_sellers_result->fetch_assoc()) {
-                    $productImagePath = $product['productImage'];
-                    echo '
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '">
-                            <div class="card-body">
-                                <h5 class="card-title">' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</h5>
-                                <p class="card-text">¥' . number_format($product['price'], 0) . '</p>
-                            </div>
-                        </div>
-                    </div>';
-                }
-            }
+            // if ($best_sellers_result->num_rows > 0) {
+            //     while ($product = $best_sellers_result->fetch_assoc()) {
+            //         $productImagePath = $product['productImage'];
+            //         echo '
+            //         <div class="col-md-4 mb-4">
+            //             <div class="card">
+            //                 <img src="' . htmlspecialchars($productImagePath, ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '">
+            //                 <div class="card-body">
+            //                     <h5 class="card-title">' . htmlspecialchars($product['pname'], ENT_QUOTES, 'UTF-8') . '</h5>
+            //                     <p class="card-text">¥' . number_format($product['price'], 0) . '</p>
+            //                 </div>
+            //             </div>
+            //         </div>';
+            //     }
+            // }
             ?>
-        </div> -->
-        <!-- <p>------------------------------------------------------------------------</p> -->
+        
+         <!-- <p>------------------------------------------------------------------------</p> -->
         <section id="product-section" class="category">
             <?php foreach ($categories as $category): ?>
                 <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
-                    <h3 class="title"><?= htmlspecialchars($category['cname']) ?></h3>
+                    <h3 class="title" data-aos="fade-right" data-aos-duration="1000">
+                        <?= htmlspecialchars($category['cname']) ?>
+                    </h3>
+
                     <div class="product-showcase">
-                        <!-- Hiển thị tối đa 4 sản phẩm -->
-                        <?php 
-                        $productCount = 0;
-                        foreach ($category['products'] as $product): 
-                            if ($productCount >= 2) break; // Dừng khi đã hiển thị đủ 4 sản phẩm
-                            $productCount++;
-                        ?>
-                            <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
-                                <img src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image"/>
-                                <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
-                            </div>
+                        <!-- Hiển thị sản phẩm (Tối đa 2 sản phẩm) -->
+                        <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
+                            <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
+                                <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
+                                    <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+                                    <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
+                                </div>
+                            </a>
                         <?php endforeach; ?>
                     </div>
-                    <!-- Nếu số lượng sản phẩm > 4, hiển thị nút Show More -->
+
+                    <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
                     <?php if (count($category['products']) > 2): ?>
-                        <button class="show-more-btn" data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">Show More</button>
+                        <button 
+                            class="show-more-btn" 
+                            data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
+                            data-aos="fade-up" 
+                            data-aos-duration="1000" 
+                            onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">
+                            全て表示
+                        </button>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         </section>
 
-
     </main>
-
-    <!-- Bootstrap JS (cục bộ) -->
-     <!-- AOS JS -->
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+</body>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            AOS.init({
-                duration: 1000, // Thời gian hiệu ứng (ms)
-                easing: 'ease-in-out', // Loại easing cho hiệu ứng
-                once: true // Hiệu ứng chỉ diễn ra một lần khi cuộn
-            });
+    document.addEventListener("DOMContentLoaded", function () {
+        // Khởi tạo hiệu ứng AOS
+        AOS.init({
+            duration: 1000, // Thời gian hiệu ứng (ms)
+            easing: 'ease-in-out', // Loại easing cho hiệu ứng
+            once: true // Hiệu ứng chỉ diễn ra một lần khi cuộn
         });
-        function showMore(products) {
-        // Lấy danh sách các sản phẩm hiện tại đã được hiển thị
+    });
+
+    function showMore(products) {
         const productShowcase = event.target.previousElementSibling;
+        const button = event.target; // Nút Show More/Show Less hiện tại
         const displayedProducts = productShowcase.querySelectorAll('.product-content');
+        const buttonText = button.textContent.trim(); // Loại bỏ khoảng trắng thừa
 
-        // Chỉ lấy các sản phẩm chưa hiển thị
-        const remainingProducts = products.slice(displayedProducts.length);
+        // Kiểm tra trạng thái của nút
+        if (buttonText === "全て表示") {
+            console.log("Hiển thị thêm sản phẩm");
 
-        remainingProducts.forEach(product => {
-            const productContent = document.createElement('div');
-            productContent.classList.add('product-content');
-            productContent.setAttribute('data-aos', 'fade-up');
-            productContent.setAttribute('data-aos-duration', '1000');
-            productContent.innerHTML = `
-                <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-                <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
-            `;
-            productShowcase.appendChild(productContent);
-        });
+            // Chỉ lấy các sản phẩm chưa hiển thị
+            const remainingProducts = products.slice(displayedProducts.length);
 
-        // Ẩn nút "Show More" sau khi nhấn nếu không còn sản phẩm để hiển thị
-        if (remainingProducts.length === 0) {
-            event.target.style.display = 'none';
+            remainingProducts.forEach(product => {
+                const productContent = document.createElement('div');
+                productContent.classList.add('product-content');
+                productContent.setAttribute('data-aos', 'fade-up');
+                productContent.setAttribute('data-aos-duration', '1000');
+
+                // Tạo liên kết đến trang chi tiết sản phẩm
+                const productLink = document.createElement('a');
+                productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
+
+                // Thêm nội dung của sản phẩm vào trong liên kết
+                productLink.innerHTML = `
+                    <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
+                    <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+                `;
+
+                // Thêm sản phẩm vào giao diện
+                productContent.appendChild(productLink);
+                productShowcase.appendChild(productContent);
+            });
+
+            // Khởi tạo lại hiệu ứng AOS
+            AOS.refresh();
+
+            // Đổi nút thành Show Less
+            button.textContent = "閉じる";
+        } else if (buttonText === "閉じる") {
+            console.log("Ẩn bớt sản phẩm");
+
+            // Quay về trạng thái chỉ hiển thị 2 sản phẩm đầu tiên
+            productShowcase.innerHTML = ''; // Xóa toàn bộ sản phẩm hiện tại
+
+            // Chỉ hiển thị 2 sản phẩm đầu
+            products.slice(0, 2).forEach(product => {
+                const productContent = document.createElement('div');
+                productContent.classList.add('product-content');
+
+                // Tạo liên kết đến trang chi tiết sản phẩm
+                const productLink = document.createElement('a');
+                productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
+
+                // Thêm nội dung của sản phẩm vào trong liên kết
+                productLink.innerHTML = `
+                    <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
+                    <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+                `;
+
+                // Thêm sản phẩm vào giao diện
+                productContent.appendChild(productLink);
+                productShowcase.appendChild(productContent);
+            });
+
+            productShowcase.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Khởi tạo lại hiệu ứng AOS
+            AOS.refresh();
+
+            // Đổi nút thành Show More
+            button.textContent = "全て表示";
+        } else {
+            // console.log(`Không nhận diện được trạng thái của nút: "${buttonText}"`);
+            console.log("1");
         }
     }
+</script>
 
-    </script>
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
+
+<footer>
+    
+</footer>
 </html>

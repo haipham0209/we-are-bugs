@@ -25,10 +25,7 @@ function startScanner() {
                 target: cameraDiv,
             },
             decoder: {
-                // readers: ["ean_reader", "code_128_reader", "upc_reader"], // Các loại barcode
-                readers: ["code_128_reader"],
-                multiple: false, // Đảm bảo chỉ lấy một kết quả
-
+                readers: ["ean_reader", "code_128_reader", "upc_reader"], // Các loại barcode
             },
         },
         (err) => {

@@ -3,8 +3,61 @@
         width: 100%;
         box-sizing: border-box;
     }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Murecho', sans-serif;
+        height: 200vh; /* Tăng chiều cao để kiểm tra cuộn */
+        z-index: 10;
+    }
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .navbar-hidden {
+        transform: translateY(-100%);
+    }
+    .content {
+        padding: 100px 20px;
+    }
+    .spacer {
+        height: 80px; /* Chiều cao này nên khớp với chiều cao thực tế của navbar */
+    }
+    
     header {
         padding-top: 0;
+    }
+    .rotated-text{
+        color: #000000;
+
+    }
+    a{
+        text-decoration: none;
+    }
+    .btn-outline-primary {
+        --bs-btn-color: #000000 !important;
+        --bs-btn-border-color:  #000000 !important;
+        --bs-btn-hover-bg:  #000000 !important;
+        --bs-btn-hover-border-color:  #000000 !important;
+        /* --bs-btn-active-bg:  #000000 !important; */
+        --bs-btn-active-border-color:  #000000 !important;
+        --bs-btn-disabled-color:  #000000 !important;
+        --bs-btn-disabled-border-color:  #000000 !important;
+        font-size: 25px;
+    }
+    .btn:hover {
+        background-color: transparent !important; /* Xóa màu nền */
+        border-color: transparent !important;     /* Xóa màu viền */
+        color: inherit !important;                /* Giữ nguyên màu chữ, hoặc chỉnh theo ý bạn */
+    }
+    
+    .form-control:focus {
+        border-color: #adafb1 !important;
+        box-shadow: 0 0 0 .25rem rgba(89, 90, 91, 0.25) !important;
     }
     .custom-navbar .container-fluid{
         height: 80px;
@@ -20,7 +73,7 @@
     }
     .custom-navbar .navbar-nav .nav-link, 
     .custom-navbar .navbar-nav .btn {
-        font-family: Arial, Helvetica, sans-serif;
+        /* font-family: sans-serif; */
         font-size: 20px; 
         padding: 10px 5px; 
         line-height: 1;
@@ -42,16 +95,18 @@
     .custom-navbar .navbar-toggler {
         padding: 5px;
         height: 50%; /* Tăng chiều cao nút hamburger */
+        border: none;
     }
     .custom-navbar button {
-        width: 35px; /* Giảm kích thước nút */
-        height: 35px;
+        width: 45px; /* Giảm kích thước nút */
+        height: 45px;
         padding: 5px;
+        border: none;
     }
     
     .custom-navbar .navbar-toggler-icon {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 2rem;
+        height: 2rem;
     }
     .custom-navbar .d-flex {
         gap: 5px; /* Giảm khoảng cách giữa các nút trong phần tìm kiếm */
@@ -87,7 +142,7 @@
         flex-direction: column; /* Hiển thị mục theo cột */
         justify-content: flex-start;
         transition: left 0.3s ease-in-out; /* Hiệu ứng khi mở menu */
-        z-index: 1000;
+        z-index: 1051;
         padding: 20px; /* Thêm khoảng cách bên trong */
         border-radius: 5px 15px 15px 0;
     }
@@ -124,20 +179,28 @@
         color: #ddd; /* Hiệu ứng khi rê chuột */
     }
     
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5); /* Màu nền overlay */
-        display: none; /* Ẩn overlay mặc định */
-        z-index: 999; /* Phía sau menu */
-    }
-    
-    .overlay.show {
-        display: block; /* Hiển thị overlay khi menu mở */
-    }
+/* Lớp khóa cuộn */
+.no-scroll {
+    overflow: hidden;
+}
+
+/* Đảm bảo overlay hiển thị trên phần body */
+.overlay {
+    z-index: 1050; /* Cao hơn nội dung khác */
+    position: fixed;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+/* Hiển thị overlay khi thêm lớp show */
+.overlay.show {
+    display: block;
+}
+
     .product-showcase {
         display: grid;
         grid-template-columns: repeat(2, 1fr); /* 2 cột */
@@ -165,16 +228,97 @@
         width: 35%;
         margin: 20px auto;
         padding: 10px 20px;
-        background-color: #0d6efd;
-        color: rgb(255, 255, 255);
-        border: none;
+        background-color: transparent;
+        color: black;
+        border: 0.1px solid #000000;
         border-radius: 5px;
-        cursor: pointer;
+        
+    }
+    .h3, h3{
+        font-size: 35px !important;
+        font-weight: bold;
+    }
+/* Tăng kích thước của nút */
+.navbar-toggler {
+    width: 29px; /* Chiều rộng tăng thêm 5px */
+    height: 29px; /* Chiều cao tăng thêm 5px */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* Có thể thêm màu nền nếu cần */
+    border: none; /* Loại bỏ viền nút */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+/* Tăng kích thước của icon 3 gạch */
+.menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 29px; /* Chiều rộng tăng thêm 5px */
+    height: 24px; /* Chiều cao tăng thêm 5px */
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Kích thước và khoảng cách của các thanh */
+.bar {
+    height: 4px; /* Độ dày của thanh tăng thêm 1px */
+    width: 100%;
+    background-color: #000; /* Màu của thanh */
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Trạng thái khi chuyển thành dấu X */
+.menu-icon.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px); /* Tăng khoảng cách chuyển đổi */
+}
+
+.menu-icon.active .bar:nth-child(2) {
+    opacity: 0; /* Ẩn thanh giữa */
+}
+
+.menu-icon.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px); /* Tăng khoảng cách chuyển đổi */
+}
+
+/* Tùy chỉnh hiệu ứng hover cho nút */
+.navbar-toggler:hover {
+    transform: scale(1.1); /* Phóng to nhẹ khi hover */
+}
+
+
+    .navbar-toggler:focus {
+        outline: none; /* Loại bỏ viền mặc định khi nhấn */
+        box-shadow: none; /* Loại bỏ hiệu ứng bóng nếu có */
+    }
+
+
+
+
+
+    #searchContainer {
+        position: fixed; /* Cố định vị trí của div */
+        display: flex;
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        top: 0; /* Đặt ở vị trí trên cùng */
+        left: 0; /* Đặt từ bên trái */
+        width: 100%; /* Chiếm toàn bộ chiều rộng */
+        height: 100px; /* Chiều cao là 100px */
+        padding: 10px; /* Khoảng cách bên trong */
+        background-color: #f0f0f0; /* Màu nền */
+        z-index: 1000; /* Đảm bảo div này hiển thị trên các phần tử khác */
     }
     
-    .show-more-btn:hover {
-        background-color: #0d6efd;
-        color: white;
+    #searchInput {
+        width: 85%; /* Chiều rộng của input */
+        height: 40px;
+        align-items: center;
+        padding: 0px; /* Khoảng cách trong input */
+        font-size: 16px; /* Kích thước chữ */
     }
     
     
