@@ -13,6 +13,14 @@ if ($productid) {
     $result = $stmt_get_category->get_result();
     $category_id = $result->fetch_assoc()['category_id'] ?? null;
 
+    // Xóa dữ liệu liên quan trong order_details
+    $sql_delete_order_details = "DELETE FROM order_details WHERE productid = ?";
+    $stmt_delete_order_details = $conn->prepare($sql_delete_order_details);
+    $stmt_delete_order_details->bind_param("i", $productid);
+    $stmt_delete_order_details->execute();
+    $stmt_delete_order_details->close();
+
+
     // Tiến hành xóa sản phẩm
     $sql = "DELETE FROM product WHERE productid = ? AND storeid = ?";
     $stmt = $conn->prepare($sql);

@@ -18,6 +18,8 @@ UPDATE user
 SET status = 'active' 
 WHERE username = 'lan1';
 
+drop table order_details;
+drop table discounts;
 drop table product;
 drop table category;
 drop table store;
@@ -66,7 +68,7 @@ CREATE TABLE category (
     FOREIGN KEY (storeid) REFERENCES store(storeid)
 );
 
-CREATE INDEX idx_productid ON product(productid);
+
 
 CREATE TABLE product (
     -- productid INT AUTO_INCREMENT PRIMARY KEY,
@@ -86,7 +88,11 @@ CREATE TABLE product (
     FOREIGN KEY (storeid) REFERENCES store(storeid),
     FOREIGN KEY (category_id, storeid) REFERENCES category(category_id, storeid)
 );
+CREATE INDEX idx_productid ON product(productid);
+ALTER TABLE product ADD CONSTRAINT unique_barcode_per_store UNIQUE (storeid, barcode);
+
 -- alter table product add discounted_price decimal(10, 2) after costPrice;
+
 CREATE TABLE order_history (
     orderid INT AUTO_INCREMENT PRIMARY KEY,             -- Mã đơn hàng, tự động tăng
     customer_code VARCHAR(10) NOT NULL,                 -- Mã khách hàng (không cho phép NULL)
@@ -97,7 +103,7 @@ CREATE TABLE order_history (
 );
 
 -- 1 cửa hàng ko trùng barcode nhưng cửa hàng khác nhau thì ok
-ALTER TABLE product ADD CONSTRAINT unique_barcode_per_store UNIQUE (storeid, barcode);
+
 
 CREATE TABLE discounts (
     discount_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -141,7 +147,8 @@ CREATE TABLE order_details (
     FOREIGN KEY (productid) REFERENCES product(productid)      -- Ràng buộc khóa ngoại đến bảng product
 );
 
-
+-- <img src=".././Manager/storeproductImg/Hai/bánh mì/8_1734075632.jpeg" alt="Product Image">
+-- <img id="imagePreview" src=".././Manager/storeproductImg/Hai/hai/1_1731051855.png" alt="プレビュー画像">
 
 -- Bảng lưu doanh thu theo ngày
 DROP TABLE IF EXISTS daily_revenue;
@@ -173,6 +180,18 @@ show columns from store;
 show columns from product;
 show columns from category;
 
+-- 1. Xóa bảng có khóa ngoại trước (tránh lỗi liên kết)
+DROP TABLE order_details;
+DROP TABLE discounts;
+DROP TABLE product;
+DROP TABLE category;
+DROP TABLE orders;
+DROP TABLE daily_revenue;
+
+-- 2. Xóa bảng không phụ thuộc
+DROP TABLE IF EXISTS StoreDescriptions;
+DROP TABLE IF EXISTS store;
+DROP TABLE IF EXISTS user;
 
 
 -- DROP DATABASE IF EXISTS wearebugs; -- Xóa cơ sở dữ liệu nếu đã tồn tại
