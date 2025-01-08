@@ -48,7 +48,9 @@ if ($result->num_rows > 0) {
     $tel = $storeData["tel"];
     $address = $storeData["address"];
     $mail = $storeData["mail"];
-    $logopath = str_replace('../Manager/', './Manager/', $storeData["logopath"]);
+    if ($storeData["logopath"]){
+        $logopath = str_replace('../Manager/', './Manager/', $storeData["logopath"]);
+    }
 } else {
     header("HTTP/1.0 404 Not Found");
     echo "404 Not Found";
@@ -134,9 +136,11 @@ require "resources.php";
                         <li class="nav-item">
                             <i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a>
                         </li>
-                        <li class="nav-item">
-                        <i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a>
-                        </li>
+                        <div class="mobile-only">
+                            <li class="nav-item">
+                                <i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
                 <div class="overlay"></div>
