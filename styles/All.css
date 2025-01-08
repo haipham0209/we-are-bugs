@@ -12,7 +12,7 @@
     }
     
     body {
-        background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
+        /* background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
         /* background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff); */
         background-size: 100% 100%;
         /* animation: wave 10s ease infinite; */
@@ -195,13 +195,14 @@
     
     /* Ẩn menu theo mặc định */
     .nav-menu {
+        background-color: white;
         /* margin-top: 105px; */
         position: fixed;
         /* top: 70px; */
         left: -100%;
-        width: 80%;
-        height: 85%;
-        background-color: rgba(0, 0, 0, 0.9);
+        width: 100%;
+        height: 100%;
+        /* background-color: rgba(0, 0, 0, 0.9); */
         color: white;
         display: flex;
         flex-direction: column; 
@@ -234,7 +235,7 @@
     
     .nav-menu ul li a {
         text-decoration: none;
-        color: white;
+        color:black;
         font-size: 18px;
         margin-left: 15px;
     }
@@ -245,14 +246,24 @@
     }
     
     .overlay {
+        z-index: 1053; /* Cao hơn nội dung khác */
         position: fixed;
-        top: 0;
-        left: 0; /* Chạy từ 80% màn hình */
+        top: 90px;
+        left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0); /* Trong suốt */
-        display: none; /* Mặc định ẩn */
-        z-index: 999; /* Trên nội dung khác, nhưng dưới menu */
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+
+
+        /* position: fixed;
+        top: 0; */
+        /* left: 0; Chạy từ 80% màn hình */
+        /* width: 100%;
+        height: 100%; */
+        /* background: rgba(0, 0, 0, 0.5); Trong suốt */
+        /* display: none; Mặc định ẩn */
+        /* z-index: 999; Trên nội dung khác, nhưng dưới menu */
     }
     
     /* Khi menu mở thì overlay hiển thị */
@@ -260,7 +271,11 @@
         display: block;
     }
     .support-title {
-        border-bottom: 1px solid white; /* Gạch chân */
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+        border-bottom: 1px solid black; /* Gạch chân */
     }
     
     
