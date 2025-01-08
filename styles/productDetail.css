@@ -2,7 +2,7 @@
     body {
         font-family: Arial, sans-serif;
         height: 100vh;
-        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
+        background-color: #f8f9fa;
         background-size: 400% 400%;
         animation: wave 10s ease infinite;
     }
@@ -123,8 +123,7 @@
     /* CSS dành cho màn hình PC */
     body {
         font-family: 'Arial', sans-serif;
-        background: linear-gradient(135deg, #618264, #B0d9b1, #ffffff);
-        background-color: #B0d9b1;
+        background-color: #f8f9fa;
         margin: 0;
         padding: 0;
         color: #333;
