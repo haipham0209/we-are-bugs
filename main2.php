@@ -111,14 +111,15 @@ require "resources.php";
         <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
             <div class="container-fluid">
             <button class="navbar-toggler" type="button" onclick="toggleMenu()">
-    <div class="menu-icon">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </div>
-</button>
+                <div class="menu-icon">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </button>
 
-                <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
+            <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
+            <div class="menu">
                 <div class="nav-menu">
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -132,10 +133,10 @@ require "resources.php";
                         </li>
                         <li class="support-title">サポート</li>
                         <li class="nav-item">
-                            <i class="fa fa-phone"></i><a class="support" href="tel:"><?php echo $tel; ?></a>
+                            <i class="fa fa-phone"></i><a class="support" href="tel: "><?php echo $tel; ?></a>
                         </li>
                         <li class="nav-item">
-                            <i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a>
+                            <i class="fa fa-envelope"></i><a class="support" href="mail: "><?php echo $mail; ?></a>
                         </li>
                         <div class="mobile-only">
                             <li class="nav-item">
@@ -144,13 +145,15 @@ require "resources.php";
                         </div>
                     </ul>
                 </div>
+                <div class="input-pc">
+                    <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
+                </div>
+            </div>
                 <div class="overlay"></div>
-                
+                    
                 <button id="searchBtn" class="btn btn-outline-primary ms-2">
                     <i class="fa fa-search"></i>
                 </button>
-                   
-            </div>
            
         </nav>
         <div class="spacer"></div>
@@ -222,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Xử lý mở menu
             menuButton.addEventListener("click", function () {
                 navMenu.classList.toggle("open");
-                overlay.classList.toggle("show");
+                // overlay.classList.toggle("show");
                 menuIcon.classList.toggle("active"); // Thêm/xóa lớp chuyển đổi dấu "X"
 
                 // Thêm hoặc xóa lớp khóa cuộn cho body
@@ -278,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     </div>
                                     <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
                                     <p class="rotated-text">
-                                        <?= htmlspecialchars($product['pname']) ?><br>
+                                        <span class="product-name"><?= htmlspecialchars($product['pname']) ?></span><br>
                                         <?php if (!is_null($product['discounted_price'])): ?>
                                             <s><?= number_format($product['price']) ?> ¥</s>
                                         <?php else: ?>
@@ -348,7 +351,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Thêm nội dung của sản phẩm vào trong liên kết
                 productLink.innerHTML = `
                     <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-                    <p class="rotated-text">${product.pname}<br>${product.price} </p>
+                    <p class="rotated-text">
+                        ${product.pname}<br>
+                        ${product.discounted_price ? `<s>${product.price} ¥</s><br><span class="discounted-price">${product.discounted_price} ¥</span>` : `${product.price} ¥`}
+                    </p>
                 `;
 
                 // Thêm sản phẩm vào giao diện
@@ -379,7 +385,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Thêm nội dung của sản phẩm vào trong liên kết
                 productLink.innerHTML = `
                     <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-                    <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+                    <p class="rotated-text">
+                        ${product.pname}<br>
+                        ${product.discounted_price ? `<s>${product.price} ¥</s><br><span class="discounted-price">${product.discounted_price} ¥</span>` : `${product.price} ¥`}
+                    </p>
                 `;
 
                 // Thêm sản phẩm vào giao diện
