@@ -49,8 +49,7 @@ if (!isset($_SESSION['userid'])) {
             <form class="edit-form" action="./php/storeProEditP.php" method="POST"enctype="multipart/form-data">
                     <!--  -->
                 <p>1:3の画像をご利用ください</p>
-                <input type="hidden" name="userid" id="userid" value="<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>">
-                <input type="hidden" name="currentLogoPath" value="<?php echo htmlspecialchars($_SESSION['logopath'] ?? ''); ?>">
+
                 <!--  -->
                 <div class="form">
                 <div class="form logo-container">
