@@ -270,11 +270,21 @@ document.addEventListener("DOMContentLoaded", function () {
                         <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
                             <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
                                 <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
-                                    <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                                    <div class="image-wrapper">
+                                        <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                                        <?php if (!is_null($product['discounted_price'])): ?>
+                                            <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
+                                        <?php endif; ?>
+                                    </div>
                                     <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
                                     <p class="rotated-text">
                                         <?= htmlspecialchars($product['pname']) ?><br>
-                                        <s><?= number_format($product['price']) ?> ¥</s>
+                                        <?php if (!is_null($product['discounted_price'])): ?>
+                                            <s><?= number_format($product['price']) ?> ¥</s>
+                                        <?php else: ?>
+                                            <?= number_format($product['price']) ?> ¥
+                                        <?php endif; ?>
+
                                         <?php if (!is_null($product['discounted_price'])): ?>
                                             <br><span class="discounted-price"><?= number_format($product['discounted_price']) ?> ¥</span>
                                         <?php endif; ?>
