@@ -3,11 +3,11 @@ session_start();
 include(__DIR__ . '/db_connect.php'); // データベース接続ファイルをインクルード
 
 // ユーザーがログインしているか確認
-if (!isset($_SESSION['userid'])) {
-    header("Location: login.php");
-    exit;
-}
-
+// if (!isset($_SESSION['userid'])) {
+//     header("Location: login.php");
+//     exit;
+// }
+include('db_connect.php');
 // パスワードが送信された場合の処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userid = $_POST['userid'];
@@ -36,6 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // todo：メールを送る処理
 
+            // Xóa dữ liệu liên quan trong orders_old trước
+            $deleteOrdersOldStmt = $conn->prepare("DELETE FROM orders_old WHERE store_id = ?");
+            $deleteOrdersOldStmt->bind_param("i", $storeid);
+            $deleteOrdersOldStmt->execute();
+            $deleteOrdersOldStmt->close();
+
             // productテーブルの関連レコードを削除
             $deleteProductStmt = $conn->prepare("DELETE FROM product WHERE storeid = ?");
             $deleteProductStmt->bind_param("i", $storeid);
@@ -47,6 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $deleteCategoryStmt->bind_param("i", $storeid);
             $deleteCategoryStmt->execute();
             $deleteCategoryStmt->close();
+
+            // Xóa dữ liệu liên quan trong storedescriptions
+            $deleteStoreDescriptionsStmt = $conn->prepare("DELETE FROM storedescriptions WHERE storeid = ?");
+            $deleteStoreDescriptionsStmt->bind_param("i", $storeid);
+            $deleteStoreDescriptionsStmt->execute();
+            $deleteStoreDescriptionsStmt->close();
+
 
             // storeテーブルの関連レコードを削除
             $deleteStoreStmt = $conn->prepare("DELETE FROM store WHERE userid = ?");
