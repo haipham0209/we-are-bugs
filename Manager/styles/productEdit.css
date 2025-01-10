@@ -49,6 +49,26 @@
         overflow-y: auto;
         /* Chỉ cuộn nội dung trong main */
     }
+    .head {
+        display: flex; /* Đặt các phần tử con trong .head nằm ngang hàng */
+        align-items: center; /* Căn chỉnh các phần tử theo chiều dọc */
+        justify-content: center; /* Căn giữa toàn bộ div theo chiều ngang */
+        gap: 10px; /* Khoảng cách giữa các phần tử */
+        margin: 0 auto; /* Căn giữa toàn bộ div nếu nó có chiều rộng cố định */
+        text-align: center; /* Căn giữa nội dung văn bản (nếu cần) */
+    }
+    
+    .head h3 {
+        margin: 25px; /* Loại bỏ margin mặc định của h3 */
+        font-size: 36px; /* Đặt kích thước chữ */
+    }
+    
+    .head .home {
+        width: 36px; /* Đặt chiều rộng ảnh */
+        height: auto; /* Giữ tỷ lệ khung hình của ảnh */
+    }
+    
+    
 
     input[type="text"],
     input[type="number"],
