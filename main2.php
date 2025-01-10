@@ -48,7 +48,9 @@ if ($result->num_rows > 0) {
     $tel = $storeData["tel"];
     $address = $storeData["address"];
     $mail = $storeData["mail"];
-    $logopath = str_replace('../Manager/', './Manager/', $storeData["logopath"]);
+    if ($storeData["logopath"]){
+        $logopath = str_replace('../Manager/', './Manager/', $storeData["logopath"]);
+    }
 } else {
     header("HTTP/1.0 404 Not Found");
     echo "404 Not Found";
@@ -69,6 +71,7 @@ $best_sellers_sql = "
     GROUP BY p.productid, p.pname, p.price, p.productImage
     ORDER BY total_quantity DESC
     LIMIT 3";
+
 $stmt_best_sellers = $conn->prepare($best_sellers_sql);
 $stmt_best_sellers->bind_param("i", $storeid);
 $stmt_best_sellers->execute();
@@ -134,17 +137,19 @@ require "resources.php";
                         <li class="nav-item">
                             <i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a>
                         </li>
-                        <li class="nav-item">
-                        <i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a>
-                        </li>
+                        <div class="mobile-only">
+                            <li class="nav-item">
+                                <i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
                 <div class="overlay"></div>
-
-                <button id="searchBtn" class="btn btn-outline-primary me-2">
+                
+                <button id="searchBtn" class="btn btn-outline-primary ms-2">
                     <i class="fa fa-search"></i>
                 </button>
-               
+                   
             </div>
            
         </nav>
@@ -196,6 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.classList.remove("show"); // Ẩn overlay khi đóng thanh tìm kiếm
         }
     });
+    
 
     // Sự kiện click vào overlay để đóng thanh tìm kiếm
     overlay.addEventListener("click", function () {
@@ -264,9 +270,25 @@ document.addEventListener("DOMContentLoaded", function () {
                         <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
                             <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
                                 <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
-                                    <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                                    <div class="image-wrapper">
+                                        <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                                        <?php if (!is_null($product['discounted_price'])): ?>
+                                            <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
+                                        <?php endif; ?>
+                                    </div>
                                     <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
-                                    <p class="rotated-text"><?= htmlspecialchars($product['pname']) ?><br><?= number_format($product['price']) ?> ¥</p>
+                                    <p class="rotated-text">
+                                        <?= htmlspecialchars($product['pname']) ?><br>
+                                        <?php if (!is_null($product['discounted_price'])): ?>
+                                            <s><?= number_format($product['price']) ?> ¥</s>
+                                        <?php else: ?>
+                                            <?= number_format($product['price']) ?> ¥
+                                        <?php endif; ?>
+
+                                        <?php if (!is_null($product['discounted_price'])): ?>
+                                            <br><span class="discounted-price"><?= number_format($product['discounted_price']) ?> ¥</span>
+                                        <?php endif; ?>
+                                    </p>
                                 </div>
                             </a>
                         <?php endforeach; ?>
@@ -326,7 +348,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Thêm nội dung của sản phẩm vào trong liên kết
                 productLink.innerHTML = `
                     <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-                    <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+                    <p class="rotated-text">${product.pname}<br>${product.price} </p>
                 `;
 
                 // Thêm sản phẩm vào giao diện

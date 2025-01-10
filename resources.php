@@ -13,7 +13,7 @@ $categories = [];
 
 // Truy vấn sản phẩm và thông tin danh mục theo storeid
 $productQuery = "
-    SELECT p.productid, p.pname, p.price, p.productImage, 
+    SELECT p.productid, p.pname, p.price, p.discounted_price, p.productImage, 
            c.cname
     FROM product p
     JOIN category c ON p.category_id = c.category_id
@@ -41,6 +41,7 @@ if ($productResult->num_rows > 0) {
             'productid' => $row['productid'],
             'pname' => $row['pname'],
             'price' => $row['price'],
+            'discounted_price' => $row['discounted_price'],
             'productImage' => $row['productImage']
         ];
     }

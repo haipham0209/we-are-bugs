@@ -1,3 +1,4 @@
+/* Mobile screen*/
 @media only screen and (max-width: 767px) {
     * {
         width: 100%;
@@ -9,6 +10,12 @@
         font-family: 'Murecho', sans-serif;
         height: 200vh; /* Tăng chiều cao để kiểm tra cuộn */
         z-index: 10;
+    }
+    .desktop-only {
+        display: none;
+    }
+    .mobile-only {
+        display: block;
     }
     .navbar {
         position: fixed;
@@ -144,7 +151,7 @@
         transition: left 0.3s ease-in-out; /* Hiệu ứng khi mở menu */
         z-index: 1051;
         padding: 20px; /* Thêm khoảng cách bên trong */
-        border-radius: 5px 15px 15px 0;
+        /* border-radius: 5px 15px 15px 0; */
     }
     .nav-menu .support-title {
         border-bottom: 1px solid black;
@@ -186,7 +193,7 @@
 
 /* Đảm bảo overlay hiển thị trên phần body */
 .overlay {
-    z-index: 1050; /* Cao hơn nội dung khác */
+    z-index: 1053; /* Cao hơn nội dung khác */
     position: fixed;
     top: 90px;
     left: 0;
@@ -222,6 +229,25 @@
         object-fit: cover; /* Giữ tỷ lệ hình ảnh và cắt phần dư thừa nếu cần */
         border-radius: 8px; /* Thêm bo góc để hình ảnh có kiểu dáng đẹp */
     }
+    .image-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .sale-icon {
+        position: absolute;
+        top: 1px; /* Điều chỉnh khoảng cách từ trên xuống */
+        right: 1px; /* Điều chỉnh khoảng cách từ phải qua */
+        width: 70px; /* Đặt kích thước icon phù hợp */
+        height: auto;
+        z-index: 10;
+    }
+    
+    .discounted-price {
+        color: red; /* Màu chữ cho giá giảm */
+        font-weight: bold; /* Làm đậm chữ */
+    }
+    
     
     .show-more-btn {
         display: block;
@@ -295,22 +321,18 @@
         box-shadow: none; /* Loại bỏ hiệu ứng bóng nếu có */
     }
 
-
-
-
-
     #searchContainer {
-        position: fixed; /* Cố định vị trí của div */
+        position: fixed; 
         display: flex;
-        justify-content: center; /* Căn giữa theo chiều ngang */
-        align-items: center; /* Căn giữa theo chiều dọc */
-        top: 0; /* Đặt ở vị trí trên cùng */
-        left: 0; /* Đặt từ bên trái */
-        width: 100%; /* Chiếm toàn bộ chiều rộng */
-        height: 100px; /* Chiều cao là 100px */
-        padding: 10px; /* Khoảng cách bên trong */
-        background-color: #f0f0f0; /* Màu nền */
-        z-index: 1000; /* Đảm bảo div này hiển thị trên các phần tử khác */
+        justify-content: center;
+        align-items: center; 
+        top: 0; 
+        left: 0;
+        width: 100%; 
+        height: 100px;
+        padding: 10px; 
+        background-color: #f0f0f0;
+        z-index: 1000; 
     }
     
     #searchInput {
@@ -322,4 +344,15 @@
     }
     
     
+}
+
+/* PC screen */
+@media only screen and (min-width: 767px) {
+    .desktop-only {
+        display: block;
+    }
+    .mobile-only {
+        display: none;
+    }
+   
 }
