@@ -110,18 +110,19 @@ if ($conn->connect_error) {
                     <select id="payment-method">
                         <option value="cash">現金</option>
                         <option value="credit">クレジットカード</option>
+                        <option value="barcode">バーコード</option>
                     </select>
                 </p>
             </div>
             <div class="total">
-                <p>合計: <span id="total-price">￥</span></p>
+                <p class="totalp">合計: <span id="total-price">___￥</span></p>
                 <!-- <p>(税込10%)</p> -->
-                <p>割引き: 
+                <!-- <p>割引き: 
                     <input type="number" id="waribiki-input" value="0" min="0" max="100" onchange="updateTotal()"> %
-                </p>
-                <label for="received-amount">お預かり:</label>
+                </p> -->
+                <p class="totalp"><label for="received-amount">お預かり:</label></p>
                 <input type="number" id="received-amount" onchange="calculateChange()">
-                <p>お釣り: <span id="change-amount">0¥</span></p>
+                <p class="totalp">お釣り: <span id="change-amount">___¥</span></p>
             </div>
 
         </div>
