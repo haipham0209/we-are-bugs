@@ -3,8 +3,6 @@ const nextDateButton = document.getElementById('next-date');
 const datePicker = document.getElementById('date-picker');
 
 const orderListBody = document.getElementById('order-list-body');
-const orderDetailsBody = document.getElementById('order-details-body');
-const orderDetailsDiv = document.getElementById('order-details');
 
 let currentDate = new Date();
 updateDateDisplay(currentDate);
@@ -64,30 +62,41 @@ function fetchOrderDetail(orderNumber, orderRow) {
     return fetch(`./php/fetch_order_details.php?order_number=${orderNumber}`)
         .then(response => response.json())
         .then(orderDetails => {
-            // 詳細情報を表示するための新しい行を作成
             const detailsRow = document.createElement('tr');
-            detailsRow.classList.add('order-details-row'); // 詳細行にクラスを追加してスタイルを設定
+            detailsRow.classList.add('order-details-row');
 
-            let detailsHTML = `<td colspan="3"><table><thead><tr><th>商品名</th><th>数量</th><th>単価</th><th>小計</th></tr></thead><tbody>`;
+            // 親の行の幅を取得
+            const parentWidth = orderRow.offsetWidth;
 
-            orderDetails.forEach(detail => {
+            let detailsHTML = `<td colspan="5"><div class="order-details-container" style="width:${parentWidth}px;"><table><thead><tr><th>商品名</th><th>数量</th><th>単価</th><th>小計</th><th>合計</th><th>お預かり</th></tr></thead><tbody>`;
+
+            orderDetails.forEach((detail, index) => {
+
+                const totalPriceCell = index === 0 ? `<td rowspan="${orderDetails.length}">${detail.total_price}</td>` : '';
+                const receivedAmount = index === 0 ? `<td rowspan="${orderDetails.length}">${detail.received_amount}</td>` : '';
+
                 detailsHTML += `
                     <tr>
                         <td>${detail.pname}</td>
                         <td>${detail.quantity}</td>
                         <td>${detail.price}</td>
-                        <td>${detail.total_price}</td>
+                        <td>${detail.order_price}</td>
+                        ${totalPriceCell}
+                        ${receivedAmount}
                     </tr>
                 `;
             });
 
-            detailsHTML += `</tbody></table></td>`;
+            detailsHTML += `</tbody></table></div></td>`;
             detailsRow.innerHTML = detailsHTML;
 
             return detailsRow;
         })
         .catch(error => console.error('注文詳細の取得に失敗しました:', error));
 }
+
+
+
 
 // 詳細情報のトグル表示
 function toggleOrderDetail(orderNumber, orderRow) {
