@@ -44,8 +44,8 @@
     display: flex;               /* Sử dụng flexbox để căn chỉnh các phần tử */
     flex-direction: column;      /* Sắp xếp các phần tử theo chiều dọc */
     align-items: flex-start;     /* Canh trái các phần tử */
-    gap: 10px;                   /* Khoảng cách giữa các phần tử */
-    padding: 15px;               /* Khoảng cách bên trong */
+    /* gap: 10px;                   Khoảng cách giữa các phần tử */
+    padding: 10px;               /* Khoảng cách bên trong */
     border: 1px solid #ddd;      /* Đường viền nhẹ */
     border-radius: 8px;          /* Bo góc */
     background-color: #f9f9f9;   /* Màu nền nhạt */
