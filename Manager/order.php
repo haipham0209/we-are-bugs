@@ -1,15 +1,35 @@
 <?php
-include('./php/auth_check.php'); 
+include('./php/auth_check.php');
 include('./php/db_connect.php');
-include('./php/order_process.php');
-
-// Khởi tạo kết nối cơ sở dữ liệu
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Kiểm tra kết nối
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// データベースから注文データを取得
+$sql = "
+    SELECT 
+        o.order_id,
+        o.order_number,
+        SUM(od.quantity) AS total_quantity,
+        o.total_price,
+        o.order_date,
+        o.status
+    FROM orders o
+    LEFT JOIN order_details od ON o.order_number = od.order_number
+    GROUP BY o.order_id, o.order_number, o.total_price, o.order_date, o.status
+";
+$result = $conn->query($sql);
+
+// データを配列に格納
+$orders = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $orders[] = $row;
+    }
+}
+$conn->close();
 
 ?>
 
@@ -24,7 +44,7 @@ if ($conn->connect_error) {
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     <!-- <script src="./scripts/cameraPos.js"></script> -->
     <!-- <script src="./scripts/search.js"></script> -->
-    
+
 
     <title>Order History</title>
 </head>
@@ -33,13 +53,13 @@ if ($conn->connect_error) {
     <header>
         <div class="main-navbar">
             <div class="search-scan">
-                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">            
+                <input type="text" name="barcode" id="barcode-input" class="search-bar" placeholder="商品名又はコード入力">
                 <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
                 <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
             </div>
             <div id="suggestionList"></div>
             <script>
-                let isCameraRunning = false; 
+                let isCameraRunning = false;
 
                 function toggleCamera() {
                     if (isCameraRunning) {
@@ -56,7 +76,7 @@ if ($conn->connect_error) {
             </a>
         </div>
     </header>
-    <main>   
+    <main>
         <div id="camera" style="display: none;">
             <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>
         </div>
@@ -81,6 +101,15 @@ if ($conn->connect_error) {
             </thead>
             <tbody id="order-list-body">
                 <!-- Dữ liệu sẽ được chèn bằng JavaScript -->
+                <?php $rowIndex = 1; ?>
+                <?php foreach ($orders as $order): ?>
+                    <tr>
+                        <td><?php echo $rowIndex++; ?></td>
+                        <td><?php echo htmlspecialchars($order['order_number']); ?></td>
+                        <td><?php echo htmlspecialchars($order['total_quantity']); ?></td>
+                        <td><?php echo htmlspecialchars($order['total_price']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
 
@@ -103,6 +132,7 @@ if ($conn->connect_error) {
             <p id="order-summary"></p>
         </div>
     </main>
+
     <footer></footer>
 </body>
 
