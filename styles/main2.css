@@ -196,7 +196,7 @@
 
     /* Đảm bảo overlay hiển thị trên phần body */
     .overlay {
-        z-index: 1050; /* Cao hơn nội dung khác */
+        z-index: 1053; /* Cao hơn nội dung khác */
         position: fixed;
         top: 90px;
         left: 0;
