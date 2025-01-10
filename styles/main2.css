@@ -143,7 +143,7 @@
         visibility: hidden;
     }
      /* Ẩn menu theo mặc định */
-     .menu {
+     .nav-menu {
         position: fixed;
         top: 90px;
         left: -100%; /* Ẩn menu ban đầu */
@@ -158,6 +158,11 @@
         z-index: 1051;
         padding: 20px; /* Thêm khoảng cách bên trong */
         /* border-radius: 5px 15px 15px 0; */
+    }
+     .menu {
+        position: fixed;
+        top: 90px;
+        left: -100%; /* Ẩn menu ban đầu */
     }
     .nav-menu .support-title {
         border-bottom: 1px solid black;
@@ -397,6 +402,7 @@
     .navbar .navbar-nav {
         display: flex;
         gap: 10px;
+        flex-wrap: nowrap; /* Không cho phép xuống dòng */
     }
     ul{
         margin-top: 15px !important;
@@ -409,7 +415,13 @@
         transition: color 0.3s;
     }
     .navbar .container-fluid{
-        align-items: flex-start !important;
+        /* align-items: flex-start !important; */
+        justify-content: flex-start !important;
+    }
+    .menu{
+        display: flex; /* Dàn các phần tử theo hàng ngang */
+        gap: 10px; /* Khoảng cách giữa các phần tử */
+        
     }
     #searchBtn{
         display: none;
@@ -448,8 +460,7 @@
     /* Product Showcase */
     .product-showcase {
         text-align: center;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Tự động điều chỉnh số cột */
+        display: flex;
         gap: 20px;
         justify-items: center; /* Căn giữa các khung sản phẩm theo chiều ngang */
         align-items: start; /* Căn giữa các khung sản phẩm theo chiều dọc (tùy chọn, có thể điều chỉnh) */
