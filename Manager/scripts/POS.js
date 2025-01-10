@@ -15,7 +15,7 @@ function addToCart(product) {
         // Nếu sản phẩm đã tồn tại, tăng số lượng
         const quantityInput = existingRow.querySelector('input.product-quantity');
         quantityInput.value = parseInt(quantityInput.value) + 1;
-
+    
         const priceCell = existingRow.querySelector('.price');
         const unitPrice = parseFloat(product.price);
         priceCell.textContent = `${(unitPrice * parseInt(quantityInput.value)).toFixed(2)}¥`;
@@ -29,7 +29,7 @@ function addToCart(product) {
         const row = document.createElement('tr');
         row.classList.add('product-row'); // Thêm class
         row.innerHTML = `
-            <td></td> <!-- Cột STT -->
+            <td class="stt"></td> <!-- Cột STT -->
             <td>${product.pname}</td>
             <td class="num">
                 <input 
@@ -47,10 +47,12 @@ function addToCart(product) {
                 <button class="delete-btn" title="Xóa">X</button>
             </td>
         `;
-        
-        // Thêm sản phẩm vào đầu bảng
-        tableBody.insertBefore(row, tableBody.firstChild);
-
+    
+        // Thêm sản phẩm vào cuối bảng
+        tableBody.appendChild(row); 
+    
+        updateSerialNumbers(); // Cập nhật lại số thứ tự
+    
         // Nếu có giảm giá, thêm dòng giảm giá ngay dưới sản phẩm chính
         if (product.discounted_price && product.discounted_price < product.price) {
             const discountRow = document.createElement('tr');
@@ -64,10 +66,10 @@ function addToCart(product) {
                 <td class="price">-${(product.price - product.discounted_price).toFixed(2)}¥</td>
                 <td></td> <!-- Không hiển thị nút xóa cho dòng giảm giá -->
             `;
-            // Chèn dòng giảm giá ngay sau sản phẩm
-            tableBody.insertBefore(discountRow, row.nextSibling);
+            // Thêm dòng giảm giá vào cuối bảng
+            tableBody.appendChild(discountRow);  
         }
-
+    
         // Thêm sự kiện xóa hàng
         row.querySelector('.delete-btn').addEventListener('click', () => {
             row.classList.add('fade-out'); // Thêm lớp hiệu ứng làm mờ dần
@@ -90,34 +92,27 @@ function addToCart(product) {
                 updateTotal(); // Cập nhật tổng tiền
             }, 300);
         });
-
+    
         // Thêm hiệu ứng làm nổi bật dòng mới
         row.classList.add('highlight');
         setTimeout(() => {
             row.classList.remove('highlight');
         }, 1500);
     }
-
+    
     // Cập nhật giá trị sản phẩm sau khi thay đổi số lượng
     // updateProductPrice(quantityInput, product.price);
-
+    
     // Cập nhật tổng tiền mỗi lần thêm sản phẩm
     updateTotal();
+    
 }
 
 
 
 
 
-// function updateSerialNumbers() {
-//     const tableRows = document.querySelectorAll('#product-table tbody tr');
-//     tableRows.forEach((row, index) => {
-//         const sttCell = row.querySelector('.stt');
-//         sttCell.textContent = index + 1; // Gán STT bắt đầu từ 1
-//     });
-// }
 function updateSerialNumbers() {
-    // Chỉ lấy các dòng sản phẩm (loại trừ dòng giảm giá)
     const productRows = document.querySelectorAll('#product-table tbody tr.product-row');
 
     productRows.forEach((row, index) => {
@@ -125,6 +120,7 @@ function updateSerialNumbers() {
         sttCell.textContent = index + 1; // Gán STT bắt đầu từ 1
     });
 }
+
 
 
 //tổng tiền từng món hàng
