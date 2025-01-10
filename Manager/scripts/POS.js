@@ -16,7 +16,7 @@ function addToCart(product) {
         const priceCell = existingRow.querySelector('.price');
         const unitPrice = parseFloat(product.price);
         priceCell.textContent = `${(unitPrice * parseInt(quantityInput.value)).toFixed(2)}¥`;
-
+        updateProductPrice(quantityInput, unitPrice);
         existingRow.classList.add('highlight');
         setTimeout(() => {
             existingRow.classList.remove('highlight');
@@ -93,6 +93,8 @@ function addToCart(product) {
             row.classList.remove('highlight');
         }, 1500);
     }
+
+    updateProductPrice(quantityInput, product.price);
 
     // Cập nhật lại số thứ tự (STT)
     updateSerialNumbers();
