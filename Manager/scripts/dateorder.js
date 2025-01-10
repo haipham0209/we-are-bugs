@@ -12,7 +12,7 @@ updateDateDisplay(currentDate);
 function updateDateDisplay(date) {
     const formattedDate = date.toISOString().split('T')[0];
     datePicker.value = formattedDate;
-    loadOrder(formattedDate);
+    loadOrderDetails(formattedDate);
 }
 
 nextDateButton.addEventListener('click', () => {
@@ -34,7 +34,7 @@ datePicker.addEventListener('change', (event) => {
 });
 
 // 注文データを表示
-function loadOrder(date) {
+function loadOrderDetails(date) {
     fetch(`./php/fetch_orders.php?date=${date}`)
         .then(response => response.json())
         .then(orders => {
@@ -50,8 +50,8 @@ function loadOrder(date) {
                     <td>${order.total_price}</td>
                 `;
                 tr.addEventListener('click', () => {
-                    // 注文詳細を表示
-                    fetchOrderDetail(order.order_number);
+                    // 注文詳細のトグル表示
+                    toggleOrderDetail(order.order_number, tr);
                 });
                 orderListBody.appendChild(tr);
             });
@@ -60,24 +60,47 @@ function loadOrder(date) {
 }
 
 // 注文詳細情報を取得
-function fetchOrderDetail(orderNumber) {
-    fetch(`./php/fetch_order_details.php?order_number=${orderNumber}`)
+function fetchOrderDetail(orderNumber, orderRow) {
+    return fetch(`./php/fetch_order_details.php?order_number=${orderNumber}`)
         .then(response => response.json())
         .then(orderDetails => {
-            // 詳細情報を表示するテーブルをクリア
-            orderDetailsBody.innerHTML = '';
+            // 詳細情報を表示するための新しい行を作成
+            const detailsRow = document.createElement('tr');
+            detailsRow.classList.add('order-details-row'); // 詳細行にクラスを追加してスタイルを設定
+
+            let detailsHTML = `<td colspan="3"><table><thead><tr><th>商品名</th><th>数量</th><th>単価</th><th>小計</th></tr></thead><tbody>`;
+
             orderDetails.forEach(detail => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${detail.pname}</td>
-                    <td>${detail.quantity}</td>
-                    <td>${detail.price}</td>
-                    <td>${detail.total_price}</td>
+                detailsHTML += `
+                    <tr>
+                        <td>${detail.pname}</td>
+                        <td>${detail.quantity}</td>
+                        <td>${detail.price}</td>
+                        <td>${detail.total_price}</td>
+                    </tr>
                 `;
-                orderDetailsBody.appendChild(tr);
             });
-            // 詳細を表示
-            orderDetailsDiv.style.display = 'block';
+
+            detailsHTML += `</tbody></table></td>`;
+            detailsRow.innerHTML = detailsHTML;
+
+            return detailsRow;
         })
         .catch(error => console.error('注文詳細の取得に失敗しました:', error));
+}
+
+// 詳細情報のトグル表示
+function toggleOrderDetail(orderNumber, orderRow) {
+    // すでに詳細情報行が表示されているかどうかを確認
+    const existingDetailRow = orderRow.nextElementSibling;
+
+    if (existingDetailRow && existingDetailRow.classList.contains('order-details-row')) {
+        // 詳細情報が表示されている場合は非表示にする
+        existingDetailRow.style.display = existingDetailRow.style.display === 'none' ? '' : 'none';
+    } else {
+        // 詳細情報が表示されていない場合は新たに表示する
+        fetchOrderDetail(orderNumber, orderRow).then(detailsRow => {
+            orderListBody.insertBefore(detailsRow, orderRow.nextSibling);
+        });
+    }
 }
