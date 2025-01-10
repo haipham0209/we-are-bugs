@@ -20,6 +20,9 @@
     .input-pc{
         display: none;
     }
+    .product-pc{
+        display: none;
+    }
     .navbar {
         position: fixed;
         top: 0;
@@ -360,7 +363,9 @@
     .mobile-only {
         display: none;
     }
-   
+    .product-mobile{
+        display: none;
+    }
 
     /* Navbar */
     .custom-navbar .navbar {

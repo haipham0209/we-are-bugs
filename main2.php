@@ -260,56 +260,105 @@ document.addEventListener("DOMContentLoaded", function () {
         
          <!-- <p>------------------------------------------------------------------------</p> -->
         <section id="product-section" class="category">
-            <?php foreach ($categories as $category): ?>
-                <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
-                    <h3 class="title" data-aos="fade-right" data-aos-duration="1000">
-                        <?= htmlspecialchars($category['cname']) ?>
-                    </h3>
+            <!--PC-->
+            <div class="product-pc">
+                <?php foreach ($categories as $category): ?>
+                    <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
+                        <h3 class="title" data-aos="fade-right" data-aos-duration="1000">
+                            <?= htmlspecialchars($category['cname']) ?>
+                        </h3>
+                        <div class="product-showcase">
+                            <!-- Hiển thị sản phẩm (Tối đa 4 sản phẩm) -->
+                            <?php foreach (array_slice($category['products'], 0, 4) as $product): ?>
+                                <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
+                                    <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
+                                        <div class="image-wrapper">
+                                            <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
+                                            <?php endif; ?>
+                                        </div>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+                                        <p class="rotated-text">
+                                            <span class="product-name"><?= htmlspecialchars($product['pname']) ?></span><br>
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <s><?= number_format($product['price']) ?> ¥</s>
+                                            <?php else: ?>
+                                                <?= number_format($product['price']) ?> ¥
+                                            <?php endif; ?>
 
-                    <div class="product-showcase">
-                        <!-- Hiển thị sản phẩm (Tối đa 2 sản phẩm) -->
-                        <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
-                            <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
-                                <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
-                                    <div class="image-wrapper">
-                                        <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
-                                        <?php if (!is_null($product['discounted_price'])): ?>
-                                            <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
-                                        <?php endif; ?>
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <br><span class="discounted-price"><?= number_format($product['discounted_price']) ?> ¥</span>
+                                            <?php endif; ?>
+                                        </p>
                                     </div>
-                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
-                                    <p class="rotated-text">
-                                        <span class="product-name"><?= htmlspecialchars($product['pname']) ?></span><br>
-                                        <?php if (!is_null($product['discounted_price'])): ?>
-                                            <s><?= number_format($product['price']) ?> ¥</s>
-                                        <?php else: ?>
-                                            <?= number_format($product['price']) ?> ¥
-                                        <?php endif; ?>
-
-                                        <?php if (!is_null($product['discounted_price'])): ?>
-                                            <br><span class="discounted-price"><?= number_format($product['discounted_price']) ?> ¥</span>
-                                        <?php endif; ?>
-                                    </p>
-                                </div>
-                            </a>
-                        <?php endforeach; ?>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                        <!-- Nếu số lượng sản phẩm > 4, hiển thị nút Show More -->
+                        <?php if (count($category['products']) > 4): ?>
+                            <button 
+                                class="show-more-btn" 
+                                data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
+                                data-aos="fade-up" 
+                                data-aos-duration="1000" 
+                                onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">
+                                全て表示
+                            </button>
+                        <?php endif; ?>
                     </div>
+                <?php endforeach; ?>
+            </div>
+             <!--Mobile-->
+            <div class="product-mobile">
+                <?php foreach ($categories as $category): ?>
+                    <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
+                        <h3 class="title" data-aos="fade-right" data-aos-duration="1000">
+                            <?= htmlspecialchars($category['cname']) ?>
+                        </h3>
+                        <div class="product-showcase">
+                            <!-- Hiển thị sản phẩm (Tối đa 2 sản phẩm) -->
+                            <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
+                                <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
+                                    <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
+                                        <div class="image-wrapper">
+                                            <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
+                                            <?php endif; ?>
+                                        </div>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+                                        <p class="rotated-text">
+                                            <span class="product-name"><?= htmlspecialchars($product['pname']) ?></span><br>
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <s><?= number_format($product['price']) ?> ¥</s>
+                                            <?php else: ?>
+                                                <?= number_format($product['price']) ?> ¥
+                                            <?php endif; ?>
 
-                    <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
-                    <?php if (count($category['products']) > 2): ?>
-                        <button 
-                            class="show-more-btn" 
-                            data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
-                            data-aos="fade-up" 
-                            data-aos-duration="1000" 
-                            onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">
-                            全て表示
-                        </button>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <br><span class="discounted-price"><?= number_format($product['discounted_price']) ?> ¥</span>
+                                            <?php endif; ?>
+                                        </p>
+                                    </div>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                        <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
+                        <?php if (count($category['products']) > 2): ?>
+                            <button 
+                                class="show-more-btn" 
+                                data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
+                                data-aos="fade-up" 
+                                data-aos-duration="1000" 
+                                onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">
+                                全て表示
+                            </button>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>  
         </section>
-
     </main>
 </body>
 
