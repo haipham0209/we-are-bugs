@@ -392,6 +392,10 @@
         font-weight: bold;
         color: #000;
         text-transform: uppercase;
+        flex: 1; /* Chiếm 1/3 chiều ngang */
+        display: flex;
+        justify-content: center; /* Căn giữa logo */
+        align-items: center;
     }
     .custom-navbar .navbar-brand img {
         max-height: 100px; /* Giảm chiều cao logo */
@@ -401,27 +405,42 @@
     
     .navbar .navbar-nav {
         display: flex;
-        gap: 10px;
-        flex-wrap: nowrap; /* Không cho phép xuống dòng */
+        gap: 30px;
+        margin: 0;
+        padding-right: 5px;
+        flex-direction: row !important;
     }
     ul{
         margin-top: 15px !important;
     }
 
     .navbar .nav-link {
-        font-size: 16px;
-        font-weight: bold;
+        font-size: 18px;
+        /* font-weight: bold; */
         color: #000;
         transition: color 0.3s;
     }
     .navbar .container-fluid{
-        /* align-items: flex-start !important; */
-        justify-content: flex-start !important;
+        display: flex;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .nav-menu {
+        display: flex;
+        justify-content: flex-start; /* Căn trái menu */
+        align-items: center;
+        gap: 15px;
     }
     .menu{
-        display: flex; /* Dàn các phần tử theo hàng ngang */
-        gap: 10px; /* Khoảng cách giữa các phần tử */
-        
+        flex: 2; /* Chiếm 2/3 chiều ngang */
+        display: flex;
+        flex-direction: column; /* Thanh tìm kiếm nằm dưới menu */
+        align-items: flex-end;
+        gap: 10px;
+        margin-right: 25px;
     }
     #searchBtn{
         display: none;
@@ -435,14 +454,19 @@
         max-width: 400px;
         margin-left: auto;
     }
+    #logoContainer {
+        max-width: 100%; /* Giới hạn kích thước logo */
+        height: auto;
+    }
 
     #searchInput {
-        width: 100%;
+        width: 400px;
         height: 35px;
         padding: 0 15px;
-        border: 1px solid #ccc;
+        border: 1px solid #6c757d;
         border-radius: 4px;
         font-size: 14px;
+        box-sizing: border-box;
     }
 
     #searchInput:focus {
