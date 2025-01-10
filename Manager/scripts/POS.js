@@ -99,7 +99,7 @@ function addToCart(product) {
     }
 
     // Cập nhật giá trị sản phẩm sau khi thay đổi số lượng
-    updateProductPrice(quantityInput, product.price);
+    // updateProductPrice(quantityInput, product.price);
 
     // Cập nhật tổng tiền mỗi lần thêm sản phẩm
     updateTotal();
