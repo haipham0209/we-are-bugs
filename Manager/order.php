@@ -78,24 +78,6 @@ $conn->close();
             </tbody>
         </table>
 
-        <!-- 注文の詳細を表示するためのdiv -->
-        <div id="order-details" style="display: none;">
-            <h3>注文の詳細</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>商品名</th>
-                        <th>数量</th>
-                        <th>単価</th>
-                        <th>小計</th>
-                    </tr>
-                </thead>
-                <tbody id="order-details-body">
-                    <!-- 詳細情報が挿入される -->
-                </tbody>
-            </table>
-        </div>
-
     </main>
     <footer></footer>
     <script src="./scripts/dateorder.js"></script>

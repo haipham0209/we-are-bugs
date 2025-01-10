@@ -9,9 +9,12 @@ $sql = "
         p.pname, 
         od.quantity, 
         p.price, 
-        (od.quantity * p.price) AS total_price 
+        (od.quantity * p.price) AS order_price,
+        o.total_price,
+        o.received_amount
     FROM order_details od
     JOIN product p ON od.productid = p.productid
+    JOIN orders o ON od.order_number = o.order_number
     WHERE od.order_number = ?
 ";
 
