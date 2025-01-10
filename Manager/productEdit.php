@@ -61,7 +61,10 @@ $category_result = $category_stmt->get_result();
 
 <body>
     <main>
+        <div class="head">
         <h3>商品編集</h3>
+        <h3><a href="main.php"><img class="home" src="./images/home.png" alt="Home Mana"></a></h3>
+        </div>
         <div class="addContainer">
             <form class="proAddForm" action="./php/updateProduct.php" method="POST" enctype="multipart/form-data">
                 <!-- Thêm icon thùng rác -->

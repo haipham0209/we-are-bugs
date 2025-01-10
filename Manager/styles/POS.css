@@ -37,6 +37,64 @@
         z-index: 1; /* Đặt thấp hơn các input fields */
         pointer-events: none; /* Vô hiệu hóa tương tác với chuột */
     }
+
+    /* //////////////////////////////////////////////////// */
+    /* Định dạng tổng thể cho .total */
+.total {
+    display: flex;               /* Sử dụng flexbox để căn chỉnh các phần tử */
+    flex-direction: column;      /* Sắp xếp các phần tử theo chiều dọc */
+    align-items: flex-start;     /* Canh trái các phần tử */
+    gap: 10px;                   /* Khoảng cách giữa các phần tử */
+    padding: 15px;               /* Khoảng cách bên trong */
+    border: 1px solid #ddd;      /* Đường viền nhẹ */
+    border-radius: 8px;          /* Bo góc */
+    background-color: #f9f9f9;   /* Màu nền nhạt */
+    width: 300px;                /* Đặt chiều rộng cố định */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng nhẹ */
+    font-family: Arial, sans-serif; /* Font chữ đẹp và dễ đọc */
+}
+
+/* Định dạng cho các đoạn văn bản trong .total */
+.total .totalp {
+    font-size: 19px;             /* Kích thước chữ */
+    font-weight: bold;           /* Chữ đậm */
+    color: #333;                 /* Màu chữ */
+    margin: 0;                   /* Bỏ khoảng cách trên/dưới */
+}
+
+/* Định dạng cho input */
+#received-amount {
+    padding: 5px;                /* Khoảng cách bên trong */
+    font-size: 19px;             /* Kích thước chữ */
+    width: 100%;                 /* Chiếm toàn bộ chiều rộng của container */
+    border: 1px solid #ccc;      /* Đường viền nhạt */
+    border-radius: 4px;          /* Bo góc */
+    background-color: #fff;      /* Màu nền trắng */
+    outline: none;               /* Bỏ viền outline khi focus */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Hiệu ứng lõm */
+    transition: border-color 0.3s; /* Hiệu ứng khi hover/focus */
+}
+
+/* Hiệu ứng khi hover hoặc focus input */
+#received-amount:hover,
+#received-amount:focus {
+    border-color: #038610;       /* Đổi màu viền khi hover hoặc focus */
+    box-shadow: 0 0 5px rgba(3, 134, 16, 0.5); /* Ánh sáng xanh nhẹ */
+}
+
+/* Định dạng cho span hiển thị giá trị */
+.total span {
+    font-weight: bold;           /* Chữ đậm */
+    color: #038610;              /* Màu xanh lá nổi bật */
+}
+
+/* Định dạng cho nhãn label */
+label[for="received-amount"] {
+    font-weight: normal;         /* Chữ thường */
+    color: #555;                 /* Màu chữ nhạt hơn */
+}
+
+/* /////////////////////////////////////////////// */
     
 
     /* //////////////////////////table////////////////////////////////// */
