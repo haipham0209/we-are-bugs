@@ -117,7 +117,7 @@ $conn->close();
         <nav class="nav-menu">
             <ul>
             <li><h3><?php echo htmlspecialchars($sname); ?></h3></li>
-            <li><a href="../main.php?sname=<?php echo urlencode($storeName); ?>">ホームページ</a></li>
+            <li><a href="./main2.php?sname=<?= urlencode($sname) ?>">ホームページ</a></li>
             <!-- <li><a href="../main.php?sname=<?php echo urlencode($storeName); ?>">商品</a></li> -->
             <li><a href="../html/storeInfor.php?sname=<?php echo urlencode($storeName); ?>">お店について</a></li>
             <li class="support-title">サポート</li>

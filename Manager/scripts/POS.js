@@ -42,6 +42,27 @@ function addToCart(product) {
                 <button class="delete-btn" title="Xóa">X</button>
             </td>
         `;
+            // // Nếu sản phẩm chưa tồn tại, thêm hàng mới
+            // const row = document.createElement('tr');
+            // const finalPrice = product.discounted_price !== null ? product.discounted_price : product.price;
+            // row.innerHTML = `
+            //     <td class="stt"></td> <!-- Cột STT -->
+            //     <td>${product.pname}</td>
+            //     <td class="num">
+            //         <input 
+            //             type="number" 
+            //             class="product-quantity" 
+            //             value="1" 
+            //             min="1" 
+            //             data-barcode="${product.barcode}" 
+            //             onchange="updateProductPrice(this, ${finalPrice})">
+            //     </td>
+            //     <td>${parseFloat(finalPrice).toFixed(2)}¥</td>
+            //     <td class="price">${parseFloat(finalPrice).toFixed(2)}¥</td>
+            //     <td>
+            //         <button class="delete-btn" title="Xóa">X</button>
+            //     </td>
+            // `;
 
         // Thêm dòng mới vào đầu bảng (đẩy các dòng trống xuống)
         tableBody.insertBefore(row, tableBody.firstChild);

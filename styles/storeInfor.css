@@ -1,3 +1,17 @@
+header{
+    background-color: #f8f9fa;
+}
+.fa{
+    color: black !important;
+}
+
+
+
+
+
+
+
+
 .logobar {
     display: flex; /* Căn giữa hình ảnh */
     align-items: center; /* Căn giữa theo chiều dọc */
