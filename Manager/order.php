@@ -41,11 +41,6 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./styles/order.css">
-    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
-    <!-- <script src="./scripts/cameraPos.js"></script> -->
-    <!-- <script src="./scripts/search.js"></script> -->
-
-
     <title>Order History</title>
 </head>
 
@@ -57,39 +52,18 @@ $conn->close();
                 <div id="barcode-suggestions" class="suggestions-list" style="display:none;"></div>
                 <img src="./images/camera-icon.png" class="camera-icon" onclick="toggleCamera()">
             </div>
-            <div id="suggestionList"></div>
-            <script>
-                let isCameraRunning = false;
-
-                function toggleCamera() {
-                    if (isCameraRunning) {
-                        stopScanner();
-                        isCameraRunning = false;
-                    } else {
-                        startScanner();
-                        isCameraRunning = true;
-                    }
-                }
-            </script>
             <a href="main.php">
                 <img class="home" src="./images/home.png" alt="Home Mana">
             </a>
         </div>
     </header>
     <main>
-        <div id="camera" style="display: none;">
-            <button id="stopBtn" onclick="toggleCamera()">カメラ停止</button>
-        </div>
         <p class="title">注文履歴</p>
-        <!-- 日期顯示 -->
         <div class="date-control">
             <button id="prev-date" class="date-button">◀</button>
             <input type="date" id="date-picker" class="date-picker">
             <button id="next-date" class="date-button">▶</button>
         </div>
-        <script src="./scripts/dateorder.js"></script>
-        <!-- <script src="./scripts/order.js"></script> -->
-        <!-- Bảng danh sách đơn hàng -->
         <table class="order-list">
             <thead>
                 <tr>
@@ -100,20 +74,11 @@ $conn->close();
                 </tr>
             </thead>
             <tbody id="order-list-body">
-                <!-- Dữ liệu sẽ được chèn bằng JavaScript -->
-                <?php $rowIndex = 1; ?>
-                <?php foreach ($orders as $order): ?>
-                    <tr>
-                        <td><?php echo $rowIndex++; ?></td>
-                        <td><?php echo htmlspecialchars($order['order_number']); ?></td>
-                        <td><?php echo htmlspecialchars($order['total_quantity']); ?></td>
-                        <td><?php echo htmlspecialchars($order['total_price']); ?></td>
-                    </tr>
-                <?php endforeach; ?>
+                <!-- Data will be inserted here via JavaScript -->
             </tbody>
         </table>
 
-        <!-- Chi tiết đơn hàng -->
+        <!-- 注文の詳細を表示するためのdiv -->
         <div id="order-details" style="display: none;">
             <h3>注文の詳細</h3>
             <table>
@@ -126,14 +91,14 @@ $conn->close();
                     </tr>
                 </thead>
                 <tbody id="order-details-body">
-                    <!-- Dữ liệu chi tiết sẽ được chèn bằng JavaScript -->
+                    <!-- 詳細情報が挿入される -->
                 </tbody>
             </table>
-            <p id="order-summary"></p>
         </div>
-    </main>
 
+    </main>
     <footer></footer>
+    <script src="./scripts/dateorder.js"></script>
 </body>
 
 </html>
