@@ -24,6 +24,7 @@ function addToCart(product) {
     } else {
         // Nếu sản phẩm chưa tồn tại, thêm hàng mới
         const row = document.createElement('tr');
+        row.classList.add('product-row'); // Thêm class
         row.innerHTML = `
             <td class="stt"></td> <!-- Cột STT -->
             <td>${product.pname}</td>
@@ -42,43 +43,48 @@ function addToCart(product) {
                 <button class="delete-btn" title="Xóa">X</button>
             </td>
         `;
-            // // Nếu sản phẩm chưa tồn tại, thêm hàng mới
-            // const row = document.createElement('tr');
-            // const finalPrice = product.discounted_price !== null ? product.discounted_price : product.price;
-            // row.innerHTML = `
-            //     <td class="stt"></td> <!-- Cột STT -->
-            //     <td>${product.pname}</td>
-            //     <td class="num">
-            //         <input 
-            //             type="number" 
-            //             class="product-quantity" 
-            //             value="1" 
-            //             min="1" 
-            //             data-barcode="${product.barcode}" 
-            //             onchange="updateProductPrice(this, ${finalPrice})">
-            //     </td>
-            //     <td>${parseFloat(finalPrice).toFixed(2)}¥</td>
-            //     <td class="price">${parseFloat(finalPrice).toFixed(2)}¥</td>
-            //     <td>
-            //         <button class="delete-btn" title="Xóa">X</button>
-            //     </td>
-            // `;
 
-        // Thêm dòng mới vào đầu bảng (đẩy các dòng trống xuống)
+        if (product.discounted_price && product.discounted_price < product.price) {
+            // Nếu có giảm giá, thêm dòng thứ 2 để hiển thị giảm giá
+            const discountRow = document.createElement('tr');
+            discountRow.classList.add('discount-row'); // Thêm class
+            discountRow.innerHTML = `
+                <td></td>
+                <td colspan="2" style="color: red; text-align: center;">
+                    割引: 
+                </td>
+                <td class="one-product-discounted">-${(product.price - product.discounted_price).toFixed(2)}¥</td>
+                <td class="price">-${(product.price - product.discounted_price).toFixed(2)}¥</td>
+
+            `;
+            tableBody.insertBefore(discountRow, row.nextSibling);  // Chèn dòng giảm giá ngay sau sản phẩm
+        }
+
         tableBody.insertBefore(row, tableBody.firstChild);
 
         // Thêm sự kiện xóa hàng
         row.querySelector('.delete-btn').addEventListener('click', () => {
             row.classList.add('fade-out'); // Thêm lớp hiệu ứng làm mờ dần
-
-            // Chờ hiệu ứng hoàn tất (300ms) rồi xóa hàng
+        
+            // Kiểm tra nếu dòng tiếp theo là dòng giảm giá
+            const nextRow = row.nextElementSibling; // Lấy dòng sau dòng sản phẩm
+            if (nextRow && nextRow.classList.contains('discount-row')) {
+                nextRow.classList.add('fade-out'); // Thêm hiệu ứng cho dòng giảm giá
+        
+                // Chờ 300ms trước khi xóa dòng giảm giá
+                setTimeout(() => {
+                    nextRow.remove();
+                }, 300);
+            }
+        
+            // Chờ hiệu ứng hoàn tất (300ms) rồi xóa hàng sản phẩm
             setTimeout(() => {
-                row.remove(); // Xóa hàng
+                row.remove(); // Xóa dòng sản phẩm
                 updateSerialNumbers(); // Cập nhật lại STT
                 updateTotal(); // Cập nhật tổng tiền
-                // calculateChange();
             }, 300);
         });
+        
 
         // Thêm hiệu ứng làm nổi bật dòng mới
         row.classList.add('highlight');
@@ -95,13 +101,25 @@ function addToCart(product) {
     // calculateChange();
 }
 
+
+
+// function updateSerialNumbers() {
+//     const tableRows = document.querySelectorAll('#product-table tbody tr');
+//     tableRows.forEach((row, index) => {
+//         const sttCell = row.querySelector('.stt');
+//         sttCell.textContent = index + 1; // Gán STT bắt đầu từ 1
+//     });
+// }
 function updateSerialNumbers() {
-    const tableRows = document.querySelectorAll('#product-table tbody tr');
-    tableRows.forEach((row, index) => {
+    // Chỉ lấy các dòng sản phẩm (loại trừ dòng giảm giá)
+    const productRows = document.querySelectorAll('#product-table tbody tr.product-row');
+
+    productRows.forEach((row, index) => {
         const sttCell = row.querySelector('.stt');
         sttCell.textContent = index + 1; // Gán STT bắt đầu từ 1
     });
 }
+
 
 //tổng tiền từng món hàng
 function updateProductPrice(input, unitPrice) {
@@ -128,26 +146,24 @@ function updateProductPrice(input, unitPrice) {
 }
 //tổng tiền
 function updateTotal() {
-    const tableRows = document.querySelectorAll('#product-table tbody tr');
+    const rows = document.querySelectorAll('#product-table tbody tr');
     let total = 0;
 
-    tableRows.forEach(row => {
-        const quantityInput = row.querySelector('.product-quantity');
-        const priceCell = row.querySelector('.price');
-        const quantity = parseInt(quantityInput.value);
-        const price = parseFloat(priceCell.textContent.replace('¥', ''));
-//price là giá x số lượng
-        total +=  price;
+    rows.forEach(row => {
+        const priceCell = row.querySelector('.price2') || row.querySelector('.price');
+        if (priceCell) {
+            const price = parseFloat(priceCell.textContent.replace('¥', '').replace('-', '')) || 0;
+
+            // Trừ tiền nếu là dòng giảm giá
+            if (row.classList.contains('discount-row')) {
+                total -= price;
+            } else {
+                total += price;
+            }
+        }
     });
 
-    const discountInput = document.getElementById('waribiki-input');
-    const discount = parseFloat(discountInput.value) || 0;
-
-    // Áp dụng giảm giá
-    const discountedTotal = total - (total * (discount / 100));
-
-    // Làm tròn xuống để chỉ giữ phần nguyên
-    document.getElementById('total-price').textContent = `${Math.floor(discountedTotal)}¥`;
+    document.getElementById('total-price').textContent = `¥${total.toFixed(2)}`;
 }
 
 function calculateChange() {

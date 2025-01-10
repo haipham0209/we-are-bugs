@@ -1,6 +1,6 @@
 function prepareFormData() {
-    // Thu thập dữ liệu từ bảng sản phẩm
-    const rows = document.querySelectorAll("#product-table tbody tr");
+    // Chỉ thu thập dữ liệu từ các dòng sản phẩm
+    const rows = document.querySelectorAll("#product-table tbody tr.product-row");
     const products = [];
 
     rows.forEach(row => {
@@ -10,8 +10,6 @@ function prepareFormData() {
             price: parseFloat(row.querySelector("td:nth-child(4)").textContent.replace("¥", "").trim()),
         };
         products.push(product);
-        // console.log("11111111111111");
-        // console.log(products);
     });
 
     // Thu thập dữ liệu thanh toán
@@ -24,8 +22,8 @@ function prepareFormData() {
         total_price: totalPrice,
         received_amount: receivedAmount,
     };
-    
 }
+
 
 // Gửi dữ liệu qua fetch
 function sendDataToServer() {
