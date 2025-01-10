@@ -95,7 +95,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
     gap: 10px;
 }
 
@@ -135,8 +135,8 @@ body {
 .row {
     justify-content: center;
     align-items: center;
-    margin: 10px 0;
-    line-height: 2.5;
+    /* margin: 10px 0; */
+    line-height: 2;
 }
 
 /* Label 部分對齊 */

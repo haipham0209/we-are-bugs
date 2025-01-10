@@ -18,11 +18,11 @@ if ($conn->connect_error) {
 }
 
 // Kiểm tra xem có tham số sname trong URL không
-if (!isset($_GET['sname'])) {
-    header("HTTP/1.0 404 Not Found");
-    echo "404 Not Found";
-    exit();
-}
+// if (!isset($_GET['sname'])) {
+//     header("HTTP/1.0 404 Not Found");
+//     echo "404 Not Found";
+//     exit();
+// }
 
 $storeName = $_GET['sname'];
 
@@ -55,11 +55,10 @@ if ($result->num_rows > 0) {
     // $description = $storeData["description"];
     $logopath = $storeData["logopath"];
     $logopath = str_replace('.../Manager/', '../Manager/', $logopath);
-
 } else {
-    header("HTTP/1.0 404 Not Found");
-    echo "404 Not Found";
-    exit();
+    // header("HTTP/1.0 404 Not Found");
+    // echo "404 Not Found";
+    // exit();
 }
 
 // Truy vấn để lấy mô tả cửa hàng
@@ -95,8 +94,8 @@ $conn->close();
 </head>
 <body>
 <header>
-        <!-- Navbar -->
-        <div class="navbar">
+      <!-- Navbar -->
+      <div class="navbar">
             <button class="menu-toggle" aria-label="Toggle navigation">
                 <span class="menu-icon"></span>
             </button>
@@ -141,18 +140,33 @@ $conn->close();
         </ul>
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
-                        const supportTitle = document.querySelector('.support-title');
-                        const supportList = document.querySelector('.support-list');
+                        const navLinks = document.querySelectorAll('.nav-menu a');
+                        const overlay = document.querySelector('.overlay');
+                        const navMenu = document.querySelector('.nav-menu');
 
-                        supportTitle.addEventListener('click', function() {
-                            // Kiểm tra trạng thái hiển thị của danh sách hỗ trợ
-                            if (supportList.style.display === "none" || supportList.style.display === "") {
-                                supportList.style.display = "block"; // Hiển thị danh sách
-                            } else {
-                                supportList.style.display = "none"; // Ẩn danh sách
-                            }
+                        navLinks.forEach(link => {
+                            link.addEventListener('click', function() {
+                                // Đóng menu
+                                navMenu.classList.remove('active');
+                                overlay.style.display = 'none';
+                            });
                         });
                     });
+
+
+                    // document.addEventListener("DOMContentLoaded", function() {
+                    //     const supportTitle = document.querySelector('.support-title');
+                    //     const supportList = document.querySelector('.support-list');
+
+                    //     supportTitle.addEventListener('click', function() {
+                    //         // Kiểm tra trạng thái hiển thị của danh sách hỗ trợ
+                    //         if (supportList.style.display === "none" || supportList.style.display === "") {
+                    //             supportList.style.display = "block"; // Hiển thị danh sách
+                    //         } else {
+                    //             supportList.style.display = "none"; // Ẩn danh sách
+                    //         }
+                    //     });
+                    // });
                 </script>
     </header>
 
