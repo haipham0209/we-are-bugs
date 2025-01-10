@@ -48,6 +48,7 @@ if ($result->num_rows > 0) {
     $tel = $storeData["tel"];
     $address = $storeData["address"];
     $mail = $storeData["mail"];
+    setcookie("storename", $sname);
     if ($storeData["logopath"]){
         $logopath = str_replace('../Manager/', './Manager/', $storeData["logopath"]);
     }
@@ -125,7 +126,7 @@ require "resources.php";
                                 <a class="nav-link" href="./main2.php?sname=<?= urlencode($sname) ?>">ホームページ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./html/storeInfor.php?sname=<?= urlencode($sname) ?>">お店について</a>
+                                <a class="nav-link" href="./storeInfor3.php?sname=<?= urlencode($sname) ?>">お店について</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="./html/myPage.php?sname=<?= urlencode($sname) ?>">マイページ</a>
