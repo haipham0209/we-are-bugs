@@ -1,10 +1,13 @@
-
 function addToCart(product) {
     const tableBody = document.querySelector('#product-table tbody');
 
-    // Kiểm tra xem sản phẩm đã tồn tại trong bảng chưa
+    // Kiểm tra xem sản phẩm đã tồn tại trong bảng chưa (trừ dòng giảm giá)
     const existingRow = Array.from(tableBody.rows).find(row => {
-        const barcode = row.querySelector('input.product-quantity').dataset.barcode;
+        const barcode = row.querySelector('input.product-quantity')?.dataset.barcode;
+        // Không dò tìm cho dòng giảm giá
+        if (row.classList.contains('discount-row')) {
+            return false;
+        }
         return barcode === product.barcode;
     });
 
@@ -12,18 +15,19 @@ function addToCart(product) {
         // Nếu sản phẩm đã tồn tại, tăng số lượng
         const quantityInput = existingRow.querySelector('input.product-quantity');
         quantityInput.value = parseInt(quantityInput.value) + 1;
-
+    
         const priceCell = existingRow.querySelector('.price');
         const unitPrice = parseFloat(product.price);
         priceCell.textContent = `${(unitPrice * parseInt(quantityInput.value)).toFixed(2)}¥`;
-
+        updateProductPrice(quantityInput, unitPrice);
         existingRow.classList.add('highlight');
         setTimeout(() => {
             existingRow.classList.remove('highlight');
         }, 1500);
     } else {
-        // Nếu sản phẩm chưa tồn tại, thêm hàng mới
+        // Nếu sản phẩm chưa tồn tại, thêm hàng mới cho sản phẩm chính
         const row = document.createElement('tr');
+        row.classList.add('product-row'); // Thêm class
         row.innerHTML = `
             <td class="stt"></td> <!-- Cột STT -->
             <td>${product.pname}</td>
@@ -34,6 +38,7 @@ function addToCart(product) {
                     value="1" 
                     min="1" 
                     data-barcode="${product.barcode}" 
+                    data-discounted-price="${product.discounted_price || product.price}" 
                     onchange="updateProductPrice(this, ${product.price})">
             </td>
             <td>${parseFloat(product.price).toFixed(2)}¥</td>
@@ -42,66 +47,81 @@ function addToCart(product) {
                 <button class="delete-btn" title="Xóa">X</button>
             </td>
         `;
-            // // Nếu sản phẩm chưa tồn tại, thêm hàng mới
-            // const row = document.createElement('tr');
-            // const finalPrice = product.discounted_price !== null ? product.discounted_price : product.price;
-            // row.innerHTML = `
-            //     <td class="stt"></td> <!-- Cột STT -->
-            //     <td>${product.pname}</td>
-            //     <td class="num">
-            //         <input 
-            //             type="number" 
-            //             class="product-quantity" 
-            //             value="1" 
-            //             min="1" 
-            //             data-barcode="${product.barcode}" 
-            //             onchange="updateProductPrice(this, ${finalPrice})">
-            //     </td>
-            //     <td>${parseFloat(finalPrice).toFixed(2)}¥</td>
-            //     <td class="price">${parseFloat(finalPrice).toFixed(2)}¥</td>
-            //     <td>
-            //         <button class="delete-btn" title="Xóa">X</button>
-            //     </td>
-            // `;
-
-        // Thêm dòng mới vào đầu bảng (đẩy các dòng trống xuống)
-        tableBody.insertBefore(row, tableBody.firstChild);
-
+    
+        // Thêm sản phẩm vào cuối bảng
+        tableBody.appendChild(row); 
+    
+        updateSerialNumbers(); // Cập nhật lại số thứ tự
+    
+        // Nếu có giảm giá, thêm dòng giảm giá ngay dưới sản phẩm chính
+        if (product.discounted_price && product.discounted_price < product.price) {
+            const discountRow = document.createElement('tr');
+            discountRow.classList.add('discount-row'); // Thêm class
+            discountRow.innerHTML = `
+                <td></td> <!-- Không hiển thị STT cho dòng giảm giá -->
+                <td colspan="2" style="color: red; text-align: center;">
+                    割引: 
+                </td>
+                <td class="one-product-discounted">-${(product.price - product.discounted_price).toFixed(2)}¥</td>
+                <td class="price">-${(product.price - product.discounted_price).toFixed(2)}¥</td>
+                <td></td> <!-- Không hiển thị nút xóa cho dòng giảm giá -->
+            `;
+            // Thêm dòng giảm giá vào cuối bảng
+            tableBody.appendChild(discountRow);  
+        }
+    
         // Thêm sự kiện xóa hàng
         row.querySelector('.delete-btn').addEventListener('click', () => {
             row.classList.add('fade-out'); // Thêm lớp hiệu ứng làm mờ dần
-
-            // Chờ hiệu ứng hoàn tất (300ms) rồi xóa hàng
+        
+            // Kiểm tra nếu dòng tiếp theo là dòng giảm giá
+            const nextRow = row.nextElementSibling; // Lấy dòng sau dòng sản phẩm
+            if (nextRow && nextRow.classList.contains('discount-row')) {
+                nextRow.classList.add('fade-out'); // Thêm hiệu ứng cho dòng giảm giá
+        
+                // Chờ 300ms trước khi xóa dòng giảm giá
+                setTimeout(() => {
+                    nextRow.remove();
+                }, 300);
+            }
+        
+            // Chờ hiệu ứng hoàn tất (300ms) rồi xóa hàng sản phẩm
             setTimeout(() => {
-                row.remove(); // Xóa hàng
+                row.remove(); // Xóa dòng sản phẩm
                 updateSerialNumbers(); // Cập nhật lại STT
                 updateTotal(); // Cập nhật tổng tiền
-                // calculateChange();
             }, 300);
         });
-
+    
         // Thêm hiệu ứng làm nổi bật dòng mới
         row.classList.add('highlight');
         setTimeout(() => {
             row.classList.remove('highlight');
         }, 1500);
     }
-
-    // Cập nhật lại số thứ tự (STT)
-    updateSerialNumbers();
-
+    
+    // Cập nhật giá trị sản phẩm sau khi thay đổi số lượng
+    // updateProductPrice(quantityInput, product.price);
+    
     // Cập nhật tổng tiền mỗi lần thêm sản phẩm
     updateTotal();
-    // calculateChange();
+    
 }
 
+
+
+
+
 function updateSerialNumbers() {
-    const tableRows = document.querySelectorAll('#product-table tbody tr');
-    tableRows.forEach((row, index) => {
+    const productRows = document.querySelectorAll('#product-table tbody tr.product-row');
+
+    productRows.forEach((row, index) => {
         const sttCell = row.querySelector('.stt');
         sttCell.textContent = index + 1; // Gán STT bắt đầu từ 1
     });
 }
+
+
 
 //tổng tiền từng món hàng
 function updateProductPrice(input, unitPrice) {
@@ -110,10 +130,15 @@ function updateProductPrice(input, unitPrice) {
     // Kiểm tra nếu số lượng <= 0, tự động xóa hàng
     if (isNaN(quantity) || quantity <= 0) {
         const row = input.closest('tr'); // Lấy hàng chứa ô nhập liệu
-        row.remove(); // Xóa hàng khỏi bảng
+        const discountRow = row.nextElementSibling; // Hàng giảm giá có thể là hàng kế tiếp
+
+        if (discountRow && discountRow.classList.contains('discount-row')) {
+            discountRow.remove(); // Xóa hàng giảm giá nếu có
+        }
+
+        row.remove(); // Xóa hàng sản phẩm
         updateSerialNumbers(); // Cập nhật lại số thứ tự (STT)
         updateTotal(); // Cập nhật lại tổng tiền
-        // calculateChange();
         return; // Kết thúc hàm để không tiếp tục tính toán
     }
 
@@ -122,32 +147,44 @@ function updateProductPrice(input, unitPrice) {
     const priceCell = row.querySelector('.price'); // Tìm ô giá của hàng
     priceCell.textContent = `${(unitPrice * quantity).toFixed(2)}¥`; // Cập nhật giá tiền
 
+    // Cập nhật giá trị của hàng giảm giá (nếu có)
+    const discountRow = row.nextElementSibling; // Hàng giảm giá có thể là hàng kế tiếp
+    if (discountRow && discountRow.classList.contains('discount-row')) {
+        const discountedPriceCell = discountRow.querySelector('.one-product-discounted'); // Ô hiển thị giảm giá
+        const discountPriceCell = discountRow.querySelector('.price'); // Ô hiển thị tổng giá giảm
+
+        // Tính toán giá trị giảm giá dựa trên số lượng
+        const discountPerProduct = parseFloat(unitPrice - input.dataset.discountedPrice); // Giá trị giảm trên 1 sản phẩm
+        const totalDiscount = discountPerProduct * quantity;
+
+        // discountedPriceCell.textContent = `-${totalDiscount.toFixed(2)}¥`; // Cập nhật giá trị giảm giá
+        discountPriceCell.textContent = `-${totalDiscount.toFixed(2)}¥`; // Cập nhật tổng giá giảm
+    }
+
     // Cập nhật tổng tiền
     updateTotal();
-    // calculateChange();
 }
+
 //tổng tiền
 function updateTotal() {
-    const tableRows = document.querySelectorAll('#product-table tbody tr');
+    const rows = document.querySelectorAll('#product-table tbody tr');
     let total = 0;
 
-    tableRows.forEach(row => {
-        const quantityInput = row.querySelector('.product-quantity');
-        const priceCell = row.querySelector('.price');
-        const quantity = parseInt(quantityInput.value);
-        const price = parseFloat(priceCell.textContent.replace('¥', ''));
-//price là giá x số lượng
-        total +=  price;
+    rows.forEach(row => {
+        const priceCell = row.querySelector('.price2') || row.querySelector('.price');
+        if (priceCell) {
+            const price = parseFloat(priceCell.textContent.replace('¥', '').replace('-', '')) || 0;
+
+            // Trừ tiền nếu là dòng giảm giá
+            if (row.classList.contains('discount-row')) {
+                total -= price;
+            } else {
+                total += price;
+            }
+        }
     });
 
-    const discountInput = document.getElementById('waribiki-input');
-    const discount = parseFloat(discountInput.value) || 0;
-
-    // Áp dụng giảm giá
-    const discountedTotal = total - (total * (discount / 100));
-
-    // Làm tròn xuống để chỉ giữ phần nguyên
-    document.getElementById('total-price').textContent = `${Math.floor(discountedTotal)}¥`;
+    document.getElementById('total-price').textContent = `¥${total.toFixed(2)}`;
 }
 
 function calculateChange() {
@@ -162,205 +199,3 @@ function calculateChange() {
     // Hiển thị tiền thừa là số nguyên
     document.getElementById('change-amount').textContent = `${Math.floor(change)}¥`;
 }
-
-////////////////////thanh toan //////////////////////
-// function getCartData() {
-//     const cartItems = [];
-//     const rows = document.querySelectorAll('#product-table tbody tr');
-    
-//     rows.forEach(row => {
-//         const barcode = row.querySelector('.product-quantity').dataset.barcode;
-//         const quantity = parseInt(row.querySelector('.product-quantity').value);
-//         const price = parseFloat(row.querySelector('.price').textContent.replace('¥', ''));
-        
-//         cartItems.push({
-//             barcode: barcode,
-//             quantity: quantity,
-//             price: price
-//         });
-//     });
-    
-//     return cartItems;
-// }
-// document.querySelector('.button-pay').addEventListener('click', function(event) {
-//     event.preventDefault();  // Ngừng hành động mặc định của form
-
-//     // Lấy dữ liệu giỏ hàng
-//     const cartData = getCartData();
-//     const totalPrice = parseFloat(document.getElementById('total-price').textContent.replace('¥', '')) || 0;
-//     const receivedAmount = parseFloat(document.getElementById('received-amount').value) || 0;
-
-//     // Kiểm tra số tiền nhận có đủ không
-//     if (receivedAmount < totalPrice) {
-//         alert("Số tiền nhận không đủ.");
-//         return;
-//     }
-
-    // Gửi dữ liệu qua AJAX
-//     fetch('./php/process_payment.php', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             complete: true,
-//             total_price: totalPrice,
-//             received_amount: receivedAmount,
-//             cart: cartData
-//         })
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         if (data.success) {
-//             alert(`Thanh toán thành công! Mã đơn hàng: ${data.order_id}`);
-//             // Làm mới giỏ hàng hoặc chuyển hướng trang
-//         } else {
-//             alert(`Lỗi: ${data.error}`);
-//         }
-//     })
-//     .catch(err => {
-//         console.error("Lỗi kết nối:", err);
-//         alert("Không thể kết nối tới server.");
-//     });
-// });
-//////////////////end thanh toan///////////////////
-
-
-
-
-
-
-
-// let totalAmount = 1;
-// function updateTotal() {
-//     const discountInput = document.getElementById('waribiki-input');
-//     const totalPriceElement = document.getElementById('total-price');
-    
-//     let discountPercentage = parseFloat(discountInput.value) || 0; // Lấy giá trị giảm giá
-//     if (discountPercentage > 100 || discountPercentage < 0) {
-//         alert("割引きは0から100の間で指定してください");
-//         return;
-//     }
-    
-//     // Tính tổng tiền sau khi giảm giá
-//     let discountedTotal = totalAmount * (1 - discountPercentage / 100);
-//     totalPriceElement.textContent = `${discountedTotal.toFixed(2)}¥`; // Hiển thị tổng tiền
-// }
-// document.addEventListener("DOMContentLoaded", () => {
-//     // Cập nhật ngày và giờ theo thời gian thực
-//     const updateDateTime = () => {
-//         const now = new Date();
-//         const date = now.toLocaleDateString("ja-JP", { year: "numeric", month: "2-digit", day: "2-digit" });
-//         const time = now.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-//         document.getElementById("date").textContent = `日付: ${date}`;
-//         document.getElementById("time").textContent = `時間: ${time}`;
-//     };
-//     updateDateTime();
-//     setInterval(updateDateTime, 1000);
-
-//     // Xử lý quét barcode
-//     document.getElementById("barcode-input").addEventListener("keydown", (event) => {
-//         if (event.key === "Enter") {
-//             event.preventDefault();
-//             const barcode = event.target.value.trim();
-//             if (barcode) processBarcode(barcode);
-//             else alert("Vui lòng nhập mã barcode.");
-//         }
-//     });
-//      // Xử lý thay đổi số lượng sản phẩm
-//      document.querySelector("#product-table").addEventListener("input", (event) => {
-//         if (event.target.classList.contains("product-quantity")) {
-//             const quantity = parseInt(event.target.value) || 0;
-//             const barcode = event.target.getAttribute("data-barcode");
-//             updateProductPrice(barcode, quantity);
-//             updateTotalPrice();
-//         }
-//     });
-//     // Xử lý thanh toán
-//     document.querySelector(".button-pay").addEventListener("click", () => {
-//         const totalPrice = parseFloat(document.getElementById("hidden-total-price").value) || 0;
-//         const receivedAmount = parseFloat(document.getElementById("hidden-received-amount").value) || 0;
-
-//         if (receivedAmount < totalPrice) {
-//             alert("Số tiền nhận không đủ.");
-//             return;
-//         }
-
-//         fetch("/POS.php", {
-//             method: "POST",
-//             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-//             body: new URLSearchParams({
-//                 complete: true,
-//                 total_price: totalPrice,
-//                 received_amount: receivedAmount
-//             })
-//         })
-//             .then(response => response.json())
-//             .then(data => {
-//                 if (data.success) alert(`Thanh toán thành công! Mã đơn hàng: ${data.order_id}`);
-//                 else alert(`Lỗi: ${data.error}`);
-//             })
-//             .catch(err => alert("Không thể kết nối tới server."));
-//     });
-// });
-
-// function processBarcode(barcode) {
-//     fetch("/POS.php", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-//         body: new URLSearchParams({ barcode })
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             if (data.error) {
-//                 alert(data.error);
-//             } else {
-//                 updateProductTable(data);
-//             }
-//         })
-//         .catch(err => console.error("Lỗi khi gửi mã barcode:", err));
-// }
-// function updateQuantity(inputElement) {
-//     const barcode = inputElement.getAttribute("data-barcode");
-//     const quantity = parseInt(inputElement.value) || 0;
-//     updateProductPrice(barcode, quantity);
-//     updateTotalPrice();
-// }
-
-// function updateProductTable(products) {
-//     const tableBody = document.querySelector("#product-table tbody");
-//     products.forEach(product => {
-//         const row = document.createElement("tr");
-//         row.innerHTML = `
-//             <td>${product.pname}</td>
-//             <td><input type="number" value="1" class="product-quantity" data-barcode="${product.barcode}" min="1"></td>
-//             <td class="product-price">${product.price}¥</td>
-//         `;
-//         tableBody.appendChild(row);
-//     });
-//     updateTotalPrice(); 
-// }
-
-// function updateProductPrice(barcode, quantity) {
-//     const rows = document.querySelectorAll("#product-table tbody tr");
-//     rows.forEach(row => {
-//         const productBarcode = row.querySelector(".product-quantity").getAttribute("data-barcode");
-//         if (productBarcode === barcode) {
-//             const price = parseFloat(row.querySelector(".product-price").textContent.replace('¥', '')) || 0;
-//             const newPrice = price / row.querySelector(".product-quantity").value * quantity; 
-//             row.querySelector(".product-price").textContent = `${newPrice.toFixed(2)}¥`;
-//         }
-//     });
-// }
-// function updateTotalPrice() {
-//     let totalPrice = 0;
-//     const rows = document.querySelectorAll("#product-table tbody tr");
-//     rows.forEach(row => {
-//         const price = parseFloat(row.querySelector(".product-price").textContent.replace('¥', '')) || 0;
-//         totalPrice += price;
-//     });
-//     document.getElementById("total-price").textContent = `${totalPrice.toFixed(2)}¥`;
-//     document.getElementById("hidden-total-price").value = totalPrice.toFixed(2);
-// }
-
-
