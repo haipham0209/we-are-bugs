@@ -110,48 +110,49 @@ require "resources.php";
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
             <div class="container-fluid">
-            <button class="navbar-toggler" type="button" onclick="toggleMenu()">
-    <div class="menu-icon">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </div>
-</button>
-
+                <button class="navbar-toggler" type="button" onclick="toggleMenu()">
+                    <div class="menu-icon">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </div>
+                </button>
                 <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
-                <div class="nav-menu">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./main2.php?sname=<?= urlencode($sname) ?>">ホームページ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./html/storeInfor.php?sname=<?= urlencode($sname) ?>">お店について</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./html/myPage.php?sname=<?= urlencode($sname) ?>">マイページ</a>
-                        </li>
-                        <li class="support-title">サポート</li>
-                        <li class="nav-item">
-                            <i class="fa fa-phone"></i><a class="support" href="tel:"><?php echo $tel; ?></a>
-                        </li>
-                        <li class="nav-item">
-                            <i class="fa fa-envelope"></i><a class="support" href="mail:"><?php echo $mail; ?></a>
-                        </li>
-                        <div class="mobile-only">
+                <div class="menu">
+                    <div class="nav-menu">
+                        <ul class="navbar-nav">
                             <li class="nav-item">
-                                <i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a>
+                                <a class="nav-link" href="./main2.php?sname=<?= urlencode($sname) ?>">ホームページ</a>
                             </li>
-                        </div>
-                    </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./html/storeInfor.php?sname=<?= urlencode($sname) ?>">お店について</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./html/myPage.php?sname=<?= urlencode($sname) ?>">マイページ</a>
+                            </li>
+                            <li class="support-title">サポート</li>
+                            <li class="nav-item">
+                                <i class="fa fa-phone"></i><a class="support" href="tel: "><?php echo $tel; ?></a>
+                            </li>
+                            <li class="nav-item">
+                                <i class="fa fa-envelope"></i><a class="support" href="mail: "><?php echo $mail; ?></a>
+                            </li>
+                            <div class="mobile-only">
+                                <li class="nav-item">
+                                    <i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="input-pc">
+                        <input type="text" id="searchInput" class="input-pc" placeholder="商品を検索">
+                    </div>
                 </div>
-                <div class="overlay"></div>
-                
+                <div class="overlay"></div>   
                 <button id="searchBtn" class="btn btn-outline-primary ms-2">
                     <i class="fa fa-search"></i>
                 </button>
-                   
-            </div>
-           
+            </div>   
         </nav>
         <div class="spacer"></div>
         <!-- ---------------hiện navbar khi cuộn------------------------------- -->
@@ -222,7 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Xử lý mở menu
             menuButton.addEventListener("click", function () {
                 navMenu.classList.toggle("open");
-                overlay.classList.toggle("show");
+                // overlay.classList.toggle("show");
                 menuIcon.classList.toggle("active"); // Thêm/xóa lớp chuyển đổi dấu "X"
 
                 // Thêm hoặc xóa lớp khóa cuộn cho body
@@ -259,56 +260,105 @@ document.addEventListener("DOMContentLoaded", function () {
         
          <!-- <p>------------------------------------------------------------------------</p> -->
         <section id="product-section" class="category">
-            <?php foreach ($categories as $category): ?>
-                <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
-                    <h3 class="title" data-aos="fade-right" data-aos-duration="1000">
-                        <?= htmlspecialchars($category['cname']) ?>
-                    </h3>
+            <!--PC-->
+            <div class="product-pc">
+                <?php foreach ($categories as $category): ?>
+                    <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
+                        <h3 class="title" data-aos="fade-right" data-aos-duration="1000">
+                            <?= htmlspecialchars($category['cname']) ?>
+                        </h3>
+                        <div class="product-showcase">
+                            <!-- Hiển thị sản phẩm (Tối đa 4 sản phẩm) -->
+                            <?php foreach (array_slice($category['products'], 0, 4) as $product): ?>
+                                <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
+                                    <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
+                                        <div class="image-wrapper">
+                                            <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
+                                            <?php endif; ?>
+                                        </div>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+                                        <p class="rotated-text">
+                                            <span class="product-name"><?= htmlspecialchars($product['pname']) ?></span><br>
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <s><?= number_format($product['price']) ?> ¥</s>
+                                            <?php else: ?>
+                                                <?= number_format($product['price']) ?> ¥
+                                            <?php endif; ?>
 
-                    <div class="product-showcase">
-                        <!-- Hiển thị sản phẩm (Tối đa 2 sản phẩm) -->
-                        <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
-                            <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
-                                <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
-                                    <div class="image-wrapper">
-                                        <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
-                                        <?php if (!is_null($product['discounted_price'])): ?>
-                                            <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
-                                        <?php endif; ?>
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <br><span class="discounted-price"><?= number_format($product['discounted_price']) ?> ¥</span>
+                                            <?php endif; ?>
+                                        </p>
                                     </div>
-                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
-                                    <p class="rotated-text">
-                                        <?= htmlspecialchars($product['pname']) ?><br>
-                                        <?php if (!is_null($product['discounted_price'])): ?>
-                                            <s><?= number_format($product['price']) ?> ¥</s>
-                                        <?php else: ?>
-                                            <?= number_format($product['price']) ?> ¥
-                                        <?php endif; ?>
-
-                                        <?php if (!is_null($product['discounted_price'])): ?>
-                                            <br><span class="discounted-price"><?= number_format($product['discounted_price']) ?> ¥</span>
-                                        <?php endif; ?>
-                                    </p>
-                                </div>
-                            </a>
-                        <?php endforeach; ?>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                        <!-- Nếu số lượng sản phẩm > 4, hiển thị nút Show More -->
+                        <?php if (count($category['products']) > 4): ?>
+                            <button 
+                                class="show-more-btn" 
+                                data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
+                                data-aos="fade-up" 
+                                data-aos-duration="1000" 
+                                onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">
+                                全て表示
+                            </button>
+                        <?php endif; ?>
                     </div>
+                <?php endforeach; ?>
+            </div>
+             <!--Mobile-->
+            <div class="product-mobile">
+                <?php foreach ($categories as $category): ?>
+                    <div class="group" id="<?= htmlspecialchars(strtolower($category['cname'])) ?>">
+                        <h3 class="title" data-aos="fade-right" data-aos-duration="1000">
+                            <?= htmlspecialchars($category['cname']) ?>
+                        </h3>
+                        <div class="product-showcase">
+                            <!-- Hiển thị sản phẩm (Tối đa 2 sản phẩm) -->
+                            <?php foreach (array_slice($category['products'], 0, 2) as $product): ?>
+                                <a href="productDetail.php?id=<?= htmlspecialchars($product['productid']) ?>">
+                                    <div class="product-content" data-aos="fade-up" data-aos-duration="1000">
+                                        <div class="image-wrapper">
+                                            <img src="./images/placeholder.jpg" data-src="<?= htmlspecialchars($product['productImage']) ?>" alt="<?= htmlspecialchars($product['pname']) ?>" class="product-image lazyload" />
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
+                                            <?php endif; ?>
+                                        </div>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+                                        <p class="rotated-text">
+                                            <span class="product-name"><?= htmlspecialchars($product['pname']) ?></span><br>
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <s><?= number_format($product['price']) ?> ¥</s>
+                                            <?php else: ?>
+                                                <?= number_format($product['price']) ?> ¥
+                                            <?php endif; ?>
 
-                    <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
-                    <?php if (count($category['products']) > 2): ?>
-                        <button 
-                            class="show-more-btn" 
-                            data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
-                            data-aos="fade-up" 
-                            data-aos-duration="1000" 
-                            onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">
-                            全て表示
-                        </button>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
+                                            <?php if (!is_null($product['discounted_price'])): ?>
+                                                <br><span class="discounted-price"><?= number_format($product['discounted_price']) ?> ¥</span>
+                                            <?php endif; ?>
+                                        </p>
+                                    </div>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                        <!-- Nếu số lượng sản phẩm > 2, hiển thị nút Show More -->
+                        <?php if (count($category['products']) > 2): ?>
+                            <button 
+                                class="show-more-btn" 
+                                data-group="<?= htmlspecialchars(strtolower($category['cname'])) ?>" 
+                                data-aos="fade-up" 
+                                data-aos-duration="1000" 
+                                onclick="showMore(<?= htmlspecialchars(json_encode($category['products'])) ?>)">
+                                全て表示
+                            </button>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>  
         </section>
-
     </main>
 </body>
 
@@ -348,7 +398,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Thêm nội dung của sản phẩm vào trong liên kết
                 productLink.innerHTML = `
                     <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-                    <p class="rotated-text">${product.pname}<br>${product.price} </p>
+                    <p class="rotated-text">
+                        ${product.pname}<br>
+                        ${product.discounted_price ? `<s>${product.price} ¥</s><br><span class="discounted-price">${product.discounted_price} ¥</span>` : `${product.price} ¥`}
+                    </p>
                 `;
 
                 // Thêm sản phẩm vào giao diện
@@ -379,7 +432,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Thêm nội dung của sản phẩm vào trong liên kết
                 productLink.innerHTML = `
                     <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
-                    <p class="rotated-text">${product.pname}<br>${product.price} ¥</p>
+                    <p class="rotated-text">
+                        ${product.pname}<br>
+                        ${product.discounted_price ? `<s>${product.price} ¥</s><br><span class="discounted-price">${product.discounted_price} ¥</span>` : `${product.price} ¥`}
+                    </p>
                 `;
 
                 // Thêm sản phẩm vào giao diện
