@@ -110,51 +110,49 @@ require "resources.php";
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
             <div class="container-fluid">
-            <button class="navbar-toggler" type="button" onclick="toggleMenu()">
-                <div class="menu-icon">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </button>
-
-            <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
-            <div class="menu">
-                <div class="nav-menu">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./main2.php?sname=<?= urlencode($sname) ?>">ホームページ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./html/storeInfor.php?sname=<?= urlencode($sname) ?>">お店について</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./html/myPage.php?sname=<?= urlencode($sname) ?>">マイページ</a>
-                        </li>
-                        <li class="support-title">サポート</li>
-                        <li class="nav-item">
-                            <i class="fa fa-phone"></i><a class="support" href="tel: "><?php echo $tel; ?></a>
-                        </li>
-                        <li class="nav-item">
-                            <i class="fa fa-envelope"></i><a class="support" href="mail: "><?php echo $mail; ?></a>
-                        </li>
-                        <div class="mobile-only">
+                <button class="navbar-toggler" type="button" onclick="toggleMenu()">
+                    <div class="menu-icon">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </div>
+                </button>
+                <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
+                <div class="menu">
+                    <div class="nav-menu">
+                        <ul class="navbar-nav">
                             <li class="nav-item">
-                                <i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a>
+                                <a class="nav-link" href="./main2.php?sname=<?= urlencode($sname) ?>">ホームページ</a>
                             </li>
-                        </div>
-                    </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./html/storeInfor.php?sname=<?= urlencode($sname) ?>">お店について</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./html/myPage.php?sname=<?= urlencode($sname) ?>">マイページ</a>
+                            </li>
+                            <li class="support-title">サポート</li>
+                            <li class="nav-item">
+                                <i class="fa fa-phone"></i><a class="support" href="tel: "><?php echo $tel; ?></a>
+                            </li>
+                            <li class="nav-item">
+                                <i class="fa fa-envelope"></i><a class="support" href="mail: "><?php echo $mail; ?></a>
+                            </li>
+                            <div class="mobile-only">
+                                <li class="nav-item">
+                                    <i class="fa fa-map-marker"></i><a target="blank" class="support" href=""><?php echo $address; ?></a>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="input-pc">
+                        <input type="text" id="searchInput" class="input-pc" placeholder="商品を検索">
+                    </div>
                 </div>
-                <div class="input-pc">
-                    <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
-                </div>
-            </div>
-                <div class="overlay"></div>
-                    
+                <div class="overlay"></div>   
                 <button id="searchBtn" class="btn btn-outline-primary ms-2">
                     <i class="fa fa-search"></i>
                 </button>
-           
+            </div>   
         </nav>
         <div class="spacer"></div>
         <!-- ---------------hiện navbar khi cuộn------------------------------- -->

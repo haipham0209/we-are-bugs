@@ -140,7 +140,7 @@
         visibility: hidden;
     }
      /* Ẩn menu theo mặc định */
-     .nav-menu {
+     .menu {
         position: fixed;
         top: 90px;
         left: -100%; /* Ẩn menu ban đầu */
@@ -393,9 +393,13 @@
         display: flex;
         gap: 10px;
     }
+    ul{
+        margin-top: 15px !important;
+    }
 
     .navbar .nav-link {
         font-size: 16px;
+        font-weight: bold;
         color: #000;
         transition: color 0.3s;
     }
