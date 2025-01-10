@@ -35,6 +35,7 @@ function addToCart(product) {
                     value="1" 
                     min="1" 
                     data-barcode="${product.barcode}" 
+                    data-discounted-price="${product.discounted_price || product.price}" 
                     onchange="updateProductPrice(this, ${product.price})">
             </td>
             <td>${parseFloat(product.price).toFixed(2)}¥</td>
@@ -96,6 +97,7 @@ function addToCart(product) {
     // Cập nhật lại số thứ tự (STT)
     updateSerialNumbers();
 
+    // updateProductPrice();
     // Cập nhật tổng tiền mỗi lần thêm sản phẩm
     updateTotal();
     // calculateChange();
@@ -128,10 +130,15 @@ function updateProductPrice(input, unitPrice) {
     // Kiểm tra nếu số lượng <= 0, tự động xóa hàng
     if (isNaN(quantity) || quantity <= 0) {
         const row = input.closest('tr'); // Lấy hàng chứa ô nhập liệu
-        row.remove(); // Xóa hàng khỏi bảng
+        const discountRow = row.nextElementSibling; // Hàng giảm giá có thể là hàng kế tiếp
+
+        if (discountRow && discountRow.classList.contains('discount-row')) {
+            discountRow.remove(); // Xóa hàng giảm giá nếu có
+        }
+
+        row.remove(); // Xóa hàng sản phẩm
         updateSerialNumbers(); // Cập nhật lại số thứ tự (STT)
         updateTotal(); // Cập nhật lại tổng tiền
-        // calculateChange();
         return; // Kết thúc hàm để không tiếp tục tính toán
     }
 
@@ -140,10 +147,24 @@ function updateProductPrice(input, unitPrice) {
     const priceCell = row.querySelector('.price'); // Tìm ô giá của hàng
     priceCell.textContent = `${(unitPrice * quantity).toFixed(2)}¥`; // Cập nhật giá tiền
 
+    // Cập nhật giá trị của hàng giảm giá (nếu có)
+    const discountRow = row.nextElementSibling; // Hàng giảm giá có thể là hàng kế tiếp
+    if (discountRow && discountRow.classList.contains('discount-row')) {
+        const discountedPriceCell = discountRow.querySelector('.one-product-discounted'); // Ô hiển thị giảm giá
+        const discountPriceCell = discountRow.querySelector('.price'); // Ô hiển thị tổng giá giảm
+
+        // Tính toán giá trị giảm giá dựa trên số lượng
+        const discountPerProduct = parseFloat(unitPrice - input.dataset.discountedPrice); // Giá trị giảm trên 1 sản phẩm
+        const totalDiscount = discountPerProduct * quantity;
+
+        // discountedPriceCell.textContent = `-${totalDiscount.toFixed(2)}¥`; // Cập nhật giá trị giảm giá
+        discountPriceCell.textContent = `-${totalDiscount.toFixed(2)}¥`; // Cập nhật tổng giá giảm
+    }
+
     // Cập nhật tổng tiền
     updateTotal();
-    // calculateChange();
 }
+
 //tổng tiền
 function updateTotal() {
     const rows = document.querySelectorAll('#product-table tbody tr');
