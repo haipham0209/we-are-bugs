@@ -1,3 +1,4 @@
+
 /* Mobile screen*/
 @media only screen and (max-width: 767px) {
     * {
@@ -367,10 +368,19 @@
     .product-mobile{
         display: none;
     }
+    body{
+        margin: 10px;
+    }
+    header {
+        padding-top: 0;
+        max-width: 100%;
+    }
     main{
         display: flex; 
-        /* justify-content: center; */
-        justify-content: flex-start;
+        justify-content: center;
+    }
+    .category{
+        max-width: 100%;
     }
     .container{
         max-width: 100% !important;
@@ -433,7 +443,7 @@
         align-items: center !important;
         justify-content: space-between !important;
         padding: 10px;
-        width: 100%;
+        max-width: 100%;
         box-sizing: border-box;
     }
     .nav-menu {
@@ -491,11 +501,11 @@
 
     /* Product Showcase */
     .product-showcase {
-        text-align: center;
-        grid-template-columns: repeat(4, 1fr); 
-        display: flex;
-        gap: 20px;
+        display: grid; /* Sử dụng grid thay vì flex */
+        grid-template-columns: repeat(4, 1fr); /* Chia thành 4 cột đều nhau */
+        gap: 20px; /* Khoảng cách giữa các phần tử */
         padding: 10px;
+        text-align: center; /* Căn giữa nội dung */
     }
     .product-content {
         background-color: #fff;
