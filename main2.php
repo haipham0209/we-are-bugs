@@ -406,7 +406,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Thêm nội dung của sản phẩm vào trong liên kết
                 productLink.innerHTML = `
-                    <img src="${product.productImage}" alt="${product.pname}" class="product-image"/>
+                    <div class="image-wrapper">
+                        <img src="./images/placeholder.jpg" data-src="${product.productImage}" alt="${product.pname}" class="product-image lazyload">
+                        ${product.discounted_price ? `<img src="Manager/images/sale.png" alt="Sale" class="sale-icon">` : ''}
+                    </div>
                     <p class="rotated-text">
                         ${product.pname}<br>
                         ${product.discounted_price ? `<s>${product.price} ¥</s><br><span class="discounted-price">${product.discounted_price} ¥</span>` : `${product.price} ¥`}
