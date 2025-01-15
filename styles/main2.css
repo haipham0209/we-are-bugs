@@ -543,6 +543,7 @@
     }
     .image-wrapper {
         aspect-ratio: 4 / 3; 
+        overflow: auto;
     }
 
     .product-image {
