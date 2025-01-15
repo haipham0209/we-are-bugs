@@ -36,26 +36,36 @@ function loadOrderDetails(date) {
     fetch(`./php/fetch_orders.php?date=${date}`)
         .then(response => response.json())
         .then(orders => {
-            // 既存のリストをクリア
             orderListBody.innerHTML = '';
-            let index = 1;
-            orders.forEach(order => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${index++}</td>
-                    <td>${order.order_number}</td>
-                    <td>${order.total_quantity}</td>
-                    <td>${order.total_price}</td>
-                `;
-                tr.addEventListener('click', () => {
-                    // 注文詳細のトグル表示
-                    toggleOrderDetail(order.order_number, tr);
+            const noDataMessage = document.getElementById('no-data-message');
+            const orderListTable = document.querySelector('.order-list');
+
+            if (orders.length === 0) {
+                noDataMessage.style.display = 'block';
+                orderListTable.style.display = 'none';
+            } else {
+                noDataMessage.style.display = 'none';
+                orderListTable.style.display = 'table';
+                let index = 1;
+                orders.forEach(order => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${index++}</td>
+                        <td>${order.order_number}</td>
+                        <td>${order.total_quantity}</td>
+                        <td>${order.total_price}</td>
+                        <td class="toggle-icon">▼</td>
+                    `;
+                    tr.querySelector('.toggle-icon').addEventListener('click', () => {
+                        toggleOrderDetail(order.order_number, tr);
+                    });
+                    orderListBody.appendChild(tr);
                 });
-                orderListBody.appendChild(tr);
-            });
+            }
         })
         .catch(error => console.error('注文データの取得に失敗しました:', error));
 }
+
 
 // 注文詳細情報を取得
 function fetchOrderDetail(orderNumber, orderRow) {
@@ -68,24 +78,30 @@ function fetchOrderDetail(orderNumber, orderRow) {
             // 親の行の幅を取得
             const parentWidth = orderRow.offsetWidth;
 
-            let detailsHTML = `<td colspan="5"><div class="order-details-container" style="width:${parentWidth}px;"><table><thead><tr><th>商品名</th><th>数量</th><th>単価</th><th>小計</th><th>合計</th><th>お預かり</th></tr></thead><tbody>`;
+            let detailsHTML = `<td colspan="5"><div class="order-details-container" style="width:${parentWidth}px;"><table><thead><tr><th style="text-align: center;">商品名</th><th style="text-align: center;">数量</th><th style="text-align: center;">単価</th><th style="text-align: center;">小計</th></tr></thead><tbody>`;
 
-            orderDetails.forEach((detail, index) => {
-
-                const totalPriceCell = index === 0 ? `<td rowspan="${orderDetails.length}">${detail.total_price}</td>` : '';
-                const receivedAmount = index === 0 ? `<td rowspan="${orderDetails.length}">${detail.received_amount}</td>` : '';
-
+            orderDetails.forEach(detail => {
                 detailsHTML += `
                     <tr>
-                        <td>${detail.pname}</td>
-                        <td>${detail.quantity}</td>
-                        <td>${detail.price}</td>
-                        <td>${detail.order_price}</td>
-                        ${totalPriceCell}
-                        ${receivedAmount}
+                        <td style="text-align: center; vertical-align: middle;">${detail.pname}</td>
+                        <td style="text-align: center; vertical-align: middle;">${detail.quantity}</td>
+                        <td style="text-align: center; vertical-align: middle;">${detail.price}</td>
+                        <td style="text-align: center; vertical-align: middle;">${detail.order_price}</td>
                     </tr>
                 `;
             });
+
+            // 合計と預かりを二行目に追加
+            detailsHTML += `
+                <tr>
+                    <td colspan="2" style="text-align: center; font-weight: bold;">合計</td>
+                    <td colspan="2" style="text-align: center;">${orderDetails[0].total_price}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center; font-weight: bold;">お預かり</td>
+                    <td colspan="2" style="text-align: center;">${orderDetails[0].received_amount}</td>
+                </tr>
+            `;
 
             detailsHTML += `</tbody></table></div></td>`;
             detailsRow.innerHTML = detailsHTML;
@@ -95,21 +111,23 @@ function fetchOrderDetail(orderNumber, orderRow) {
         .catch(error => console.error('注文詳細の取得に失敗しました:', error));
 }
 
-
-
-
 // 詳細情報のトグル表示
 function toggleOrderDetail(orderNumber, orderRow) {
-    // すでに詳細情報行が表示されているかどうかを確認
+    const toggleIcon = orderRow.querySelector('.toggle-icon');
     const existingDetailRow = orderRow.nextElementSibling;
 
     if (existingDetailRow && existingDetailRow.classList.contains('order-details-row')) {
-        // 詳細情報が表示されている場合は非表示にする
-        existingDetailRow.style.display = existingDetailRow.style.display === 'none' ? '' : 'none';
+        if (existingDetailRow.style.display === 'none') {
+            existingDetailRow.style.display = '';
+            toggleIcon.textContent = '▲';
+        } else {
+            existingDetailRow.style.display = 'none';
+            toggleIcon.textContent = '▼';
+        }
     } else {
-        // 詳細情報が表示されていない場合は新たに表示する
         fetchOrderDetail(orderNumber, orderRow).then(detailsRow => {
             orderListBody.insertBefore(detailsRow, orderRow.nextSibling);
+            toggleIcon.textContent = '▲';
         });
     }
 }
