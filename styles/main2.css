@@ -78,8 +78,8 @@
     }
     .custom-navbar .navbar-nav {
         display: flex;
-        align-items: center;
-        justify-content: flex-start; /* Sát trái */
+        /* align-items: center; */
+        /* justify-content: flex-start; Sát trái */
         gap: 10px; /* Giảm khoảng cách giữa các mục */
         padding: 0;
         margin: 0;
