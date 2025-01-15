@@ -64,6 +64,7 @@ $conn->close();
             <input type="date" id="date-picker" class="date-picker">
             <button id="next-date" class="date-button">▶</button>
         </div>
+        <p id="no-data-message" style="text-align: center; display:none;">データがありません。</p>
         <table class="order-list">
             <thead>
                 <tr>
