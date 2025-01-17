@@ -1,3 +1,5 @@
+
+
 <?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -5,6 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Thông tin kết nối cơ sở dữ liệu
 include('./Manager/php/db_connect.php');
+
 
 // Kết nối đến cơ sở dữ liệu
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -14,25 +17,19 @@ if ($conn->connect_error) {
     echo "SERVER NOT FOUND";
     exit();
 }
+
+
 $storeName= $_COOKIE["storename"];
-// Kiểm tra tham số URL
-// if (!isset($_GET['sname'])) {
-//     header("HTTP/1.0 404 Not Found");
-//     echo "404 Not Found";
-//     exit();
-// }
-// echo $storeName;
 
-// $storeName = $_GET['sname'];
-
-// Khởi tạo các biến
+// Khởi tạo các biến để tránh lỗi chưa khai báo
 $tel = null;
 $address = null;
 $mail = null;
 $sname = null;
 $storeid = null;
+// $description = null;
 
-// Truy vấn dữ liệu cửa hàng
+// Thực hiện truy vấn để lấy dữ liệu cửa hàng và thông tin người dùng
 $query = "SELECT store.storeid, store.logopath, store.sname, store.tel, store.address, user.mail 
           FROM store 
           JOIN user ON store.userid = user.userid 
@@ -52,11 +49,7 @@ if ($result->num_rows > 0) {
     if ($storeData["logopath"]){
         $logopath = str_replace('../Manager/', './Manager/', $storeData["logopath"]);
     }
-} else {
-    // header("HTTP/1.0 404 Not Found");
-    // echo "404 Not Found";
-    // exit();
-}
+} 
 
 // Truy vấn để lấy mô tả cửa hàng
 $descriptionQuery = "SELECT title, content FROM StoreDescriptions WHERE storeid = ?";
@@ -69,45 +62,35 @@ $descResult = $descStmt->get_result();
 
 // Đóng kết nối
 $stmt->close();
-// $stmt_best_sellers->close();
 $conn->close();
 require "resources.php";
 
-
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WRB - Home</title>
+    <title>WRB - My Page</title>
     <!-- Bootstrap CSS (cục bộ) -->
     <!-- AOS CSS -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  
-    <link rel="stylesheet" href="storeInfor3.css">
-    <!-- <link href="./styles/All.css">
-    <link href="./styles/index.css"> -->
     <link href="./styles/main2.css" rel="stylesheet">
+    <link href="./styles/myPage.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     <!-- Thêm vào phần <head> của HTML -->
     <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap" rel="stylesheet">
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-            <!-- AOS JS -->
+    <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
 </head>
 <body>
-    <header>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
+<header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
             <div class="container-fluid">
                 <button class="navbar-toggler mobile-only" type="button" onclick="toggleMenu()">
                     <div class="menu-icon">
@@ -236,44 +219,53 @@ document.addEventListener("DOMContentLoaded", function () {
 
     </script>
     <!-- ------------------------------------------------------ -->
-    
-    <main class="container mt-4">
-         <!-- Store Information Section -->
-         <div class="store-info">
-            <div class="logo">
-                <img src="./images/welcome.png" alt=" ">
+    <main>
+        <div class="mypage-container">
+            <!-- Order History Section -->
+            <div class="order-history">
+                <h2>
+                    <img src="./images/time.png" alt="History Icon" class="icon"> 注文履歴
+                </h2>
+                <div class="order-items">
+                    <img src="./images/product/1.jpg" alt="Order Item">
+                </div>
             </div>
-             <!-- About Store Section -->
-                <div class="about-store">
-                <!-- <h2>店舗紹介</h2> -->
-                <?php while ($descriptionRow = $descResult->fetch_assoc()): ?>
-                    <h2><?php echo htmlspecialchars($descriptionRow['title']); ?></h2>
-                    <p><?php echo htmlspecialchars($descriptionRow['content']); ?></p>
-                <?php endwhile; ?>
-
-                <h2>所在地</h2>
-                <p><?php echo htmlspecialchars($address); ?></p>
-
-                <h2>電話番号</h2>
-                <p>📞<?php echo htmlspecialchars($tel); ?></p>
-
-
-                <h2>お客様の声</h2>
-                <p>「とても美味しいパンと料理に感動しました！新鮮で、毎回違うメニューを楽しむことができるので、何度も訪れています。店員さんも親切で、居心地の良い空間です。これからも通い続けます！」</p>
-                <p>「このお店のパンは、ふわふわで香りもよく、一口食べると幸せな気分になります。ベトナム料理も本格的で、味に深みがあって本当に美味しいです。」</p>
-            </div>  
+            <!-- Shopping Cart Section -->
+            <div class="cart">
+                <h2>
+                    <img src="./images/shopping.png" alt="Cart Icon" class="icon"> 買い物カゴ
+                </h2>
+                <div class="cart-items">
+                    <div class="cart-img">
+                        <img src="./images/no-image.png" alt="Cart Item">
+                    </div>
+                    <div class="cart-info">
+                        <div class="cart-details">
+                            <p>1アイテム</p>
+                            <p>1,500¥</p>
+                        </div>
+                        <button class="buy-button">ご購入</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Favorites Section -->
+            <div class="favorites">
+                <h2>
+                    <img src="./images/black-heart.png" alt="Favor Icon" class="icon"> お気に入りリスト
+                </h2>
+                <div class="favor-items">
+                    <img src="./images/no-image.png" alt="Favor Item">
+                    <img src="./images/no-image.png" alt="Favor Item">
+                    <img src="./images/no-image.png" alt="Favor Item">
+                </div>
+            </div>
         </div>
-
     </main>
+    <footer>
+       
+    </footer>
+
 </body>
-
-
-<footer>
-     <!-- Social Media Section -->
-     <div class="social-media">
-            <a href="#"><img src="./images/twitter.png" alt="Twitter"></a>
-            <a href="#"><img src="./images/facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="./images/instagram.png" alt="Instagram"></a>
-        </div>
-</footer>
+<script src="../scripts/menu.js"></script>
+<script src="../scripts/mypage.js"></script>
 </html>

@@ -7,9 +7,10 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        animation: wave 10s ease infinite;
+        /* animation: wave 10s ease infinite; */
         margin: 0;
-        background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
+        /* background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
+        background-color: #B0d9b1;
         background-size: 100% 100%;
         overflow-y: auto;
     }
@@ -26,6 +27,9 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
+    h2{
+        margin-left: 20px;
+    }
     /* Tiêu đề */
    .addTitle{
         text-align: center;
@@ -44,6 +48,8 @@
     main {
         overflow-y: auto;
         /* Chỉ cuộn nội dung trong main */
+        width: 90%;
+        height: 85%;
     }
 
     input[type="text"],
@@ -191,7 +197,8 @@ html, body {
     min-height: 100vh; /* Đảm bảo chiếm ít nhất chiều cao của màn hình */
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
+    /* background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0)); */
+    background-color: #B0d9b1;
     background-size: 100% auto; /* Để nền tự điều chỉnh chiều cao */
     background-repeat: no-repeat; /* Đảm bảo không lặp lại, nếu muốn */
 }
