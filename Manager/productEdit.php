@@ -38,15 +38,28 @@ if ($product_result->num_rows > 0) {
     die("Product not found.");
 }
 
-// Retrieve category options
+// Query to get category options based on storeid
 $category_sql = "SELECT category_id, cname FROM category WHERE storeid = ?";
 $category_stmt = $conn->prepare($category_sql);
 $category_stmt->bind_param("i", $_SESSION['storeid']); // Assuming storeid is stored in session
 $category_stmt->execute();
 $category_result = $category_stmt->get_result();
 
-?>
+// Retrieve category name for the product
+$category_id = $product['category_id']; // Get category_id from product
 
+$category_name_sql = "SELECT cname FROM category WHERE storeid = ? AND category_id = ?";
+$category_name_stmt = $conn->prepare($category_name_sql);
+$category_name_stmt->bind_param("ii", $_SESSION['storeid'], $category_id);
+$category_name_stmt->execute();
+$category_name_result = $category_name_stmt->get_result();
+
+$category_name = null;
+if ($category_name_result->num_rows > 0) {
+    $category_row = $category_name_result->fetch_assoc();
+    $category_name = $category_row['cname'];
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -86,7 +99,7 @@ $category_result = $category_stmt->get_result();
                 <!-- Category -->
                 <label for="category">カテゴリー:</label>
                 <div style="display: flex; align-items: center;">
-                    <input type="text" id="categoryText" name="categoryText" placeholder="選択したカテゴリー" value="<?= htmlspecialchars($product['category_name']); ?>" />
+                    <input type="text" id="categoryText" name="categoryText" placeholder="選択したカテゴリー" value="<?= htmlspecialchars($category_name); ?>" />
                     <select id="category" name="category" required onchange="updateCategoryText()">
                         <option value="">選択してください</option>
                         <?php
