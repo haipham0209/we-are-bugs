@@ -22,9 +22,12 @@ drop table order_details;
 drop table discounts;
 drop table product;
 drop table category;
+drop table StoreDescriptions;
+drop table orders;
+drop table daily_revenue;
 drop table store;
 drop table user;
-
+drop table daily_revenue;
 
 DROP DATABASE IF EXISTS wearebugs;
 CREATE DATABASE wearebugs;
