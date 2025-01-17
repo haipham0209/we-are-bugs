@@ -542,11 +542,11 @@
         padding: 10px;
         text-align: center;
         border-radius: 5px;
-
+        transition: transform 0.3s ease, box-shadow 0.3s ease !important;
     }
 
     .product-content:hover {
-        transform: translateY(-5px);
+        transform: scale(1.1)  !important;
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
     }
     .image-wrapper {
