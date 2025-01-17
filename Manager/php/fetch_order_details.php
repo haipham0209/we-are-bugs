@@ -1,12 +1,15 @@
 <?php
+require 'auth_check.php';
 require 'db_connect.php';
 
 $order_number = $_GET['order_number'];
+$storeid = $_SESSION["storeid"];
 
 // 注文の詳細データを取得
 $sql = "
     SELECT 
         p.pname, 
+        p.storeid,
         od.quantity, 
         p.price, 
         (od.quantity * p.price) AS order_price,
@@ -15,11 +18,11 @@ $sql = "
     FROM order_details od
     JOIN product p ON od.productid = p.productid
     JOIN orders o ON od.order_number = o.order_number
-    WHERE od.order_number = ?
+    WHERE od.order_number = ? AND p.storeid = ?
 ";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param('s', $order_number);
+$stmt->bind_param('si', $order_number, $storeid);
 $stmt->execute();
 $result = $stmt->get_result();
 
