@@ -37,6 +37,7 @@ $category_stmt = $conn->prepare($category_sql);
 $category_stmt->bind_param("i", $_SESSION['storeid']);
 $category_stmt->execute();
 $category_result = $category_stmt->get_result();
+$sname= $_COOKIE["storename"];
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +54,7 @@ $category_result = $category_stmt->get_result();
 
 <body>
     <header>
-        <a href="#">
+        <a href="./main2.php?sname=<?= urlencode($sname) ?>">
             <img src="./images/backicon2.png" alt="Back Icon" style="width: 40px; height: 40px;" onclick="location.href='#'">
         </a>
         <div class="favorite-button">
