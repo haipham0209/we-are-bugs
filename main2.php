@@ -133,10 +133,10 @@ require "resources.php";
                             </li>
                             <li class="support-title mobile-only">サポート</li>
                             <li class="nav-item">
-                                <i class="fa fa-phone"></i><a class="support" href="tel: "><?php echo $tel; ?></a>
+                                <i class="fa fa-phone"></i><a class="support" href="tel:<?php echo htmlspecialchars($tel); ?>"><?php echo $tel; ?></a>
                             </li>
                             <li class="nav-item">
-                                <i class="fa fa-envelope"></i><a class="support" href="mail: "><?php echo $mail; ?></a>
+                                <i class="fa fa-envelope"></i><a class="support" href="mailto:<?php echo htmlspecialchars($mail); ?>"><?php echo $mail; ?></a>
                             </li>
                             <div class="mobile-only">
                                 <li class="nav-item">

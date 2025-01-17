@@ -415,7 +415,9 @@
         width: auto; /* Giữ tỉ lệ */
         object-fit: contain; /* Đảm bảo logo không bị méo */
     }
-    
+    .navbar-nav {
+        --bs-nav-link-padding-y: unset !important; 
+    }
     .navbar .navbar-nav {
         display: flex;
         gap: 30px;
@@ -424,7 +426,7 @@
         flex-direction: row !important;
     }
     ul{
-        margin-top: 15px !important;
+        margin-bottom: 10px !important;
     }
     .fa-envelope:before{
         margin-right: 8px;
