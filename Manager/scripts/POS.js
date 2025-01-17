@@ -54,21 +54,22 @@ function addToCart(product) {
         updateSerialNumbers(); // Cập nhật lại số thứ tự
     
         // Nếu có giảm giá, thêm dòng giảm giá ngay dưới sản phẩm chính
-        if (product.discounted_price && product.discounted_price < product.price) {
-            const discountRow = document.createElement('tr');
-            discountRow.classList.add('discount-row'); // Thêm class
-            discountRow.innerHTML = `
-                <td></td> <!-- Không hiển thị STT cho dòng giảm giá -->
-                <td colspan="2" style="color: red; text-align: center;">
-                    割引: 
-                </td>
-                <td class="one-product-discounted">-${(product.price - product.discounted_price).toFixed(2)}¥</td>
-                <td class="price">-${(product.price - product.discounted_price).toFixed(2)}¥</td>
-                <td></td> <!-- Không hiển thị nút xóa cho dòng giảm giá -->
-            `;
-            // Thêm dòng giảm giá vào cuối bảng
-            tableBody.appendChild(discountRow);  
-        }
+            if (product.discounted_price) {
+                const discountRow = document.createElement('tr');
+                discountRow.classList.add('discount-row'); // Thêm class
+                discountRow.innerHTML = `
+                    <td></td> <!-- Không hiển thị STT cho dòng giảm giá -->
+                    <td colspan="2" style="color: red; text-align: center;">
+                        割引: 
+                    </td>
+                    <td class="one-product-discounted">-${(product.price - product.discounted_price).toFixed(2)}¥</td>
+                    <td class="price">-${(product.price - product.discounted_price).toFixed(2)}¥</td>
+                    <td></td> <!-- Không hiển thị nút xóa cho dòng giảm giá -->
+                `;
+                // Thêm dòng giảm giá vào cuối bảng
+                tableBody.appendChild(discountRow);  
+                console.log("oke");
+            }
     
         // Thêm sự kiện xóa hàng
         row.querySelector('.delete-btn').addEventListener('click', () => {

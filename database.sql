@@ -139,6 +139,7 @@ CREATE TABLE order_history (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+ALTER TABLE orders ADD COLUMN discount INT;
 -- 1 cửa hàng ko trùng barcode nhưng cửa hàng khác nhau thì ok
 
 
