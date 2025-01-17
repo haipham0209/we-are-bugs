@@ -158,6 +158,14 @@ function updateProductPrice(input, unitPrice) {
         const discountPerProduct = parseFloat(unitPrice - input.dataset.discountedPrice); // Giá trị giảm trên 1 sản phẩm
         const totalDiscount = discountPerProduct * quantity;
 
+
+        /////
+        const expires = new Date();
+        expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000)); // 1日後の有効期限
+        
+        document.cookie = `totalDiscount=${totalDiscount}; expires=${expires.toUTCString()}; path=/`;
+        console.log(document.cookie);
+//////
         // discountedPriceCell.textContent = `-${totalDiscount.toFixed(2)}¥`; // Cập nhật giá trị giảm giá
         discountPriceCell.textContent = `-${totalDiscount.toFixed(2)}¥`; // Cập nhật tổng giá giảm
     }
