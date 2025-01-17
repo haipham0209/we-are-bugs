@@ -90,10 +90,11 @@ require "resources.php";
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./styles/main2.css" rel="stylesheet">
+  
     <link rel="stylesheet" href="storeInfor3.css">
-    <link href="./styles/All.css">
-    <link href="./styles/index.css">
+    <!-- <link href="./styles/All.css">
+    <link href="./styles/index.css"> -->
+    <link href="./styles/main2.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     <!-- Thêm vào phần <head> của HTML -->
@@ -105,8 +106,8 @@ require "resources.php";
 </head>
 <body>
     <header>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
             <div class="container-fluid">
                 <button class="navbar-toggler mobile-only" type="button" onclick="toggleMenu()">
                     <div class="menu-icon">
@@ -130,10 +131,10 @@ require "resources.php";
                             </li>
                             <li class="support-title mobile-only">サポート</li>
                             <li class="nav-item">
-                                <i class="fa fa-phone"></i><a class="support" href="tel: "><?php echo $tel; ?></a>
+                                <i class="fa fa-phone"></i><a class="support" href="tel:<?php echo htmlspecialchars($tel); ?>"><?php echo $tel; ?></a>
                             </li>
                             <li class="nav-item">
-                                <i class="fa fa-envelope"></i><a class="support" href="mail: "><?php echo $mail; ?></a>
+                                <i class="fa fa-envelope"></i><a class="support" href="mailto:<?php echo htmlspecialchars($mail); ?>"><?php echo $mail; ?></a>
                             </li>
                             <div class="mobile-only">
                                 <li class="nav-item">

@@ -1,19 +1,4 @@
 
-
-
-sửa category và product truy vấn dựa vào storeid
-1 user chỉ tạo dc 1 store,
---LAN:
-========  truy vấn thông tin chỉ dựa vào storeid -==============
-1.category lấy chữ chứ ko lấy dropdown (dropdown ko gửi dữ liệu lên php)
-        (so sánh chữ ko phân biệt chữ lớn chữ nhỏ)
-2.kiểm tra ko có category tương ứng trên DB thì insert vô bảng category trc rồi mới insert bảng product
-3.nếu có sẵn category trên DB thì chỉ thêm sản phẩm 
----------------------------------------------------------------------------------------------
-SAU KHI TẠO LẠI BẢNG => ĐĂNG KÝ TÀI KHOẢN MỚI NHƯ BTH => HIỆN BẢNG CHECK EMAIL THÌ KO CẦN MỞ MAIL ==>
-DÁN LỆNH SAU LÀ LOGIN DC : (THAY TÊN USERNAME)
-
-
 UPDATE user 
 SET status = 'active' 
 WHERE username = 'lan1';
@@ -22,13 +7,22 @@ drop table order_details;
 drop table discounts;
 drop table product;
 drop table category;
+drop table StoreDescriptions;
+drop table orders;
+drop table daily_revenue;
 drop table store;
 drop table user;
 
 
 DROP DATABASE IF EXISTS wearebugs;
+
+
 CREATE DATABASE wearebugs;
+
+
 USE wearebugs;
+
+
  CREATE TABLE user (
     userid INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
@@ -50,7 +44,30 @@ CREATE TABLE store (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userid) REFERENCES user(userid)
 );
---bảng lưu about store
+
+CREATE TABLE daily_revenue (
+    store_id INT NOT NULL,
+    revenue_date DATE NOT NULL,
+    total_revenue DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    total_cost DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    total_profit DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    PRIMARY KEY (store_id, revenue_date),
+    FOREIGN KEY (store_id) REFERENCES store(storeid)
+);
+
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_number VARCHAR(50) NOT NULL UNIQUE,
+    store_id INT NOT NULL,
+    customer_id INT NULL,
+    total_price DECIMAL(10, 2) NOT NULL,
+    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pending', 'completed', 'canceled') DEFAULT 'pending',
+    received_amount DECIMAL(10, 2) NULL,
+    FOREIGN KEY (store_id) REFERENCES store(storeid)
+);
+
+
 CREATE TABLE StoreDescriptions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     storeid INT NOT NULL,
@@ -71,7 +88,7 @@ CREATE TABLE category (
 
 
 CREATE TABLE product (
-    -- productid INT AUTO_INCREMENT PRIMARY KEY,
+
     productid INT NOT NULL,
     storeid INT NOT NULL,
     category_id INT NOT NULL,
@@ -91,19 +108,6 @@ CREATE TABLE product (
 CREATE INDEX idx_productid ON product(productid);
 ALTER TABLE product ADD CONSTRAINT unique_barcode_per_store UNIQUE (storeid, barcode);
 
--- alter table product add discounted_price decimal(10, 2) after costPrice;
-
-CREATE TABLE order_history (
-    orderid INT AUTO_INCREMENT PRIMARY KEY,             -- Mã đơn hàng, tự động tăng
-    customer_code VARCHAR(10) NOT NULL,                 -- Mã khách hàng (không cho phép NULL)
-    storeid INT NOT NULL,                               -- Mã cửa hàng (không cho phép NULL)
-    total_price DECIMAL(10,2) NOT NULL,                 -- Tổng giá trị đơn hàng (không cho phép NULL)
-    order_date DATE NOT NULL,                           -- Ngày đặt hàng (không cho phép NULL)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP      -- Thời gian tạo đơn hàng, giá trị mặc định là thời gian hiện tại
-);
-
--- 1 cửa hàng ko trùng barcode nhưng cửa hàng khác nhau thì ok
-
 
 CREATE TABLE discounts (
     discount_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -116,6 +120,30 @@ CREATE TABLE discounts (
     FOREIGN KEY (productid) REFERENCES product(productid)
 );
 
+
+CREATE TABLE order_details (
+    order_detail_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_number VARCHAR(50) NOT NULL,
+    productid INT NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (order_number) REFERENCES orders(order_number),
+    FOREIGN KEY (productid) REFERENCES product(productid)
+);
+
+CREATE TABLE order_history (
+    orderid INT AUTO_INCREMENT PRIMARY KEY,
+    customer_code VARCHAR(10) NOT NULL,
+    storeid INT NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    order_date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 1 cửa hàng ko trùng barcode nhưng cửa hàng khác nhau thì ok
+
+
+
+
 -- Thêm bảng 2024/11/22
 -- Bảng lưu đơn hàng
 ALTER TABLE order_details DROP FOREIGN KEY order_details_ibfk_1;
@@ -124,44 +152,12 @@ drop table orders;
 drop table daily_revenue;
 -- Bảng lưu đơn hàng
 -- Tạo bảng orders sau khi sửa lỗi
-CREATE TABLE orders (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
-    order_number VARCHAR(50) NOT NULL UNIQUE,
-    store_id INT NOT NULL,  -- ID cửa hàng
-    customer_id INT NULL,  -- Tham chiếu đến bảng customers nếu có
-    total_price DECIMAL(10, 2) NOT NULL,  -- Tổng tiền đơn hàng
-    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Ngày giờ đặt hàng
-    status ENUM('pending', 'completed', 'canceled') DEFAULT 'pending',  -- Trạng thái đơn hàng
-    received_amount DECIMAL(10, 2) NULL,
-    FOREIGN KEY (store_id) REFERENCES store(storeid)  -- Tham chiếu đến bảng cửa hàng
-);
 
 
--- Tạo bảng order_details sau khi bảng orders đã tồn tại
-CREATE TABLE order_details (
-    order_detail_id INT AUTO_INCREMENT PRIMARY KEY,  -- ID tự tăng cho từng dòng chi tiết đơn hàng
-    order_number VARCHAR(50) NOT NULL,               -- Số đơn hàng, tham chiếu đến bảng orders
-    productid INT NOT NULL,                          -- ID sản phẩm
-    quantity INT NOT NULL,                           -- Số lượng sản phẩm
-    FOREIGN KEY (order_number) REFERENCES orders(order_number), -- Ràng buộc khóa ngoại đến bảng orders
-    FOREIGN KEY (productid) REFERENCES product(productid)      -- Ràng buộc khóa ngoại đến bảng product
-);
 
--- <img src=".././Manager/storeproductImg/Hai/bánh mì/8_1734075632.jpeg" alt="Product Image">
--- <img id="imagePreview" src=".././Manager/storeproductImg/Hai/hai/1_1731051855.png" alt="プレビュー画像">
 
--- Bảng lưu doanh thu theo ngày
-DROP TABLE IF EXISTS daily_revenue;
 
-CREATE TABLE daily_revenue (
-    store_id INT NOT NULL,              -- ID của cửa hàng
-    revenue_date DATE NOT NULL,         -- Ngày tính doanh thu
-    total_revenue DECIMAL(10, 2) NOT NULL DEFAULT 0.00,  -- Tổng doanh thu
-    total_cost DECIMAL(10, 2) NOT NULL DEFAULT 0.00,     -- Tổng chi phí
-    total_profit DECIMAL(10, 2) NOT NULL DEFAULT 0.00,   -- Lợi nhuận
-    PRIMARY KEY (store_id, revenue_date),
-    FOREIGN KEY (store_id) REFERENCES store(storeid)
-);
+
 
 
 
