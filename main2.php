@@ -48,7 +48,9 @@ if ($result->num_rows > 0) {
     $tel = $storeData["tel"];
     $address = $storeData["address"];
     $mail = $storeData["mail"];
-    setcookie("storename", $sname);
+    // setcookie("storename", $sname);
+    setcookie("storename", $sname, time() + (10 * 365 * 24 * 60 * 60), "/");
+    setcookie("storeid", $storeid, time() + (10 * 365 * 24 * 60 * 60), "/");
     if ($storeData["logopath"]){
         $logopath = str_replace('../Manager/', './Manager/', $storeData["logopath"]);
     }
