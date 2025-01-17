@@ -16,7 +16,7 @@ $productid = $_GET['id'] ?? null;
 
 // If product ID is not provided, redirect or show an error
 if (!$productid) {
-    die("Product ID not provided.");
+    die("404");
 }
 
 // Query to get the product details
@@ -25,11 +25,11 @@ $product_sql = "
            p.barcode, c.cname AS category_name
     FROM product p
     JOIN category c ON p.category_id = c.category_id
-    WHERE p.productid = ?";
-
+    WHERE p.productid = ? AND p.storeid = ?";
 $stmt = $conn->prepare($product_sql);
-$stmt->bind_param("i", $productid);
+$stmt->bind_param("ii", $productid, $_SESSION['storeid']); // Gán giá trị cho productid và storeid
 $stmt->execute();
+
 $product_result = $stmt->get_result();
 
 if ($product_result->num_rows > 0) {
@@ -44,6 +44,7 @@ $category_stmt = $conn->prepare($category_sql);
 $category_stmt->bind_param("i", $_SESSION['storeid']); // Assuming storeid is stored in session
 $category_stmt->execute();
 $category_result = $category_stmt->get_result();
+
 ?>
 
 <!DOCTYPE html>
