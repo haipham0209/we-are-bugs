@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <img src="./images/time.png" alt="History Icon" class="icon"> 注文履歴
                 </h2>
                 <div class="order-items">
-                    <img src="./images/product/1.jpg" alt="Order Item">
+                    <img src="./images/no-image.png" alt="Order Item">
                 </div>
             </div>
             <!-- Shopping Cart Section -->
