@@ -9,6 +9,13 @@ if ($conn->connect_error) {
 }
 
 $productid = $_GET['id'] ?? null;
+//cookie sname
+if (isset($_COOKIE['storename'])) {
+    $storeid = $_COOKIE['storeid'];
+} else {
+    die("404");
+    exit;
+}
 
 if (!$productid) {
     die("Product ID not provided.");
@@ -19,10 +26,10 @@ $product_sql = "
            p.barcode, c.cname AS category_name
     FROM product p
     JOIN category c ON p.category_id = c.category_id
-    WHERE p.productid = ?";
+    WHERE p.productid = ? AND p.storeid = ?";
 
 $stmt = $conn->prepare($product_sql);
-$stmt->bind_param("i", $productid);
+$stmt->bind_param("ii", $productid, $storeid);
 $stmt->execute();
 $product_result = $stmt->get_result();
 

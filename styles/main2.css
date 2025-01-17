@@ -9,7 +9,7 @@
         margin: 0;
         padding: 0;
         font-family: 'Murecho', sans-serif;
-        height: 200vh; /* Tăng chiều cao để kiểm tra cuộn */
+        height: 100%; /* Tăng chiều cao để kiểm tra cuộn */
         z-index: 10;
     }
     .desktop-only {
