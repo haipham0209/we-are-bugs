@@ -354,7 +354,15 @@
         font-size: 16px; /* Kích thước chữ */
     }
     
-    
+    /* Footer */
+    footer {
+        margin-top: 50px;
+        background-color: #f8f9fa;
+        padding: 20px 40px;
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+    }
 }
 
 /* PC screen */
@@ -415,7 +423,9 @@
         width: auto; /* Giữ tỉ lệ */
         object-fit: contain; /* Đảm bảo logo không bị méo */
     }
-    
+    .navbar-nav {
+        --bs-nav-link-padding-y: unset !important; 
+    }
     .navbar .navbar-nav {
         display: flex;
         gap: 30px;
@@ -424,7 +434,7 @@
         flex-direction: row !important;
     }
     ul{
-        margin-top: 15px !important;
+        margin-bottom: 10px !important;
     }
     .fa-envelope:before{
         margin-right: 8px;
@@ -601,7 +611,7 @@
     /* Footer */
     footer {
         margin-top: 50px;
-        background-color: #f1f1f1;
+        background-color: #f8f9fa;
         padding: 20px 40px;
         text-align: center;
         font-size: 14px;
