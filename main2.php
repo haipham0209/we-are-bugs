@@ -341,98 +341,105 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showMore(products) {
-        const productShowcase = event.target.previousElementSibling;
-        const button = event.target; // Nút Show More/Show Less hiện tại
-        const displayedProducts = productShowcase.querySelectorAll('.product-content');
-        const buttonText = button.textContent.trim(); // Loại bỏ khoảng trắng thừa
+    const productShowcase = event.target.previousElementSibling;
+    const button = event.target; // Nút Show More/Show Less hiện tại
+    const displayedProducts = productShowcase.querySelectorAll('.product-content');
+    const buttonText = button.textContent.trim(); // Loại bỏ khoảng trắng thừa
 
-        // Kiểm tra trạng thái của nút
-        if (buttonText === "全て表示") {
-            console.log("Hiển thị thêm sản phẩm");
+    // Kiểm tra trạng thái của nút
+    if (buttonText === "全て表示") {
+        console.log("Hiển thị thêm sản phẩm");
 
-            // Chỉ lấy các sản phẩm chưa hiển thị
-            const remainingProducts = products.slice(displayedProducts.length);
+        // Chỉ lấy các sản phẩm chưa hiển thị
+        const remainingProducts = products.slice(displayedProducts.length);
 
-            remainingProducts.forEach(product => {
-                const productContent = document.createElement('div');
-                productContent.classList.add('product-content');
-                productContent.setAttribute('data-aos', 'fade-up');
-                productContent.setAttribute('data-aos-duration', '1000');
+        remainingProducts.forEach(product => {
+            const productContent = document.createElement('div');
+            productContent.classList.add('product-content');
+            productContent.setAttribute('data-aos', 'fade-up');
+            productContent.setAttribute('data-aos-duration', '1000');
 
-                // Tạo liên kết đến trang chi tiết sản phẩm
-                const productLink = document.createElement('a');
-                productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
+            // Định dạng giá
+            const formattedPrice = formatPrice(product.price);
+            const formattedDiscountedPrice = product.discounted_price ? formatPrice(product.discounted_price) : null;
 
-                // Thêm nội dung của sản phẩm vào trong liên kết
-                productLink.innerHTML = `
-                    <div class="image-wrapper">
-                        <img src="./images/placeholder.jpg" data-src="${product.productImage}" alt="${product.pname}" class="product-image lazyload">
-                        ${product.discounted_price ? `<img src="Manager/images/sale.png" alt="Sale" class="sale-icon">` : ''}
-                    </div>
-                    <p class="rotated-text">
-                        ${product.pname}<br>
-                        ${product.discounted_price ? `<s>${product.price} ¥</s><br><span class="discounted-price">${product.discounted_price} ¥</span>` : `${product.price} ¥`}
-                    </p>
-                `;
+            // Tạo liên kết đến trang chi tiết sản phẩm
+            const productLink = document.createElement('a');
+            productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
 
-                // Thêm sản phẩm vào giao diện
-                productContent.appendChild(productLink);
-                productShowcase.appendChild(productContent);
-            });
+            // Thêm nội dung của sản phẩm vào trong liên kết
+            productLink.innerHTML = `
+                <div class="image-wrapper">
+                    <img src="./images/placeholder.jpg" data-src="${product.productImage}" alt="${product.pname}" class="product-image lazyload">
+                    ${formattedDiscountedPrice ? `<img src="Manager/images/sale.png" alt="Sale" class="sale-icon">` : ''}
+                </div>
+                <p class="rotated-text">
+                    ${product.pname}<br>
+                    ${formattedDiscountedPrice ? `<s>${formattedPrice} ¥</s><br><span class="discounted-price">${formattedDiscountedPrice} ¥</span>` : `${formattedPrice} ¥`}
+                </p>
+            `;
 
-            // Khởi tạo lại hiệu ứng AOS
-            AOS.refresh();
+            // Thêm sản phẩm vào giao diện
+            productContent.appendChild(productLink);
+            productShowcase.appendChild(productContent);
+        });
 
-            // Đổi nút thành Show Less
-            button.textContent = "閉じる";
-        } else if (buttonText === "閉じる") {
-            console.log("Ẩn bớt sản phẩm");
+        // Khởi tạo lại hiệu ứng AOS
+        AOS.refresh();
 
-            // Quay về trạng thái chỉ hiển thị 2 sản phẩm đầu tiên
-            productShowcase.innerHTML = ''; // Xóa toàn bộ sản phẩm hiện tại
+        // Đổi nút thành Show Less
+        button.textContent = "閉じる";
+    } else if (buttonText === "閉じる") {
+        console.log("Ẩn bớt sản phẩm");
 
-            // Kiểm tra kích thước màn hình
-            const isMobile = window.innerWidth <= 768;
-            // Hiển thị số lượng sản phẩm tùy thuộc vào kích thước màn hình
-            const visibleProducts = isMobile ? 2 : 4; // 2 sản phẩm cho điện thoại, 4 sản phẩm cho máy tính
-            // Chỉ hiển thị 2 sản phẩm đầu
-            products.slice(0, visibleProducts).forEach(product => {
-                const productContent = document.createElement('div');
-                productContent.classList.add('product-content');
+        // Quay về trạng thái chỉ hiển thị 2 sản phẩm đầu tiên
+        productShowcase.innerHTML = ''; // Xóa toàn bộ sản phẩm hiện tại
 
-                // Tạo liên kết đến trang chi tiết sản phẩm
-                const productLink = document.createElement('a');
-                productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
+        // Kiểm tra kích thước màn hình
+        const isMobile = window.innerWidth <= 768;
+        // Hiển thị số lượng sản phẩm tùy thuộc vào kích thước màn hình
+        const visibleProducts = isMobile ? 2 : 4; // 2 sản phẩm cho điện thoại, 4 sản phẩm cho máy tính
+        // Chỉ hiển thị 2 sản phẩm đầu
+        products.slice(0, visibleProducts).forEach(product => {
+            const productContent = document.createElement('div');
+            productContent.classList.add('product-content');
 
-                // Thêm nội dung của sản phẩm vào trong liên kết
-                productLink.innerHTML = `
-                    <div class="image-wrapper">
-                        <img src="./images/placeholder.jpg" data-src="${product.productImage}" alt="${product.pname}" class="product-image lazyload">
-                        ${product.discounted_price ? `<img src="Manager/images/sale.png" alt="Sale" class="sale-icon">` : ''}
-                    </div>
-                    <p class="rotated-text">
-                        ${product.pname}<br>
-                        ${product.discounted_price ? `<s>${product.price} ¥</s><br><span class="discounted-price">${product.discounted_price} ¥</span>` : `${product.price} ¥`}
-                    </p>
-                `;
+            // Định dạng giá
+            const formattedPrice = formatPrice(product.price);
+            const formattedDiscountedPrice = product.discounted_price ? formatPrice(product.discounted_price) : null;
 
-                // Thêm sản phẩm vào giao diện
-                productContent.appendChild(productLink);
-                productShowcase.appendChild(productContent);
-            });
+            // Tạo liên kết đến trang chi tiết sản phẩm
+            const productLink = document.createElement('a');
+            productLink.href = `productDetail.php?id=${product.productid}`; // Thêm liên kết vào sản phẩm
 
-            productShowcase.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Thêm nội dung của sản phẩm vào trong liên kết
+            productLink.innerHTML = `
+                <div class="image-wrapper">
+                    <img src="./images/placeholder.jpg" data-src="${product.productImage}" alt="${product.pname}" class="product-image lazyload">
+                    ${formattedDiscountedPrice ? `<img src="Manager/images/sale.png" alt="Sale" class="sale-icon">` : ''}
+                </div>
+                <p class="rotated-text">
+                    ${product.pname}<br>
+                    ${formattedDiscountedPrice ? `<s>${formattedPrice} ¥</s><br><span class="discounted-price">${formattedDiscountedPrice} ¥</span>` : `${formattedPrice} ¥`}
+                </p>
+            `;
 
-            // Khởi tạo lại hiệu ứng AOS
-            AOS.refresh();
+            // Thêm sản phẩm vào giao diện
+            productContent.appendChild(productLink);
+            productShowcase.appendChild(productContent);
+        });
 
-            // Đổi nút thành Show More
-            button.textContent = "全て表示";
-        } else {
-            // console.log(`Không nhận diện được trạng thái của nút: "${buttonText}"`);
-            console.log("1");
-        }
+        productShowcase.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Khởi tạo lại hiệu ứng AOS
+        AOS.refresh();
+
+        // Đổi nút thành Show More
+        button.textContent = "全て表示";
+    } else {
+        console.log("1");
     }
+}
 </script>
 
 
