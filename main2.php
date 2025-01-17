@@ -118,7 +118,7 @@ require "resources.php";
                         <span class="bar"></span>
                     </div>
                 </button>
-                <a class="navbar-brand" href="#"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
+                <a class="navbar-brand" href="./main2.php?sname=<?= urlencode($sname) ?>"><img id="logoContainer" src="<?= $logopath ?>" alt="logo"></a>
                 <div class="menu">
                     <div class="nav-menu">
                         <ul class="navbar-nav">
@@ -129,7 +129,7 @@ require "resources.php";
                                 <a class="nav-link" href="./storeInfor3.php?sname=<?= urlencode($sname) ?>">お店について</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./html/myPage.php?sname=<?= urlencode($sname) ?>">マイページ</a>
+                                <a class="nav-link" href="./myPage2.php?sname=<?= urlencode($sname) ?>">マイページ</a>
                             </li>
                             <li class="support-title mobile-only">サポート</li>
                             <li class="nav-item">
