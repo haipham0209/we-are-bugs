@@ -1,13 +1,1 @@
-# Bật Rewrite Engine
-RewriteEngine On
-
-# Ẩn đuôi .php
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^([^/]+)/?$ $1.php [L]
-
-# Ẩn đuôi .html
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^([^/]+)/?$ $1.html [L]
-
-# Điều hướng truy cập thư mục về index.php
-
+Options -Indexes
