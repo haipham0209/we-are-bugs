@@ -608,6 +608,8 @@
         color: #fff;
     }
 
+
+}
     /* Footer */
     footer {
         margin-top: 50px;
@@ -617,4 +619,18 @@
         font-size: 14px;
         color: #666;
     }
-}
+    /* Social Media Section */
+    .social-media {
+        display: flex;
+        justify-content: center;
+        /* margin-top: 5px; */
+    }
+
+    .social-media a {
+        margin: 0 10px;
+    }
+
+    .social-media img {
+        width: 50px;
+        height: 50px;
+    }
