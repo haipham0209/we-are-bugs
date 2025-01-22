@@ -331,6 +331,21 @@
         outline: none; /* Loại bỏ viền mặc định khi nhấn */
         box-shadow: none; /* Loại bỏ hiệu ứng bóng nếu có */
     }
+    .search-container {
+        position: relative;
+        display: inline-block;
+        width: 100%; 
+    }
+    .search-container .search-icon {
+        position: absolute;
+        right: 10px; 
+        top: 50%; 
+        transform: translateY(-50%);
+        width: 20px; 
+        height: 20px;
+        cursor: pointer; /* Hiển thị con trỏ tay khi hover */
+        pointer-events: auto; 
+    }
 
     #searchContainer {
         position: fixed; 
@@ -347,10 +362,10 @@
     }
     
     #searchInput {
-        width: 85%; /* Chiều rộng của input */
+        width: 100%; /* Chiều rộng của input */
         height: 40px;
         align-items: center;
-        padding: 0px; /* Khoảng cách trong input */
+        padding: 5px; /* Khoảng cách trong input */
         font-size: 16px; /* Kích thước chữ */
     }
     
@@ -383,10 +398,7 @@
         padding-top: 0;
         max-width: 100%;
     }
-    main{
-        display: flex; 
-        justify-content: center;
-    }
+    
     .category{
         max-width: 100%;
     }
@@ -486,7 +498,8 @@
         transform: translateY(-50%);
         width: 20px; 
         height: 20px;
-        pointer-events: none; 
+        cursor: pointer; 
+        pointer-events: auto; 
     }
     
     #searchContainer {

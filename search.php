@@ -14,16 +14,15 @@ if ($conn->connect_error) {
     echo "SERVER NOT FOUND";
     exit();
 }
-$storeName= $_COOKIE["storename"];
-// Kiểm tra tham số URL
-// if (!isset($_GET['sname'])) {
-//     header("HTTP/1.0 404 Not Found");
-//     echo "404 Not Found";
-//     exit();
-// }
-// echo $storeName;
 
-// $storeName = $_GET['sname'];
+// Kiểm tra tham số URL
+if (!isset($_GET['sname'])) {
+    header("HTTP/1.0 404 Not Found");
+    echo "404 Not Found";
+    exit();
+}
+
+$storeName = $_GET['sname'];
 
 // Khởi tạo các biến
 $tel = null;
@@ -49,65 +48,66 @@ if ($result->num_rows > 0) {
     $tel = $storeData["tel"];
     $address = $storeData["address"];
     $mail = $storeData["mail"];
+    // setcookie("storename", $sname);
+    setcookie("storename", $sname, time() + (10 * 365 * 24 * 60 * 60), "/");
+    setcookie("storeid", $storeid, time() + (10 * 365 * 24 * 60 * 60), "/");
     if ($storeData["logopath"]){
         $logopath = str_replace('../Manager/', './Manager/', $storeData["logopath"]);
     }
 } else {
-    // header("HTTP/1.0 404 Not Found");
-    // echo "404 Not Found";
-    // exit();
+    header("HTTP/1.0 404 Not Found");
+    echo "404 Not Found";
+    exit();
 }
 
-// Truy vấn để lấy mô tả cửa hàng
-$descriptionQuery = "SELECT title, content FROM StoreDescriptions WHERE storeid = ?";
-$descStmt = $conn->prepare($descriptionQuery);
-$descStmt->bind_param("i", $storeid);
-$descStmt->execute();
-$descResult = $descStmt->get_result();
+// Nhận từ khóa tìm kiếm từ URL
+$query = isset($_GET['query']) ? htmlspecialchars($_GET['query']) : '';
 
-
+if ($query) {
+    $results = [];
+    try {
+        // Sử dụng MySQLi
+        $stmt = $conn->prepare("SELECT * FROM product WHERE pname LIKE ?");
+        $searchTerm = "%$query%";
+        $stmt->bind_param("s", $searchTerm);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $results = $result->fetch_all(MYSQLI_ASSOC);
+    } catch (Exception $e) {
+        die("Lỗi truy vấn cơ sở dữ liệu: " . $e->getMessage());
+    }
+}
 
 // Đóng kết nối
 $stmt->close();
-// $stmt_best_sellers->close();
 $conn->close();
 require "resources.php";
-
-
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WRB - Home</title>
+    <title>Search Results</title>
     <!-- Bootstrap CSS (cục bộ) -->
     <!-- AOS CSS -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  
-    <link rel="stylesheet" href="storeInfor3.css">
-    <!-- <link href="./styles/All.css">
-    <link href="./styles/index.css"> -->
     <link href="./styles/main2.css" rel="stylesheet">
+    <link href="./styles/search.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     <!-- Thêm vào phần <head> của HTML -->
     <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap" rel="stylesheet">
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-            <!-- AOS JS -->
+    <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
 </head>
 <body>
-    <header>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
+<header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
             <div class="container-fluid">
                 <button class="navbar-toggler mobile-only" type="button" onclick="toggleMenu()">
                     <div class="menu-icon">
@@ -179,8 +179,8 @@ require "resources.php";
     </header>
     <div id="searchContainer" class="d-none">
         <div class="search-container">
-            <input type="text" id="searchInput" class="form-control" placeholder="商品を検索" onkeypress="handleKeyPress(event)">
-            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick="performSearch()">
+            <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
+            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick=" ">
         </div>
     </div>
     
@@ -191,7 +191,7 @@ require "resources.php";
             const searchContainer = document.getElementById("searchContainer");
             const logoContainer = document.getElementById("logoContainer");
             const overlay = document.querySelector(".overlay");
-            const searchInputs = document.querySelectorAll("#searchInput"); 
+            const searchInputs = document.querySelectorAll("#searchInput");
 
             // Sự kiện click vào nút tìm kiếm
             searchBtn.addEventListener("click", function () {
@@ -217,9 +217,9 @@ require "resources.php";
                 logoContainer.classList.remove("hidden");
                 overlay.classList.remove("show"); // Ẩn overlay
             });
-            
+
              // Gắn sự kiện keypress và click cho tất cả input tìm kiếm
-            searchInputs.forEach(function (input) {
+             searchInputs.forEach(function (input) {
                 input.addEventListener("keypress", function (event) {
                     if (event.key === 'Enter') {
                         event.preventDefault();
@@ -236,7 +236,6 @@ require "resources.php";
                     alert('検索キーワードを入力してください。');
                 }
             }
-
         });
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -260,46 +259,66 @@ require "resources.php";
                 }
             });
         });
+       
     </script>
     <!-- ------------------------------------------------------ -->
     
-    <main class="container mt-4">
-         <!-- Store Information Section -->
-         <div class="store-info">
-            <div class="logo">
-                <img src="./images/welcome.png" alt=" ">
+
+    <!-- Nội dung trang -->
+    <main>
+        <h1>検索結果</h1>
+
+        <?php if ($query): ?>
+            <p>商品名：<strong><?= $query ?></strong></p>
+
+            <!-- Hiển thị kết quả tìm kiếm -->
+            <div class="search-results">
+                <?php if (!empty($results)): ?>
+                    <?php foreach ($results as $result): ?>
+                        <div class="result-item">
+                            <div class="image-wrapper">
+                                <!-- Hình ảnh sản phẩm -->
+                                <img src="<?= htmlspecialchars($result['productImage']) ?>" alt="<?= htmlspecialchars($result['pname']) ?>" class="product-image">
+
+                                <!-- Biểu tượng sale nếu có giảm giá -->
+                                <?php if (!is_null($result['discounted_price'])): ?>
+                                    <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Tên sản phẩm -->
+                            <h2><?= htmlspecialchars($result['pname']) ?></h2>
+
+                            <!-- Hiển thị giá gốc và giá giảm -->
+                            <p class="price">
+                                <?php if (!is_null($result['discounted_price'])): ?>
+                                    <s><?= number_format($result['price']) ?> ¥</s> 
+                                    <span class="discounted-price"><?= number_format($result['discounted_price']) ?> ¥</span>
+                                <?php else: ?>
+                                    <?= number_format($result['price']) ?> ¥
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>一致する結果が見つかりませんでした。</p> <!-- "Không tìm thấy kết quả phù hợp." -->
+                <?php endif; ?>
             </div>
-             <!-- About Store Section -->
-                <div class="about-store">
-                <!-- <h2>店舗紹介</h2> -->
-                <?php while ($descriptionRow = $descResult->fetch_assoc()): ?>
-                    <h2><?php echo htmlspecialchars($descriptionRow['title']); ?></h2>
-                    <p><?php echo htmlspecialchars($descriptionRow['content']); ?></p>
-                <?php endwhile; ?>
-
-                <h2>所在地</h2>
-                <p><?php echo htmlspecialchars($address); ?></p>
-
-                <h2>電話番号</h2>
-                <p>📞<?php echo htmlspecialchars($tel); ?></p>
 
 
-                <h2>お客様の声</h2>
-                <p>「とても美味しいパンと料理に感動しました！新鮮で、毎回違うメニューを楽しむことができるので、何度も訪れています。店員さんも親切で、居心地の良い空間です。これからも通い続けます！」</p>
-                <p>「このお店のパンは、ふわふわで香りもよく、一口食べると幸せな気分になります。ベトナム料理も本格的で、味に深みがあって本当に美味しいです。」</p>
-            </div>  
-        </div>
-
+        <?php else: ?>
+            <p>検索キーワードを入力してください。</p>
+        <?php endif; ?>
     </main>
+
+    <!-- Footer -->
+    <footer>
+        <!-- Social Media Section -->
+        <div class="social-media">
+            <a href="#"><img src="./images/twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="./images/facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="./images/instagram.png" alt="Instagram"></a>
+        </div>
+    </footer>
 </body>
-
-
-<footer>
-     <!-- Social Media Section -->
-     <div class="social-media">
-        <a href="#"><img src="./images/twitter.png" alt="Twitter"></a>
-        <a href="#"><img src="./images/facebook.png" alt="Facebook"></a>
-        <a href="#"><img src="./images/instagram.png" alt="Instagram"></a>
-    </div>
-</footer>
 </html>

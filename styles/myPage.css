@@ -1,4 +1,12 @@
 @media only screen and (max-width: 767px) {
+    body{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        font-family: 'Murecho', sans-serif;
+        height: 100%; /* Tăng chiều cao để kiểm tra cuộn */
+        z-index: 10;
+    }
     header{
         background-color: #f8f9fa;
      }
