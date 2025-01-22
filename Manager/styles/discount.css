@@ -167,33 +167,10 @@
     }
 
     /* Nút All Categories luôn có nền đen và chữ trắng */
-    .all-categories {
-        background-color: #000;
-        /* Nền đen */
-        color: #fff;
-        /* Chữ trắng */
-        border-radius: 10px;
-        /* Bo tròn các góc */
-        padding: 10px 20px;
-        /* Padding cho nút */
-        font-size: 16px;
-        /* Kích thước chữ */
-        border: 1px solid #000;
-        /* Đường viền đen */
-        cursor: pointer;
-        /* Hiển thị con trỏ chuột */
-        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        /* Đổ bóng nhẹ */
-    }
+
 
     /* Nút All Categories khi hover (Vẫn giữ nền đen và chữ trắng) */
-    .all-categories:hover {
-        background-color: #333;
-        /* Nền hơi sáng khi hover */
-        color: #fff;
-        /* Chữ vẫn trắng */
-    }
+
 
     /* Các nút trong main-category có nền sáng và chữ đen */
     .category button {
@@ -216,17 +193,7 @@
         /* Đổ bóng nhẹ */
     }
 
-    /* Các nút trong main-category khi hover (Nền chuyển sang đen, chữ chuyển sang trắng) */
-    .category button:hover {
-        background-color: #000;
-        /* Nền đen khi hover */
-        color: #fff;
-        /* Chữ trắng khi hover */
-        transform: translateY(-3px);
-        /* Hiệu ứng nổi lên khi hover */
-        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-        /* Đổ bóng mạnh hơn khi hover */
-    }
+    /* Các nút trong main-category khi hover (Nền chuyển sang đen, chữ chuyển sang trắng) *
 
     /* Nút active trong main-category khi được chọn */
     .category button.active {
@@ -632,25 +599,7 @@
     }
 
     /* Nút All Categories luôn có nền đen và chữ trắng */
-    .all-categories {
-        background-color: #000;
-        /* Nền đen */
-        color: #fff;
-        /* Chữ trắng */
-        border-radius: 10px;
-        /* Bo tròn các góc */
-        padding: 10px 20px;
-        /* Padding cho nút */
-        font-size: 16px;
-        /* Kích thước chữ */
-        border: 1px solid #000;
-        /* Đường viền đen */
-        cursor: pointer;
-        /* Hiển thị con trỏ chuột */
-        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        /* Đổ bóng nhẹ */
-    }
+
 
     /* Nút All Categories khi hover (Vẫn giữ nền đen và chữ trắng) */
     .all-categories:hover {
@@ -664,7 +613,7 @@
     .category button {
         /* background-color: #f4f4f400; */
         /* Nền sáng */
-        color: #333;
+        /* color: #333; */
         /* Chữ đen */
         border-radius: 10px;
         /* Bo tròn góc */
@@ -682,16 +631,7 @@
     }
 
     /* Các nút trong main-category khi hover (Nền chuyển sang đen, chữ chuyển sang trắng) */
-    .category button:hover {
-        background-color: #000;
-        /* Nền đen khi hover */
-        color: #fff;
-        /* Chữ trắng khi hover */
-        transform: translateY(-3px);
-        /* Hiệu ứng nổi lên khi hover */
-        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-        /* Đổ bóng mạnh hơn khi hover */
-    }
+
 
     /* Nút active trong main-category khi được chọn */
     .category button.active {

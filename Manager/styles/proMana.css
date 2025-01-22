@@ -239,23 +239,12 @@
     }
 
     /* Các nút trong main-category khi hover (Nền chuyển sang đen, chữ chuyển sang trắng) */
-    .category button:hover {
-        background-color: #000;
-        /* Nền đen khi hover */
-        color: #fff;
-        /* Chữ trắng khi hover */
-        transform: translateY(-3px);
-        /* Hiệu ứng nổi lên khi hover */
-        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-        /* Đổ bóng mạnh hơn khi hover */
-    }
-
     /* Nút active trong main-category khi được chọn */
     .category button.active {
         background-color: #000;
-        /* Nền đen khi được chọn */
+
         color: #fff;
-        /* Chữ trắng khi được chọn */
+
     }
 
     /* Responsive adjustments */
@@ -735,18 +724,6 @@ video {
         transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         /* Đổ bóng nhẹ */
-    }
-
-    /* Các nút trong main-category khi hover (Nền chuyển sang đen, chữ chuyển sang trắng) */
-    .category button:hover {
-        background-color: #000;
-        /* Nền đen khi hover */
-        color: #fff;
-        /* Chữ trắng khi hover */
-        transform: translateY(-3px);
-        /* Hiệu ứng nổi lên khi hover */
-        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-        /* Đổ bóng mạnh hơn khi hover */
     }
 
     /* Nút active trong main-category khi được chọn */
