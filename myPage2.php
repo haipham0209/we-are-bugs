@@ -127,7 +127,10 @@ require "resources.php";
                         </ul>
                     </div>
                     <div class="input-pc">
-                        <input type="text" id="searchInput" class="input-pc" placeholder="商品を検索">
+                        <div class="search-container">
+                            <input type="text" id="searchInput" class="input-pc" placeholder="商品を検索" onkeypress="handleKeyPress(event)">
+                            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick="performSearch()">
+                        </div>
                     </div>
                 </div>
                 <div class="overlay"></div>   
@@ -158,42 +161,65 @@ require "resources.php";
         <!-- --------------------------------------------------------------- -->
     </header>
     <div id="searchContainer" class="d-none">
-        <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
+        <div class="search-container">
+            <input type="text" id="searchInput" class="form-control" placeholder="商品を検索" onkeypress="handleKeyPress(event)">
+            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick="performSearch()">
+        </div>
     </div>
     
     <!-- -----------------------search + navmenu--------------------------------- -->
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const searchBtn = document.getElementById("searchBtn");
-    const searchContainer = document.getElementById("searchContainer");
-    const logoContainer = document.getElementById("logoContainer");
-    const overlay = document.querySelector(".overlay");
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchBtn = document.getElementById("searchBtn");
+            const searchContainer = document.getElementById("searchContainer");
+            const logoContainer = document.getElementById("logoContainer");
+            const overlay = document.querySelector(".overlay");
+            const searchInputs = document.querySelectorAll("#searchInput"); 
 
-    // Sự kiện click vào nút tìm kiếm
-    searchBtn.addEventListener("click", function () {
-        if (searchContainer.classList.contains("d-none")) {
-            // Hiển thị thanh tìm kiếm và ẩn logo
-            searchContainer.classList.remove("d-none");
-            logoContainer.classList.add("hidden");
-            overlay.classList.add("show"); // Hiển thị overlay
-            document.getElementById("searchInput").focus(); // Đặt con trỏ vào thanh input
-        } else {
-            // Ẩn thanh tìm kiếm và hiển thị logo
-            searchContainer.classList.add("d-none");
-            logoContainer.classList.remove("hidden");
-            overlay.classList.remove("show"); // Ẩn overlay khi đóng thanh tìm kiếm
-        }
-    });
-    
+            // Sự kiện click vào nút tìm kiếm
+            searchBtn.addEventListener("click", function () {
+                if (searchContainer.classList.contains("d-none")) {
+                    // Hiển thị thanh tìm kiếm và ẩn logo
+                    searchContainer.classList.remove("d-none");
+                    logoContainer.classList.add("hidden");
+                    overlay.classList.add("show"); // Hiển thị overlay
+                    document.getElementById("searchInput").focus(); // Đặt con trỏ vào thanh input
+                } else {
+                    // Ẩn thanh tìm kiếm và hiển thị logo
+                    searchContainer.classList.add("d-none");
+                    logoContainer.classList.remove("hidden");
+                    overlay.classList.remove("show"); // Ẩn overlay khi đóng thanh tìm kiếm
+                }
+            });
+            
 
-    // Sự kiện click vào overlay để đóng thanh tìm kiếm
-    overlay.addEventListener("click", function () {
-        // Ẩn thanh tìm kiếm và hiển thị logo
-        searchContainer.classList.add("d-none");
-        logoContainer.classList.remove("hidden");
-        overlay.classList.remove("show"); // Ẩn overlay
-    });
-});
+            // Sự kiện click vào overlay để đóng thanh tìm kiếm
+            overlay.addEventListener("click", function () {
+                // Ẩn thanh tìm kiếm và hiển thị logo
+                searchContainer.classList.add("d-none");
+                logoContainer.classList.remove("hidden");
+                overlay.classList.remove("show"); // Ẩn overlay
+            });
+
+             // Gắn sự kiện keypress và click cho tất cả input tìm kiếm
+            searchInputs.forEach(function (input) {
+                input.addEventListener("keypress", function (event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        performSearch(input.value); // Gọi hàm tìm kiếm
+                    }
+                });
+            });
+            // Hàm thực hiện tìm kiếm
+            function performSearch(query) {
+                if (query.length > 0) {
+                    // Chuyển hướng đến trang tìm kiếm với từ khóa trong URL
+                    window.location.href = `search.php?sname=<?= urlencode($sname) ?>&query=${encodeURIComponent(query)}`;
+                } else {
+                    alert('検索キーワードを入力してください。');
+                }
+            }
+        });
 
         document.addEventListener("DOMContentLoaded", function () {
             const menuButton = document.querySelector(".navbar-toggler");
@@ -262,7 +288,12 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     </main>
     <footer>
-       
+        <!-- Social Media Section -->
+        <div class="social-media">
+            <a href="#"><img src="./images/twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="./images/facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="./images/instagram.png" alt="Instagram"></a>
+        </div>
     </footer>
 
 </body>

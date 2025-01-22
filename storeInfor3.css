@@ -42,12 +42,13 @@ h3{
 
 .about-store h2 {
     font-size: 20px;
+    font-weight: 600;
     /* margin-bottom: 10px; */
     text-align: left;
 }
 
 .about-store p {
-    font-size: 14px;
+    font-size: 18px;
     line-height: 1.6;
     margin-bottom: 20px;
 }

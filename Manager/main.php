@@ -28,10 +28,7 @@ include('./php/auth_check.php');
                 <img src="./images/product-icon.png" alt="商品" class="icon">
                 <span>商品</span>
             </button>
-            <button class="menu-button" onclick="location.href='setBestSel.php'">
-                <img src="./images/bestseller.png" alt="BestSellers" class="icon">
-                <span>ベストセラー</span>
-            </button>
+
             <button class="menu-button" onclick="location.href='discount.php'">
                 <img src="./images/sale-icon.png" alt="割引" class="icon">
                 <span>割引</span>
@@ -41,21 +38,26 @@ include('./php/auth_check.php');
                 <span>在庫</span>
             </button>
             <button class="menu-button" onclick="location.href='order.php'">
-                <img src="./images/order-icon.png" alt="注文" class="icon">
-                <span>注文</span>
+                <img src="./images/order-icon.png" alt="注文歴史" class="icon">
+                <span>注文歴史</span>
             </button>
-            <button class="menu-button">
+            <button class="menu-button"onclick="location.href='setBestSel.php2'"disabled>
                 <img src="./images/customer-icon.png" alt="顧客" class="icon">
                 <span>顧客</span>
             </button>
-            <button class="menu-button" onclick="location.href='profileEdit.php'">
-                <img src="./images/profile-icon.png" alt="プロフィール" class="icon">
-                <span>プロフ</span>
+            <button class="menu-button" onclick="location.href='setBestSel.phps'"disabled>
+                <img src="./images/bestseller.png" alt="BestSellers" class="icon">
+                <span>ベストセラー</span>
             </button>
             <button class="menu-button" onclick="location.href='POS.php'">
                 <img src="./images/regi.png" alt="レジ" class="icon">
                 <span>レジ</span>
             </button>
+            <button class="menu-button" onclick="location.href='profileEdit.php'">
+                <img src="./images/profile-icon.png" alt="プロフィール" class="icon">
+                <span>プロフ</span>
+            </button>
+
         </div>
 
         <!-- 日期顯示 -->
