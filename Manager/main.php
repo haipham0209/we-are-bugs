@@ -28,7 +28,7 @@ include('./php/auth_check.php');
                 <img src="./images/product-icon.png" alt="商品" class="icon">
                 <span>商品</span>
             </button>
-            <button class="menu-button" onclick="location.href='setBestSel.php'">
+            <button class="menu-button" onclick="location.href='setBestSel.phps'"disabled>
                 <img src="./images/bestseller.png" alt="BestSellers" class="icon">
                 <span>ベストセラー</span>
             </button>
@@ -44,7 +44,7 @@ include('./php/auth_check.php');
                 <img src="./images/order-icon.png" alt="注文" class="icon">
                 <span>注文</span>
             </button>
-            <button class="menu-button">
+            <button class="menu-button"onclick="location.href='setBestSel.php2'"disabled>
                 <img src="./images/customer-icon.png" alt="顧客" class="icon">
                 <span>顧客</span>
             </button>

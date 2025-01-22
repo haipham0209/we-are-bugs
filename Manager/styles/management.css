@@ -49,6 +49,14 @@ body {
     cursor: pointer;
 
 }
+button:disabled {
+    background-color: #e7d9d9;
+    opacity: 0.8; 
+    cursor: not-allowed; /* Thay đổi con trỏ để chỉ rõ rằng nút không thể bấm */
+    box-shadow: none;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2); /* Bóng đổ từ dưới phải */
+}
+
 
 .menu-button span {
     font-size: 18px;
@@ -177,6 +185,7 @@ body {
         padding: 14px 28px;
         font-size: 20px;
         border-radius: 12px;
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2); /* Bóng đổ từ dưới phải */
     }
 footer {
     position: fixed;
@@ -307,6 +316,7 @@ footer img {
         padding: 14px 28px;
         font-size: 20px;
         border-radius: 12px;
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2); /* Bóng đổ từ dưới phải */
     }
 
     footer {
