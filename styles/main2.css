@@ -474,6 +474,21 @@
         display: none;
     }
     /* Search Input */
+    .search-container {
+        position: relative;
+        display: inline-block;
+        width: 100%; 
+    }
+    .search-container .search-icon {
+        position: absolute;
+        right: 10px; 
+        top: 50%; 
+        transform: translateY(-50%);
+        width: 20px; 
+        height: 20px;
+        pointer-events: none; 
+    }
+    
     #searchContainer {
         display: flex;
         align-items: center;
@@ -542,11 +557,11 @@
         padding: 10px;
         text-align: center;
         border-radius: 5px;
-
+        transition: transform 0.3s ease, box-shadow 0.3s ease !important;
     }
 
     .product-content:hover {
-        transform: translateY(-5px);
+        transform: scale(1.1)  !important;
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
     }
     .image-wrapper {

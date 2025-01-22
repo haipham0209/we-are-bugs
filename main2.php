@@ -148,7 +148,10 @@ require "resources.php";
                         </ul>
                     </div>
                     <div class="input-pc">
-                        <input type="text" id="searchInput" class="input-pc" placeholder="商品を検索">
+                        <div class="search-container">
+                            <input type="text" id="searchInput" class="input-pc" placeholder="商品を検索">
+                            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick=" ">
+                        </div>
                     </div>
                 </div>
                 <div class="overlay"></div>   
