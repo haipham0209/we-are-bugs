@@ -178,7 +178,10 @@ require "resources.php";
         <!-- --------------------------------------------------------------- -->
     </header>
     <div id="searchContainer" class="d-none">
-        <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
+        <div class="search-container">
+            <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
+            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick=" ">
+        </div>
     </div>
     
     <!-- -----------------------search + navmenu--------------------------------- -->
