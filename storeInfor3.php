@@ -105,9 +105,9 @@ require "resources.php";
 
 </head>
 <body>
-    <header>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
+<header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
             <div class="container-fluid">
                 <button class="navbar-toggler mobile-only" type="button" onclick="toggleMenu()">
                     <div class="menu-icon">
@@ -143,10 +143,11 @@ require "resources.php";
                             </div>
                         </ul>
                     </div>
+                    <!-- Search PC -->
                     <div class="input-pc">
                         <div class="search-container">
                             <input type="text" id="searchInput" class="input-pc" placeholder="商品を検索" onkeypress="handleKeyPress(event)">
-                            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick="performSearch()">
+                            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" id="searchIcon" >
                         </div>
                     </div>
                 </div>
@@ -177,6 +178,7 @@ require "resources.php";
         </script>
         <!-- --------------------------------------------------------------- -->
     </header>
+    <!--Search Mobile -->
     <div id="searchContainer" class="d-none">
         <div class="search-container">
             <input type="text" id="searchInput" class="form-control" placeholder="商品を検索" onkeypress="handleKeyPress(event)">
@@ -191,7 +193,7 @@ require "resources.php";
             const searchContainer = document.getElementById("searchContainer");
             const logoContainer = document.getElementById("logoContainer");
             const overlay = document.querySelector(".overlay");
-            const searchInputs = document.querySelectorAll("#searchInput"); 
+            const searchInputs = document.querySelectorAll("#searchInput");
 
             // Sự kiện click vào nút tìm kiếm
             searchBtn.addEventListener("click", function () {
@@ -217,9 +219,9 @@ require "resources.php";
                 logoContainer.classList.remove("hidden");
                 overlay.classList.remove("show"); // Ẩn overlay
             });
-            
+
              // Gắn sự kiện keypress và click cho tất cả input tìm kiếm
-            searchInputs.forEach(function (input) {
+             searchInputs.forEach(function (input) {
                 input.addEventListener("keypress", function (event) {
                     if (event.key === 'Enter') {
                         event.preventDefault();
@@ -229,15 +231,35 @@ require "resources.php";
             });
             // Hàm thực hiện tìm kiếm
             function performSearch(query) {
-                if (query.length > 0) {
+                if (query) {
                     // Chuyển hướng đến trang tìm kiếm với từ khóa trong URL
                     window.location.href = `search.php?sname=<?= urlencode($sname) ?>&query=${encodeURIComponent(query)}`;
                 } else {
                     alert('検索キーワードを入力してください。');
                 }
             }
-
         });
+
+        //click vào biểu tượng search icon PC
+        document.getElementById('searchIcon').addEventListener('click', function () {
+            const query = document.getElementById("searchInput").value.trim();
+            if (query) {
+                // Chuyển hướng đến trang tìm kiếm
+                window.location.href = `search.php?sname=<?= urlencode($sname) ?>&query=${encodeURIComponent(query)}`;
+            } else {
+                alert('検索キーワードを入力してください。');
+            }
+        });
+        //click vào biểu tượng search icon Mobile
+        function performSearch(query) {
+            if (query) {
+                // Chuyển hướng đến trang tìm kiếm với từ khóa trong URL
+                window.location.href = `search.php?sname=<?= urlencode($sname) ?>&query=${encodeURIComponent(query)}`;
+            } else {
+                alert('検索キーワードを入力してください。');
+            }
+        }
+
 
         document.addEventListener("DOMContentLoaded", function () {
             const menuButton = document.querySelector(".navbar-toggler");
@@ -260,8 +282,11 @@ require "resources.php";
                 }
             });
         });
+       
     </script>
     <!-- ------------------------------------------------------ -->
+    
+
     
     <main class="container mt-4">
          <!-- Store Information Section -->
