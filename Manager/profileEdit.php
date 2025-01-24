@@ -154,7 +154,7 @@ if (!isset($_SESSION['userid'])) {
 
 
                 <div class="store-link">
-                    <a href="../main.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>" target="_blank" rel="noopener noreferrer">
+                    <a href="../main2.php?sname=<?php echo isset($_SESSION['sname']) ? htmlspecialchars($_SESSION['sname']) : ''; ?>" target="_blank" rel="noopener noreferrer">
                         ストアのリンクアドレス
                     </a>
                     <!-- Copy Icon -->
