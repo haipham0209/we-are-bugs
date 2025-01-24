@@ -299,28 +299,30 @@ require "resources.php";
                 <?php if (!empty($results)): ?>
                     <?php foreach ($results as $result): ?>
                         <div class="result-item">
-                            <div class="image-wrapper">
-                                <!-- Hình ảnh sản phẩm -->
-                                <img src="<?= htmlspecialchars($result['productImage']) ?>" alt="<?= htmlspecialchars($result['pname']) ?>" class="product-image">
+                            <a href="productDetail.php?id=<?= htmlspecialchars($result['productid']) ?>">
+                                <div class="image-wrapper">
+                                    <!-- Hình ảnh sản phẩm -->
+                                    <img src="<?= htmlspecialchars($result['productImage']) ?>" alt="<?= htmlspecialchars($result['pname']) ?>" class="product-image">
 
-                                <!-- Biểu tượng sale nếu có giảm giá -->
-                                <?php if (!is_null($result['discounted_price'])): ?>
-                                    <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
-                                <?php endif; ?>
-                            </div>
+                                    <!-- Biểu tượng sale nếu có giảm giá -->
+                                    <?php if (!is_null($result['discounted_price'])): ?>
+                                        <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
+                                    <?php endif; ?>
+                                </div>
 
-                            <!-- Tên sản phẩm -->
-                            <h5><?= htmlspecialchars($result['pname']) ?></h5>
+                                <!-- Tên sản phẩm -->
+                                <h5><?= htmlspecialchars($result['pname']) ?></h5>
 
-                            <!-- Hiển thị giá gốc và giá giảm -->
-                            <p class="price">
-                                <?php if (!is_null($result['discounted_price'])): ?>
-                                    <s><?= number_format($result['price']) ?> ¥</s> 
-                                    <span class="discounted-price"><?= number_format($result['discounted_price']) ?> ¥</span>
-                                <?php else: ?>
-                                    <?= number_format($result['price']) ?> ¥
-                                <?php endif; ?>
-                            </p>
+                                <!-- Hiển thị giá gốc và giá giảm -->
+                                <p class="price">
+                                    <?php if (!is_null($result['discounted_price'])): ?>
+                                        <s><?= number_format($result['price']) ?> ¥</s> 
+                                        <span class="discounted-price"><?= number_format($result['discounted_price']) ?> ¥</span>
+                                    <?php else: ?>
+                                        <?= number_format($result['price']) ?> ¥
+                                    <?php endif; ?>
+                                </p>
+                            </a>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>

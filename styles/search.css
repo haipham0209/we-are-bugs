@@ -144,3 +144,7 @@
     }
 
 }
+main a{
+    color: inherit; /* Thừa kế màu sắc từ phần tử cha */
+    text-decoration: none; /* Loại bỏ gạch dưới */
+}
