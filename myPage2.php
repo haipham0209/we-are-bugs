@@ -320,6 +320,27 @@ require "resources.php";
             <a href="#"><img src="./images/instagram.png" alt="Instagram"></a>
         </div>
     </footer>
+    <!-- Modal -->
+    <div id="loginRegisterModal" class="modal">
+        <div class="modal-content">
+            <p class="modalTitle">アカウントを作成またはログイン</p>
+            <div class="modal-buttons">
+                <button id="loginButton" class="btn btn-primary">ログイン</button>
+                <button id="registerButton" class="btn btn-secondary">新規登録</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("loginRegisterModal");
+
+            // Hiển thị modal khi trang được tải
+            modal.style.display = "block";
+
+            
+        });
+
+    </script>
 
 </body>
 <script src="../scripts/menu.js"></script>
