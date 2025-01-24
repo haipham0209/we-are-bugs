@@ -61,8 +61,8 @@
     }
 
     .description-title {
-        font-family: 'Grape Nuts';
-        font-size: 45px;
+        /* font-family: 'Grape Nuts'; */
+        /* font-size: 45px; */
         /* color: #454545;
         text-shadow: 2px 1px #c7edff, 4px 2px #9acee7, 6px 3px #6bbade; */
         margin: 10px 0;
@@ -78,7 +78,7 @@
     }
 
     .product-price {
-        font-family: 'Grenze';
+        /* font-family: 'Grenze'; */
         font-size: 25px;
     }
 
@@ -87,7 +87,7 @@
     }
 
     .prodcut-description {
-        font-family: 'Grenze';
+        /* font-family: 'Grenze'; */
         font-size: 25px;
         text-align: center;
     }
