@@ -91,6 +91,16 @@ function fetchOrderDetail(orderNumber, orderRow) {
                 `;
             });
 
+            // 割引行を追加
+            if (orderDetails[0].discount > 0) {
+                detailsHTML += `
+                    <tr>
+                        <td colspan="2" style="text-align: center; font-weight: bold; color: red;">割引合計</td>
+                        <td colspan="2" style="text-align: center; color: red;">-${orderDetails[0].discount}</td>
+                    </tr>
+                `;
+            }
+
             // 合計と預かりを二行目に追加
             detailsHTML += `
                 <tr>
