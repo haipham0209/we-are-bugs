@@ -140,6 +140,8 @@ CREATE TABLE order_history (
 );
 
 ALTER TABLE orders ADD COLUMN discount INT;
+-- select * from order_details;
+ALTER TABLE order_details ADD COLUMN item_price INT AFTER productid;
 -- 1 cửa hàng ko trùng barcode nhưng cửa hàng khác nhau thì ok
 
 

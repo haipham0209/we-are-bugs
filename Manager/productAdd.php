@@ -62,49 +62,47 @@ $barcode = isset($_GET['barcode']) ? urldecode($_GET['barcode']) : '';
                 <br>
                 
 
-                <!-- Category -->
                 <label for="category">カテゴリー:</label>
-                <?php if ($error === 'notexistcate'): ?>
-                    <p style="color: red; margin:0;">カテゴリーを選ぶか入力してください</p>
-                <?php endif; ?>
                 <div style="display: flex; align-items: center;">
-                    <input type="text" id="categoryText" name="categoryText" placeholder="選択してください" readonly />
-                    <select id="category" name="category" required onchange="handleCategorySelection()">
-                        <option value="">選択してください</option>
-                        <option value="new">新しいカテゴリーを追加</option>
+                    <input type="text" id="categoryText" name="categoryText" placeholder="新しいカテゴリーを入力" value="" />
+                    <select id="category" name="category" required onchange="updateCategoryText()">
+                        <option value="new" selected>新規作成</option> <!-- Chữ ngắn hơn -->
                         <?php
                         if ($category_result->num_rows > 0) {
                             while ($row = $category_result->fetch_assoc()) {
-                                echo "<option value='" . $row['category_id'] . "'>" . htmlspecialchars($row['cname']) . "</option>";
+                                echo "<option value='" . htmlspecialchars($row['category_id']) . "'>" . htmlspecialchars($row['cname']) . "</option>";
                             }
+                        } else {
+                            echo "<option value=''>カテゴリーがありません</option>";
                         }
                         ?>
                     </select>
                 </div>
                 <br>
 
-                <!-- JavaScript để cập nhật ô văn bản -->
                 <script>
-                    function previewImage(event) {
-                        const imagePreview = document.getElementById('imagePreview');
-                        imagePreview.src = URL.createObjectURL(event.target.files[0]);
-                        imagePreview.style.display = 'block';
-                    }
-
-                    function handleCategorySelection() {
+                    function updateCategoryText() {
                         const categoryDropdown = document.getElementById('category');
                         const categoryTextInput = document.getElementById('categoryText');
+                        const selectedValue = categoryDropdown.value;
 
-                        if (categoryDropdown.value === "new") {
-                            categoryTextInput.placeholder = "新しいカテゴリー名を入力してください";
-                            categoryTextInput.value = ""; // Clear the input field
-                            categoryTextInput.removeAttribute('readonly');
+                        if (selectedValue === "new") {
+                            categoryTextInput.readOnly = false; // Cho phép chỉnh sửa
+                            categoryTextInput.value = ""; // Xóa giá trị cũ
+                            categoryTextInput.placeholder = "カテゴリー選択か入力";
+                            categoryTextInput.focus(); // Đưa con trỏ vào ô nhập
                         } else {
+                            categoryTextInput.readOnly = true; // Khóa ô nhập
                             categoryTextInput.value = categoryDropdown.options[categoryDropdown.selectedIndex].text;
-                            categoryTextInput.setAttribute('readonly', true);
                         }
                     }
+
+                    // Đảm bảo ô nhập mặc định có thể chỉnh sửa khi tải trang
+                    document.addEventListener("DOMContentLoaded", function () {
+                        updateCategoryText();
+                    });
                 </script>
+
 
                 <!-- Các trường khác -->
                 <?php if ($error === 'exist'): ?>

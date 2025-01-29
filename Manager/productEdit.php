@@ -97,45 +97,58 @@ if ($category_name_result->num_rows > 0) {
 
 
                 <!-- Category -->
-                <label for="category">カテゴリー:</label>
-                <div style="display: flex; align-items: center;">
-                    <input type="text" id="categoryText" name="categoryText" placeholder="選択したカテゴリー" value="<?= htmlspecialchars($category_name); ?>" />
-                    <select id="category" name="category" required onchange="updateCategoryText()">
-                        <option value="">選択してください</option>
-                        <?php
-                        if ($category_result->num_rows > 0) {
-                            while ($row = $category_result->fetch_assoc()) {
-                                $selected = ($row['category_id'] == $product['category_id']) ? 'selected' : '';
-                                echo "<option value='" . htmlspecialchars($row['category_id']) . "' $selected>" . htmlspecialchars($row['cname']) . "</option>";
-                            }
-                        } else {
-                            echo "<option value=''>カテゴリーがありません</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <br>
+                    <label for="category">カテゴリー:</label>
+    <div style="display: flex; align-items: center;">
+        <input type="text" id="categoryText" name="categoryText" placeholder="選択したカテゴリー"required value="<?= htmlspecialchars($category_name); ?>" readonly />
+        <select id="category" name="category" required onchange="updateCategoryText()">
+            <option value="">選択してください</option>
+            <?php
+            if ($category_result->num_rows > 0) {
+                while ($row = $category_result->fetch_assoc()) {
+                    $selected = ($row['category_id'] == $product['category_id']) ? 'selected' : '';
+                    echo "<option value='" . htmlspecialchars($row['category_id']) . "' $selected>" . htmlspecialchars($row['cname']) . "</option>";
+                }
+            } else {
+                echo "<option value=''>カテゴリーがありません</option>";
+            }
+            ?>
+            <option value="new">+ 新しいカテゴリーを作成</option>
+        </select>
+    </div>
+    <br>
 
-                <!-- JavaScript để cập nhật ô văn bản -->
-                <script>
-                    function updateCategoryText() {
-                        const categoryDropdown = document.getElementById('category');
-                        const categoryTextInput = document.getElementById('categoryText');
-                        categoryTextInput.value = categoryDropdown.options[categoryDropdown.selectedIndex].text;
-                    }
-                </script>
+    <script>
+        function updateCategoryText() {
+            const categoryDropdown = document.getElementById('category');
+            const categoryTextInput = document.getElementById('categoryText');
+            const selectedValue = categoryDropdown.value;
+
+            // Nếu chọn mục "Tạo mới", cho phép chỉnh sửa ô nhập
+            if (selectedValue === "new") {
+                categoryTextInput.readOnly = false; // Bỏ khóa
+                categoryTextInput.value = ""; // Xóa giá trị cũ
+                categoryTextInput.placeholder = "新しいカテゴリーを入力";
+                categoryTextInput.focus(); // Đưa con trỏ vào ô nhập
+            } else {
+                // Nếu chọn mục khác, khóa ô nhập và hiển thị giá trị từ dropdown
+                categoryTextInput.readOnly = true; // Khóa
+                categoryTextInput.value = categoryDropdown.options[categoryDropdown.selectedIndex].text;
+            }
+        }
+    </script>
+
 
                 <!-- Các trường khác -->
                 <label for="pname">商品名:</label>
-                <input type="text" id="pname" name="pname" value="<?= htmlspecialchars($product['pname']); ?>" readonly>
+                <input type="text" id="pname" name="pname" required value="<?= htmlspecialchars($product['pname']); ?>" >
                 <br>
 
                 <label for="price">価格:</label>
-                <input type="number" id="price" name="price" value="<?= htmlspecialchars($product['price']); ?>" required min="0" step="0.1">
+                <input type="number" id="price" name="price" required value="<?= htmlspecialchars($product['price']); ?>" required min="0" step="0.1">
                 <br>
 
                 <label for="costPrice">仕入れ価格:</label>
-                <input type="number" id="costPrice" name="costPrice" value="<?= htmlspecialchars($product['costPrice']); ?>" required min="0" step="0.1">
+                <input type="number" id="costPrice" name="costPrice"required value="<?= htmlspecialchars($product['costPrice']); ?>" required min="0" step="0.1">
                 <br>
 
                 <label for="description">商品説明:</label>
@@ -144,11 +157,11 @@ if ($category_name_result->num_rows > 0) {
 
                 <!-- Số lượng tồn kho -->
                 <label for="stockQuantity">在庫数量:</label>
-                <input type="number" id="stockQuantity" name="stockQuantity" value="<?= htmlspecialchars($product['stock_quantity']); ?>" required min="1">
+                <input type="number" id="stockQuantity" name="stockQuantity"required value="<?= htmlspecialchars($product['stock_quantity']); ?>" required min="1">
                 <br>
 
                 <label for="barcode">バーコード:</label>
-                <input type="text" id="barcode" name="barcode" value="<?= htmlspecialchars($product['barcode']); ?>" readonly>
+                <input type="text" id="barcode" name="barcode" required value="<?= htmlspecialchars($product['barcode']); ?>" readonly>
                 <!-- <button type="button" id="start-scan">カメラでスキャン</button> -->
                 <!-- Div để hiển thị camera -->
                 <!-- <div id="camera" style="display: none;"></div> -->

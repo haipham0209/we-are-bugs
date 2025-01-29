@@ -85,7 +85,7 @@ function fetchOrderDetail(orderNumber, orderRow) {
                     <tr>
                         <td style="text-align: center; vertical-align: middle;">${detail.pname}</td>
                         <td style="text-align: center; vertical-align: middle;">${detail.quantity}</td>
-                        <td style="text-align: center; vertical-align: middle;">${detail.price}</td>
+                        <td style="text-align: center; vertical-align: middle;">${detail.item_price}</td>
                         <td style="text-align: center; vertical-align: middle;">${detail.order_price}</td>
                     </tr>
                 `;
