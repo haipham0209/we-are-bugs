@@ -23,6 +23,23 @@
         }
     } */
 
+    .addbtn {
+        width: 50px; /* Kích thước nút */
+        height: 50px;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out, opacity 0.2s;
+    }
+    
+    .addbtn:hover {
+        transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+        opacity: 0.8; /* Giảm độ trong suốt */
+    }
+    
+    .addbtn:active {
+        transform: scale(0.95); /* Hiệu ứng nhấn nút */
+    }
+    
+
     .main-navbar {
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
         display: flex;
@@ -490,6 +507,23 @@
     #suggestionList div:hover {
         background-color: #f0f0f0;
     }
+
+    .addbtn {
+        width: 50px; /* Kích thước nút */
+        height: 50px;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out, opacity 0.2s;
+    }
+    
+    .addbtn:hover {
+        transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+        opacity: 0.8; /* Giảm độ trong suốt */
+    }
+    
+    .addbtn:active {
+        transform: scale(0.95); /* Hiệu ứng nhấn nút */
+    }
+    
 
     .search-scan {
         margin: 0 10px 0 10px;
