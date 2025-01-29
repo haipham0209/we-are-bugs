@@ -106,6 +106,7 @@ require "resources.php";
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
             <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="./scripts/main2oSearch.js"></script>
 
 </head>
 <body>
@@ -186,7 +187,7 @@ require "resources.php";
     <div id="searchContainer" class="d-none">
         <div class="search-container">
             <input type="text" id="searchInput" class="form-control" placeholder="商品を検索" onkeypress="handleKeyPress(event)">
-            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick="performSearch()">
+            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" id="search1" onclick="performSearchFromInput()">
         </div>
     </div>
     
