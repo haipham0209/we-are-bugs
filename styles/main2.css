@@ -223,12 +223,17 @@
     .product-showcase {
         display: grid;
         grid-template-columns: repeat(2, 1fr); /* 2 cột */
-        gap: 15px; /* Khoảng cách giữa các sản phẩm */
+        gap: 5px; /* Khoảng cách giữa các sản phẩm */
     }
     
     .product-content {
         display: flex;
         flex-direction: column;
+        background-color: #fff;
+        /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); */
+        padding: 5px;
+        text-align: center;
+        border-radius: 5px;
     }
     
     .product-image {

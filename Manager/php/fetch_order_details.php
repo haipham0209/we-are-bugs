@@ -11,8 +11,8 @@ $sql = "
         od.order_number, 
         p.pname, 
         od.quantity, 
-        p.price, 
-        (od.quantity * p.price) AS order_price,
+        od.item_price,
+        (od.quantity * od.item_price) AS order_price,
         o.total_price,
         o.received_amount,
         o.discount

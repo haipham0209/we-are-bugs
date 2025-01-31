@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $total_discount += $discount_value * $quantity;  // 各商品の割引額を累積
             }
         }
+        
 
         $stmt = $conn->prepare("INSERT INTO orders (order_number, store_id, customer_id, total_price, status, received_amount, discount) VALUES (?, ?, ?, ?, 'pending', ?, ?)");
         $stmt->bind_param("sddsdi", $order_number, $store_id, $customer_id, $total_price, $received_amount, $total_discount);
@@ -95,12 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Giải phóng kết quả truy vấn
             $stmt->free_result();  // Giải phóng kết quả truy vấn SELECT
-
+            // $item_price = $price; // Đây là đơn giá của sản phẩm trước khi giảm giá
+            $item_price = ($discounted_price !== null) ? $discounted_price : $price;
             // Kiểm tra nếu productid tồn tại
             if ($productid) {
                 // Thêm chi tiết vào bảng order_details
-                $stmt = $conn->prepare("INSERT INTO order_details (order_number, productid, quantity) VALUES (?, ?, ?)");
-                $stmt->bind_param("sii", $order_number, $productid, $quantity);
+                $stmt = $conn->prepare("INSERT INTO order_details (order_number, productid, item_price, quantity) VALUES (?, ?, ?, ?)");
+                $stmt->bind_param("siii", $order_number, $productid, $item_price, $quantity);
                 $stmt->execute();
 
 

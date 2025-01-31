@@ -143,10 +143,11 @@ require "resources.php";
                             </div>
                         </ul>
                     </div>
+                    <!-- Search PC -->
                     <div class="input-pc">
                         <div class="search-container">
                             <input type="text" id="searchInput" class="input-pc" placeholder="商品を検索" onkeypress="handleKeyPress(event)">
-                            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick="performSearch()">
+                            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" id="searchIcon" >
                         </div>
                     </div>
                 </div>
@@ -177,10 +178,11 @@ require "resources.php";
         </script>
         <!-- --------------------------------------------------------------- -->
     </header>
+    <!--Search Mobile -->
     <div id="searchContainer" class="d-none">
         <div class="search-container">
-            <input type="text" id="searchInput" class="form-control" placeholder="商品を検索">
-            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick=" ">
+            <input type="text" id="searchInput" class="form-control" placeholder="商品を検索" onkeypress="handleKeyPress(event)">
+            <img src="./images/search-icon.png" alt="Search Icon" class="search-icon" onclick="performSearch()">
         </div>
     </div>
     
@@ -229,7 +231,7 @@ require "resources.php";
             });
             // Hàm thực hiện tìm kiếm
             function performSearch(query) {
-                if (query.length > 0) {
+                if (query) {
                     // Chuyển hướng đến trang tìm kiếm với từ khóa trong URL
                     window.location.href = `search.php?sname=<?= urlencode($sname) ?>&query=${encodeURIComponent(query)}`;
                 } else {
@@ -237,6 +239,27 @@ require "resources.php";
                 }
             }
         });
+
+        //click vào biểu tượng search icon PC
+        document.getElementById('searchIcon').addEventListener('click', function () {
+            const query = document.getElementById("searchInput").value.trim();
+            if (query) {
+                // Chuyển hướng đến trang tìm kiếm
+                window.location.href = `search.php?sname=<?= urlencode($sname) ?>&query=${encodeURIComponent(query)}`;
+            } else {
+                alert('検索キーワードを入力してください。');
+            }
+        });
+        //click vào biểu tượng search icon Mobile
+        function performSearch(query) {
+            if (query) {
+                // Chuyển hướng đến trang tìm kiếm với từ khóa trong URL
+                window.location.href = `search.php?sname=<?= urlencode($sname) ?>&query=${encodeURIComponent(query)}`;
+            } else {
+                alert('検索キーワードを入力してください。');
+            }
+        }
+
 
         document.addEventListener("DOMContentLoaded", function () {
             const menuButton = document.querySelector(".navbar-toggler");
@@ -276,28 +299,30 @@ require "resources.php";
                 <?php if (!empty($results)): ?>
                     <?php foreach ($results as $result): ?>
                         <div class="result-item">
-                            <div class="image-wrapper">
-                                <!-- Hình ảnh sản phẩm -->
-                                <img src="<?= htmlspecialchars($result['productImage']) ?>" alt="<?= htmlspecialchars($result['pname']) ?>" class="product-image">
+                            <a href="productDetail.php?id=<?= htmlspecialchars($result['productid']) ?>">
+                                <div class="image-wrapper">
+                                    <!-- Hình ảnh sản phẩm -->
+                                    <img src="<?= htmlspecialchars($result['productImage']) ?>" alt="<?= htmlspecialchars($result['pname']) ?>" class="product-image">
 
-                                <!-- Biểu tượng sale nếu có giảm giá -->
-                                <?php if (!is_null($result['discounted_price'])): ?>
-                                    <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
-                                <?php endif; ?>
-                            </div>
+                                    <!-- Biểu tượng sale nếu có giảm giá -->
+                                    <?php if (!is_null($result['discounted_price'])): ?>
+                                        <img src="Manager/images/sale.png" alt="Sale" class="sale-icon" />
+                                    <?php endif; ?>
+                                </div>
 
-                            <!-- Tên sản phẩm -->
-                            <h2><?= htmlspecialchars($result['pname']) ?></h2>
+                                <!-- Tên sản phẩm -->
+                                <h5><?= htmlspecialchars($result['pname']) ?></h5>
 
-                            <!-- Hiển thị giá gốc và giá giảm -->
-                            <p class="price">
-                                <?php if (!is_null($result['discounted_price'])): ?>
-                                    <s><?= number_format($result['price']) ?> ¥</s> 
-                                    <span class="discounted-price"><?= number_format($result['discounted_price']) ?> ¥</span>
-                                <?php else: ?>
-                                    <?= number_format($result['price']) ?> ¥
-                                <?php endif; ?>
-                            </p>
+                                <!-- Hiển thị giá gốc và giá giảm -->
+                                <p class="price">
+                                    <?php if (!is_null($result['discounted_price'])): ?>
+                                        <s><?= number_format($result['price']) ?> ¥</s> 
+                                        <span class="discounted-price"><?= number_format($result['discounted_price']) ?> ¥</span>
+                                    <?php else: ?>
+                                        <?= number_format($result['price']) ?> ¥
+                                    <?php endif; ?>
+                                </p>
+                            </a>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>

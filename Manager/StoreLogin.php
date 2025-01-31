@@ -104,7 +104,7 @@ if (isset($_COOKIE['loggedin'])) {
             // Đợi 2,5 giây rồi mới gửi form
             setTimeout(() => {
                 this.submit();  // Gửi form sau 2,5 giây
-            }, 2500);
+            }, 1000);
         });
     });
 </script>

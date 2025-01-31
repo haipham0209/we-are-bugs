@@ -103,7 +103,7 @@ $product_result = $product_stmt->get_result();
         <!-- Add Product Button -->
         <div class="add-product">
             <a href="productAdd.php">
-                <button>+</button>
+                <img class="addbtn" src="./images/add1.png" alt="addbtn">
             </a>
         </div>
 

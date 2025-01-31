@@ -1,3 +1,5 @@
+       
+@media only screen and (max-width: 767px) {
     main {
         display: flex;
         align-items: center;
@@ -16,8 +18,6 @@
         background-size: 100% 100%;
         overflow-y: auto;
     }
-@media only screen and (max-width: 767px) {
-
     /* Đặt logo vào một container có vị trí tương đối */
     .logo-container {
 
@@ -401,32 +401,39 @@
 
 /* Styles for larger PC screens */
 @media only screen and (min-width: 768px) {
-    /* body {
+    header{
+        justify-self: start;
+        margin: 15px 0 0 15px;
+    }
+    body {
         font-family: Arial, sans-serif;
         margin: 0;
-        padding: 0;
-        background: linear-gradient(135deg, rgba(121, 200, 120, 0), #79ac78, rgba(121, 200, 120, 0));
-        display: flex;
+        background-color: #B0d9b1;
+        overflow-y: auto;
+    }
+    main{
+        margin: auto;
+        max-width: 40%;
         justify-content: center;
-        align-items: flex-start;
-        min-height: 100vh;
-    } */
+    }
 
     .container {
         background-color: white;
         /* margin-top: 30px; */
         border-radius: 10px;
-        margin: 40px 0;
-        /* width: 10px; Chiều rộng cố định */
+        margin: 0 0 40px 0;
         
-        background-color: #ccc; /* Màu nền chỉ để dễ nhìn */
+        /* background-color: #ccc; */
         display: flex;
         align-items: stretch; /* Căn giữa nút */
         justify-content: center; /* Căn giữa theo chiều ngang */
     }
 
+    p{
+        justify-self: center;
+    }
     .profile-form {
-        padding: 30px;
+        padding: 10px 30px 30px 30px;
         border-radius: 20px;
         width: 80%;
         height: 100%;
@@ -455,7 +462,8 @@
 
 /* Đặt logo vào một container có vị trí tương đối */
 .logo-container {
-
+    margin: auto;
+    justify-self: center;
     position: relative;
     display: inline-block; /* Để nút có thể chồng lên logo */
     /* max-width: 200px; */
@@ -544,6 +552,7 @@ svg {
 
     /* Form */
     .form {
+        gap: 10px;
         display: flex;
         flex-direction: column;
     }

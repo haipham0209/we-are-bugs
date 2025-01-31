@@ -180,7 +180,26 @@
         border-radius: 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
+    #loading{
+        display: none;
+         position: fixed; 
+         top: 0; left: 0;
+          width: 50%; 
+          height: 50%; 
+          background: rgba(255, 255, 255, 0.8); 
+          justify-content: center; align-items: center;
+    }
+    /* llottie */
+#lottie{
+    width: 500px;
+    height: 500px;
+}
+svg {
+  width: 500px; /* Chiều rộng mong muốn */
+  height: 500px; /* Chiều cao mong muốn */
+}
 
+/* end lottie */
     /* Logo */
     .logo {
         margin-bottom: 8px;

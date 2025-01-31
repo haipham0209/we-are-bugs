@@ -61,8 +61,8 @@ $sname= $_COOKIE["storename"];
 
 <body>
     <header>
-        <a href="./main2.php?sname=<?= urlencode($sname) ?>">
-            <img src="./images/backicon2.png" alt="Back Icon" style="width: 40px; height: 40px;" onclick="location.href='#'">
+        <a href="javascript:void(0)" onclick="window.history.back();">
+            <img src="./images/backicon2.png" alt="Back Icon" style="width: 40px; height: 40px;">
         </a>
         <div class="favorite-button">
             <img id="favorite-icon" src="./images/white-heart.png" style="width: 40px; height: 40px;" alt="お気に入り">
