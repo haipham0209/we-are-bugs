@@ -229,6 +229,7 @@ $product_result = $product_stmt->get_result();
                 <p><strong>値段：</strong><span id="dialog-product-price"></span></p>
                 <p><strong>割引率：</strong>
                     <input type="number" id="discount-rate" placeholder="割引率 (%)" min="0" max="100" step="1">
+                    <strong>%</strong>
                 </p>
                 <p><strong>割引後の値段：</strong>¥<span id="discounted-price"></span></p>
                 <button id="apply-discount">確定</button>
