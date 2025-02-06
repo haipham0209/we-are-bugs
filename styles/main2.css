@@ -568,6 +568,7 @@
         display: grid; /* Sử dụng grid thay vì flex */
         grid-template-columns: repeat(4, 1fr); /* Chia thành 4 cột đều nhau */
         gap: 15px; 
+        padding-bottom: 20px;
     }
     .product-content {
         background-color: #fff;
