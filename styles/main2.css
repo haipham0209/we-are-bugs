@@ -575,7 +575,7 @@
         padding: 10px;
         text-align: center;
         border-radius: 5px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+        /* transition: transform 0.3s ease, box-shadow 0.3s ease !important; */
     }
 
     .product-content:hover {
